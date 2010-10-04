@@ -1,0 +1,13 @@
+<div class="grid_10 prefix_1 suffix_1">
+	<div class="box">
+		<div class="block" id="registration">
+			<% form_for @account, :builder => ErrorFormBuilder, :url => account_path do |f| %>
+			<fieldset>
+				<legend><%=t :Register %></legend>
+				<p><%= f.error_messages %></p>
+				<%= render :partial => "form", :object => f, :locals => { :countries => @countries, :mobile_prefixes => @mobile_prefixes } %>
+			</fieldset>
+			<% end %>
+		</div>
+	</div>
+</div>

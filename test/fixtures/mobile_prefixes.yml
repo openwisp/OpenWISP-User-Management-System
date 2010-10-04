@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  prefix: 1
+  international_prefix: 1
+  valid: false
+
+two:
+  prefix: 1
+  international_prefix: 1
+  valid: false

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  iso: MyString
+  iso3: MyString
+  name: MyString
+  printable_name: MyString
+  numcode: 1
+  valid: false
+
+two:
+  iso: MyString
+  iso3: MyString
+  name: MyString
+  printable_name: MyString
+  numcode: 1
+  valid: false

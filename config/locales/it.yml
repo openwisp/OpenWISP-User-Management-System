@@ -1,0 +1,460 @@
+it:
+  Account_disabled: Account disabilitato
+  Account_disable_confirmation: "Attenzione: disabilitando l'account non potrai più accedere al servizio. Potrai abilitare nuovamente l'account, ripetendo la procedura di verifica."
+  Account_registered: Account registrato corretamente
+  Account_updated: Account aggiornato correttamente
+  Account_verification_status: Stato di verifica dell'account
+  Active_qm: Abilitato?
+  Additional_info: Maggiori Informazioni
+  Address: Indirizzo
+  Add_new_user: Aggiungi nuovo utente
+  Are_you_sure: Sei sicuro? L'operazione non potrà essere annullata.
+  Back: Indietro
+  Birth_date: Data di nascita
+  captcha_error: Testo e immagine non erano uguali
+  registration_captcha_info: Scrivi qui sotto il testo contenuto nell'immagine sopra
+  Call_one_of_the_following_numbers:
+    one: Chiama il seguente numero di telefono
+    other: Chiama uno dei seguenti numeri di telefono
+  Change_password: Cambio password
+  City: Città
+  Click_for_eula: Clicca qui per leggere le condizioni di utilizzo del servizio
+  Click_for_privacy: "Clicca qui per leggere l'informativa sul trattamento dei dati personali"
+  Create: Crea
+  Create_user: Crea utente 
+  Current_login_at: Data accesso corrente
+  Current_login_ip: IP accesso corrente
+  Destroy: Elimina
+  Document_photo: Copia del documento
+  Download: Traffico in download
+  Downloaded_bytes: Byte scaricati
+  Dunno_how_to_register_click_here: Ha problemi a registrarti? Clicca qui
+  Edit: Modifica
+  Edit_user: Modifica utente
+  Edit_account: Modifica account
+  Email: E-mail
+  Forgot_password: Password dimenticata
+  Forgot_password_description_email: Scrivi qui sotto l'indirizzo email utilizzato in fase di registrazione e premi "reimposta password" per recuperare la tua password
+  Forgot_password_description_mobile_phone: Scrivi qui sotto il numero di telefono cellulare utilizzato in fase di registrazione e premi "reimposta password" per recuperare la tua password
+  Forgot_password_description_select: Seleziona qui sotto il metodo con il quale vuoi effettuare il ripristino della password
+  Free_call_description: "La chiamata è gratuita e, dopo alcuni squilli, terminerà automaticamente."
+  From_mobile_phone_number: Dall'utenza telefonica
+  General_infos: Informazioni generali
+  Given_name: Nome
+  Hours: Ore
+  If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: Se hai inserito un numero di telefono cellulare errato, attendi la scadenza della registrazione e riprova.
+  If_problem_with_redirect: Dopo la procedura di verifica, se non vieni rediretto automaticamente
+  Instruction_reset_has_been_mailed: Le istruzioni per il recupero della password sono state inviate. Controlla la tua posta elettronica
+  IP_address: Indirizzo IP
+  Last_login_at: Data ultimo accesso
+  Last_login_ip: IP ultimo accesso
+  Last_x_days_traffic:
+    one: Traffico di oggi
+    other: Traffico degli ultimi {{count}} giorni
+  Last_x_days_time:
+    one: Tempo utilizzato null'ultima sessione
+    other: Tempo utilizzato nelle ultime {{count}} sessioni
+  Last_x_logins: 
+    one: Ultimo login
+    other: Ultimi {{count}} login
+  Last_x_online_users:
+    one: Ultimo utente online
+    other: Ultimi {{count}} utenti online
+  Last_x_registered_users: 
+    one: Ultimo utente registrato
+    other: Ultimi {{count}} utenti registrati
+  Listing_users: Lista utenti
+  Loggedin_users: Utenti attualmente connessi
+  Login: Accedi
+  Logins: Accessi
+  Login_successful: Login riuscito
+  Login_count: Numero di accessi
+  Login_error: "Nome utente o password errati"
+  Logout: Esci
+  Logout_successful: Logout riuscito
+  Mac_address: MAC address
+  Manage_your_account: Gestisci il tuo account
+  Minutes: Minuti
+  Mobile_phone_number: Numero di cellulare
+  My_account: Il mio account
+  My_profile: Il mio profilo
+  Must_be_logged_in: Devi effettuare l'accesso per poter accedere a quella pagina
+  Must_be_logged_out: Devi effettuare il logout per poter accedere a quella pagina
+  Name: Nome
+  New_user: Nuovo utente
+  Next: Avanti
+  No_ajax_verification_success: Il tuo account e' stato verificato ora
+  No_user_found_with_that_email: "Nessun utente trovato per l'indirizzo e-mail inserito"
+  No_user_found_with_that_mobile_phone: "Nessun utente trovato per il numero di telefono cellulare"
+  Not_verified: Non verificato
+  Not_yet_connected: 
+    one: "L'utente non ha ancora effettuato connessioni oggi, non e' possibile tracciare i grafici"
+    other: "L'utente non ha ancora effettuato connessioni negli ultimi {{count}} giorni, non e' possibile tracciare i grafici"
+  No_verification_possible: Per questo account non e' possibile effettuare la verifica. Contattare l'assistenza per risolvere il problema.
+  Online_users: Utenti online
+  Operations: Operazioni
+  Operator_login: Accesso operatore
+  Password_format_error: "La password deve contenere almeno un carattere alfabetico ed un numero"
+  Password_recovery_from: "Password recovery"
+  Password_recovery_subject: "Istruzioni per il ripristino della password"
+  Password_reset_instructions_1: "E' stata effettuata una richiesta di reset della password per il tuo account."
+  Password_reset_instructions_2: "Se non sei stato tu ad effettuare la richiesta, ingora questo messaggio."
+  Password_reset_instructions_3: "Se hai effettuato tu la richiesta, clicca sulla seguente URL."
+  Password_reset_instructions_4: "Nel caso in cui la precedente URL non funzionasse, prova a copiare ed incollare l'indirizzo nel tuo browser."
+  Password_reset_instructions_5: "Se continui ad avere problemi per il reset della password, per piacere contattaci."
+  Password_successfully_updated: "Password aggiornata correttamente"
+  Perishable_token_error: "Non è stato possibile trovare il tuo account. Invece di cliccare sull'indirizzo che ti è stato inviato per email, prova a copiarlo e incollarlo nel tuo browser. 
+Se continui ad avere problemi, ripeti la procedura di recupero password"
+  Please_verify_credit_card: "Per abilitare l'utenza abbiamo la necessita' di verificare la tua carta di credito. Vai su"
+  Please_verify_mobile_number: "Per abilitare l'utenza abbiamo la necessità di verificare il tuo numero di cellulare"
+  Priority: Priorità
+  Redirecting_in_x_secs:
+    one: "redirezione in {{count}} secondo"
+    other: "redirezione in {{count}} secondi"
+  Radius_logins: Accessi a Internet
+  Radius_groups: Gruppi radius
+  Refresh_data: Aggiorna dati
+  Register: Registrati
+  Registered_users: Utenti registrati
+  Registration_date: Data di registrazione
+  Reset_password: Reimposta password
+  Repeat_registration: "Puoi ripetere la registrazione cliccando qui."
+  Search_by_user_name_surname_mobile: "Cerca per nome utente, nome, cognome o numero di telefono"
+  Search_user: cerca utente
+  Select: Seleziona
+  Sort_by_this_field: Ordina per questo campo
+  Show: Mostra
+  Show_account_info: Mostra informazioni account
+  Show_all_users: Mostra tutti gli utenti
+  Start_time: Inizio connessione
+  State: Stato
+  Stop_time: Fine connessione
+  Surname: Cognome
+  Title: Titolo
+  Top_x_active_users: 
+    one: Utente più attivo
+    other: I {{count}} utenti più attivi
+  Traffic: Traffico
+  Traffic_total: Traffico totale
+  Undo: Annulla
+  Unique_logins: Accessi unici
+  Update: Aggiorna
+  Update_my_password_and_log_me_in: Aggiorna la mia password e fammi entrare!
+  Upload: Traffico in upload
+  Uploaded_bytes: Byte inviati
+  Username: Nome Utente
+  Users_management: Gestione delle utenze  
+  User_management_logins: Accessi a questo sistema
+  User_sessions: "Sessioni dell'utente"
+  Users_management_system: Sistema di gestione delle utenze
+  Users_nationality: "Nazionalita\' utenti"
+  Verification_date: Data di verifica account
+  Verification_expire_time_x_mins: 
+    one: "Ti rimane {{count}} minuto per verificare il tuo account."
+    other: "Ti rimangono {{count}} minuti per verificare il tuo account."
+  Verification_time_expired: "Hai esaurito il tempo a tua disposizione per la verifica."
+  Verified: Verificato
+  Verified_qm: Verificato?
+  Your_account_is_not_yet_verified: Il tuo account non è ancora stato verificato
+  Zip: CAP
+  active: abilitato
+  address: indirizzo 
+  affermative: "si"
+  birth_date: data di nascita
+  change_password: Nuova password
+  city: città
+  click_here: clicca qui
+  credit_card: Carta di credito
+  credit_card_instructions: "Al termine della procedura di registrazione ti verra' chiesto di effettuare un acquisto da {{count}} euro per verificare la tua identita'"
+  credit_card_item_name: Registrazione a Surfinsardinia con carta di credito
+  disable_account: disabilita account
+  document_photo: copia del documento
+  email: E-mail
+  email_confirmation: conferma e-mail
+  eula_description: "Spuntando la seguente casella, dichiaro di accettare i termini e le condizioni di utilizzo del servizio"
+  privacy_description: "Spuntando la seguente casella, dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali"
+  given_name: nome
+  identity_document: "Documento d'identità"
+  listen: ascolta
+  login: accesso
+  mobile_phone: "Numero di cellulare"
+  mobile_prefix: "Prefisso telefono cellulare"
+  mobile_prefix_confirmation: "Conferma prefisso telefono cellulare"
+  mobile_suffix: "Numero telefono cellulare senza prefisso"
+  mobile_suffix_confirmation: "Conferma numero telefono cellulare senza prefisso"
+  mobile_phone_number: numero di cellulare
+  mobile_phone_confirmation: conferma numero di cellulare
+  negative: "no"
+  next: successivo
+  online: online
+  password: password
+  password_confirmation: conferma password
+  previous: precedente
+  radius_groups: gruppi radius
+  registration_email_info: "L'indirizzo e-mail potrà essere usato per poter reimpostare la tua password in caso la dimenticassi"  
+  registration_mobile_phone_info: Dovrai effettuare una chiamata da questo numero. Puoi utilizzare solo numeri di operatori italiani
+  registration_password_info: Dovrà contenere almeno una lettera ed un numero e dovrà essere di almeno 8 caratteri
+  registration_username_info: Dovrai utilizzare questo username e la tua password per accedere al servizio
+  remember_me: ricorda il mio login
+  results: risultati
+  select_prefix: Prefisso telefonico
+  state: stato
+  surname: cognome
+  total_results: Risultati totali
+  uploaded_document_photo: anteprima copia del documento
+  username: nome utente
+  verification_method: "modalità di verifica dell'identità"
+  verified: verificato
+  verified_qm: verificato?
+  zip: cap
+
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 3
+    
+    currency:
+      format:
+        format: "%n %u"
+        unit: "€"
+        separator: "."
+        delimiter: ","
+        precision: 2
+      
+    percentage:
+      format:
+        delimiter: ""
+        # precision: 
+      
+    precision:
+      format:
+        # separator:
+        delimiter: ""
+        # precision:
+      
+    human:
+      format:
+        # separator: 
+        delimiter: ""
+        precision: 1
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Byte"
+          kb: "Kb"
+          mb: "Mb"
+          gb: "Gb"
+          tb: "Tb"
+
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+
+    day_names: [Domenica, Lunedì, Martedì, Mercoledì, Giovedì, Venerdì, Sabato]
+    abbr_day_names: [Dom, Lun, Mar, Mer, Gio, Ven, Sab]
+
+    month_names: [~, Gennaio, Febbraio, Marzo, Aprile, Maggio, Giugno, Luglio, Agosto, Settembre, Ottobre, Novembre, Dicembre]
+    abbr_month_names: [~, Gen, Feb, Mar, Apr, Mag, Giu, Lug, Ago, Set, Ott, Nov, Dic]
+    order: [ :day, :month, :year ]
+
+  time:
+    formats:
+      default: "%a %d %b %Y, %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y %H:%M"
+        
+    am: 'am'
+    pm: 'pm'
+    
+  datetime:
+    distance_in_words:
+      half_a_minute: "mezzo minuto"
+      less_than_x_seconds:
+        one:  "meno di un secondo"
+        other: "meno di {{count}} secondi"
+      x_seconds:
+        one:  "1 secondo"
+        other: "{{count}} secondi"
+      less_than_x_minutes:
+        one:  "meno di un minuto"
+        other: "meno di {{count}} minuti"
+      x_minutes:
+        one:  "1 minuto"
+        other: "{{count}} minuti"
+      about_x_hours:
+        one:  "circa un'ora"
+        other: "circa {{count}} ore"
+      x_days:
+        one:  "1 giorno"
+        other: "{{count}} giorni"
+      about_x_months:
+        one:  "circa un mese"
+        other: "circa {{count}} mesi"
+      x_months:
+        one:  "1 mese"
+        other: "{{count}} mesi"
+      about_x_years:
+        one:  "circa un anno"
+        other: "circa {{count}} anni"
+      over_x_years:
+        one:  "oltre un anno"
+        other: "oltre {{count}} anni"
+
+    prompts:
+      year:   "Anno"
+      month:  "Mese"
+      day:    "Giorno"
+      hour:   "Ora"
+      minute: "Minuto"
+      second: "Secondi"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: ", e "
+      
+  activerecord:
+    errors:
+      template:
+        header: 
+          one: "Si è verificato un errore"
+          other: "Si sono verificati {{count}} errori"
+        body: "Per favore correggi i seguenti errori:"
+      messages:
+        inclusion: "non è incluso nella lista"
+        exclusion: "è riservato"
+        invalid: "non è valido"
+        confirmation: "non coincide con la conferma"
+        accepted: "deve essere accettata"
+        empty: "non può essere vuoto"
+        blank: "deve essere specificato"
+        too_long: "è troppo lungo (il massimo è {{count}} lettere)"
+        too_short: "è troppo corto (il minimo è {{count}} lettere)"
+        wrong_length: "è della lunghezza sbagliata (deve essere di {{count}} lettere)"
+        taken: "è già stato utilizzato per un'altro account"
+        not_a_number: "non è un numero"
+        greater_than: "deve essere superiore a {{count}}"
+        greater_than_or_equal_to: "deve essere superiore o uguale a {{count}}"
+        equal_to: "deve essere uguale a {{count}}"
+        less_than: "deve essere meno di {{count}}"
+        less_than_or_equal_to: "deve essere meno o uguale a {{count}}"
+        odd: "deve essere dispari"
+        even: "deve essere pari"
+        not_valid_f: "non valida"
+        not_valid_m: "non valido"
+        record_invalid: record non valido
+        missing_image: mancante
+        invalid_image: non è valida
+        image_too_small: "è troppo piccola (deve essere >= {{minimum}})"
+        password_format: "deve contenere almeno un carattere ed un numero"
+        mobile_phone_format: "deve contenere solo numeri"
+        mobile_prefix_format: "deve contenere solo numeri"
+        mobile_suffix_format: "deve contenere solo numeri"
+        name_format: "può contenere solo caratteri alfabetici ed i caratteri ''', '.' e ','"
+        address_format: "può contenere solo numeri, lettere  ed i caratteri ''', '.' e ','"
+        zip_format: non è corretto
+        eula_must_be_accepted: "devono essere accettate"
+        privacy_must_be_accepted: "deve essere accettata"
+        
+    # Translate model names. Used in Model.human_name().
+    models:
+      operator_session: "sessione operatore"
+      user_session: "sessione utente"
+      user: utente
+          
+    # Translate model attribute names. Used in Model.human_attribute_name(attribute).
+    attributes:
+      user:
+        mobile_phone: "Numero di cellulare"
+        mobile_phone_confirmation: "Conferma numero di cellulare"
+        mobile_prefix: "Prefisso telefono cellulare"
+        mobile_prefix_confirmation: "Conferma prefisso telefono cellulare"
+        mobile_suffix: "Numero telefono cellulare senza prefisso"
+        mobile_suffix_confirmation: "Conferma numero telefono cellulare senza prefisso"
+        image_file: "Foto del documento"
+        email: "E-mail"
+        username: "Nome utente"
+        password: "Password"
+        change_password: "Nuova password"
+        password_confirmation: "Conferma password"
+        email_confirmation: "Conferma email"
+        birth_date: "Data di nascita"
+        given_name: "Nome"
+        surname: "Cognome"
+        state: "Stato"
+        city: "Città"
+        address: "Indirizzo"
+        zip: "CAP"
+        verification_method: "Modalità di verifica dell'identità"
+        verified: "Verificato"
+        active: "Abilitato"
+        radius_groups: "Gruppi RADIUS"
+        eula_acceptance: "Condizioni e termini di utilizzo del servizio"
+        privacy_acceptance: "Informativa sul trattamento dei dati personali"
+        document_photo: "Fotocopia di un documento d'identità"
+      account:
+        mobile_phone: "Numero di cellulare"
+        mobile_phone_confirmation: "Conferma numero di cellulare"
+        mobile_prefix: "Prefisso telefono cellulare"
+        mobile_prefix_confirmation: "Conferma prefisso telefono cellulare"
+        mobile_suffix: "Numero telefono cellulare senza prefisso"
+        mobile_suffix_confirmation: "Conferma numero telefono cellulare senza prefisso"
+        image_file: "Foto del documento"
+        email: "E-mail"
+        username: "Nome utente"
+        password: "Password"
+        change_password: "Nuova password"
+        password_confirmation: "Conferma password"
+        email_confirmation: "Conferma email"
+        birth_date: "Data di nascita"
+        given_name: "Nome"
+        surname: "Cognome"
+        state: "Stato"
+        city: "Città"
+        address: "Indirizzo"
+        zip: "CAP"
+        verification_method: "Modalità di verifica dell'identità"
+        verified: "Verificato"
+        active: "Abilitato"
+        radius_groups: "Gruppi RADIUS"
+        eula_acceptance: "Condizioni e termini di utilizzo del servizio"
+        privacy_acceptance: "Informativa sul trattamento dei dati personali"
+        document_photo: "Fotocopia di un documento d'identità"
+
+  authlogic:
+    error_messages:
+      login_blank: "deve essere specificato"
+      login_not_found: "non è valido"
+      login_invalid: "utilizza solo lettere numeri, spazi e .-_@"
+      consecutive_failed_logins_limit_exceeded: "Limite di tentativi errati superato, account disabilitato"
+      email_invalid: "non sembra un indirizzo e-mail"
+      password_blank: "deve essere specificata"
+      password_invalid: "non è valida"
+      not_active: "L'account non è attivo"
+      not_confirmed: "L'account non è confermato"
+      not_approved: "L'account non è approvato"
+      no_authentication_details: "Non hai fornito alcun dettaglio per l'autenticazione"
+      is_not_valid: "non è valida"
+    models:
+      operator_session: "sessione operatore"
+      user_session: "sessione utente"
+    attributes:
+      operator_session:
+        mobile_phone: "Numero di telefono"
+        login: "Nome utente"
+        email: email
+        password: Password
+        remember_me: "Ricordami"
+      user_session:
+        mobile_phone: "Numero di telefono"
+        login: "nome utente"
+        username: "Nome utente"
+        email: email
+        password: Password
+        remember_me: "Ricordami"

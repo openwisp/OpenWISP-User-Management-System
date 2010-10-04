@@ -1,0 +1,106 @@
+<div class="grid_3">
+  <div class="box">
+    <div class="block" id="general_info">
+      <fieldset>
+        <p>
+          <b><%=t :Given_name %></b><br />
+          <%=h @account.given_name %>
+        </p>
+        <p>
+          <b><%=t :Surname %></b><br />
+          <%=h @account.surname %>
+        </p>
+        <p>
+          <b><%=t :Username %></b><br />
+          <%=h @account.username %>
+        </p>
+        <% if @account.has_image? %>
+        <p>
+          <b><%=t :Document_photo %></b><br />
+          <p>
+            <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
+          </p>
+        </p>
+        <% end %>
+        <p>
+          <b><%=t :State %></b><br />
+          <%=h @account.state %>
+        </p>
+        <p>
+          <b><%=t :City %></b><br />
+          <%=h @account.city %>
+        </p>
+        <p>
+          <b><%=t :Address %></b><br />
+          <%=h @account.address %>
+        </p>
+        <p>
+          <b><%=t :Email %></b><br />
+          <%=h @account.email %>
+        </p>
+        <p>
+          <b><%=t :Registration_date %></b><br />
+          <%=h @account.created_at.strftime("%d/%m/%y %H:%M:%S") %>
+        </p>
+        <p>
+          <b><%=t :Verification_date %></b><br />
+          <% if @account.verified %>
+            <%=h @account.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
+          <% else %>
+            <font color="red"><%=t :Not_verified %></font>
+          <% end %>
+        </p>
+        <p>
+          <b><%=t :Radius_logins %></b><br />
+          <%=h @account.radius_accountings.count %>
+        </p>
+        <p>
+          <b><%=t :Last_login_ip %></b><br />
+          <%=h @account.last_login_ip %>
+        </p>
+      </fieldset>
+    </div>
+  </div>
+</div>
+
+<div class="grid_9">
+  <p>
+    <%= button_to t(:Refresh_data), "", :method => :get %>
+  </p>
+  <div class="clear"></div>
+  
+<% if @show_graphs %>
+    <div class="box">
+      <h2><%=h t(:Logins) %></h2>
+      <div class="block" id="rad_acct_login_block">
+          <% render_chart fusionchart_path('FCF_Column2D.swf'), '', @login_xml_data, 'chart_login', 500, 200, false, false do %>
+          <% end %>
+      </div>
+      &nbsp;
+    </div>
+
+    <div class="box">
+      <h2><%=h t(:Traffic) %></h2>
+      <div class="block" id="rad_acct_traffic_block">
+          <% render_chart fusionchart_path('FCF_MSColumn2D.swf'), '', @traffic_xml_data, 'chart_traffic', 500, 200, false, false do %>
+          <% end %>
+      </div>
+      &nbsp;
+    </div>
+<% else %>
+    <div class="box">
+      <p><%=t :Not_yet_connected, AccountsController::STATS_PERIOD %></p>
+    </div>
+<% end %>
+</div>
+
+<div class="clear"></div>
+<div class="grid_12">
+  <div class="box">
+    <h2><%=h t(:User_sessions) %></h2>
+    <div class="block" id="rad_list_block">
+      <%= @controller.ajax_accounting_search %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

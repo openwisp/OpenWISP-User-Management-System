@@ -1,0 +1,18 @@
+<table id="radius_groups-table">
+  <thead>
+    <tr>
+      <th scope="col" class="head-left"><%=t :Select %></th>
+      <th scope="col" class="head"><%=t :Name %></th>
+      <th scope="col" class="head-right"><%=t :Priority %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @radius_groups.each do |radius_group| %>
+        <tr>
+          <td><%= check_box_tag("user[radius_group_ids][]", radius_group.id, @user.radius_group_ids.include?(radius_group.id)) %></td>
+          <td><%=h radius_group.name %></td>
+          <td><%=h radius_group.priority %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

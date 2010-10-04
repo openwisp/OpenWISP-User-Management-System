@@ -1,0 +1,10 @@
+@user.operate do |image|
+  image.resize '800x600', :crop => true
+  image.image_overlay 'public/images/logo.png',
+    :alignment => :center,
+    :offset => '20x20'
+  image.border :size => 10, :color => 'gray'
+  image.text I18n.t(:Document_photo)
+  image.unsharp_mask  
+  image.shadow
+end

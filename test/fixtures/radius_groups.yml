@@ -1,0 +1,25 @@
+--- 
+radius_groups_002: 
+  name: Users
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  priority: "1"
+  id: "2"
+radius_groups_003: 
+  name: PowerUsers
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  priority: "1"
+  id: "3"
+radius_groups_004: 
+  name: Machines
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  priority: "1"
+  id: "4"
+radius_groups_001: 
+  name: Disabled
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  priority: "1"
+  id: "1"

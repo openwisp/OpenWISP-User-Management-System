@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th><%= t(:Username) %></th>
+      <th><%= t(:Registration_date) %></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <% users.each do |user| %>
+    <tr>
+      <td><%= link_to h(user.username), user %></td>
+      <td><%=h user.created_at.strftime("%d/%m/%y - %H:%M") %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

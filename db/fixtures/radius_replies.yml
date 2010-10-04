@@ -1,0 +1,55 @@
+--- 
+radius_replies_001: 
+  radius_entity_type: RadiusGroup
+  op: "="
+  radius_entity_id: "2"
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  id: "1"
+  value: "600"
+  attribute: Idle-Timeout
+radius_replies_002: 
+  radius_entity_type: RadiusGroup
+  op: "="
+  radius_entity_id: "2"
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  id: "2"
+  value: "3600"
+  attribute: Session-Timeout
+radius_replies_003: 
+  radius_entity_type: RadiusGroup
+  op: "="
+  radius_entity_id: "3"
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  id: "3"
+  value: "1200"
+  attribute: Idle-Timeout
+radius_replies_004: 
+  radius_entity_type: RadiusGroup
+  op: "="
+  radius_entity_id: "3"
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  id: "4"
+  value: "1800"
+  attribute: Session-Timeout
+radius_replies_005: 
+  radius_entity_type: RadiusGroup
+  op: "="
+  radius_entity_id: "4"
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  id: "5"
+  value: "1800"
+  attribute: Idle-Timeout
+radius_replies_006: 
+  radius_entity_type: RadiusGroup
+  op: "="
+  radius_entity_id: "1"
+  created_at: 2009-12-28 13:36:50
+  updated_at: 2009-12-28 13:36:50
+  id: "6"
+  value: Account Disabilitato - Account Disabled
+  attribute: Reply-Message

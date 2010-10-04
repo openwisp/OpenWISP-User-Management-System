@@ -1,0 +1,12 @@
+--- 
+:backgroundrb: 
+  :ip: 0.0.0.0 
+  :port: 11008
+  :environment: production
+
+:schedules:
+  :house_keeper_worker:
+    :remove_stale_sessions:
+      :trigger_args: 0  0  2 * * 0 *
+    :remove_stale_bdrbs:
+      :trigger_args: 0  30 2 * * 0 *

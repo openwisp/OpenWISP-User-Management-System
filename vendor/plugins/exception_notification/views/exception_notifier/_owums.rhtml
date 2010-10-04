@@ -1,0 +1,9 @@
+<% unless @operator.nil? -%> 
+* operator name: <%= @operator.login %>
+* operator ip: <%= @operator.current_login_ip %>
+<% end -%>
+
+<% unless @account.nil? -%> 
+* user name: <%= @account.username %>
+* user ip: <%= @account.current_login_ip %>
+<% end -%>

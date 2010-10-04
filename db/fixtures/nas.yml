@@ -1,0 +1,10 @@
+---
+nas_001:
+  nasname: 127.0.0.1
+  shortname: localhost
+  type: other
+  ports: 0
+  secret: itslocalbabe
+  community:
+  description: Localhost RADIUS nas
+

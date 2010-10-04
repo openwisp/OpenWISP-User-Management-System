@@ -1,0 +1,127 @@
+<div class="grid_3">
+  <div class="box">
+    <ul class="nav main">
+      <% if current_operator.has_role? 'users_manager' %>
+        <li><%= link_to t(:Edit), edit_user_path(@user) %></li>
+      <% end %>
+      <li><%= link_to t(:Back), :back %></li>
+    </ul>
+    <div class="block" id="general_info">
+      <fieldset>
+        <p>
+          <b><%=t :Given_name %></b><br />
+          <%=h @user.given_name %>
+        </p>
+        <p>
+          <b><%=t :Surname %></b><br />
+          <%=h @user.surname %>
+        </p>
+        <% if @user.verification_method == User::VERIFY_BY_MOBILE %>
+          <p>
+            <b><%=t :Mobile_phone_number %></b><br />
+            <%=h @user.mobile_phone %>
+          </p>
+        <% end %>
+        <p>
+          <b><%=t :Username %></b><br />
+          <%=h @user.username %>
+        </p>
+        <% if @user.has_image? %>
+        <p>
+          <b><%=t :Document_photo %></b><br />
+          <p>
+            <%= link_to embedded_image_tag(@user.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
+          </p>
+        </p>
+        <% end %>
+        <p>
+          <b><%=t :State %></b><br />
+          <%=h @user.state %>
+        </p>
+        <p>
+          <b><%=t :City %></b><br />
+          <%=h @user.city %>
+        </p>
+        <p>
+          <b><%=t :Address %></b><br />
+          <%=h @user.address %>
+        </p>
+        <p>
+          <b><%=t :Email %></b><br />
+          <%=h @user.email %>
+        </p>
+        <p>
+          <b><%=t :Registration_date %></b><br />
+          <%=h @user.created_at.strftime("%d/%m/%y %H:%M:%S") %>
+        </p>
+        <p>
+          <b><%=t :Verification_date %></b><br />
+          <% if @user.verified %>
+            <%=h @user.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
+          <% else %>
+            <font color="red"><%=t :Not_verified %></font>
+          <% end %>
+        </p>
+        <p>
+          <b><%=t :User_management_logins %></b><br />
+          <%=h @user.login_count %>
+        </p>
+        <p>
+          <b><%=t :Radius_logins %></b><br />
+          <%=h @user.radius_accountings.count %>
+        </p>
+
+        <% if current_operator.has_role? 'users_manager' %>
+          <p>
+          <b><%=t :Radius_groups %></b><br />
+          <% @user.radius_groups.each do |g| %>
+            <%=h g.name %><br />
+          <% end %>
+          </p>
+        <% end %>
+      </fieldset>
+    </div>
+  </div>
+</div>
+
+
+<div class="grid_9">
+  <p>
+    <%= button_to t(:Refresh_data), "", :method => :get %>
+  </p>
+  <div class="clear"></div>
+<% if @show_graphs %>
+    <div class="box">
+      <h2><%=h t(:Logins) %></h2>
+      <div class="block" id="rad_acct_login_block">
+          <% render_chart fusionchart_path('FCF_Column2D.swf'), '', @login_xml_data, 'chart_login', 500, 200, false, false do %>
+          <% end %>
+      </div>
+      &nbsp;
+    </div>
+
+    <div class="box">
+      <h2><%=h t(:Traffic) %></h2>
+      <div class="block" id="rad_acct_traffic_block">
+          <% render_chart fusionchart_path('FCF_MSColumn2D.swf'), '', @traffic_xml_data, 'chart_traffic', 500, 200, false, false do %>
+          <% end %>
+      </div>
+      &nbsp;
+    </div>
+<% else %>
+    <div class="box">
+      <p><%=t :Not_yet_connected, :count => UsersController::STATS_PERIOD %></p>
+    </div>
+<% end %>
+</div>
+
+<div class="clear"></div>
+<div class="grid_12">
+  <div class="box">
+    <h2><%=h t(:User_sessions) %></h2>
+    <div class="block" id="rad_list_block">
+      <%= @controller.ajax_accounting_search %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

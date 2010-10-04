@@ -1,0 +1,28 @@
+<div class="grid_6 prefix_3 suffix_3">
+	<div class="box">
+		<div class="block" id="login">
+			<% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path do |f| %>
+			<fieldset>
+				<legend><%=t :Login %></legend>       
+				<p><%= f.error_messages %></p>
+
+				<p>
+					<%= f.label :username %>
+					<br />
+					<%= f.text_field :username %>
+				</p>
+				<p>
+					<%= f.label :password %>
+					<br />
+					<%= f.password_field :password %>
+				</p>
+				<div><%= f.check_box :remember_me %><%= f.label :remember_me %></div>
+				<p>
+					<%= f.submit t(:Login), :class => 'submit' %>
+				</p>
+			</fieldset>
+			<% end %>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,29 @@
+<table>
+  <thead>
+    <tr>
+      <th><%= t(:Username) %></th>
+      <th><%= t(:Start_time) %></th>
+      <th><%= t(:Stop_time) %></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <% accountings.each do |acct| %>
+    <tr>
+      <td><%= link_to h(acct.username), acct.user %></td>
+      <td><%=h acct.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
+      <% if acct.acct_stop_time.nil? %>
+        <td><%=t :online %></td>
+      <% else %>
+        <td><%=h acct.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,41 @@
+<div class="grid_6 prefix_3 suffix_3">
+  <div class="box">
+    <div class="block" id="forgot_password">
+
+      <h1>Abuse detected!</h1>
+      <p>
+      Hi,<br>
+      i see you're trying something nasty on my auth system...<br>
+      <br>
+      This incident will be reported.<br>
+      &nbsp;-- Davide
+      </p>
+      <h2>Your request</h2>
+      <table>
+        <tbody>
+          <tr>
+            <td>Your IP</td>
+            <td><%=h request.remote_ip %></td>
+          </tr>
+          <tr>
+            <td>Request User Agent</td>
+            <td><%=h request.env["HTTP_USER_AGENT"] %></td>
+          </tr>
+          <tr>
+            <td>Request URI</td>
+            <td><%=h request.request_uri %></td>
+          </tr>
+          <tr>
+            <td>Request method</td>
+            <td><%=h request.method %></td>
+          </tr>
+          <tr>
+            <td>Request Parameters</td>
+            <td><%=h request.request_parameters %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

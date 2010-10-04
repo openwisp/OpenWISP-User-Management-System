@@ -1,0 +1,22 @@
+<div class="grid_6 prefix_3 suffix_3">
+  <div class="box">
+    <div class="block" id="forgot_password">
+      <% form_tag password_resets_path do %>
+        <fieldset>
+          <legend><%=t :Forgot_password %></legend>
+          <p>
+            <%=t :Forgot_password_description_select %>
+            <br />
+            <%= select_tag "recovery_method", options_for_select(@recovery_methods.map { |r| [t(r), r] }), 
+              { :prompt => t(:select_recovery_method), :multiple => false }
+            %>
+          </p>
+          <p>
+            <%= submit_tag t(:Next), :class => 'submit' %>
+          </p>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,105 @@
+<div class="grid_4">
+  <div class="box">
+    <h2><a href="#" id="toggle-accounts-graph"><%=h t(:Registered_users) %></a></h2>
+    <div class="block" id="accounts-graph">
+      <% if @show_graphs %>
+        <% render_chart fusionchart_path('FCF_Line.swf'), '', @accounts_xml_data, 'Registered_users', 310, 200, false, false do %>
+        <% end %>
+      <% end %>
+      &nbsp;
+    </div>
+  </div>
+</div>
+
+<div class="grid_4">
+  <div class="box">
+    <h2><a href="#" id="toggle-logins-graph"><%=h t(:Logins) %></a></h2>
+    <div class="block" id="logins-graph">
+      <% if @show_login_graphs %>
+        <% render_chart fusionchart_path('FCF_MSLine.swf'), '', @logins_xml_data, 'Logins', 310, 200, false, false do %>
+        <% end %>
+      <% end %>
+      &nbsp;
+    </div>
+  </div>
+</div>
+
+<div class="grid_4">
+  <div class="box">
+    <h2><a href="#" id="toggle-traffic-graph"><%=h t(:Traffic) %></a></h2>
+    <div class="block" id="traffic-graph">
+      <% if @show_traffic_graphs %>
+        <% render_chart fusionchart_path('FCF_MSLine.swf'), '', @traffic_xml_data, 'Traffic_total', 310, 200, false, false do %>
+        <% end %>
+      <% end %>
+      &nbsp;
+    </div>
+  </div>
+</div>
+
+<div class="clear"></div>
+
+<div class="grid_3">
+  <div class="box">
+    <h2><a href="#" id="toggle-online-users"><%=h t(:Top_x_active_users, :count => 5) %></a></h2>
+    <div class="block" id="online-users">
+      <%= render :partial => 'common/top_traffic_users_brief', :locals => { :top_traffic_users => @top_traffic_users } %>
+    </div>
+  </div>
+</div>
+
+<div class="grid_5">
+  <div class="box">
+    <h2><a href="#" id="toggle-last-logins"><%=h t(:Last_x_logins, :count => 5) %></a></h2>
+    <div class="block" id="last-logins">
+      <%= render :partial => 'common/radius_accounting_list_brief', :locals => { :accountings => @last_logins } %>
+    </div>
+  </div>
+</div>
+
+<div class="grid_4">
+  <div class="box">
+    <h2><a href="#" id="toggle-last-registered"><%=h t(:Last_x_registered_users, :count => 5) %></a></h2>
+    <div class="block" id="last-registered">
+      <%= render :partial => 'list_brief', :locals => { :users => @last_registered } %>
+    </div>
+  </div>
+</div>
+
+<div class="clear"></div>
+
+<div class="grid_12">
+  <div class="box">
+    <h2><a href="#" id="toggle-search"><%=h t(:Search_user) %></a></h2>
+    <div class="block" id="search">
+      <fieldset>
+        <legend><%=t :Search_user %></legend>
+        <p>
+          <%= label_tag t(:Search_by_user_name_surname_mobile) %>
+          <%= image_tag("spinner.gif",
+                        :align => "absmiddle",
+                        :border => 0,
+                        :id =>"search_spinner",
+                        :style =>"display:none;",
+                        :size => "12x12")
+          %>
+          <%= text_field_tag :search_user %>
+        </p>
+      </fieldset>
+      <div class="block" id="search_block">
+        <%= @controller.ajax_search %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+
+<%= 
+  observe_field :search_user,
+    :with => :search,
+    :frequency => 0.5,
+    :update => 'search_block',
+    :before => "jQuery( '#search_spinner' ).show();",
+    :success => "jQuery( '#search_spinner' ).hide();",
+    :url => { :action => :ajax_search }
+%>

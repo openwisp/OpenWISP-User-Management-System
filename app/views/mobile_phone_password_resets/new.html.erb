@@ -1,0 +1,37 @@
+<div class="grid_6 prefix_3 suffix_3">
+  <div class="box">
+    <div class="block" id="forgot_password">
+      <% form_tag mobile_phone_password_resets_path do %>
+        <fieldset>
+          <legend><%=t :Forgot_password %></legend>
+          <p><%=t :Forgot_password_description_mobile_phone %></p>
+          <p>
+            <b><%= label_tag t(:mobile_phone) %></b>
+					</p>
+          <table>
+            <tr>
+              <td><b><%= label_tag t(:mobile_prefix) %></b></td>
+              <td>
+                <b><%= label_tag t(:mobile_suffix) %></b>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <%= select_tag 'mobile_phone_password_reset_mobile_prefix', options_for_select(@mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ] }), 
+                  { :prompt => t(:select_prefix), :multiple => false, :name => 'mobile_phone_password_reset[mobile_prefix]' }
+                %>
+              </td>
+              <td>
+                <%= text_field_tag 'mobile_phone_password_reset_mobile_suffix', {}, :name => 'mobile_phone_password_reset[mobile_suffix]' %>
+              </td>
+            </tr>
+          </table>
+          <p>
+            <%= submit_tag t(:Reset_password), :class => 'submit' %>
+          </p>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>

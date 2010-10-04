@@ -1,0 +1,31 @@
+<div style="text-align:center;font-size:200%">
+  <% if @account.verified %>
+    <script type="text/javascript">document.location="<%= account_url %>"</script>
+  <% else %>
+    <% if @account.verification_method == Account::VERIFY_BY_MOBILE %>
+      <%=t :Please_verify_mobile_number %><br /><br />
+      <%=t :From_mobile_phone_number %><br />
+      <%=h @account.mobile_phone %><br /><br />
+      <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
+      <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
+      <% numbers.each do |number| %>
+        <p style="background-color:green;color:white"><%=h number %></p>
+      <% end %>
+      <%=t :Free_call_description %><br />
+      <br />
+    <% elsif @account.verification_method == Account::VERIFY_BY_CREDIT_CARD %>
+      <%=t :Please_verify_credit_card %><br />
+      <%= link_to_paypal image_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
+      <%# encrypted_submit_to_paypal image_submit_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
+      <br /><br /><br />
+    <% end %>
+
+    <% if @account.expire_time > 0 %>
+      <p style="font-size:80%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
+      <% if @account.verification_method == Account::VERIFY_BY_MOBILE %>
+        <p style="font-size:80%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+  <p style="font-size:80%"><%=t :If_problem_with_redirect %> <%= link_to t(:click_here), account_url %></p>
+</div>

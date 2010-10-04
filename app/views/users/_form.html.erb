@@ -1,0 +1,195 @@
+<p>
+  <b><%= form.label :username %></b>
+  <br />
+  <%= form.text_field :username %>
+</p>
+<% if form.object.verification_method == User::VERIFY_BY_CREDIT_CARD %>
+  <td><b><%= form.label :verification_method %></b></td>
+  <table>
+    <tr>
+      <td><b><%=t :credit_card%></b></td>
+    </tr>
+  </table>
+<% else %>
+  <p>
+    <b><%= form.label :verification_method %></b>
+    <br />
+    <%= form.select :verification_method, 
+                    User::VERIFICATION_METHODS_SELECT, 
+                    { :multiple => false },
+                    { :onchange => "enable_verification_blocks(this);" }
+    %>
+  </p>
+  <div id="document_verification-block" style="display:<%= form.object.verification_method == 'mobile_phone' ? 'none' : 'inline' %>">
+  <p>
+    <% if form.object.has_image? %>
+      <b><%= form.label :uploaded_document_photo %></b>
+      <br />
+      <p style="text-align:center">
+        <% if form.object.new_record? %>
+          <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
+        <% else %>
+          <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
+        <% end %>
+      </p>
+    <% end %>
+    <b><%= form.label :document_photo %></b>
+    <br />
+    <%= form.file_field :image_file %>
+    <%= form.hidden_field :image_file_temp %>
+  </p>
+  </div>
+  <div id="mobile_phone_verification-block" style="display:<%= form.object.verification_method == 'mobile_phone' ? 'inline' : 'none' %>">
+    <p>
+      <b><%= form.label :mobile_phone %></b>
+      <br />
+      <table>
+        <tr>
+          <td><b><%= form.label :mobile_prefix %></b></td>
+          <td>
+            <b><%= form.label :mobile_suffix %></b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= form.select :mobile_prefix, 
+                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, 
+                            { :prompt => t(:select_prefix), :multiple => false }
+            %>
+          </td>
+          <td>
+            <%= form.text_field :mobile_suffix %>
+          </td>
+        </tr>
+      </table>
+    </p>
+    <p>
+      <b><%= form.label :mobile_phone_confirmation %></b>
+      <br />
+      <table>
+        <tr>
+          <td><b><%= form.label :mobile_prefix_confirmation %></b></td>
+          <td>
+            <b><%= form.label :mobile_suffix_confirmation %></b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= form.select :mobile_prefix_confirmation ,
+                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, 
+                            { :prompt => t(:select_prefix), :multiple => false }
+            %>
+          </td>
+          <td>
+            <%= form.text_field :mobile_suffix_confirmation %>
+          </td>
+        </tr>
+      </table>
+    </p>
+  </div>
+<% end %>
+<% if current_operator.has_role? 'users_manager' %>
+  <p align="center">
+    <table>
+      <tbody>
+        <tr>
+          <td><b><%= form.label :verified %></b><%= form.check_box :verified, :checked_value => "1", :unchecked_value => "0" %></td>
+          <td><b><%= form.label :active %></b><%= form.check_box :active, :checked_value => "1", :unchecked_value => "0" %></td>
+        </tr>
+      </tbody>
+    </table>
+  </p>
+<% end %>
+<p>
+  <b><%= form.label :given_name %></b>
+  <br />
+  <%= form.text_field :given_name, :size => 20 %>
+</p>
+<p>
+  <b><%= form.label :surname %></b>
+  <br />
+  <%= form.text_field :surname, :size => 20 %>
+</p>
+<p>
+  <b><%= form.label :birth_date %></b>
+  <br />
+  <div style="text-align:center" class="date">
+    <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
+  </div>
+</p>
+<p>
+  <b><%= form.label :address %></b>
+  <br />
+  <%= form.text_field :address, :size => 50 %>
+</p>
+<p>
+  <b><%= form.label :zip %></b>
+  <br />
+  <%= form.text_field :zip, :size => 10 %>
+</p>
+<p>
+  <b><%= form.label :city %></b>
+  <br />
+  <%= form.text_field :city %>
+</p>
+<p>
+  <b><%= form.label :state %></b>
+  <br />
+  <%= form.select :state, 
+                  countries.map { |c| [ c.printable_name, c.printable_name ]}, 
+                  { :multiple => false }
+  %>
+</p>
+<p>
+  <b><%= form.label :email %></b>
+  <br />
+  <%= form.text_field :email %>
+</p>
+<p>
+  <b><%= form.label :email_confirmation %></b>
+  <br />
+  <%= form.text_field :email_confirmation %>
+</p>
+<p>
+  <b><%= form.label :password, form.object.new_record? ? nil : t(:change_password) %></b>
+  <br />
+  <%= form.password_field :password %>
+</p>
+<p>
+  <b><%= form.label :password_confirmation %></b>
+  <br />
+  <%= form.password_field :password_confirmation %>
+</p>
+
+<br />
+<br />
+<p>
+  <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
+  <br />
+  <%= label_tag 'eula', t(:eula_description) %><br />
+  <%= form.check_box :eula_acceptance %>
+  <br />
+  <br />
+  <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
+  <br />
+  <%= label_tag 'privacy', t(:privacy_description) %><br />
+  <%= form.check_box :privacy_acceptance %>
+</p>
+
+<% if current_operator.has_role? 'users_manager' %>
+  <%= form.label :radius_groups %>
+  <%= render 'radius_group_select', :user => user, :radius_groups => radius_groups %>
+<% end %>
+
+<%= javascript_tag '
+  function enable_verification_blocks(el) {
+    if (el.value == "mobile_phone") {
+      document.getElementById("mobile_phone_verification-block").style.display = "inline";
+      document.getElementById("document_verification-block").style.display = "none";
+    } else {
+      document.getElementById("mobile_phone_verification-block").style.display = "none";
+      document.getElementById("document_verification-block").style.display = "inline";    
+    }
+  }
+'
+%>

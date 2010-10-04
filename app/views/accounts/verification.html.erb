@@ -1,0 +1,12 @@
+<div class="grid_12">
+
+  <div id="verification_div">
+    <%= render :partial => 'verification' %>
+  </div>
+</div>
+<div class="clear"></div>
+
+<%= periodically_call_remote( :url => { :action => 'verification' },
+                              :frequency => '2',
+                              :update => 'verification_div')
+%>
