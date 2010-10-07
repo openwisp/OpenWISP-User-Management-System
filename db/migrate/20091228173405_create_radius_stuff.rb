@@ -1,32 +1,34 @@
 class CreateRadiusStuff < ActiveRecord::Migration
   def self.up
-    create_table :radacct, { :primary_key => :RadAcctId } do |t|
-      t.integer :RadAcctId,           :limit => 21,  :null => false
+    create_table :radacct, { :id => false } do |t|
+      t.integer :RadAcctId,           :limit => 8,   :null => false, :primary_key => true
       t.string :AcctSessionId,        :limit => 32,  :null => false, :default => ''
       t.string :AcctUniqueId,         :limit => 32,  :null => false, :default => ''
       t.string :UserName,             :limit => 64,  :null => false, :default => ''
-      t.string :Realm,                :limit => 64,  :null => false, :default => ''
+      t.string :Realm,                :limit => 64,  :default => ''
       t.string :NASIPAddress,         :limit => 15,  :null => false, :default => ''
       t.string :NASPortId,            :limit => 15,  :null => true
       t.string :NASPortType,          :limit => 32,  :null => false, :default => ''
       t.datetime :AcctStartTime,                     :null => false, :default => '0000-00-00 00:00:00'
       t.datetime :AcctStopTime,                      :null => true,  :default => '0000-00-00 00:00:00'
-      t.integer :AcctSessionTime,     :limit => 12,  :null => true
+      t.integer :AcctSessionTime,     :limit => 5,   :null => true
       t.string :AcctAuthentic,        :limit => 32,  :null => true
       t.string :ConnectInfo_start,    :limit => 50,  :null => true
       t.string :ConnectInfo_stop,     :limit => 50,  :null => true
-      t.integer :AcctInputOctets,     :limit => 20,  :null => true
-      t.integer :AcctOutputOctets,    :limit => 20,  :null => true
+      t.integer :AcctInputOctets,     :limit => 8,   :null => true
+      t.integer :AcctOutputOctets,    :limit => 8,   :null => true
       t.string :CalledStationId,      :limit => 50,  :null => false, :default => ''
       t.string :CallingStationId,     :limit => 50,  :null => false, :default => ''
       t.string :AcctTerminateCause,   :limit => 32,  :null => false, :default => ''
       t.string :ServiceType,          :limit => 32,  :null => true
       t.string :FramedProtocol,       :limit => 32,  :null => true
       t.string :FramedIPAddress,      :limit => 15,  :null => false, :default => ''
-      t.integer :AcctStartDelay,      :limit => 12,  :null => true
-      t.integer :AcctStopDelay,       :limit => 12,  :null => true
+      t.integer :AcctStartDelay,      :limit => 5,   :null => true
+      t.integer :AcctStopDelay,       :limit => 5,   :null => true
       t.string :XAscendSessionSvrKey, :limit => 10,  :null => true
     end
+    
+    execute("ALTER TABLE radacct ADD PRIMARY KEY (RadAcctId)")
     
     add_index :radacct, :UserName
     add_index :radacct, :FramedIPAddress
