@@ -1,25 +1,25 @@
 1:
-  system_key: t
+  system_key: f
   key: sip_servers
   value: 193.204.5.206
 
 2:
-  system_key: t
+  system_key: f
   key: sip_listen_address
   value: 0.0.0.0
 
 3:
-  system_key: t
+  system_key: f
   key: verification_numbers
   value: 0644486656
 
 4:
-  system_key: t
+  system_key: f
   key: notifier_base_url
   value: "localhost:3000"
 
 5:
-  system_key: t
+  system_key: f
   key: notifier_protocol
   value: "https"
 
@@ -44,27 +44,27 @@
   value: 20
 
 10:
-  system_key: t
+  system_key: f
   key: default_radius_group
   value: "Users"
 
 22:
-  system_key: t
+  system_key: f
   key: credit_card_enabled
   value: false
     
 23:
-  system_key: t
+  system_key: f
   key: ipn_url
   value: https://www.paypal.com/cgi-bin/webscr
     
 24:
-  system_key: t
+  system_key: f
   key: sandbox_ipn_url
   value: https://www.sandbox.paypal.com/cgi-bin/webscr
     
 25:
-  system_key: t
+  system_key: f
   key: credit_card_verification_cost
   value: 1
 
@@ -74,24 +74,24 @@
   value: 300
 
 27:
-  system_key: t
+  system_key: f
   key: credit_card_business_account
   value: mtylty_1277212890_biz@gmail.com
 
 28:
-  system_key: t
+  system_key: f
   key: ipn_cert_id
   value: ""
 
 29:
-  system_key: t
+  system_key: f
   key: ipn_shared_secret
   value: ""
 
 32:
   system_key: t
   key: mailer_custom_url_enabled
-  value: false
+  value: 'false'
 
 33:
   system_key: t
@@ -99,7 +99,7 @@
   value: "http://placeholder.url.com/&t="
 
 34:
-  system_key: t
+  system_key: f
   key: local_time_radius_accounting
-  value: true
+  value: 'true'
 
