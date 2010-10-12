@@ -1,7 +1,9 @@
+# WARNING: the following stuff is mostly MySQL dependent!
+
 class CreateRadiusStuff < ActiveRecord::Migration
   def self.up
     create_table :radacct, { :id => false } do |t|
-      t.integer :RadAcctId,           :limit => 8,   :null => false, :primary_key => true
+      t.integer :RadAcctId,           							 :null => false, :primary_key => true
       t.string :AcctSessionId,        :limit => 32,  :null => false, :default => ''
       t.string :AcctUniqueId,         :limit => 32,  :null => false, :default => ''
       t.string :UserName,             :limit => 64,  :null => false, :default => ''
@@ -11,24 +13,30 @@ class CreateRadiusStuff < ActiveRecord::Migration
       t.string :NASPortType,          :limit => 32,  :null => false, :default => ''
       t.datetime :AcctStartTime,                     :null => false, :default => '0000-00-00 00:00:00'
       t.datetime :AcctStopTime,                      :null => true,  :default => '0000-00-00 00:00:00'
-      t.integer :AcctSessionTime,     :limit => 5,   :null => true
+      t.integer :AcctSessionTime,     							 :null => true
       t.string :AcctAuthentic,        :limit => 32,  :null => true
       t.string :ConnectInfo_start,    :limit => 50,  :null => true
       t.string :ConnectInfo_stop,     :limit => 50,  :null => true
-      t.integer :AcctInputOctets,     :limit => 8,   :null => true
-      t.integer :AcctOutputOctets,    :limit => 8,   :null => true
+      t.integer :AcctInputOctets,     							 :null => true
+      t.integer :AcctOutputOctets,    							 :null => true
       t.string :CalledStationId,      :limit => 50,  :null => false, :default => ''
       t.string :CallingStationId,     :limit => 50,  :null => false, :default => ''
       t.string :AcctTerminateCause,   :limit => 32,  :null => false, :default => ''
       t.string :ServiceType,          :limit => 32,  :null => true
       t.string :FramedProtocol,       :limit => 32,  :null => true
       t.string :FramedIPAddress,      :limit => 15,  :null => false, :default => ''
-      t.integer :AcctStartDelay,      :limit => 5,   :null => true
-      t.integer :AcctStopDelay,       :limit => 5,   :null => true
+      t.integer :AcctStartDelay,      							 :null => true
+      t.integer :AcctStopDelay,       							 :null => true
       t.string :XAscendSessionSvrKey, :limit => 10,  :null => true
     end
     
-    execute("ALTER TABLE radacct ADD PRIMARY KEY (RadAcctId)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY RadAcctId BIGINT(21)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctInputOctets BIGINT(20)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctOutputOctets BIGINT(20)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctSessionTime INT(12)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctStartDelay INT(12)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctStopDelay INT(12)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct ADD PRIMARY KEY (RadAcctId)")
     
     add_index :radacct, :UserName
     add_index :radacct, :FramedIPAddress
@@ -55,7 +63,7 @@ class CreateRadiusStuff < ActiveRecord::Migration
       t.string :nasname,              :limit => 128, :null => false
       t.string :shortname,            :limit => 32,  :null => true
       t.string :type,                 :limit => 30,  :null => false, :default => 'other'
-      t.integer :ports,               :limit => 05,  :null => true
+      t.integer :ports,               							 :null => true
       t.string :secret,               :limit => 60,  :null => false
       t.string :community,            :limit => 50,  :null => true
       t.string :description,          :limit => 200, :null => true, :default => 'Radius Client'
