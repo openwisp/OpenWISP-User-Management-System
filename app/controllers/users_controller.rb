@@ -17,15 +17,17 @@
 
 class UsersController < ApplicationController
   before_filter :require_operator
-  before_filter :load_user, :except => [ :index, :new, :create, :ajax_search ]
+  before_filter :load_user, :except => [ :index, :new, :create, :ajax_search, :browse, :search, :find ]
  
   access_control :subject_method => :current_operator do
     default :deny
     
-    allow :users_viewer,     :to => [ :index, :show, :ajax_search, :ajax_accounting_search ]
+    allow :users_browser,    :to => [ :show, :browse, :ajax_search, :ajax_accounting_search ]
     allow :users_registrant, :to => [ :new, :create ]
     allow :users_manager,    :to => [ :new, :create, :edit, :update ]
-    allow :user_destroyer,   :to => [ :destroy ]
+    allow :users_destroyer,  :to => [ :destroy ]
+    allow :users_finder,     :to => [ :find, :search, :show ]
+    allow :stats_viewer,     :to => [ :index ]
   end
 
   STATS_PERIOD = 14
@@ -239,6 +241,33 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     redirect_to users_url
+  end
+
+  def find
+    if params[:user] && params[:user][:query]
+      query = params[:user][:query]
+      found_users = User.find_all_by_user_phone_or_mail(query)
+
+      if found_users.count == 1
+        @user = found_users.first
+        redirect_to @user
+      elsif found_users.count > 1
+        flash[:error] = I18n.t(:Too_many_search_results)
+        render :action => :search
+      else
+        flash[:error] = I18n.t(:User_not_found)
+        render :action => :search
+      end
+    else
+      flash[:error] = I18n.t(:User_not_found)
+      render :action => :search
+    end
+  end
+
+  def search
+  end
+
+  def browse
   end
 
   def ajax_search

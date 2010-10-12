@@ -29,10 +29,14 @@ class OperatorSessionsController < ApplicationController
       flash[:notice] = I18n.t(:Login_successful)
       #Avoids session fixations
       reset_session
-      if @operator_session.record.has_role? 'users_viewer'
-        redirect_back_or_default users_url
+      if @operator_session.record.has_role? 'stats_viewer'
+        redirect_to users_url
       elsif @operator_session.record.has_role? 'users_registrant'
-        redirect_back_or_default new_user_url
+        redirect_to new_user_url
+      elsif @operator_session.record.has_role? 'users_browser'
+        redirect_to users_browse_url
+      elsif @operator_session.record.has_role? 'users_finder'
+        redirect_to users_search_url
       else # "Uh? Error!"
         redirect_back_or_default users_url
       end

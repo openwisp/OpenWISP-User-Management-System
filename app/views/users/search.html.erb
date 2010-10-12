@@ -1,0 +1,25 @@
+<div class="grid_12">
+  <div class="box">
+    <h2><a href="#" id="toggle-search"><%=h t(:Search_user) %></a></h2>
+    <div class="block" id="search">
+      <% form_for :user, :url => {:action => 'find'} do |f| %>
+        <fieldset>
+          <legend><%=t :Search_user %></legend>
+          <p>
+            <%= label_tag t(:Search_by_user_mobile_email) %>
+            <br />
+            <%= f.text_field :query %>
+          </p>
+          <p>
+            <%= f.submit t(:Search), :class => 'submit' %>
+          </p>
+          <% if flash[:error]%>
+            <p style="color: red"><%= flash[:error] %>&nbsp;</p>
+          <% end %>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="clear"></div>

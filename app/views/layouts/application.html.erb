@@ -51,8 +51,14 @@
    <div class="grid_12">
       <ul class="nav main">
          <% if current_operator %>
-           <% if current_operator.has_role? 'users_viewer' %>
-             <li><%= link_to t(:Show_all_users), users_path %></li>
+           <% if current_operator.has_role? 'stats_viewer' %>
+             <li><%= link_to t(:Show_stats), users_path %></li>
+           <% end %>
+           <% if current_operator.has_role? 'users_browser' %>
+             <li><%= link_to t(:Browse_users), users_browse_path %></li>
+           <% end %>
+           <% if current_operator.has_role? 'users_finder' %>
+             <li><%= link_to t(:Search_users), users_search_path %></li>
            <% end %>
            <% if current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant' %>
              <li><%= link_to t(:Add_new_user), new_user_path %></li>
@@ -85,7 +91,7 @@
 
    <div class="grid_12" id="site_info">
       <div class="box" style="text-align:center">
-         <p>Open WISP User Management System - Created by <a href="http://www.caspur.it/~guerri/">Davide Guerri</a> - Copyright (C) 2010 - <a href="http://www.caspur.it/">CASPUR</a></p>
+         <p>Open WISP User Management System - Created by <a href="https://spider.caspur.it/">CASPUR</a></p>
       </div>
    </div>
    <div class="clear"></div>

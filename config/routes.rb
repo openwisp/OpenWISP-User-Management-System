@@ -11,6 +11,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.recovery_confirmation 'mobile_phone_password_resets/:id/recovery_confirmation', :controller => 'mobile_phone_password_resets', :action => 'recovery_confirmation'
 
+  map.users_browse '/users/browse', :controller => 'users', :action => 'browse'
+  map.users_search '/users/search', :controller => 'users', :action => 'search'
+
   # Operator user (admin) named routes
   map.operator_login '/operator/login', :controller => "operator_sessions", :action => "new"
   map.operator_logout '/operator/logout', :controller => "operator_sessions", :action => "destroy", :method => "delete"
@@ -20,6 +23,8 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.connect 'users/ajax_search', :controller => 'users', :action => 'ajax_search'
+  map.connect '/users/find', :controller => 'users', :action => 'find', :method => 'post'
+
   map.resource :account
   map.resources :users, :has_many => :radius_accountings
   map.resources :operators

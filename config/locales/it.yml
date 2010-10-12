@@ -11,8 +11,7 @@ it:
   Are_you_sure: Sei sicuro? L'operazione non potrà essere annullata.
   Back: Indietro
   Birth_date: Data di nascita
-  captcha_error: Testo e immagine non erano uguali
-  registration_captcha_info: Scrivi qui sotto il testo contenuto nell'immagine sopra
+  Browse_users: Sfoglia utenti
   Call_one_of_the_following_numbers:
     one: Chiama il seguente numero di telefono
     other: Chiama uno dei seguenti numeri di telefono
@@ -119,18 +118,22 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Registration_date: Data di registrazione
   Reset_password: Reimposta password
   Repeat_registration: "Puoi ripetere la registrazione cliccando qui."
+  Search: Cerca
+  Search_by_user_mobile_email: "Cerca per nome utente, numero di telefono o email"
   Search_by_user_name_surname_mobile: "Cerca per nome utente, nome, cognome o numero di telefono"
   Search_user: cerca utente
+  Search_users: Cerca utenti
   Select: Seleziona
   Sort_by_this_field: Ordina per questo campo
   Show: Mostra
   Show_account_info: Mostra informazioni account
-  Show_all_users: Mostra tutti gli utenti
+  Show_stats: Mostra statistiche
   Start_time: Inizio connessione
   State: Stato
   Stop_time: Fine connessione
   Surname: Cognome
   Title: Titolo
+  Too_many_search_results: "Troppi utenti trovati, prova ad essere piu' specifico."
   Top_x_active_users: 
     one: Utente più attivo
     other: I {{count}} utenti più attivi
@@ -145,6 +148,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Username: Nome Utente
   Users_management: Gestione delle utenze  
   User_management_logins: Accessi a questo sistema
+  User_not_found: Utente non trovato
   User_sessions: "Sessioni dell'utente"
   Users_management_system: Sistema di gestione delle utenze
   Users_nationality: "Nazionalita\' utenti"
@@ -161,6 +165,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   address: indirizzo 
   affermative: "si"
   birth_date: data di nascita
+  captcha_error: Testo e immagine non erano uguali
   change_password: Nuova password
   city: città
   click_here: clicca qui
@@ -191,6 +196,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   password_confirmation: conferma password
   previous: precedente
   radius_groups: gruppi radius
+  registration_captcha_info: Scrivi qui sotto il testo contenuto nell'immagine sopra
   registration_email_info: "L'indirizzo e-mail potrà essere usato per poter reimpostare la tua password in caso la dimenticassi"  
   registration_mobile_phone_info: Dovrai effettuare una chiamata da questo numero. Puoi utilizzare solo numeri di operatori italiani
   registration_password_info: Dovrà contenere almeno una lettera ed un numero e dovrà essere di almeno 8 caratteri

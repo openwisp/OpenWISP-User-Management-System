@@ -72,6 +72,11 @@ fieldset p input {
   margin-left:5px;
 }
 
+fieldset input {
+  width:98%;
+  margin-left:5px;
+}
+
 fieldset p select {
   width:99%;
   margin-left:5px;
@@ -135,4 +140,3 @@ table.branding tr td {
   margin:0;
   border:0;
 }
-

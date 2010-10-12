@@ -64,6 +64,10 @@ class User < AccountCommon
     User.find(:first, :conditions => [ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ])
   end
 
+  def self.find_all_by_user_phone_or_mail(query, params={})
+    User.find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
+  end
+
   # Utilities
 
   def total_traffic

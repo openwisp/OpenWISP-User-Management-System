@@ -14,8 +14,7 @@ en:
   Are_you_sure: Are you sure? The procedure cannot be undone.
   Back: Back
   Birth_date: Birthdate
-  captcha_error: Text and picture differ
-  registration_captcha_info: Fill the form below with the text you see in the picture
+  Browse_users: Browse users
   Call_one_of_the_following_numbers:
     one: Call this phone number
     other: Call one of the following phone numbers
@@ -123,18 +122,22 @@ If you still have problems resetting the password, try repeating the procedure"
   Registration_date: Sign up date
   Repeat_registration: "To repeat registration click here"
   Reset_password: Reset password
+  Search: Search
+  Search_by_user_mobile_email: "Search by username, phone number or email"
   Search_by_user_name_surname_mobile: "Search by username, name, surname or phone number"
   Search_user: search user
+  Search_users: Search users
   Select: Select
   Sort_by_this_field: Sort by this field
   Show: Show
   Show_account_info: Show account info
-  Show_all_users: Show all users
+  Show_stats: Show stats
   Start_time: Connection start
   State: State
   Stop_time: Connection end
   Surname: Surname
   Title: Title
+  Too_many_search_results: "Too many search results, be more specific please."
   Top_x_active_users: 
     one: Most active user
     other: Top {{count}} active users
@@ -149,6 +152,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Username: Username
   Users_management: Account management
   User_management_logins: Logins to this system
+  User_not_found: User not found
   User_sessions: User sessions
   Users_management_system: Account management system
   Users_nationality: Users nationality
@@ -165,6 +169,7 @@ If you still have problems resetting the password, try repeating the procedure"
   address: address 
   affermative: "yes"
   birth_date: birthdate
+  captcha_error: Text and picture differ
   change_password: New password
   city: city
   click_here: click here
@@ -197,6 +202,7 @@ If you still have problems resetting the password, try repeating the procedure"
   password_confirmation: confirm password
   previous: previous
   radius_groups: radius groups
+  registration_captcha_info: Fill the form below with the text you see in the picture
   registration_email_info: "The e-mail address can be used to reset your password in case you forget it"
   registration_mobile_phone_info: You will need this number to make a call. You can only use italian mobile phone carriers
   registration_password_info: It must contain at least one alphabetic character and one digit and be at least 8 character long

@@ -17,7 +17,7 @@
 
 class Operator < ActiveRecord::Base
   
-  ROLES = %w(users_destroyer users_manager users_viewer users_registrant)
+  ROLES = %w(users_destroyer users_manager users_registrant stats_viewer users_finder users_browser)
 
   acts_as_authentic
   acts_as_authorization_subject
