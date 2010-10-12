@@ -116,7 +116,7 @@ class UsersController < ApplicationController
     if @show_graphs
       @accounts_xml_data = 
         render_to_string :template => "common/SSFusionChart.xml", 
-                         :locals => { :y_axis_min_value => registered_users_ymin <<, :caption => t(:Registered_users), :data => registered_users }, 
+                         :locals => { :y_axis_min_value => registered_users_ymin, :caption => t(:Registered_users), :data => registered_users }, 
                          :layout => false
       # @countries_xml_data = 
       #   render_to_string :template => "common/SSFusionChart.xml",
