@@ -40,6 +40,7 @@ class UsersController < ApplicationController
     now = Date.today
     cur = now - 14.days
     registered_users = []
+    registered_users_ymin = nil
     logins = []
     ulogins = []
     traffic = []
@@ -61,6 +62,11 @@ class UsersController < ApplicationController
       @show_graphs = true if user_count > 0
 
       registered_users.push :name => cur.to_s, :value => user_count
+      if registered_users_ymin.nil?
+        registered_users_ymin = user_count
+      else 
+        registered_users_ymin = user_count if registered_users_ymin > user_count
+      end
       login_count = RadiusAccounting.count( :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'" )
       ulogin_count = RadiusAccounting.count( 'UserName', :distinct => true, :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'" )
       @show_login_graphs = true if login_count > 0 and ulogin_count > 0
@@ -85,7 +91,7 @@ class UsersController < ApplicationController
                                       :suffix => 'B',
                                       :categories => categories, 
                                       :format_number_scale => 1,
-                                      :decimalPrecision => 2,
+                                      :decimal_precision => 0,
                                       :series => [ { :name => t(:Traffic_total), :color => '5E5E5E', :data => traffic },
                                                    { :name => t(:Upload), :color => '26A4F7', :data => traffic_in }, 
                                                    { :name => t(:Download), :color => 'FDC12E', :data => traffic_out } ]
@@ -110,12 +116,12 @@ class UsersController < ApplicationController
     if @show_graphs
       @accounts_xml_data = 
         render_to_string :template => "common/SSFusionChart.xml", 
-                         :locals => { :caption => t(:Registered_users), :data => registered_users }, 
+                         :locals => { :y_axis_min_value => registered_users_ymin <<, :caption => t(:Registered_users), :data => registered_users }, 
                          :layout => false
-      @countries_xml_data = 
-        render_to_string :template => "common/SSFusionChart.xml",
-                         :locals => { :caption => t(:Users_nationality), :data => countries.to_a.map{|values| values[1]} }, 
-                         :layout => false
+      # @countries_xml_data = 
+      #   render_to_string :template => "common/SSFusionChart.xml",
+      #                    :locals => { :caption => t(:Users_nationality), :data => countries.to_a.map{|values| values[1]} }, 
+      #                    :layout => false
     else
       @accounts_xml_data = @countries_xml_data = ""
     end
