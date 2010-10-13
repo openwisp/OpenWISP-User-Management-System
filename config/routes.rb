@@ -26,10 +26,12 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/users/find', :controller => 'users', :action => 'find', :method => 'post'
 
   map.resource :account
-  map.resources :users, :has_many => :radius_accountings
-  map.resources :operators
   map.resource :account_session
   map.resource :operator_session
+
+  map.resources :configurations
+  map.resources :users, :has_many => :radius_accountings
+  map.resources :operators
   map.resources :password_resets
   map.resources :email_password_resets
   map.resources :mobile_phone_password_resets

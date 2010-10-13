@@ -63,6 +63,9 @@
            <% if current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant' %>
              <li><%= link_to t(:Add_new_user), new_user_path %></li>
            <% end %>
+           <% if current_operator.has_role? 'configurations_manager' %>
+             <li><%= link_to t(:Configuration_keys), configurations_path %></li>
+           <% end %>
            <li><%= link_to t(:Logout), operator_logout_url %></li>
          <% else %>
             <% if !current_account %>

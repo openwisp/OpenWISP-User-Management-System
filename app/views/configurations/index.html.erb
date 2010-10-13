@@ -1,0 +1,26 @@
+<div class="grid_12">
+  <div class="box">
+    <h2><%=t :Configuration_keys %></h2>
+    <br />
+
+    <table>
+      <thead>
+        <tr>
+          <th><%=t :Key %></th>
+          <th><%=t :Value %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @configurations.each do |configuration| %>
+          <tr class="hover">
+            <td><%= configuration.key %></td>
+            <td><%= configuration.value %></td>
+            <td><%= link_to t(:Edit), edit_configuration_path(configuration) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>

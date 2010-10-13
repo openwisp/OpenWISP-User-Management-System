@@ -22,6 +22,8 @@ en:
   City: City
   Click_for_eula: Click here to read the Terms of Service
   Click_for_privacy: Click here to the Privacy Policy
+  Configuration_keys: Configuration keys
+  Configuration_key_updated: Configuration key updated
   Create: Create
   Create_user: Create user 
   Current_login_at: Current login at
@@ -34,6 +36,7 @@ en:
   Edit: Edit
   Edit_user: Edit user
   Edit_account: Edit account
+  Edit_configuration_key: Edit configuration
   Email: E-mail
   Forgot_password: Password forgotten
   Forgot_password_description_email: Use the email you used to sign up to fill the form below and click "reset password" to get a new password
@@ -48,6 +51,7 @@ en:
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: If the mobile phone number you entered is wrong, please wait for the sign up procedure to time out, then try again.
   Instruction_reset_has_been_mailed: Instructions on how to reset your password have been emailed to you. Please check your email
   IP_address: IP address
+  Key: Key
   Last_login_at: Last login at
   Last_login_ip: Last login from IP
   Last_x_days_traffic:
@@ -156,6 +160,7 @@ If you still have problems resetting the password, try repeating the procedure"
   User_sessions: User sessions
   Users_management_system: Account management system
   Users_nationality: Users nationality
+  Value: Value
   Verification_date: Verification date
   Verification_expire_time_x_mins: 
     one: "You have {{count}} minute left to verify your account." 
@@ -186,6 +191,7 @@ If you still have problems resetting the password, try repeating the procedure"
   privacy_description: "By clicking on the checkbox below you are agreeing to the Privacy Policy"
   given_name: name
   identity_document: ID card
+  key: key
   listen: listen
   login: login
   mobile_phone: "Mobile phone number"
@@ -215,6 +221,7 @@ If you still have problems resetting the password, try repeating the procedure"
   total_results: Total results
   uploaded_document_photo: ID card scan preview
   username: username
+  value: value
   verification_method: ID verification method
   verified: verified
   verified_qm: verified?

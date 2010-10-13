@@ -1,0 +1,21 @@
+<div class="grid_12">
+  <div class="box">
+    <h2><%=t :Edit_configuration_key %></h2>
+    <br />
+
+    <% form_for @configuration do |f| %>
+      <fieldset>
+        <legend><strong><%=t :Key %>:</strong> <%= @configuration.key %></legend>
+          <p>
+            <strong><%= label_tag t(:value) %>:</strong>
+            <br />
+            <%= f.text_field :value %>
+          </p>
+          <p>
+            <%= f.submit t(:Edit), :class => 'submit' %>
+          </p>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
+

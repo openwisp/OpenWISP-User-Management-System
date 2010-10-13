@@ -19,6 +19,8 @@ it:
   City: Città
   Click_for_eula: Clicca qui per leggere le condizioni di utilizzo del servizio
   Click_for_privacy: "Clicca qui per leggere l'informativa sul trattamento dei dati personali"
+  Configuration_keys: Chiavi di configurazione
+  Configuration_key_updated: Chiave di configurazione aggiornata
   Create: Crea
   Create_user: Crea utente 
   Current_login_at: Data accesso corrente
@@ -31,6 +33,7 @@ it:
   Edit: Modifica
   Edit_user: Modifica utente
   Edit_account: Modifica account
+  Edit_configuration_key: Modifica configurazione
   Email: E-mail
   Forgot_password: Password dimenticata
   Forgot_password_description_email: Scrivi qui sotto l'indirizzo email utilizzato in fase di registrazione e premi "reimposta password" per recuperare la tua password
@@ -45,6 +48,7 @@ it:
   If_problem_with_redirect: Dopo la procedura di verifica, se non vieni rediretto automaticamente
   Instruction_reset_has_been_mailed: Le istruzioni per il recupero della password sono state inviate. Controlla la tua posta elettronica
   IP_address: Indirizzo IP
+  Key: Chiave
   Last_login_at: Data ultimo accesso
   Last_login_ip: IP ultimo accesso
   Last_x_days_traffic:
@@ -152,6 +156,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   User_sessions: "Sessioni dell'utente"
   Users_management_system: Sistema di gestione delle utenze
   Users_nationality: "Nazionalita\' utenti"
+  Value: Valore
   Verification_date: Data di verifica account
   Verification_expire_time_x_mins: 
     one: "Ti rimane {{count}} minuto per verificare il tuo account."
@@ -180,6 +185,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   privacy_description: "Spuntando la seguente casella, dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali"
   given_name: nome
   identity_document: "Documento d'identità"
+  key: chiave
   listen: ascolta
   login: accesso
   mobile_phone: "Numero di cellulare"
@@ -209,6 +215,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   total_results: Risultati totali
   uploaded_document_photo: anteprima copia del documento
   username: nome utente
+  value: valore
   verification_method: "modalità di verifica dell'identità"
   verified: verificato
   verified_qm: verificato?
