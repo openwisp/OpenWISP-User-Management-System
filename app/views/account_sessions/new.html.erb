@@ -7,16 +7,16 @@
 				<p><%= f.error_messages %></p>
 
 				<p>
-					<%= f.label :username %>
+					<%= f.label t(:username) %>
 					<br />
 					<%= f.text_field :username %>
 				</p>
 				<p>
-					<%= f.label :password %>
+					<%= f.label t(:password) %>
 					<br />
 					<%= f.password_field :password %>
 				</p>
-				<div><%= f.check_box :remember_me %><%= f.label :remember_me %></div>
+				<div><%= f.check_box :remember_me %><%= f.label t(:remember_me) %></div>
 				<p>
 					<%= f.submit t(:Login), :class => 'submit' %>
 				</p>
