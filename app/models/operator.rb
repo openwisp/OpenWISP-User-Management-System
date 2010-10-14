@@ -17,14 +17,29 @@
 
 class Operator < ActiveRecord::Base
   
-  ROLES = %w(users_destroyer users_manager users_registrant stats_viewer users_finder users_browser configurations_manager)
+  ROLES = %w(
+    users_destroyer users_manager users_registrant 
+    stats_viewer users_finder users_browser configurations_manager
+    operators_manager
+  )
 
-  acts_as_authentic
+  acts_as_authentic do |c|
+    c.merge_validates_length_of_password_field_options( { :minimum => 8 } )
+    c.validates_length_of_login_field_options = { :in => 4..16 }
+    c.validates_format_of_login_field_options = { :with => /\A[a-z0-9\_\-\.]+\Z/i }
+    c.session_class = OperatorSession
+  end
   acts_as_authorization_subject
   acts_as_authorization_object :subject_class_name => 'Operator'
 
+  attr_readonly :login
+
   # Access current_operator from models
   cattr_accessor :current_operator
+
+  # Validations
+  # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
+  validates_format_of :password, :with => /([a-z][0-9])|([0-9][a-z])/i, :message => :password_format, :allow_nil => true
 
   def initialize(params = nil)
     super(params)
@@ -37,5 +52,11 @@ class Operator < ActiveRecord::Base
       @rs << r if self.has_role?(r)
     end
     @rs
+  end
+
+  def roles=(new_roles)
+    to_remove = self.roles - new_roles
+    new_roles.each{|role| self.has_role! role if Operator::ROLES.include? role}
+    to_remove.each{|role| self.has_no_role! role}
   end
 end

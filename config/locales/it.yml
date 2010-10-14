@@ -7,6 +7,7 @@ it:
   Active_qm: Abilitato?
   Additional_info: Maggiori Informazioni
   Address: Indirizzo
+  Add_new_operator: Aggiungi nuovo operatore
   Add_new_user: Aggiungi nuovo utente
   Are_you_sure: Sei sicuro? L'operazione non potrà essere annullata.
   Back: Indietro
@@ -34,6 +35,7 @@ it:
   Edit_user: Modifica utente
   Edit_account: Modifica account
   Edit_configuration_key: Modifica configurazione
+  Edit_operator: Modifica operatore
   Email: E-mail
   Forgot_password: Password dimenticata
   Forgot_password_description_email: Scrivi qui sotto l'indirizzo email utilizzato in fase di registrazione e premi "reimposta password" per recuperare la tua password
@@ -67,6 +69,7 @@ it:
     one: Ultimo utente registrato
     other: Ultimi {{count}} utenti registrati
   Listing_users: Lista utenti
+  Logged_in: "Connesso?"
   Loggedin_users: Utenti attualmente connessi
   Login: Accedi
   Logins: Accessi
@@ -84,8 +87,10 @@ it:
   Must_be_logged_in: Devi effettuare l'accesso per poter accedere a quella pagina
   Must_be_logged_out: Devi effettuare il logout per poter accedere a quella pagina
   Name: Nome
+  New_operator: Nuovo operatore
   New_user: Nuovo utente
   Next: Avanti
+  Notes: Note
   No_ajax_verification_success: Il tuo account e' stato verificato ora
   No_user_found_with_that_email: "Nessun utente trovato per l'indirizzo e-mail inserito"
   No_user_found_with_that_mobile_phone: "Nessun utente trovato per il numero di telefono cellulare"
@@ -96,7 +101,12 @@ it:
   No_verification_possible: Per questo account non e' possibile effettuare la verifica. Contattare l'assistenza per risolvere il problema.
   Online_users: Utenti online
   Operations: Operazioni
+  Operator: Operatore
+  Operators: Operatori
+  Operator_created_success: Operatore creato con successo
+  Operator_deleted_success: Operatore eliminato con successo
   Operator_login: Accesso operatore
+  Operator_updated_success: Operatore aggiornato con successo
   Password_format_error: "La password deve contenere almeno un carattere alfabetico ed un numero"
   Password_recovery_from: "Password recovery"
   Password_recovery_subject: "Istruzioni per il ripristino della password"
@@ -122,6 +132,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Registration_date: Data di registrazione
   Reset_password: Reimposta password
   Repeat_registration: "Puoi ripetere la registrazione cliccando qui."
+  Roles: Ruoli
   Search: Cerca
   Search_by_user_mobile_email: "Cerca per nome utente, numero di telefono o email"
   Search_by_user_name_surname_mobile: "Cerca per nome utente, nome, cognome o numero di telefono"
@@ -197,6 +208,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   mobile_phone_confirmation: conferma numero di cellulare
   negative: "no"
   next: successivo
+  notes: note
   online: online
   password: password
   password_confirmation: conferma password

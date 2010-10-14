@@ -144,3 +144,15 @@ table.branding tr td {
 tr:hover td {
   background-color: #ffffee;
 }
+
+#operator_info {
+  background-color: #eee;
+}
+
+#operator_info td strong {
+  float: left;
+}
+
+#operator_roles {
+  background-color: #eee;
+}

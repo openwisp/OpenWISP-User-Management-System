@@ -1,0 +1,64 @@
+<div class="grid_12">
+  <h2><%=t :Operator %> <%= @operator.login %></h2>
+  <br />
+
+
+  <div class="grid_3">
+    <div id="operator_roles" class="box">
+      <h2><%=t :Roles %></h2>
+      <br />
+      <ul>
+        <% @operator.roles.sort.each do |role|%>
+          <li><%= role %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid_9">
+    <div id="operator_info" class="box">
+      <h2><%=t :Additional_info %></h2>
+      <table>
+        <tbody>
+          <tr>
+            <td><strong><%=t :Logged_in %></strong></td>
+            <td><%= @operator.logged_in? %></td>
+          </tr>
+          <tr>
+            <td><strong><%=t :Current_login_at %></strong></td>
+            <td><%= @operator.current_login_at.nil? ? '-' : @operator.current_login_at.strftime("%d/%m/%y %H:%M:%S") %></td>
+          </tr>
+          <tr>
+            <td><strong><%=t :Current_login_ip %></strong></td>
+            <td><%= @operator.current_login_ip.nil? ? '-' : @operator.current_login_ip %></td>
+          </tr>
+          <tr>
+            <td><strong><%=t :Last_login_at %></strong></td>
+            <td><%= @operator.last_login_at.nil? ? '-' : @operator.last_login_at.strftime("%d/%m/%y %H:%M:%S") %></td>
+          </tr>
+          <tr>
+            <td><strong><%=t :Last_login_ip %></strong></td>
+            <td><%= @operator.last_login_ip.nil? ? '-' : @operator.last_login_ip %></td>
+          </tr>
+          <tr>
+            <td><strong><%=t :Login_count %></strong></td>
+            <td><%= @operator.login_count %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br />
+
+  <div class="grid_12">
+    <div class="box">
+      <h2><%=t :Notes %></h2>
+      <br />
+
+      <p><%= @operator.notes %></p>
+    </div>
+    <p><%= link_to t(:Edit), edit_operator_path(@operator) %></p>
+  </div>
+  <br />
+
+</div>

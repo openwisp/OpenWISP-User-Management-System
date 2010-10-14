@@ -37,6 +37,8 @@ class OperatorSessionsController < ApplicationController
         redirect_to users_browse_url
       elsif @operator_session.record.has_role? 'users_finder'
         redirect_to users_search_url
+      elsif @operator_session.record.has_role? 'operators_manager'
+        redirect_to operators_url
       else # "Uh? Error!"
         redirect_back_or_default users_url
       end
