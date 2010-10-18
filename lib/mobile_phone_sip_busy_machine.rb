@@ -5,7 +5,7 @@ class MobilePhoneSipBusyMachine < SipBusyMachine
   public
 
     def initialize(params = {})
-      super( params.merge({ :address => Configuration.get('sip_listen_address') }))
+      super( params.merge({ :address => Configuration.get('sip_listen_address'), :port => Configuration.get('sip_listen_port') }))
     end
 
   protected

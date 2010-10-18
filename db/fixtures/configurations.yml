@@ -103,3 +103,7 @@
   key: local_time_radius_accounting
   value: 'true'
 
+40:
+  system_key: f
+  key: sip_listen_port
+  value: 5060
