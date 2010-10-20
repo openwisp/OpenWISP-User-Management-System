@@ -48,7 +48,11 @@
       </p>
 
       <p>
-        <%= f.submit t(:Edit), :class => 'submit' %>
+        <% if @operator.new_record? %>
+          <%= f.submit t(:Create), :class => 'submit' %>
+        <% else %>
+          <%= f.submit t(:Edit), :class => 'submit' %>
+        <% end %>
       </p>
   </fieldset>
 <% end %>

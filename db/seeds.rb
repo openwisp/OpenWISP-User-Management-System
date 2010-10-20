@@ -23,15 +23,15 @@ registrant = Operator.new :login => 'registrant', :password => 'registrant', :pa
 registrant.has_role! 'users_registrant'
 registrant.save(false)
 
-# Create 'helpdesk1_operator' user. Login: 'helpdesk1_operator', Password: 'helpdesk1_operator' and give it hd1 powers
-puts "Creating helpdesk1_operator with password helpdesk1_operator and role 'users_finder'..."
-helpdesk_operator = Operator.new :login => 'helpdesk1_operator', :password => 'helpdesk1_operator', :password_confirmation => 'helpdesk1_operator', :notes => 'Helpdesk1 operator'
+# Create 'hd1_operator' user. Login: 'hd1_operator', Password: 'helpdesk1_operator' and give it hd1 powers
+puts "Creating hd1_operator with password helpdesk1_operator and role 'users_finder'..."
+helpdesk_operator = Operator.new :login => 'hd1_operator', :password => 'helpdesk1_operator', :password_confirmation => 'helpdesk1_operator', :notes => 'Helpdesk1 operator'
 %w(users_finder).each { |r| helpdesk_operator.has_role! r }
 helpdesk_operator.save(false)
 
-# Create 'helpdesk2_operator' user. Login: 'helpdesk2_operator', Password: 'helpdesk2_operator' and give it registrant powers
-puts "Creating helpdesk2_operator with password helpdesk2_operator and role 'users_browser stats_viewer users_registrant'..."
-helpdesk2_operator = Operator.new :login => 'helpdesk2_operator', :password => 'helpdesk2_operator', :password_confirmation => 'helpdesk2_operator', :notes => 'Helpdesk2 operator'
+# Create 'hd2_operator' user. Login: 'hd2_operator', Password: 'helpdesk2_operator' and give it registrant powers
+puts "Creating hd2_operator with password helpdesk2_operator and role 'users_browser stats_viewer users_registrant'..."
+helpdesk2_operator = Operator.new :login => 'hd2_operator', :password => 'helpdesk2_operator', :password_confirmation => 'helpdesk2_operator', :notes => 'Helpdesk2 operator'
 %w(stats_viewer users_browser users_manager users_registrant).each { |r| helpdesk2_operator.has_role! r }
 helpdesk2_operator.save(false)
 
