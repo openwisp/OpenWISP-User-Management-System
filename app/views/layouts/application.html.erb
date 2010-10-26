@@ -6,7 +6,7 @@
    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
    <title><%=t :Users_management %></title>
 
-   <% if is_mobile_device? %>
+   <% if is_mobile_device? and !is_touchscreen_device? %>
    <% else %>
       <%= stylesheet_link_tag 'fluid960/reset' %>
       <%= stylesheet_link_tag 'fluid960/text' %>

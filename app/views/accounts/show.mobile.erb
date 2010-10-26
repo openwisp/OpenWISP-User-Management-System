@@ -73,8 +73,12 @@
     <div class="box">
       <h2><%=h t(:Logins) %></h2>
       <div class="block" id="rad_acct_login_block">
+        <% if is_apple_device? %>
+          <%=t :Flash_not_supported %>
+        <% else %>
           <% render_chart fusionchart_path('FCF_Column2D.swf'), '', @login_xml_data, 'chart_login', 500, 200, false, false do %>
           <% end %>
+        <% end %>
       </div>
       &nbsp;
     </div>
@@ -82,8 +86,12 @@
     <div class="box">
       <h2><%=h t(:Traffic) %></h2>
       <div class="block" id="rad_acct_traffic_block">
+        <% if is_apple_device? %>
+          <%=t :Flash_not_supported %>
+        <% else %>
           <% render_chart fusionchart_path('FCF_MSColumn2D.swf'), '', @traffic_xml_data, 'chart_traffic', 500, 200, false, false do %>
           <% end %>
+        <% end %>
       </div>
       &nbsp;
     </div>
