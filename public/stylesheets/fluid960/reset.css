@@ -20,7 +20,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 body {
 	line-height: 1;
-        width:1140px; margin-left:auto; margin-right:auto;
+  margin:auto;
+  width:1044px;
+  min-height: 690px;
 }
 ol, ul {
 	list-style: none;
