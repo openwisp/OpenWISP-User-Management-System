@@ -178,7 +178,7 @@
 <p>
   <b><%= form.label :password, form.object.new_record? ? nil : t(:change_password) %></b>
   <br />
-  <% if form.object.new_record? %>(<%=t :registration_password_info %>)<br /><% end %>
+  (<%=t :registration_password_info %>)<br />
   <%= form.password_field :password %>
 </p>
 
