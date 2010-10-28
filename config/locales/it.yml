@@ -109,10 +109,9 @@ it:
   Operator_login: Accesso operatore
   Operator_updated_success: Operatore aggiornato con successo
   Password_format_error: "La password deve contenere almeno un carattere alfabetico ed un numero"
-  Password_recovery_from: "Password recovery"
-  Password_recovery_subject: "Istruzioni per il ripristino della password"
+  Password_reset_subject: "Istruzioni per il ripristino della password"
   Password_reset_instructions_1: "E' stata effettuata una richiesta di reset della password per il tuo account."
-  Password_reset_instructions_2: "Se non sei stato tu ad effettuare la richiesta, ingora questo messaggio."
+  Password_reset_instructions_2: "Se non sei stato tu ad effettuare la richiesta, ignora questo messaggio."
   Password_reset_instructions_3: "Se hai effettuato tu la richiesta, clicca sulla seguente URL."
   Password_reset_instructions_4: "Nel caso in cui la precedente URL non funzionasse, prova a copiare ed incollare l'indirizzo nel tuo browser."
   Password_reset_instructions_5: "Se continui ad avere problemi per il reset della password, per piacere contattaci."

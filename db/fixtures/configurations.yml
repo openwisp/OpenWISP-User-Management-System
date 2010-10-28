@@ -107,3 +107,13 @@
   system_key: f
   key: sip_listen_port
   value: 5060
+  
+41:
+  system_key: f
+  key: password_reset_from
+  value: no-reply@localhost
+
+42:
+  system_key: f
+  key: password_reset_instructions_custom
+  value: ""

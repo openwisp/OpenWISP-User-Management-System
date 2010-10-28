@@ -16,18 +16,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Notifier < ActionMailer::Base  
-  default_url_options[:host] = Configuration.get('notifier_base_url') #TO DO: CHANGE THIS!
+  default_url_options[:host] = Configuration.get('notifier_base_url')
   default_url_options[:protocol]  =  Configuration.get('notifier_protocol')
   
   def password_reset_instructions(account)
     if Configuration.get('mailer_custom_url_enabled') == 'true'
-      reset_url = Configuration.get('mailer_custom_url')+account.perishable_token
+      reset_url = Configuration.get('mailer_custom_url') + account.perishable_token
     else
       reset_url = edit_email_password_reset_url(account.perishable_token)
     end
     
-    subject       I18n.t(:Password_recovery_subject)
-    from          I18n.t(:Password_recovery_from)
+    subject       I18n.t(:Password_reset_subject)
+    from          Configuration.get('password_reset_from')
     recipients    account.email  
     sent_on       Time.now  
     body          :edit_password_reset_url => reset_url
