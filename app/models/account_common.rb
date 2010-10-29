@@ -71,15 +71,15 @@ class AccountCommon <  ActiveRecord::Base
                       :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
   validates_presence_of :birth_date
   validates_presence_of :given_name
-  validates_format_of :given_name, :with => /\A[a-z\ \']+\Z/i, :message => :name_format
+  validates_format_of :given_name, :with => /\A(\w|[\ \'])+\Z/i, :message => :name_format
   validates_presence_of :surname
-  validates_format_of :surname, :with => /\A[a-z\ \']+\Z/i, :message => :name_format
+  validates_format_of :surname, :with => /\A(\w|[\ \'])+\Z/i, :message => :name_format
   validates_presence_of :state
   validates_format_of :state, :with => /\A[a-z\ \'\.\,]+\Z/i, :message => :addres_format
   validates_presence_of :city
-  validates_format_of :city, :with => /\A[a-z\ \'\.\,]+\Z/i, :message => :address_format
+  validates_format_of :city, :with => /\A(\w|[\ \'\.\,\-])+\Z/i, :message => :address_format
   validates_presence_of :address
-  validates_format_of :address, :with => /\A[a-z0-9\ \'\.\,]+\Z/i, :message => :address_format
+  validates_format_of :address, :with => /\A(\w|[\ \'\.\,\/\-])+\Z/i, :message => :address_format
   validates_presence_of :zip
   validates_format_of :zip, :with => /[a-z0-9]/, :message => :zip_format
   
