@@ -1,17 +1,110 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  iso: MyString
-  iso3: MyString
-  name: MyString
-  printable_name: MyString
-  numcode: 1
-  valid: false
-
-two:
-  iso: MyString
-  iso3: MyString
-  name: MyString
-  printable_name: MyString
-  numcode: 1
-  valid: false
+90:
+  iso: GW
+  name: GUINEA-BISSAU
+  printable_name: Guinea-Bissau
+  iso3: GNB
+  numcode: 624
+  disabled: f
+91:
+  iso: GY
+  name: GUYANA
+  printable_name: Guyana
+  iso3: GUY
+  numcode: 328
+  disabled: f
+92:
+  iso: HT
+  name: HAITI
+  printable_name: Haiti
+  iso3: HTI
+  numcode: 332
+  disabled: f
+93:
+  iso: HM
+  name: HEARD ISLAND AND MCDONALD ISLANDS
+  printable_name: Heard Island and Mcdonald Islands
+  disabled: f
+94:
+  iso: VA
+  name: HOLY SEE (VATICAN CITY STATE)
+  printable_name: Holy See (Vatican City State)
+  iso3: VAT
+  numcode: 336
+  disabled: f
+95:
+  iso: HN
+  name: HONDURAS
+  printable_name: Honduras
+  iso3: HND
+  numcode: 340
+  disabled: f
+96:
+  iso: HK
+  name: HONG KONG
+  printable_name: Hong Kong
+  iso3: HKG
+  numcode: 344
+  disabled: f
+97:
+  iso: HU
+  name: HUNGARY
+  printable_name: Hungary
+  iso3: HUN
+  numcode: 348
+  disabled: f
+98:
+  iso: IS
+  name: ICELAND
+  printable_name: Iceland
+  iso3: ISL
+  numcode: 352
+  disabled: f
+99:
+  iso: IN
+  name: INDIA
+  printable_name: India
+  iso3: IND
+  numcode: 356
+  disabled: f
+100:
+  iso: ID
+  name: INDONESIA
+  printable_name: Indonesia
+  iso3: IDN
+  numcode: 360
+  disabled: f
+101:
+  iso: IR
+  name: IRAN, ISLAMIC REPUBLIC OF
+  printable_name: Iran, Islamic Republic of
+  iso3: IRN
+  numcode: 364
+  disabled: f
+102:
+  iso: IQ
+  name: IRAQ
+  printable_name: Iraq
+  iso3: IRQ
+  numcode: 368
+  disabled: f
+103:
+  iso: IE
+  name: IRELAND
+  printable_name: Ireland
+  iso3: IRL
+  numcode: 372
+  disabled: f
+104:
+  iso: IL
+  name: ISRAEL
+  printable_name: Israel
+  iso3: ISR
+  numcode: 376
+  disabled: f
+105:
+  iso: IT
+  name: ITALY
+  printable_name: Italy
+  iso3: ITA
+  numcode: 380
+  disabled: f

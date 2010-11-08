@@ -1,11 +1,60 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  prefix: 1
-  international_prefix: 1
-  valid: false
-
-two:
-  prefix: 1
-  international_prefix: 1
-  valid: false
+1:
+  prefix: 320
+  international_prefix: 
+  disabled: f
+2:
+  prefix: 323
+  international_prefix: 
+  disabled: f
+3:
+  prefix: 327
+  international_prefix: 
+  disabled: f
+4:
+  prefix: 328
+  international_prefix: 
+  disabled: f
+5:
+  prefix: 329
+  international_prefix: 
+  disabled: f
+6:
+  prefix: 330
+  international_prefix: 
+  disabled: f
+7:
+  prefix: 331
+  international_prefix: 
+  disabled: f
+8:
+  prefix: 333
+  international_prefix: 
+  disabled: f
+9:
+  prefix: 334
+  international_prefix: 
+  disabled: f
+10:
+  prefix: 335
+  international_prefix: 
+  disabled: f
+11:
+  prefix: 336
+  international_prefix: 
+  disabled: f
+12:
+  prefix: 337
+  international_prefix: 
+  disabled: f
+13:
+  prefix: 338
+  international_prefix: 
+  disabled: f
+14:
+  prefix: 339
+  international_prefix: 
+  disabled: f
+15:
+  prefix: 340
+  international_prefix: 
+  disabled: f
