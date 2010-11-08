@@ -215,12 +215,9 @@ class AccountsController < ApplicationController
     # clarity is preferred to geekiness :D
     # TODO: disable and delete this method
     if params.has_key? :invoice
-      account = Account.find params[:invoice]
-
-      if account and account.verification_method == Account::VERIFY_BY_CREDIT_CARD
-        account.verified = true
-        account.save
-      end
+      user = User.find params[:invoice]
+      
+      user.credit_card_identity_verify!
     end
     render :nothing => true
   end
@@ -233,12 +230,9 @@ class AccountsController < ApplicationController
     # clarity is preferred to geekiness :D
     if params.has_key?(:secret) and params[:secret] == Configuration.get("ipn_shared_secret")
       if params.has_key? :invoice
-        account = Account.find params[:invoice]
-
-        if account.verification_method == Account::VERIFY_BY_CREDIT_CARD
-          account.verified = true
-          account.save
-        end
+        user = User.find params[:invoice]
+        
+        user.credit_card_identity_verify!
       end
     end
     render :nothing => true
