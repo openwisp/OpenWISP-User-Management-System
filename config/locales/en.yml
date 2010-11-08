@@ -1,6 +1,3 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
   Account_disabled: Account disabled
   Account_disable_confirmation: "Warning: if you disable your account, you won't be able to login. You can enable your account again by repeating the account confirmation procedure."
@@ -25,6 +22,7 @@ en:
   Click_for_privacy: Click here to the Privacy Policy
   Configuration_keys: Configuration keys
   Configuration_key_updated: Configuration key updated
+  Cookies_disabled_or_session_expired: Your browser has disabled cookies or the session has expired.
   Create: Create
   Create_user: Create user 
   Current_login_at: Current login at
@@ -53,6 +51,7 @@ en:
   If_problem_with_redirect: If your browser does not get redirected after the verification procedure
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: If the mobile phone number you entered is wrong, please wait for the sign up procedure to time out, then try again.
   Instruction_reset_has_been_mailed: Instructions on how to reset your password have been emailed to you. Please check your email
+  Invalid_request: "Invalid request!"
   IP_address: IP address
   Key: Key
   Last_login_at: Last login at
@@ -122,8 +121,8 @@ en:
   Password_successfully_updated: "Password updated successfully"
   Perishable_token_error: "Your account could not be found. Instead of clicking on the URL sent you via email, please try to copy and paste the URL in your browser. 
 If you still have problems resetting the password, try repeating the procedure"
-  Please_verify_credit_card: "To enable your account, we need to verify your identity via credit card. Go to"
-  Please_verify_mobile_number: "To enable your account, we need to verify your mobile phone number"
+  Please_verify_credit_card: "To fulfill your request we need to verify your identity via credit card. Go to"
+  Please_verify_mobile_number: "To fulfill your request we need to verify your mobile phone number"
   Priority: Priority
   Redirecting_in_x_secs:
     one: "redirect in {{count}} second"

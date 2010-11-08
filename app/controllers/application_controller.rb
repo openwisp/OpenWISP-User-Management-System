@@ -19,6 +19,8 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  rescue_from ActionController::InvalidAuthenticityToken, :with => :invalid_token
+  
   include ExceptionNotifiable
   include SimpleCaptcha::ControllerHelpers
   has_mobile_fu()
@@ -45,8 +47,13 @@ class ApplicationController < ActionController::Base
     session[:locale] = params[:locale]
     redirect_to request.env['HTTP_REFERER'] || :root
   end
-  
-  protected
+
+  # Invalid authenticity token custom error page
+  def invalid_token
+    render render "common/invalid_token"
+  end
+
+protected
   def current_account_session
     return @current_account_session if defined?(@current_account_session)
     @current_account_session = AccountSession.find
@@ -117,7 +124,7 @@ class ApplicationController < ActionController::Base
     Operator.current_operator = self.current_operator
   end
 
-protected
+  # ExceptionNotify extra data
   exception_data :additional_data
 
   def additional_data

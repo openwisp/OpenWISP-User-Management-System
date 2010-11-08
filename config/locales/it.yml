@@ -22,6 +22,7 @@ it:
   Click_for_privacy: "Clicca qui per leggere l'informativa sul trattamento dei dati personali"
   Configuration_keys: Chiavi di configurazione
   Configuration_key_updated: Chiave di configurazione aggiornata
+  Cookies_disabled_or_session_expired: Il tuo browser ha i cookie disabilitati oppure la sessioen è scaduta.
   Create: Crea
   Create_user: Crea utente 
   Current_login_at: Data accesso corrente
@@ -50,6 +51,7 @@ it:
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: Se hai inserito un numero di telefono cellulare errato, attendi la scadenza della registrazione e riprova.
   If_problem_with_redirect: Dopo la procedura di verifica, se non vieni rediretto automaticamente
   Instruction_reset_has_been_mailed: Le istruzioni per il recupero della password sono state inviate. Controlla la tua posta elettronica
+  Invalid_request: "Richiesta non valida!"
   IP_address: Indirizzo IP
   Key: Chiave
   Last_login_at: Data ultimo accesso
@@ -118,7 +120,7 @@ it:
   Password_successfully_updated: "Password aggiornata correttamente"
   Perishable_token_error: "Non è stato possibile trovare il tuo account. Invece di cliccare sull'indirizzo che ti è stato inviato per email, prova a copiarlo e incollarlo nel tuo browser. 
 Se continui ad avere problemi, ripeti la procedura di recupero password"
-  Please_verify_credit_card: "Per abilitare l'utenza abbiamo la necessita' di verificare la tua carta di credito. Vai su"
+  Please_verify_credit_card: "Per procedere con l'operazione è necessario verificare la tua carta di credito. Vai su"
   Please_verify_mobile_number: "Per abilitare l'utenza abbiamo la necessità di verificare il tuo numero di cellulare"
   Priority: Priorità
   Redirecting_in_x_secs:
