@@ -16,6 +16,32 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
     persistent_job.finish!
   end
   
+  def new_account_external_command(user_id = nil)
+    unless user_id.nil?
+      user = User.find(user_id)
+      if !user.nil?
+        puts "[#{Time.now()}] Executing external command for user '#{user.given_name} #{user.surname}' - (#{user.username})"
+        begin
+          command = Configuration.get('new_account_external_command')
+          if command.length > 0
+            begin
+              fd = IO.popen(command, "w")
+              fd.puts(user.to_xml)
+              puts "[#{Time.now()}] External command exit status: " + $?.exitstatus.to_s
+              fd.close
+            rescue
+              puts "[#{Time.now()}] Problem executing external command '#{command}'"
+            end
+          else
+            puts "[#{Time.now()}] No external command specified"
+          end
+        rescue
+          puts "[#{Time.now()}] Missing 'new_account_external_command' configuration key"
+        end
+      end
+    end
+  end
+  
   def remove_stale_sessions
     puts "[#{Time.now()}] Removing stale sessions record..."
     ActiveRecord::SessionStore::Session.destroy_all("updated_at < '#{1.month.ago.to_s(:db)}'")

@@ -109,10 +109,21 @@ class User < AccountCommon
     end
   end
 
+  def credit_card_identity_verify!
+    if self.verification_method == User::VERIFY_BY_CREDIT_CARD
+      self.verified = true
+      self.save!
+      MiddleMan.worker(:house_keeper_worker).async_new_account_external_command(:arg => self.id)
+    else
+      Rails.logger.error("Verification method is not 'credit_card'!")
+    end
+  end
+
   def mobile_phone_identity_verify!
     if self.verification_method == User::VERIFY_BY_MOBILE
       self.verified = true
       self.save!
+      MiddleMan.worker(:house_keeper_worker).async_new_account_external_command(:arg => self.id)
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end

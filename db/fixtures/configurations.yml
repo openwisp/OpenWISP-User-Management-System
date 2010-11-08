@@ -117,3 +117,8 @@
   system_key: f
   key: password_reset_instructions_custom
   value: ""
+
+43:
+  system_key: f
+  key: new_account_external_command
+  value: ""
