@@ -101,7 +101,6 @@ en:
   Not_yet_connected:
     one: "The user has not yet connected today, there is no data to draw traffic graphs"
     other: "The user has not yet connected in the last {{count}} days, there is no data to draw traffic graphs"
-  No_verification_possible: Per questo account non e' possibile effettuare la verifica. Contattare l'assistenza per risolvere il problema.
   No_verification_possible: It is not currently possible to verify this account. Please call the support number to solve the problem.
   Online_users: Online users
   Operations: Operations
