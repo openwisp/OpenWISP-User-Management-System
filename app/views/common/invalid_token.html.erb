@@ -1,10 +1,14 @@
 <div class="grid_6 prefix_3 suffix_3">
   <div class="box">
     <div class="block" id="invalid_token">
-      <h1><%=t :Invalid_request %></h1>
-      <%=t :Cookies_disabled_or_session_expired %>
+      <h2><%=t :Invalid_request %></h2>
+      <p>
+        <h3><%=t :Cookies_disabled_or_session_expired %></h3>
+      </p>
       <br />
-      <%= link_to t(:Back), :back %>
+      <p>
+        <%= link_to t(:Back), :back %>
+      </p>
     </div>
   </div>
 </div>
