@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
 
   # Invalid authenticity token custom error page
   def invalid_token
-    render render "common/invalid_token"
+    render "common/invalid_token"
   end
 
 protected
