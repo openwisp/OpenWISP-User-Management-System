@@ -240,12 +240,12 @@ If you still have problems resetting the password, try repeating the procedure"
   activerecord:
     errors:
       messages:
-        password_format: "must contain at least one alphabetic character and one digit"
-        mobile_phone_format: "must contain only numbers"
-        mobile_prefix_format: "must contain only numbers"
-        mobile_suffix_format: "must contain only numbers"
-        name_format: "must contain only alphabetic characters and the following symbols: ''', '.' and ','"
-        address_format: "must contain only numbers, alphabetic characters and the following symbols: ''', '.' and ','"
+        password_format: "must contains only alphabetic characters, digits, spaces or the symbol '_' and must contains at least one alphabetic character and one digit"
+        mobile_phone_format: "must contains only numbers"
+        mobile_prefix_format: "must contains only numbers"
+        mobile_suffix_format: "must contains only numbers"
+        name_format: "must contains only alphabetic characters and the following symbols: ''', '.' and ','"
+        address_format: "must contains only numbers, alphabetic characters and the following symbols: ''', '.' and ','"
         zip_format: "is invalid"
         eula_must_be_accepted: "eula must be accepted"
         privacy_must_be_accepted: "privacy ageement must be accepted"

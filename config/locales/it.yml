@@ -379,7 +379,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
         missing_image: mancante
         invalid_image: non è valida
         image_too_small: "è troppo piccola (deve essere >= {{minimum}})"
-        password_format: "deve contenere almeno un carattere ed un numero"
+        password_format: "deve essere composta solo da caratteri alfabetici, spazi, numeri ed il carattere '_' e deve contenere almeno un carattere ed un numero"
         mobile_phone_format: "deve contenere solo numeri"
         mobile_prefix_format: "deve contenere solo numeri"
         mobile_suffix_format: "deve contenere solo numeri"

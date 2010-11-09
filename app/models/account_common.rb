@@ -58,7 +58,7 @@ class AccountCommon <  ActiveRecord::Base
 
   # Validations
   # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
-  validates_format_of :password, :with => /([a-z][0-9])|([0-9][a-z])/i, :message => :password_format, :allow_nil => true 
+  validates_format_of :password, :with => /\A((\d|[a-z\_]|\s)*\d(\d|[a-z\_]|\s)*[a-z](\d|[a-z\_]|\s)*)|((\d|[a-z\_]|\s)*[a-z](\d|[a-z\_]|\s)*\d(\d|[a-z\_]|\s)*)\Z/i, :message => :password_format, :allow_nil => true
   validates_presence_of :eula_acceptance, :message => :eula_must_be_accepted
   validates_presence_of :privacy_acceptance, :message => :privacy_must_be_accepted
   validates_presence_of :mobile_prefix, :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
