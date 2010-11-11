@@ -26,7 +26,7 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
           if command.length > 0
             begin
               fd = IO.popen(command, "w")
-              fd.puts(user.to_xml)
+              fd.puts(user.to_xml( :except => [ :crypted_password, :password_salt, :perishable_token, :persistence_token, :single_access_token ] ))
               puts "[#{Time.now()}] External command exit status: " + $?.exitstatus.to_s
               fd.close
             rescue
