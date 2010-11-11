@@ -7,7 +7,7 @@ production:
   password: owums_db_user_password
   socket: /var/run/mysqld/mysqld.sock
 
-test: &test
+development:
   adapter: mysql
   encoding: utf8
   database: owums_db
@@ -16,5 +16,11 @@ test: &test
   password: owums_db_user_password
   socket: /var/run/mysqld/mysqld.sock
 
-cucumber:
-  <<: *test
+test:
+  adapter: mysql
+  encoding: utf8
+  database: owums_db
+  pool: 5
+  username: owums_db_user
+  password: owums_db_user_password
+  socket: /var/run/mysqld/mysqld.sock
