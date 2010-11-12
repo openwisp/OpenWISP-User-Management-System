@@ -235,6 +235,7 @@ If you still have problems resetting the password, try repeating the procedure"
   verification_method: ID verification method
   verified: verified
   verified_qm: verified?
+  will_be_your_username: "will be your username"
   zip: zip
 
   activerecord:
