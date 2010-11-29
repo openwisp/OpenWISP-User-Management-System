@@ -156,3 +156,8 @@ tr:hover td {
 #operator_roles {
   background-color: #eee;
 }
+
+#remember_me *{
+  margin-bottom: 8px;
+  width: auto;
+}

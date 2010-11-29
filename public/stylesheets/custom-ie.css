@@ -156,3 +156,8 @@ table#branding tr td {
   margin:0;
   border:0;
 }
+
+#remember_me label{
+  display: block;
+  margin-left: 10px;
+}
