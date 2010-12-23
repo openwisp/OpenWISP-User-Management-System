@@ -52,14 +52,11 @@ class Account < AccountCommon
   
   def ask_for_mobile_phone_password_recovery!
     if self.verification_method == Account::VERIFY_BY_MOBILE
-      if self.verified?
-        self.reset_single_access_token
-        self.reset_perishable_token
-        self.recovered = false
-        self.save!
-      else
-        Rails.logger.error("Recovery asked for an unverified account")
-      end
+      self.reset_single_access_token
+      self.reset_perishable_token
+      self.recovered = false
+      self.save!
+      Rails.logger.info("Recovery asked for an unverified account")
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end

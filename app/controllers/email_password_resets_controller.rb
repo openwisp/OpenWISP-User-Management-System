@@ -25,15 +25,9 @@ class EmailPasswordResetsController < ApplicationController
   def create
     @account = Account.find_by_email(params[:email_password_reset][:email]) if params[:email_password_reset]
     if @account
-      if @account.verified?
-        @account.deliver_password_reset_instructions!
-        flash[:notice] = I18n.t(:Instruction_reset_has_been_mailed)
-        redirect_to root_url
-      else
-        Rails.logger.error("Recovery asked for an unverified account")
-        flash[:notice] = I18n.t(:Your_account_is_not_yet_verified)
-        render :action => :new
-      end
+      @account.deliver_password_reset_instructions!
+      flash[:notice] = I18n.t(:Instruction_reset_has_been_mailed)
+      redirect_to root_url
     else
       flash[:notice] = I18n.t(:No_user_found_with_that_email)
       render :action => :new

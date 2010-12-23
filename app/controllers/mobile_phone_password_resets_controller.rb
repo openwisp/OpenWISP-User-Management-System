@@ -33,15 +33,9 @@ class MobilePhonePasswordResetsController < ApplicationController
     end
 
     if @account
-      if @account.verified?
-        @account.ask_for_mobile_phone_password_recovery!
-        @single_access_token = @account.single_access_token
-        render :action => :verification
-      else
-        Rails.logger.error("Recovery asked for an unverified account")
-        flash[:notice] = I18n.t(:Your_account_is_not_yet_verified)
-        render :action => :new
-      end
+      @account.ask_for_mobile_phone_password_recovery!
+      @single_access_token = @account.single_access_token
+      render :action => :verification
     else
       @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
       flash[:notice] = I18n.t(:No_user_found_with_that_mobile_phone)

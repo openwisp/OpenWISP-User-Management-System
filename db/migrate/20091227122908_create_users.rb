@@ -34,7 +34,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string   :verification_method, :null => false, :default => 'mobile_phone'
       t.boolean  :verified,                            :default => FALSE
       t.datetime :verified_at
-      t.boolean  :recovered,                           :default => FALSE
+      t.boolean  :recovered,           :null => true
       t.datetime :recovered_at
       t.boolean  :eula_acceptance,     :null => false, :default => FALSE
       t.boolean  :privacy_acceptance,  :null => false, :default => FALSE

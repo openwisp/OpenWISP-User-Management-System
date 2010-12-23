@@ -148,6 +148,13 @@ class User < AccountCommon
     else
       Rails.logger.info("Verifing '#{self.username}' (id: #{self.id})")
       self.mobile_phone_identity_verify!
+      # If the user is not verified because she has disabled her account
+      # (i.e. verified == false and recovered == false)
+      # we have to recover her password.
+      # Default value for recovered is nil (!= false)
+      if self.recovered == false
+        self.mobile_phone_password_recover!
+      end
       return true
     end
     return false
