@@ -1,7 +1,7 @@
 <p>
   <b><%= form.label :username %></b>
   <br />
-  <%= form.text_field :username %>
+  <%= form.text_field :username, :disabled => !form.object.new_record? %>
 </p>
 <% if form.object.verification_method == User::VERIFY_BY_CREDIT_CARD %>
   <td><b><%= form.label :verification_method %></b></td>

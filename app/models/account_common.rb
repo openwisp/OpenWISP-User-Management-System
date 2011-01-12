@@ -18,6 +18,8 @@
 class AccountCommon <  ActiveRecord::Base
   set_table_name 'users'
 
+  attr_readonly  :username
+
   # Macros
   
   VERIFY_BY_MOBILE = "mobile_phone"

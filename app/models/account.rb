@@ -23,7 +23,7 @@ class Account < AccountCommon
 
   # Security and cleanup
 
-  attr_readonly  :username, :given_name, :surname, :birth_date, :verification_method
+  attr_readonly  :given_name, :surname, :birth_date, :verification_method
 
   # Validations
   # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
