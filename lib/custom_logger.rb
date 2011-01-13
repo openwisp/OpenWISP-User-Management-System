@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'active_support'
 
 # Logger class for custom logging format
