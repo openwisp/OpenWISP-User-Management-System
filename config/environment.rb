@@ -50,12 +50,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   config.i18n.default_locale = 'it'
   
-  # Force all environments to use the same logger level
-  # (by default production uses :info, the others :debug)
-  config.log_level = ENV['RAILS_ENV']=='production' ?
-                                 ActiveSupport::BufferedLogger::Severity::INFO :
-                                 ActiveSupport::BufferedLogger::Severity::DEBUG
-
   # initializing custom logger
   config.logger = CustomLogger.new(config.log_path, config.log_level)
 
