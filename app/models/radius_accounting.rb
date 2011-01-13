@@ -61,11 +61,11 @@ class RadiusAccounting < ActiveRecord::Base
     end
   end
   
-  def acct_input_octects
+  def acct_input_octets
     read_attribute :AcctInputOctets
   end
   
-  def acct_output_octects
+  def acct_output_octets
     read_attribute :AcctOutputOctets
   end
   

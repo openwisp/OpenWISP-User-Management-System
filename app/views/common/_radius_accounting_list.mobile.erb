@@ -20,13 +20,13 @@
           <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
           <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
         </th>
-        <th scope="col" <%= sort_td_class_helper "acct_input_octects" %>>
-          <%= sort_remote_link_helper t(:Uploaded_bytes), 'acct_input_octects', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
+        <th scope="col" <%= sort_td_class_helper "acct_input_octets" %>>
+          <%= sort_remote_link_helper t(:Uploaded_bytes), 'acct_input_octets', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
           <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
           <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
         </th>
-        <th scope="col" <%= sort_td_class_helper "acct_output_octects" %>>
-          <%= sort_remote_link_helper t(:Downloaded_bytes), 'acct_output_octects', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
+        <th scope="col" <%= sort_td_class_helper "acct_output_octets" %>>
+          <%= sort_remote_link_helper t(:Downloaded_bytes), 'acct_output_octets', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
           <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
           <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
         </th>
@@ -55,8 +55,8 @@
           <% else %>
             <td><%=h accounting.acct_stop_time.strftime("%d/%m/%y - %H:%M") %></td>
           <% end %>
-          <td><%=h bytes_to_human(accounting.acct_input_octects) %></td>
-          <td><%=h bytes_to_human(accounting.acct_output_octects) %></td>
+          <td><%=h bytes_to_human(accounting.acct_input_octets) %></td>
+          <td><%=h bytes_to_human(accounting.acct_output_octets) %></td>
         </tr>
       <% end %>
     </tbody>

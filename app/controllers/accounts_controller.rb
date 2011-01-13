@@ -244,12 +244,12 @@ class AccountsController < ApplicationController
     sort = case params[:sort]
       when 'acct_start_time'          then "AcctStartTime"
       when 'acct_stop_time'           then "AcctStopTime"
-      when 'acct_input_octects'       then "AcctInputOctets"
-      when 'acct_output_octects'      then "AcctOutputOctets"
+      when 'acct_input_octets'       then "AcctInputOctets"
+      when 'acct_output_octets'      then "AcctOutputOctets"
       when 'acct_start_time_rev'      then "AcctStartTime DESC"
       when 'acct_stop_time_rev'       then "AcctStopTime DESC"
-      when 'acct_input_octects_rev'   then "AcctInputOctets DESC"
-      when 'acct_output_octects_rev'  then "AcctOutputOctets DESC"
+      when 'acct_input_octets_rev'   then "AcctInputOctets DESC"
+      when 'acct_output_octets_rev'  then "AcctOutputOctets DESC"
     end
     if sort.nil?
       params[:sort] = "acct_start_time_rev"
