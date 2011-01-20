@@ -122,9 +122,9 @@ eor
           result[:to] = $1
         when /\AFrom: (.+;tag=.+)\Z/
           result[:from] = $1
-        when /\ACall-ID: (.+)\Z/
+        when /\ACall-ID: (.+)\Z/i
           result[:call_id] = $1
-        when /\ACSeq: (.+) INVITE\Z/
+        when /\ACSeq: (.+) INVITE\Z/i
           result[:cseq] = $1
         end
       }
@@ -145,9 +145,9 @@ eor
           result[:to] = $1
         when /\AFrom: (.+;tag=.+)\Z/
           result[:from] = $1
-        when /\ACall-ID: (.+)\Z/
+        when /\ACall-ID: (.+)\Z/i
           result[:call_id] = $1
-        when /\ACSeq: (.+) CANCEL\Z/
+        when /\ACSeq: (.+) CANCEL\Z/i
           result[:cseq] = $1
         end
       }
