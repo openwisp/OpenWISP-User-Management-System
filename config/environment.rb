@@ -28,6 +28,7 @@ Rails::Initializer.run do |config|
   config.gem 'rmagick', :version => '2.12.2', :lib => 'RMagick'
   config.gem 'fleximage', :version => '1.0.4'
   config.gem 'daemons', :version => '1.0.10'
+  config.gem "i18n", :version => "0.4.1"
   
   config.action_controller.session_store = :active_record_store
   
