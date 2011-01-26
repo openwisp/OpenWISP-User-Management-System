@@ -41,6 +41,7 @@ class AccountCommon <  ActiveRecord::Base
     c.crypto_provider = NullCryptoProvider # Cleartext password... :(
     c.login_field = :username
     c.merge_validates_length_of_password_field_options( { :minimum => 8 } )
+    c.merge_validates_format_of_email_field_options(:message => :email_invalid)
     c.validates_length_of_login_field_options = { :in => 4..16 }
     c.validates_format_of_login_field_options = { :with => /\A[a-z0-9\_\-\.]+\Z/i }
     c.session_class = AccountSession
