@@ -225,7 +225,7 @@ eor
                   end
                 ensure
                   @serving_m.synchronize {
-                    @serving_h["#{sender[3]}#{from}"] = nil
+                    @serving_h.delete("#{sender[3]}#{from}")
                   }
                 end 
               end
