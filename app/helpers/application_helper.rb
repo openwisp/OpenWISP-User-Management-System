@@ -18,4 +18,8 @@ module ApplicationHelper
     is_device?('iphone') || is_device?('ipod') || is_device?('ipad')
   end
   
+  def auth?(role, object=nil)
+    current_operator && current_operator.has_role?(role, object)
+  end
+  
 end

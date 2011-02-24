@@ -14,7 +14,13 @@
   <tbody>
     <% users.each do |user| %>
     <tr>
-      <td><%= link_to h(user.username), user %></td>
+      <td>
+        <% if auth?(:users_browser)%>
+          <%= link_to h(user.username), user %>
+        <% else %>
+          <%= h(user.username[0..-4] + "xxx") %>
+        <% end %>
+      </td>
       <td><%=h user.created_at.strftime("%d/%m/%y - %H:%M") %></td>
     </tr>
     <% end %>

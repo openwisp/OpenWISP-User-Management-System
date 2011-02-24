@@ -16,7 +16,13 @@
   <tbody>
     <% accountings.each do |acct| %>
     <tr>
-      <td><%= link_to h(acct.username), acct.user %></td>
+      <td>
+        <% if auth?(:users_browser)%>
+          <%= link_to h(acct.username), acct.user %>
+        <% else %>
+          <%= h(acct.username[0..-4] + "xxx") %>
+        <% end %>
+      </td>
       <td><%=h acct.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
       <% if acct.acct_stop_time.nil? %>
         <td><%=t :online %></td>
