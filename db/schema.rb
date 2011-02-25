@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.string  "nasname",     :limit => 128,                              :null => false
     t.string  "shortname",   :limit => 32
     t.string  "type",        :limit => 30,  :default => "other",         :null => false
-    t.integer "ports",       :limit => 8
+    t.integer "ports"
     t.string  "secret",      :limit => 60,                               :null => false
     t.string  "community",   :limit => 50
     t.string  "description", :limit => 200, :default => "Radius Client"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.string   "AcctSessionId",        :limit => 32, :default => "", :null => false
     t.string   "AcctUniqueId",         :limit => 32, :default => "", :null => false
     t.string   "UserName",             :limit => 64, :default => "", :null => false
-    t.string   "Realm",                :limit => 64, :default => "", :null => false
+    t.string   "Realm",                :limit => 64, :default => ""
     t.string   "NASIPAddress",         :limit => 15, :default => "", :null => false
     t.string   "NASPortId",            :limit => 15
     t.string   "NASPortType",          :limit => 32, :default => "", :null => false
@@ -130,8 +130,8 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.string   "AcctAuthentic",        :limit => 32
     t.string   "ConnectInfo_start",    :limit => 50
     t.string   "ConnectInfo_stop",     :limit => 50
-    t.integer  "AcctInputOctets"
-    t.integer  "AcctOutputOctets"
+    t.integer  "AcctInputOctets",      :limit => 8
+    t.integer  "AcctOutputOctets",     :limit => 8
     t.string   "CalledStationId",      :limit => 50, :default => "", :null => false
     t.string   "CallingStationId",     :limit => 50, :default => "", :null => false
     t.string   "AcctTerminateCause",   :limit => 32, :default => "", :null => false
@@ -293,7 +293,7 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.string   "verification_method",                     :default => "mobile_phone", :null => false
     t.boolean  "verified",                                :default => false
     t.datetime "verified_at"
-    t.boolean  "recovered",                               :default => false
+    t.boolean  "recovered"
     t.datetime "recovered_at"
     t.boolean  "eula_acceptance",                         :default => false,          :null => false
     t.boolean  "privacy_acceptance",                      :default => false,          :null => false
