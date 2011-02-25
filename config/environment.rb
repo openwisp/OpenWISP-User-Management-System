@@ -15,21 +15,6 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
 
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  # config.gem "bj"
-  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
-  # config.gem "sqlite3-ruby", :lib => "sqlite3"
-  # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem "authlogic", :version => '2.1.3'
-  config.gem "be9-acl9", :source => "http://gems.github.com", :lib => "acl9", :version => '0.11.0'
-  config.gem "chronic", :version => '0.2.3'
-  config.gem "packet", :version => '0.1.15'
-  config.gem 'will_paginate', :version => '2.3.11', :source => 'http://gemcutter.org'
-  config.gem 'rmagick', :version => '2.12.2', :lib => 'RMagick'
-  config.gem 'fleximage', :version => '1.0.4'
-  config.gem 'daemons', :version => '1.0.10'
-  config.gem "i18n", :version => "0.4.1"
-  
   config.action_controller.session_store = :active_record_store
   
   # Only load the plugins named here, in the order given (default is alphabetical).
