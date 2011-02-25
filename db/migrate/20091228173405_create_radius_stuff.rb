@@ -3,7 +3,7 @@
 class CreateRadiusStuff < ActiveRecord::Migration
   def self.up
     create_table :radacct, { :id => false } do |t|
-      t.integer :RadAcctId,           							 :null => false, :primary_key => true
+      t.integer :RadAcctId,           							 :null => false
       t.string :AcctSessionId,        :limit => 32,  :null => false, :default => ''
       t.string :AcctUniqueId,         :limit => 32,  :null => false, :default => ''
       t.string :UserName,             :limit => 64,  :null => false, :default => ''
@@ -30,13 +30,13 @@ class CreateRadiusStuff < ActiveRecord::Migration
       t.string :XAscendSessionSvrKey, :limit => 10,  :null => true
     end
     
-    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY RadAcctId BIGINT(21)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct ADD PRIMARY KEY (RadAcctId)")
+    ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY RadAcctId BIGINT(21) AUTO_INCREMENT")
     ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctInputOctets BIGINT(20)")
     ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctOutputOctets BIGINT(20)")
     ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctSessionTime INT(12)")
     ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctStartDelay INT(12)")
     ActiveRecord::Base.connection.execute("ALTER TABLE radacct MODIFY AcctStopDelay INT(12)")
-    ActiveRecord::Base.connection.execute("ALTER TABLE radacct ADD PRIMARY KEY (RadAcctId)")
     
     add_index :radacct, :UserName
     add_index :radacct, :FramedIPAddress
