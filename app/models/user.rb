@@ -55,9 +55,13 @@ class User < AccountCommon
                                :group => :UserName, 
                                :order => 'sum(AcctInputOctets + AcctOutputOctets) DESC', 
                                :limit => num)
-    top.map do |t| 
-        User.find_by_username(t.Username) 
+    ret = []
+    top.each do |t|
+        user = User.find_by_username(t.Username)
+        ret.push(user) unless user.nil?
     end
+
+    ret
   end
   
   def self.find_by_mobile_phone(mobile_phone, params={})
