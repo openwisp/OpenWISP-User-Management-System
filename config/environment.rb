@@ -56,7 +56,7 @@ if ENV['RAILS_ENV'] == 'production'
 end
 
 ExceptionNotifier.exception_recipients = [ 'root@localhost' ]
-ExceptionNotifier.sender_address = 'exception@wifi-demo-selfcare.inroma.roma.it'
+ExceptionNotifier.sender_address = 'root@localhost'
 ExceptionNotifier.email_prefix = "[OWUMS] "
 ExceptionNotifier.sections.unshift("owums")
 
