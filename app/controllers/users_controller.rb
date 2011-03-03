@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   before_filter :require_operator
   before_filter :load_user, :except => [ :index, :new, :create, :ajax_search, :browse, :search, :find ]
  
-  access_control :subject_method => :current_operator do
+  access_control do
     default :deny
     
     allow :users_browser,    :to => [ :show, :browse, :ajax_search, :ajax_accounting_search ]

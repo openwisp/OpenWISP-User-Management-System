@@ -1,0 +1,1 @@
+Acl9::config[:default_subject_method] = :current_operator

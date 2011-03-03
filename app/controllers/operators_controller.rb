@@ -1,7 +1,7 @@
 class OperatorsController < ApplicationController
   before_filter :require_operator
 
-  access_control :subject_method => :current_operator do
+  access_control do
     default :deny
 
     allow :operators_manager
