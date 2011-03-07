@@ -56,7 +56,7 @@ class Account < AccountCommon
       self.reset_perishable_token
       self.recovered = false
       self.save!
-      Rails.logger.info("Recovery asked for an unverified account")
+      Rails.logger.warn("Account recover asked for '#{self.username}'")
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end

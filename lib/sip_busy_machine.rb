@@ -2,9 +2,12 @@ require 'socket'
 require 'thread'
 
 class SipBusyMachine
-  
+
+  LOCK_SLEEP_TIME = 0.1 # Secs
+  LOCK_RETRIES = 20 # * LOCK_SLEEP_TIME seconds
+
   SIP_RINGING_TIME = 8 # Secs
-  
+
   SIP_TRYING_FMT = <<eor
 SIP/2.0 100 Trying\r
 %s\r
@@ -55,65 +58,66 @@ eor
 
 
   protected
-    attr_accessor :sd # Socket desctiptor  
-    attr_accessor :logger
-  
+  attr_accessor :sd # Socket descriptor
+  attr_accessor :logger
+
   public
-    def initialize(params = {})
-      @logger = params[:logger] || Rails.logger
-      @port = params[:port] || 5060
-      @address = params[:address] || '0.0.0.0'
+  def initialize(params = {})
+    @logger = params[:logger] || Rails.logger
+    @port = params[:port] || 5060
+    @address = params[:address] || '0.0.0.0'
 
-      @serving_m = Mutex.new
-      @serving_h = {}
-    end
+    #noinspection RubyResolve
+    @serving_m = Mutex.new
+    @serving_h = {}
+  end
 
-    def run
-      current_retry = 0
-      begin
-        self.sd = UDPSocket.open
-        sd.setsockopt(Socket::SOL_SOCKET,Socket::SO_REUSEADDR, true)
-        self.sd.bind(@address, @port)
-        loop do
-          data, sender = self.sd.recvfrom(1500) # Ugly!
-          Thread.new { 
-            if validSIPServerAddress?( :address => sender[3] )
-              serveSIPRequest(data, sender)
-            end
-          }
-        end
-        current_retry = 0
-      rescue Exception => e
-        @logger.error "Error! (#{e.to_s})"
-      ensure
-        @logger.error "Sip Busy Machine terminated! (#{$!})"
+  def run
+    begin
+      #noinspection RubyResolve
+      self.sd = UDPSocket.open
+      #noinspection RubyResolve
+      sd.setsockopt(Socket::SOL_SOCKET,Socket::SO_REUSEADDR, true)
+      self.sd.bind(@address, @port)
+      loop do
+        data, sender = self.sd.recvfrom(1500) # Ugly!
+        Thread.new {
+          if valid_sip_server_address?( :address => sender[3] )
+            serve_sip_request(data, sender)
+          end
+        }
       end
+    rescue Exception => e
+      @logger.error "Error! (#{e.to_s})"
+    ensure
+      @logger.error "Sip Busy Machine terminated! (#{$!})"
     end
+  end
 
-    def validSIPServerAddress?(params)
-      params[:address] || raise("BUG: address parameter is required!")
-      # default: do nothing!
-      return true
-    end
+  def valid_sip_server_address?(params)
+    params[:address] || raise("BUG: address parameter is required!")
+    # default: do nothing!
+    true
+  end
 
-    def validPhoneNumbers?(params)
-      params[:from] || raise("BUG: from parameter is required!")
-      params[:to]   || raise("BUG: to parameter is required!")
-      # default: do nothing!
-      return true
-    end
+  def valid_phone_numbers?(params)
+    params[:from] || raise("BUG: from parameter is required!")
+    params[:to]   || raise("BUG: to parameter is required!")
+    # default: do nothing!
+    true
+  end
 
-    def callback(params)
-      params[:from] || raise("BUG: from parameter is required!")
-      params[:to]   || raise("BUG: to parameter is required!")
-    end
+  def callback(params)
+    params[:from] || raise("BUG: from parameter is required!")
+    params[:to]   || raise("BUG: to parameter is required!")
+  end
 
   private
-  
-    def parseINVITERequestHeader(header)
-      result = {}
-      header.each { |line|
-        case line
+
+  def parse_invite_request_header(header)
+    result = {}
+    header.each { |line|
+      case line
         when /\AVia: (.+)\Z/
           result[:via] = result[:via].nil? ? [ $1 ] : result[:via] << $1
         when /\ARecord-Route: (.+)\Z/
@@ -126,19 +130,19 @@ eor
           result[:call_id] = $1
         when /\ACSeq: (.+) INVITE\Z/i
           result[:cseq] = $1
-        end
-      }
-      if result[:cseq].nil? or result[:call_id].nil? or result[:to].nil? or result[:from].nil? or result[:via].nil?
-        nil
-      else
-        result
       end
+    }
+    if result[:cseq].nil? or result[:call_id].nil? or result[:to].nil? or result[:from].nil? or result[:via].nil?
+      nil
+    else
+      result
     end
+  end
 
-    def parseCANCELRequestHeader(header)
-      result = {}
-      header.each { |line|
-        case line
+  def parse_cancel_request_header(header)
+    result = {}
+    header.each { |line|
+      case line
         when /\AVia: (.+)\Z/
           result[:via] = result[:via].nil? ? [ $1 ] : result[:via] << $1
         when /\ATo: (.+)\Z/
@@ -149,98 +153,131 @@ eor
           result[:call_id] = $1
         when /\ACSeq: (.+) CANCEL\Z/i
           result[:cseq] = $1
-        end
-      }
-      if result[:cseq].nil? or result[:call_id].nil? or result[:to].nil? or result[:from].nil? or result[:via].nil?
-        nil
-      else
-        result
       end
+    }
+    if result[:cseq].nil? or result[:call_id].nil? or result[:to].nil? or result[:from].nil? or result[:via].nil?
+      nil
+    else
+      result
     end
+  end
 
-    def sendSIPBusyReply(params, sender)
-      chost = sender[3]
-      cport = sender[1]
-      
-      viarr = ''
-      unless params[:via].nil?
-        viarr = (params[:via].map{ |v| "Via: #{v}" }).join("\r\n")
-      end
-      unless params[:record_route].nil?
-        viarr += "\r\n" + (params[:record_route].map{ |r| "Record-Route: #{r}" }).join("\r\n")
-      end
-      tag = rand(36 ** 10).to_s(36)
+  def send_sip_busy_reply(params, sender)
+    chost = sender[3]
+    cport = sender[1]
 
-      self.sd.send(sprintf(SIP_TRYING_FMT,  viarr, params[:from], params[:to],                 params[:call_id], params[:cseq]), 0, chost, cport)
-      self.sd.send(sprintf(SIP_RINGING_FMT, viarr, params[:from], "#{params[:to]};tag=#{tag}", params[:call_id], params[:cseq]), 0, chost, cport)
-      sleep(SIP_RINGING_TIME)
-      self.sd.send(sprintf(SIP_BUSY_FMT,    viarr, params[:from], "#{params[:to]};tag=#{tag}", params[:call_id], params[:cseq]), 0, chost, cport)
-    end
-
-    def sendSIPCancelOk(params, sender)
-      chost = sender[3]
-      cport = sender[1]
-    
+    viarr = ''
+    unless params[:via].nil?
       viarr = (params[:via].map{ |v| "Via: #{v}" }).join("\r\n")
-      unless params[:record_route].nil?
-        viarr += "\r\n" + (params[:record_route].map{ |r| "Record-Route: #{r}" }).join("\r\n")
-      end
-      self.sd.send(sprintf(SIP_CANCEL_OK_FMT, viarr, params[:from], params[:to], params[:call_id], params[:cseq]), 0, chost, cport)
     end
-  
-    def serveSIPRequest(data, sender)
-      request = data.split("\r\n")
+    unless params[:record_route].nil?
+      viarr += "\r\n" + (params[:record_route].map{ |r| "Record-Route: #{r}" }).join("\r\n")
+    end
+    tag = rand(36 ** 10).to_s(36)
 
-      case request[0]
+    self.sd.send(sprintf(SIP_TRYING_FMT, viarr, params[:from], params[:to], params[:call_id], params[:cseq]), 0,
+                 chost, cport
+    )
+    self.sd.send(sprintf(SIP_RINGING_FMT, viarr, params[:from], "#{params[:to]};tag=#{tag}", params[:call_id],
+                         params[:cseq]), 0, chost, cport
+    )
+
+    sleep(SIP_RINGING_TIME)
+
+    self.sd.send(sprintf(SIP_BUSY_FMT, viarr, params[:from], "#{params[:to]};tag=#{tag}", params[:call_id],
+                         params[:cseq]), 0, chost, cport
+    )
+  end
+
+  def send_sip_cancel_ok(params, sender)
+    chost = sender[3]
+    cport = sender[1]
+
+    viarr = (params[:via].map{ |v| "Via: #{v}" }).join("\r\n")
+    unless params[:record_route].nil?
+      viarr += "\r\n" + (params[:record_route].map{ |r| "Record-Route: #{r}" }).join("\r\n")
+    end
+    self.sd.send(sprintf(SIP_CANCEL_OK_FMT, viarr, params[:from], params[:to], params[:call_id], params[:cseq]), 0,
+                 chost, cport
+    )
+  end
+
+  def serve_sip_request(data, sender)
+    request = data.split("\r\n")
+
+    case request[0]
       when /\AINVITE (sip:.+) SIP\/2.0\Z/
         # SIP INVITE
-        uri = $1
+        # uri = $1
         # TODO: validate URI
-        params = parseINVITERequestHeader(request[1..-1])
+        params = parse_invite_request_header(request[1..-1])
         unless params.nil?
-          if params[:from] =~ /\A[^0-9]+([0-9]+)\@.+\Z/ or params[:from] =~ /<[^0-9]+([0-9]+)\@.+>/
+          if params[:from] =~ /\A[^0-9]+([0-9]+)@.+\Z/ or params[:from] =~ /<[^0-9]+([0-9]+)@.+>/
             from = $1
-            if params[:to] =~ /\A[^0-9]+([0-9]+)\@.+\Z/
+            if params[:to] =~ /\A[^0-9]+([0-9]+)@.+\Z/
               to = $1
               @logger.info("Incoming call from #{from} to #{to}")
-              process_new_req = true
-              @serving_m.synchronize {
-                if @serving_h["#{sender[3]}#{from}"] == true
-                  process_new_req = false
-                  @logger.info "Ignoring call from #{from}: already serving!"
-                else
-                  @serving_h["#{sender[3]}#{from}"] = true
+
+              lock_retry_count = 0
+              while (!@serving_m.try_lock) do
+                @logger.warn("Waiting for lock serving a call from: #{from}")
+                sleep(LOCK_SLEEP_TIME)
+                if ( (lock_retry_count += 1) > LOCK_RETRIES )
+                  @logger.error("Giving up waiting for lock serving a call from: #{from}")
+                  return
                 end
-              }
+              end
+
+              if @serving_h["#{sender[3]}#{from}"] == true
+                process_new_req = false
+                @logger.warn "Ignoring call from #{from}: already serving!"
+              else
+                process_new_req = true
+                @serving_h["#{sender[3]}#{from}"] = true
+              end
+
+              @serving_m.unlock
+
               if process_new_req
                 begin
-                  if validPhoneNumbers?( :from => from, :to => to )
+                  if valid_phone_numbers?( :from => from, :to => to )
                     @logger.info("Processing incoming call from #{from} to #{to}")
-                    cbThread = Thread.new { callback( :from => from, :to => to ) }
-                    sendSIPBusyReply(params, sender)
-                    cbThread.join
+                    cb_thread = Thread.new { callback( :from => from, :to => to ) }
+                    send_sip_busy_reply(params, sender)
+                    cb_thread.join
                   else
-                    @logger.info("Ignoring incoming call from #{from} to #{to}")
-                    sendSIPBusyReply(params, sender)
+                    @logger.warn("Ignoring incoming call from #{from} to #{to}: invalid number")
+                    send_sip_busy_reply(params, sender)
                   end
                 ensure
-                  @serving_m.synchronize {
-                    @serving_h.delete("#{sender[3]}#{from}")
-                  }
-                end 
+
+                  lock_retry_count = 0
+                  while (!@serving_m.try_lock) do
+                    @logger.warn("Waiting for lock after serving a call from: #{from}")
+                    sleep(LOCK_SLEEP_TIME)
+                    if ( (lock_retry_count += 1) > LOCK_RETRIES )
+                      @logger.error("Giving up waiting for lock after serving a call from: #{from}")
+                      return
+                    end
+                  end
+
+                  @serving_h.delete("#{sender[3]}#{from}")
+
+                  @serving_m.unlock
+                end
               end
             end
           end
         end
       when /\ACANCEL (sip:.+) SIP\/2.0\Z/
         # SIP CANCEL
-        uri = $1
-        params = parseCANCELRequestHeader(request[1..-1])
+        # uri = $1
+        params = parse_cancel_request_header(request[1..-1])
         unless params.nil?
-          sendSIPCancelOk(params, sender)
+          send_sip_cancel_ok(params, sender)
         end
-      end
     end
+  end
 
 end
 
