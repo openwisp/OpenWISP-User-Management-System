@@ -39,7 +39,7 @@ Rails::Initializer.run do |config|
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   config.log_level = ENV['RAILS_ENV']=='production' ?
-                                 ActiveSupport::BufferedLogger::Severity::INFO :
+                                 ActiveSupport::BufferedLogger::Severity::WARN :
                                  ActiveSupport::BufferedLogger::Severity::DEBUG
 
   # initializing custom logger
