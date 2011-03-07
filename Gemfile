@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '2.3.5'
+gem 'rails', '2.3.11'
 gem 'mysql'
 
 gem 'authlogic', '2.1.3'
