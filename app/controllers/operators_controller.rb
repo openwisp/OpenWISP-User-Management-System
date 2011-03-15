@@ -5,6 +5,8 @@ class OperatorsController < ApplicationController
     default :deny
 
     allow :operators_manager
+
+    allow all, :to => :show, :if => :looking_at_stats_of_self
   end
 
   def index
@@ -49,4 +51,9 @@ class OperatorsController < ApplicationController
     redirect_to operators_path
   end
 
+  private
+
+  def looking_at_stats_of_self
+    current_operator == Operator.find(params[:id])
+  end
 end

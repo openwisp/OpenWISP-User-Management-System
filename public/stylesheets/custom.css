@@ -161,3 +161,7 @@ tr:hover td {
   margin-bottom: 8px;
   width: auto;
 }
+
+.right {
+    float:right;
+}

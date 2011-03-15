@@ -18,35 +18,23 @@
 class OperatorSessionsController < ApplicationController
   before_filter :require_no_operator, :only => [:new, :create]
   before_filter :require_operator, :only => :destroy
-  
+
   def new
     @operator_session = OperatorSession.new
   end
-  
+
   def create
     @operator_session = OperatorSession.new(params[:operator_session])
     if @operator_session.save
-      flash[:notice] = I18n.t(:Login_successful)
       #Avoids session fixations
       reset_session
-      if @operator_session.record.has_role? 'stats_viewer'
-        redirect_to users_url
-      elsif @operator_session.record.has_role? 'users_registrant'
-        redirect_to new_user_url
-      elsif @operator_session.record.has_role? 'users_browser'
-        redirect_to users_browse_url
-      elsif @operator_session.record.has_role? 'users_finder'
-        redirect_to users_search_url
-      elsif @operator_session.record.has_role? 'operators_manager'
-        redirect_to operators_url
-      else # "Uh? Error!"
-        redirect_back_or_default users_url
-      end
+      flash[:notice] = I18n.t(:Login_successful)
+      redirect_to operator_url(@operator_session.record)
     else
       render :action => :new
     end
   end
-  
+
   def destroy
     current_operator_session.destroy
     flash[:notice] = I18n.t(:Logout_successful)

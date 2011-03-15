@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
- 
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -35,9 +35,9 @@
                </h1>
             </td>
             <td style="text-align:right">
-               <%= link_to image_tag("italy_small.jpg", :alt => :Italiano, :border => 0, :width => "24"), 
+               <%= link_to image_tag("italy_small.jpg", :alt => :Italiano, :border => 0, :width => "24"),
                      :controller => :application, :action => :set_session_locale, :locale => :it %>
-               <%= link_to image_tag("uk_small.jpg", :alt => :English, :border => 0, :width => "24"), 
+               <%= link_to image_tag("uk_small.jpg", :alt => :English, :border => 0, :width => "24"),
                      :controller => :application, :action => :set_session_locale, :locale => :en %>
             </td>
          </tr>
@@ -65,7 +65,10 @@
            <% if current_operator.has_role? 'operators_manager' %>
              <li><%= link_to t(:Operators), operators_path %></li>
            <% end %>
-           <li><%= link_to t(:Logout), operator_logout_url %></li>
+           <span class="right">
+              <li><%= link_to t(:Home), operator_path(current_operator) %></li>
+              <li><%= link_to t(:Logout), operator_logout_url %></li>
+           </span>
          <% else %>
             <% if !current_account %>
                <li><%= link_to t(:Manage_your_account), account_login_url %></li>
