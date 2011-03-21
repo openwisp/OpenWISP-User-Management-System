@@ -49,11 +49,6 @@ class AccountsController < ApplicationController
     @account.radius_groups << RadiusGroup.find_by_name(Configuration.get('default_radius_group'))
     
     if @account.save_with_captcha
-      if @account.verification_method == Account::VERIFY_BY_MOBILE
-        MiddleMan.worker(:house_keeper_worker).enq_remove_unverified_user(:arg => @account.id, :job_key => @account.id, :scheduled_at => Time.now + Configuration.get('mobile_phone_registration_expire').to_i)
-      elsif @account.verification_method == Account::VERIFY_BY_CREDIT_CARD
-        MiddleMan.worker(:house_keeper_worker).enq_remove_unverified_user(:arg => @account.id, :job_key => @account.id, :scheduled_at => Time.now + Configuration.get('credit_card_registration_expire').to_i)
-      end
       redirect_to account_path
     else
       respond_to do |format|
