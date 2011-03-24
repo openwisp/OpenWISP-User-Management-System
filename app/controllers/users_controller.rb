@@ -37,94 +37,10 @@ class UsersController < ApplicationController
   end
   
   def index
-    now = Date.today
-    cur = now - 14.days
-    registered_users = []
-    registered_users_ymin = nil
-    logins = []
-    ulogins = []
-    traffic = []
-    traffic_in = []
-    traffic_out = []
-    categories = []
-    countries = {}
-    @show_graphs = false
-    @show_login_graphs = false
-    @show_traffic_graphs = false
-
     @last_logins = RadiusAccounting::last_logins(5)
     @online_users = RadiusAccounting::online_users(5)
     @last_registered = User.last_registered(5)
     @top_traffic_users = User.top_traffic(5)
-
-    while cur <= now do
-      user_count = User.count( :conditions => "DATE(verified_at) <= '#{cur.to_s}'" )
-      @show_graphs = true if user_count > 0
-
-      registered_users.push :name => cur.to_s, :value => user_count
-      if registered_users_ymin.nil?
-        registered_users_ymin = user_count
-      else 
-        registered_users_ymin = user_count if registered_users_ymin > user_count
-      end
-      login_count = RadiusAccounting.count( :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'" )
-      ulogin_count = RadiusAccounting.count( 'UserName', :distinct => true, :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'" )
-      @show_login_graphs = true if login_count > 0 and ulogin_count > 0
-
-      traffic_in_count = RadiusAccounting.sum( 'AcctInputOctets', :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'")
-      traffic_out_count = RadiusAccounting.sum( 'AcctOutputOctets', :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'")
-      @show_traffic_graphs = true if traffic_in_count > 0 and traffic_out_count > 0
-
-      categories.push cur.to_s
-      logins.push login_count
-      ulogins.push ulogin_count
-      traffic.push traffic_in_count + traffic_out_count
-      traffic_in.push traffic_in_count
-      traffic_out.push traffic_out_count
-      cur += 1.day
-    end
-
-    if @show_traffic_graphs
-      @traffic_xml_data = 
-        render_to_string :template => "common/MSFusionChart.xml", 
-                         :locals => { :caption => t(:Traffic),
-                                      :suffix => 'B',
-                                      :categories => categories, 
-                                      :format_number_scale => 1,
-                                      :decimal_precision => 0,
-                                      :series => [ { :name => t(:Traffic_total), :color => '5E5E5E', :data => traffic },
-                                                   { :name => t(:Upload), :color => '26A4F7', :data => traffic_in }, 
-                                                   { :name => t(:Download), :color => 'FDC12E', :data => traffic_out } ]
-                                    }, :layout => false
-    else
-      @traffic_xml_data = ""
-    end
-
-    if @show_login_graphs
-      @logins_xml_data = 
-        render_to_string :template => "common/MSFusionChart.xml",
-                         :locals => { :caption => t(:Logins),
-                                      :categories => categories,
-                                      :series => [ { :name => t(:Logins), :color => '56B9F9', :data => logins }, 
-                                                   { :name => t(:Unique_logins), :color => 'FDC12E', :data => ulogins } ]
-                                    },
-                         :layout => false
-    else
-      @logins_xml_data = ""
-    end
-
-    if @show_graphs
-      @accounts_xml_data = 
-        render_to_string :template => "common/SSFusionChart.xml", 
-                         :locals => { :y_axis_min_value => registered_users_ymin, :caption => t(:Registered_users), :data => registered_users }, 
-                         :layout => false
-      # @countries_xml_data = 
-      #   render_to_string :template => "common/SSFusionChart.xml",
-      #                    :locals => { :caption => t(:Users_nationality), :data => countries.to_a.map{|values| values[1]} }, 
-      #                    :layout => false
-    else
-      @accounts_xml_data = @countries_xml_data = ""
-    end
   end
   
   def new

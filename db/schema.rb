@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100115150746) do
+ActiveRecord::Schema.define(:version => 20110317145357) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.datetime "updated_at"
   end
 
+  add_index "countries", ["disabled"], :name => "index_countries_on_disabled"
   add_index "countries", ["printable_name"], :name => "index_countries_on_printable_name"
 
   create_table "dictionary", :force => true do |t|
@@ -74,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.datetime "updated_at"
   end
 
+  add_index "mobile_prefixes", ["disabled"], :name => "index_mobile_prefixes_on_disabled"
   add_index "mobile_prefixes", ["prefix"], :name => "index_mobile_prefixes_on_prefix"
 
   create_table "nas", :force => true do |t|
@@ -258,6 +260,9 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.datetime "updated_at"
   end
 
+  add_index "simple_captcha_data", ["key"], :name => "index_simple_captcha_data_on_key"
+  add_index "simple_captcha_data", ["updated_at"], :name => "index_simple_captcha_data_on_updated_at"
+
   create_table "usergroup", :id => false, :force => true do |t|
     t.string "UserName",                               :null => false
     t.string "GroupName",                              :null => false
@@ -301,9 +306,13 @@ ActiveRecord::Schema.define(:version => 20100115150746) do
     t.datetime "updated_at"
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["mobile_prefix", "mobile_suffix"], :name => "index_users_on_mobile_prefix_and_mobile_suffix"
+  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
+  add_index "users", ["single_access_token"], :name => "index_users_on_single_access_token"
+  add_index "users", ["updated_at"], :name => "index_users_on_updated_at"
   add_index "users", ["username"], :name => "index_users_on_username"
 
 end

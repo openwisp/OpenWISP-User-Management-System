@@ -1,39 +1,30 @@
+<% content_for :after_defaults do %>
+    <%= javascript_include_tag 'highcharts',
+                               'owm.graphs',
+                               'owm.registerd_users_graph',
+                               'owm.logins_graph',
+                               'owm.traffic_graph'
+    %>
+<% end %>
+
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-accounts-graph"><%=h t(:Registered_users) %></a></h2>
-    <div class="block" id="accounts-graph">
-      <% if @show_graphs %>
-        <% render_chart fusionchart_path('FCF_Line.swf'), '', @accounts_xml_data, 'Registered_users', 310, 200, false, false do %>
-        <% end %>
-      <% end %>
-      &nbsp;
-    </div>
+    <h2><a href="#" id="toggle-registered_users"><%=h t(:Registered_users) %></a></h2>
+    <div class="block" id="registered_users"></div>
   </div>
 </div>
 
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-logins-graph"><%=h t(:Logins) %></a></h2>
-    <div class="block" id="logins-graph">
-      <% if @show_login_graphs %>
-        <% render_chart fusionchart_path('FCF_MSLine.swf'), '', @logins_xml_data, 'Logins', 310, 200, false, false do %>
-        <% end %>
-      <% end %>
-      &nbsp;
-    </div>
+    <h2><a href="#" id="toggle-logins_graph"><%=h t(:Logins) %></a></h2>
+    <div class="block" id="logins"></div>
   </div>
 </div>
 
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-traffic-graph"><%=h t(:Traffic) %></a></h2>
-    <div class="block" id="traffic-graph">
-      <% if @show_traffic_graphs %>
-        <% render_chart fusionchart_path('FCF_MSLine.swf'), '', @traffic_xml_data, 'Traffic_total', 310, 200, false, false do %>
-        <% end %>
-      <% end %>
-      &nbsp;
-    </div>
+    <h2><a href="#" id="toggle-traffic_graph"><%=h t(:Traffic) %></a></h2>
+    <div class="block" id="traffic"></div>
   </div>
 </div>
 

@@ -27,11 +27,57 @@ class RadiusAccounting < ActiveRecord::Base
   # Class methods
   
   def self.last_logins(num = 5)
-    RadiusAccounting.find(:all, :order => "AcctStartTime DESC", :limit => num)
+    find(:all, :order => "AcctStartTime DESC", :limit => num)
   end
 
   def self.online_users(num = 5)
-    RadiusAccounting.find(:all, :conditions => "AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL", :order => "AcctStartTime DESC", :limit => num)
+    find(:all, :conditions => "AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL", :order => "AcctStartTime DESC", :limit => num)
+  end
+
+  def self.logins_on(date)
+    count(:conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+  end
+
+  def self.unique_logins_on(date)
+    count('UserName', :distinct => true, :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+  end
+
+  def self.logins_each_day_from(date)
+    total = []
+    unique = []
+
+    (date.to_date..Date.today).each do |that_day|
+      total << [that_day.to_time.to_i * 1000, logins_on(that_day)]
+      unique << [that_day.to_time.to_i * 1000, unique_logins_on(that_day)]
+    end
+
+    [total, unique]
+  end
+
+  def self.traffic_in_on(date)
+    sum('AcctInputOctets', :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+  end
+
+  def self.traffic_out_on(date)
+    sum('AcctOutputOctets', :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+  end
+
+  def self.traffic_on(date)
+    traffic_in_on(date) + traffic_out_on(date)
+  end
+
+  def self.traffic_each_day_from(date)
+    input = []
+    output = []
+    total = []
+
+    (date.to_date..Date.today).each do |that_day|
+      input << [that_day.to_time.to_i * 1000, traffic_in_on(that_day)]
+      output << [that_day.to_time.to_i * 1000, traffic_out_on(that_day)]
+      total << [that_day.to_time.to_i * 1000, traffic_on(that_day)]
+    end
+
+    [total, input, output]
   end
 
   # Accessors

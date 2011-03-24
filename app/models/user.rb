@@ -72,6 +72,16 @@ class User < AccountCommon
     User.find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
   end
 
+  def self.registered_each_day_from(date)
+    (date.to_date..Date.today).map do |that_day|
+      [that_day.to_time.to_i * 1000, registerd_on(that_day)]
+    end
+  end
+
+  def self.registerd_on(date)
+    User.count :conditions => "Date(verified_at) <= '#{date.to_s}'"
+  end
+
   # Utilities
 
   def total_traffic

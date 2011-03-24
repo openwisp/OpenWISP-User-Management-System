@@ -35,6 +35,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :password_resets
   map.resources :email_password_resets
   map.resources :mobile_phone_password_resets
+  map.resources :stats, :only => :show
 
   map.root :account_login
 

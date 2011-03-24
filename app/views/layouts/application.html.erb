@@ -18,6 +18,9 @@
     <!--[if IE 7]><%= stylesheet_link_tag 'fluid960/ie', 'custom-ie' %><![endif]-->
 
    <%= javascript_include_tag :defaults %>
+
+   <%= yield :after_defaults %>
+
    <%= javascript_include_tag 'fluid16' %>
    <%= javascript_include_tag 'FusionCharts' %>
 
@@ -91,7 +94,7 @@
       </div>
    </div>
    <div class="clear"></div>
- 
+
    <%= yield  %>
 
    <div class="grid_12" id="site_info">
