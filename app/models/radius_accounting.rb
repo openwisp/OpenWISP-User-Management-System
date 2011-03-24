@@ -85,10 +85,6 @@ class RadiusAccounting < ActiveRecord::Base
     read_attribute :CalledStationId
   end
 
-  def called_station_id
-    read_attribute :CallingStationId
-  end
-  
   def framed_ip_address
     read_attribute :FramedIPAddress
   end
