@@ -165,3 +165,8 @@ tr:hover td {
 .right {
     float:right;
 }
+
+.small_graph {
+    height:250px;
+    margin-bottom: 20px;
+}

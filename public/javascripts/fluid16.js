@@ -2,11 +2,11 @@ var fluid = {
 Toggle : function(){
   var default_hide = {"help": true, "search": false };
   $.each(
-    [ "registration", "help", "search", "blockquote", "section-menu", 
-      "tables", "forms", "login-forms", "articles", "accordion", "accounts-graph",
-      "logins-graph", "traffic-graph", "last-logins", "online-users", "last-registered"],
+    [ "registration", "help", "search", "blockquote", "section-menu",
+      "tables", "forms", "login-forms", "articles", "accordion", "registered_users_graph",
+      "logins_graph", "traffic_graph", "last-logins", "online-users", "last-registered"],
 		function() {
-			var el = $("#" + (this == 'accordon' ? 'accordion-block' : this) );
+			var el = $("#" + (this == 'accordion' ? 'accordion-block' : this) );
 			if (default_hide[this]) {
 				el.hide();
 				$("[id='toggle-"+this+"']").addClass("hidden")
@@ -15,10 +15,10 @@ Toggle : function(){
 			.bind("click", function(e) {
 				if ($(this).hasClass('hidden')){
 					$(this).removeClass('hidden').addClass('visible');
-					el.slideDown();
+					el.slideToggle();
 				} else {
 					$(this).removeClass('visible').addClass('hidden');
-					el.slideUp();
+					el.slideToggle();
 				}
 				e.preventDefault();
 			});

@@ -17,9 +17,23 @@ module ApplicationHelper
   def is_apple_device?
     is_device?('iphone') || is_device?('ipod') || is_device?('ipad')
   end
-  
+
   def auth?(role, object=nil)
     current_operator && current_operator.has_role?(role, object)
   end
-  
+
+  def link_to_locale(locale, opts={})
+    html_opts = locale.to_sym == I18n.locale ? {:class => "current_#{locale}"} : {}
+    link_to(image_tag("locale/#{locale}.jpg", :size => "24x24"), {:controller => :application, :action => :set_session_locale, :locale => locale}, html_opts.merge(opts))
+  end
+
+  def for_ie(opts = {:version => nil, :if => nil}, &block)
+    to_include = with_output_buffer(&block)
+    open_tag = "<!--[if "
+    open_tag << "#{opts[:if]} " unless opts[:if].nil?
+    open_tag << "IE"
+    open_tag << " #{opts[:version]}" unless opts[:version].nil?
+    open_tag << "]>"
+    concat(open_tag+to_include+"<![endif]-->")
+  end
 end

@@ -1,8 +1,7 @@
 $.getJSON('stats/registered_users', function(registered_users){
     graphs.init({
         chart: {
-            renderTo: 'registered_users',
-            height: 250,
+            renderTo: 'registered_users_graph',
             zoomType: 'x'
         },
         title: { text: null },

@@ -1,9 +1,8 @@
 $.getJSON('stats/logins', function(logins){
     graphs.init({
         chart: {
-            renderTo: 'logins',
+            renderTo: 'logins_graph',
             type: 'column',
-            height: 250,
             zoomType: 'xy'
         },
         title: { text: null },

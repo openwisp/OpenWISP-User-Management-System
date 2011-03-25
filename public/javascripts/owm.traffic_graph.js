@@ -1,9 +1,8 @@
 $.getJSON('stats/traffic', function(traffic){
     graphs.init({
         chart: {
-            renderTo: 'traffic',
+            renderTo: 'traffic_graph',
             type: 'column',
-            height: 250,
             zoomType: 'xy'
         },
         title: { text: null },
