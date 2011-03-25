@@ -20,20 +20,20 @@
 
 class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, :with => :invalid_token
-  
+
   include ExceptionNotifiable
   include SimpleCaptcha::ControllerHelpers
-  has_mobile_fu()
-  
+  has_mobile_fu
+
   helper :all
   helper_method :current_account_session, :current_account
   helper_method :current_operator_session, :current_operator
   filter_parameter_logging :password, :password_confirmation, :crypted_password
   protect_from_forgery
-  
+
   # Access current_operator from models
   before_filter :set_current_operator
-  
+
   # Set locale from session
   before_filter :set_locale
 
@@ -58,12 +58,12 @@ protected
     return @current_account_session if defined?(@current_account_session)
     @current_account_session = AccountSession.find
   end
-  
+
   def current_account
     return @current_account if defined?(@current_account)
     @current_account = current_account_session && current_account_session.record
   end
-  
+
   def require_account
     unless current_account
       store_location
@@ -86,12 +86,12 @@ protected
     return @current_operator_session if defined?(@current_operator_session)
     @current_operator_session = OperatorSession.find
   end
-  
+
   def current_operator
     return @current_operator if defined?(@current_operator)
     @current_operator = current_operator_session && current_operator_session.record
   end
-  
+
   def require_operator
     unless current_operator
       store_location
@@ -113,7 +113,7 @@ protected
   def store_location
     session[:return_to] = request.request_uri
   end
-  
+
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
