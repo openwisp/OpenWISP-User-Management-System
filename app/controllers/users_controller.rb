@@ -37,10 +37,10 @@ class UsersController < ApplicationController
   end
   
   def index
-    @last_logins = []# RadiusAccounting::last_logins(5)
-    @online_users = [] #RadiusAccounting::online_users(5)
-    @last_registered = []# User.last_registered(5)
-    @top_traffic_users =[]# User.top_traffic(5)
+    @last_logins = RadiusAccounting::last_logins(5)
+    @online_users = RadiusAccounting::online_users(5)
+    @last_registered = User.last_registered(5)
+    @top_traffic_users = User.top_traffic(5)
   end
   
   def new
