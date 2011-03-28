@@ -1,10 +1,14 @@
 var fluid = {
 Toggle : function(){
-  var default_hide = {"help": true, "search": false };
+  var default_hide = {
+      "help": true, "search": false, "top_traffic_users": true, "last_logins": true,
+      "last_registered": true
+  };
   $.each(
     [ "registration", "help", "search", "blockquote", "section-menu",
       "tables", "forms", "login-forms", "articles", "accordion", "registered_users_graph",
-      "logins_graph", "traffic_graph", "last-logins", "online-users", "last-registered"],
+      "logins_graph", "traffic_graph", "last_logins", "top_traffic_users", "last_registered"
+    ],
 		function() {
 			var el = $("#" + (this == 'accordion' ? 'accordion-block' : this) );
 			if (default_hide[this]) {

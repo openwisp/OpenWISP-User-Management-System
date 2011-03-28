@@ -73,6 +73,7 @@ en:
     one: Last registered user
     other: Last {{count}} registered users
   Listing_users: Users list
+  Loading_data: "Loading data: please wait"
   Logged_in: "Logged in?"
   Loggedin_users: Currently loggedin users
   Login: Login

@@ -32,27 +32,45 @@
 
 <div class="grid_3">
   <div class="box">
-    <h2><a href="#" id="toggle-online-users"><%=h t(:Top_x_active_users, :count => 5) %></a></h2>
-    <div class="block" id="online-users">
-      <%= render :partial => 'common/top_traffic_users_brief', :locals => { :top_traffic_users => @top_traffic_users } %>
+    <h2>
+      <%= link_to_remote t(:Top_x_active_users, :count => 5),
+                         :url => stat_path('top_traffic_users'),
+                         :method => :get,
+                         :html => {:id => 'toggle-top_traffic_users'}
+      %>
+    </h2>
+    <div class="block" id="top_traffic_users">
+      <h5><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
     </div>
   </div>
 </div>
 
 <div class="grid_5">
   <div class="box">
-    <h2><a href="#" id="toggle-last-logins"><%=h t(:Last_x_logins, :count => 5) %></a></h2>
-    <div class="block" id="last-logins">
-      <%= render :partial => 'common/radius_accounting_list_brief', :locals => { :accountings => @last_logins } %>
+    <h2>
+      <%= link_to_remote t(:Last_x_logins, :count => 5),
+                         :url => stat_path('last_logins'),
+                         :method => :get,
+                         :html => {:id => 'toggle-last_logins'}
+      %>
+    </h2>
+    <div class="block" id="last_logins">
+      <h5><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
     </div>
   </div>
 </div>
 
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-last-registered"><%=h t(:Last_x_registered_users, :count => 5) %></a></h2>
-    <div class="block" id="last-registered">
-      <%= render :partial => 'list_brief', :locals => { :users => @last_registered } %>
+    <h2>
+      <%= link_to_remote t(:Last_x_registered_users, :count => 5),
+                         :url => stat_path('last_registered'),
+                         :method => :get,
+                         :html => {:id => 'toggle-last_registered'}
+      %>
+    </h2>
+    <div class="block" id="last_registered">
+      <h5><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
     </div>
   </div>
 </div>

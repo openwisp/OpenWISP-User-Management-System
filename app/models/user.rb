@@ -19,7 +19,7 @@ class User < AccountCommon
 
   self.before_validation { |record|
     # Cleaning up unused fields... just in case..
-    
+
     if record.verification_method == User::VERIFY_BY_DOCUMENT
       record.mobile_prefix = nil
       record.mobile_suffix = nil
@@ -27,10 +27,10 @@ class User < AccountCommon
       record.image_file_data = nil
     end
   }
-  
+
   # Validations
   # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
-  validates_inclusion_of :verification_method, :in => User::VERIFICATION_METHODS, 
+  validates_inclusion_of :verification_method, :in => User::VERIFICATION_METHODS,
     :unless => Proc.new{|user| User::SELFVERIFICATION_METHODS.include? user.verification_method }
 
   has_many :radius_checks,  :as => :radius_entity, :dependent => :destroy
@@ -41,8 +41,8 @@ class User < AccountCommon
   def self.last_registered(num = 5)
     User.find(:all, :order => "created_at DESC", :limit => num)
   end
-  
-  # Class Method: 
+
+  # Class Method:
   #   top_traffic()
   # Description:
   #   Returns most active (traffic pov) users
@@ -51,9 +51,9 @@ class User < AccountCommon
   # Output
   #   Hash { :user => <User model instance>,  :total_traffic => <total traffic (bytes)> }
   def self.top_traffic(num = 5)
-    top = RadiusAccounting.all(:select => 'Username', 
-                               :group => :UserName, 
-                               :order => 'sum(AcctInputOctets + AcctOutputOctets) DESC', 
+    top = RadiusAccounting.all(:select => 'Username',
+                               :group => :UserName,
+                               :order => 'sum(AcctInputOctets + AcctOutputOctets) DESC',
                                :limit => num)
     ret = []
     top.each do |t|
@@ -63,23 +63,23 @@ class User < AccountCommon
 
     ret
   end
-  
+
   def self.find_by_mobile_phone(mobile_phone, params={})
-    User.find(:first, :conditions => [ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ])
+    find(:first, :conditions => [ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ])
   end
 
   def self.find_all_by_user_phone_or_mail(query, params={})
-    User.find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
+    find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
   end
 
   def self.registered_each_day_from(date)
     (date.to_date..Date.today).map do |that_day|
-      [that_day.to_time.to_i * 1000, registerd_on(that_day)]
+      [that_day.to_time.to_i * 1000, registered_on(that_day)]
     end
   end
 
-  def self.registerd_on(date)
-    User.count :conditions => "Date(verified_at) <= '#{date.to_s}'"
+  def self.registered_on(date)
+    count :conditions => "Date(verified_at) <= '#{date.to_s}'"
   end
 
   # Utilities
@@ -88,17 +88,17 @@ class User < AccountCommon
     self.radius_accountings.sum('AcctInputOctets + AcctOutputOctets')
   end
 
-  def deliver_password_reset_instructions!  
-    reset_perishable_token!  
-    Notifier.deliver_password_reset_instructions(self)  
+  def deliver_password_reset_instructions!
+    reset_perishable_token!
+    Notifier.deliver_password_reset_instructions(self)
   end
-  
+
   def radius_name
     username
   end
 
   def radius_groups_ids
-    self.radius_groups.map{|group| group.id} 
+    self.radius_groups.map{|group| group.id}
   end
 
   def radius_groups_ids=(ids)

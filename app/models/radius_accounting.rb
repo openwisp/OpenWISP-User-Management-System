@@ -17,7 +17,7 @@
 
 class RadiusAccounting < ActiveRecord::Base
   # Legacy !
-  set_primary_key "RadAcctId" 
+  set_primary_key "RadAcctId"
 
   def self.table_name() "radacct" end
 
@@ -25,7 +25,7 @@ class RadiusAccounting < ActiveRecord::Base
   belongs_to :user, :foreign_key => :UserName, :primary_key => :username
 
   # Class methods
-  
+
   def self.last_logins(num = 5)
     find(:all, :order => "AcctStartTime DESC", :limit => num)
   end
@@ -42,16 +42,24 @@ class RadiusAccounting < ActiveRecord::Base
     count('UserName', :distinct => true, :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
   end
 
+  def self.logins_from(date)
+    count('Username',
+          :select => 'AcctStartTime',
+          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+          :group => "DATE(AcctStartTime)"
+    ).map { |on_date, count| [ on_date.to_date.to_time.to_i * 1000, count.to_i ] }
+  end
+
+  def self.unique_logins_from(date)
+    count('Username',
+          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+          :group => "DATE(AcctStartTime)",
+          :distinct => true
+    ).map { |on_date, count| [ on_date.to_date.to_time.to_i * 1000, count.to_i ] }
+  end
+
   def self.logins_each_day_from(date)
-    total = []
-    unique = []
-
-    (date.to_date..Date.today).each do |that_day|
-      total << [that_day.to_time.to_i * 1000, logins_on(that_day)]
-      unique << [that_day.to_time.to_i * 1000, unique_logins_on(that_day)]
-    end
-
-    [total, unique]
+    [ logins_from(date), unique_logins_from(date) ]
   end
 
   def self.traffic_in_on(date)
@@ -66,31 +74,42 @@ class RadiusAccounting < ActiveRecord::Base
     traffic_in_on(date) + traffic_out_on(date)
   end
 
+  def self.traffic_in_from(date)
+    sum('AcctInputOctets',
+        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+        :group => "DATE(AcctStartTime)"
+    ).map { |on_date, traffic| [ on_date.to_date.to_time.to_i * 1000, traffic.to_i ] }
+  end
+
+  def self.traffic_out_from(date)
+    sum('AcctOutputOctets',
+        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+        :group => "DATE(AcctStartTime)"
+    ).map { |on_date, traffic| [ on_date.to_date.to_time.to_i * 1000, traffic.to_i ] }
+  end
+
+  def self.traffic_from(date)
+    sum('AcctInputOctets + AcctOutputOctets',
+        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+        :group => "DATE(AcctStartTime)"
+    ).map { |on_date, traffic| [ on_date.to_date.to_time.to_i * 1000, traffic.to_i ] }
+  end
+
   def self.traffic_each_day_from(date)
-    input = []
-    output = []
-    total = []
-
-    (date.to_date..Date.today).each do |that_day|
-      input << [that_day.to_time.to_i * 1000, traffic_in_on(that_day)]
-      output << [that_day.to_time.to_i * 1000, traffic_out_on(that_day)]
-      total << [that_day.to_time.to_i * 1000, traffic_on(that_day)]
-    end
-
-    [total, input, output]
+    [ traffic_from(date), traffic_in_from(date), traffic_out_from(date) ]
   end
 
   # Accessors
-  
+
   ## Read
   def username
     read_attribute :UserName
   end
-  
+
   def realm
     read_attribute :Realm
   end
-  
+
   def acct_start_time
     if Configuration.get('local_time_radius_accounting') == 'true'
       self.AcctStartTime - Time.now().utc_offset
@@ -98,7 +117,7 @@ class RadiusAccounting < ActiveRecord::Base
       self.AcctStartTime
     end
   end
-  
+
   def acct_stop_time
     if Configuration.get('local_time_radius_accounting') == 'true'
       self.AcctStopTime.nil? ? nil : self.AcctStopTime - Time.now().utc_offset
@@ -106,23 +125,23 @@ class RadiusAccounting < ActiveRecord::Base
       self.AcctStopTime
     end
   end
-  
+
   def acct_input_octets
     read_attribute :AcctInputOctets
   end
-  
+
   def acct_output_octets
     read_attribute :AcctOutputOctets
   end
-  
+
   def acct_terminate_cause
     read_attribute :AcctTerminateCause
   end
-  
+
   def nas_ip_address
     read_attribute :NASIPAddress
   end
-  
+
   def calling_station_id
     read_attribute :CallingStationId
   end
@@ -142,7 +161,7 @@ class RadiusAccounting < ActiveRecord::Base
     # Convert bytes to megabytes (1048576 = 1024*1024)
     sprintf "%.2f", self.AcctOutputOctets/1048576.0
   end
-  
+
   def traffic_in_mega
     # Convert bytes to megabytes (1048576 = 1024*1024)
     sprintf "%.2f", self.AcctInputOctets/1048576.0

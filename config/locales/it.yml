@@ -73,6 +73,7 @@ it:
     one: Ultimo utente registrato
     other: Ultimi {{count}} utenti registrati
   Listing_users: Lista utenti
+  Loading_data: "Caricamento dati: attendere"
   Logged_in: "Connesso?"
   Loggedin_users: Utenti attualmente connessi
   Login: Accedi
