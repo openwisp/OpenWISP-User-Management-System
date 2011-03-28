@@ -1,8 +1,6 @@
 class StatsController < ApplicationController
   before_filter :require_operator
 
-  caches_action :show
-
   access_control do
     default :deny
 
