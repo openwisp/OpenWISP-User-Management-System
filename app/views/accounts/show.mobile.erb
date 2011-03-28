@@ -1,61 +1,69 @@
+<% content_for :after_defaults do %>
+    <%= javascript_include_tag 'highcharts',
+                               'owums.graphs',
+                               'owums.account_logins_graph',
+                               'owums.account_traffic_graph'
+    %>
+<% end %>
+
 <div class="grid_3">
   <div class="box">
     <div class="block" id="general_info">
       <fieldset>
         <p>
-          <b><%=t :Given_name %></b><br />
+          <strong><%=t :Given_name %></strong><br />
           <%=h @account.given_name %>
         </p>
         <p>
-          <b><%=t :Surname %></b><br />
+          <strong><%=t :Surname %></strong><br />
           <%=h @account.surname %>
         </p>
         <p>
-          <b><%=t :Username %></b><br />
+          <strong><%=t :Username %></strong><br />
           <%=h @account.username %>
         </p>
         <% if @account.has_image? %>
-        <p>
-          <b><%=t :Document_photo %></b><br />
-          <p>
-            <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
-          </p>
-        </p>
+            <p>
+              <strong><%=t :Document_photo %></strong><br />
+            <p>
+              <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
+            </p>
+            </p>
         <% end %>
         <p>
-          <b><%=t :State %></b><br />
+          <strong><%=t :State %></strong><br />
           <%=h @account.state %>
         </p>
         <p>
-          <b><%=t :City %></b><br />
+          <strong><%=t :City %></strong><br />
           <%=h @account.city %>
         </p>
         <p>
-          <b><%=t :Address %></b><br />
+          <strong><%=t :Address %></strong><br />
           <%=h @account.address %>
         </p>
         <p>
-          <b><%=t :Email %></b><br />
+          <strong><%=t :Email %></strong><br />
           <%=h @account.email %>
         </p>
         <p>
-          <b><%=t :Registration_date %></b><br />
+          <strong><%=t :Registration_date %></strong><br />
           <%=h @account.created_at.strftime("%d/%m/%y %H:%M:%S") %>
         </p>
         <p>
-          <b><%=t :Verification_date %></b><br />
+          <strong><%=t :Verification_date %></strong><br />
           <% if @account.verified %>
-            <%=h @account.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
+              <%=h @account.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
           <% else %>
-            <font color="red"><%=t :Not_verified %></font>
+              <span style="color: red; "><%=t :Not_verified %></span>
           <% end %>
         </p>
         <p>
-          <b><%=t :Radius_logins %></b><br />
+          <strong><%=t :Radius_logins %></strong><br />
           <%=h @account.radius_accountings.count %>
         </p>
         <p>
-          <b><%=t :Last_login_ip %></b><br />
+          <strong><%=t :Last_login_ip %></strong><br />
           <%=h @account.last_login_ip %>
         </p>
       </fieldset>
@@ -68,38 +76,16 @@
     <%= button_to t(:Refresh_data), "", :method => :get %>
   </p>
   <div class="clear"></div>
-  
-<% if @show_graphs %>
-    <div class="box">
-      <h2><%=h t(:Logins) %></h2>
-      <div class="block" id="rad_acct_login_block">
-        <% if is_apple_device? %>
-          <%=t :Flash_not_supported %>
-        <% else %>
-          <% render_chart fusionchart_path('FCF_Column2D.swf'), '', @login_xml_data, 'chart_login', 500, 200, false, false do %>
-          <% end %>
-        <% end %>
-      </div>
-      &nbsp;
-    </div>
 
-    <div class="box">
-      <h2><%=h t(:Traffic) %></h2>
-      <div class="block" id="rad_acct_traffic_block">
-        <% if is_apple_device? %>
-          <%=t :Flash_not_supported %>
-        <% else %>
-          <% render_chart fusionchart_path('FCF_MSColumn2D.swf'), '', @traffic_xml_data, 'chart_traffic', 500, 200, false, false do %>
-          <% end %>
-        <% end %>
-      </div>
-      &nbsp;
-    </div>
-<% else %>
-    <div class="box">
-      <p><%=t :Not_yet_connected, :count => AccountsController::STATS_PERIOD %></p>
-    </div>
-<% end %>
+  <div class="box">
+    <h2><%=h t(:Logins) %></h2>
+    <div class="block account_graph" id="account_logins_graph"></div>
+  </div>
+
+  <div class="box">
+    <h2><%=h t(:Traffic) %></h2>
+    <div class="block account_graph" id="account_traffic_graph"></div>
+  </div>
 </div>
 
 <div class="clear"></div>

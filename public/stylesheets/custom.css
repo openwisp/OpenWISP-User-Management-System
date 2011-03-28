@@ -166,6 +166,12 @@ tr:hover td {
     float:right;
 }
 
+.account_graph, .user_graph {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
 .small_graph {
     height:250px;
     margin-bottom: 20px;

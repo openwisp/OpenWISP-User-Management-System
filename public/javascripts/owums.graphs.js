@@ -28,7 +28,7 @@ var graphs = {
 
     setLocale: function() {
         $.each(graphs.locales, function(){
-            if (owm.exists(this.triggerIfExists)) {
+            if (owums.exists(this.triggerIfExists)) {
                 Highcharts.setOptions({lang: this.lang});
             }
         });
@@ -50,6 +50,18 @@ var graphs = {
         e = (e<0) ? (-e) : e;
         if (label) value += ' ' + s[e];
         return value;
+    },
+
+    time_formatter: function(value) {
+        var h=Math.floor(value/3600);
+        var m=Math.floor(value/60)-(h*60);
+        var s=value-(h*3600)-(m*60);
+
+        var hours = (h < 10 ? '0' : '') + h;
+        var minutes = (m < 10 ? '0' : '') + m;
+        var seconds = (s < 10 ? '0' : '') + s;
+
+        return hours+':'+minutes+':'+seconds;
     }
 };
 

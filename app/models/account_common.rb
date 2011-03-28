@@ -21,7 +21,7 @@ class AccountCommon <  ActiveRecord::Base
   attr_readonly  :username
 
   # Macros
-  
+
   VERIFY_BY_MOBILE = "mobile_phone"
   VERIFY_BY_DOCUMENT = "identity_document"
   VERIFY_BY_CREDIT_CARD = "credit_card"
@@ -29,10 +29,10 @@ class AccountCommon <  ActiveRecord::Base
   VERIFICATION_METHODS_SELECT = [ [ I18n.t(:identity_document), 'identity_document' ], [ I18n.t(:mobile_phone), 'mobile_phone' ] ]
 
   if Configuration.get("credit_card_enabled") == "true"
-    SELFVERIFICATION_METHODS = %( mobile_phone credit_card ) 
+    SELFVERIFICATION_METHODS = %( mobile_phone credit_card )
     SELFVERIFICATION_METHODS_SELECT = [ [ I18n.t(:mobile_phone), 'mobile_phone' ], [ I18n.t(:credit_card), 'credit_card' ] ]
   else
-    SELFVERIFICATION_METHODS = %( mobile_phone ) 
+    SELFVERIFICATION_METHODS = %( mobile_phone )
     SELFVERIFICATION_METHODS_SELECT = [ [ I18n.t(:mobile_phone), 'mobile_phone' ] ]
   end
 
@@ -46,14 +46,14 @@ class AccountCommon <  ActiveRecord::Base
     c.validates_format_of_login_field_options = { :with => /\A[a-z0-9\_\-\.]+\Z/i }
     c.session_class = AccountSession
   end
-  
+
   # Fleximage (identity document)
   acts_as_fleximage do
     require_image false
     invalid_image_message :invalid_image
     missing_image_message :missing_image
     image_storage_format :jpg
-    
+
     preprocess_image do |image|
       image.resize '800x600'
     end
@@ -66,11 +66,11 @@ class AccountCommon <  ActiveRecord::Base
   validates_presence_of :privacy_acceptance, :message => :privacy_must_be_accepted
   validates_presence_of :mobile_prefix, :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
   validates_presence_of :mobile_suffix, :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
-  validates_uniqueness_of :mobile_suffix, :scope => :mobile_prefix, :allow_nil => true, 
+  validates_uniqueness_of :mobile_suffix, :scope => :mobile_prefix, :allow_nil => true,
+                          :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
+  validates_format_of :mobile_prefix, :allow_nil => true, :with => /\A[0-9]+\Z/, :message => :mobile_prefix_format,
                       :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
-  validates_format_of :mobile_prefix, :allow_nil => true, :with => /\A[0-9]+\Z/, :message => :mobile_prefix_format, 
-                      :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
-  validates_format_of :mobile_suffix, :allow_nil => true, :with => /\A[0-9]+\Z/, :message => :mobile_suffix_format, 
+  validates_format_of :mobile_suffix, :allow_nil => true, :with => /\A[0-9]+\Z/, :message => :mobile_suffix_format,
                       :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
   validates_presence_of :birth_date
   validates_presence_of :given_name
@@ -85,18 +85,18 @@ class AccountCommon <  ActiveRecord::Base
   validates_format_of :address, :with => /\A(\w|[\ \'\.\,\/\-])+\Z/i, :message => :address_format
   validates_presence_of :zip
   validates_format_of :zip, :with => /[a-z0-9]/, :message => :zip_format
-  
-  
+
+
   has_and_belongs_to_many :radius_groups, :join_table => 'radius_groups_users', :foreign_key => 'user_id'
   has_many :radius_accountings, :foreign_key => :UserName, :primary_key => :username
 
   # Methods
-  
+
   def validate
     # Check e-mail confirmation
     if self.email_changed? or !read_attribute(:email_confirmation).nil?
       if self.email != read_attribute(:email_confirmation)
-          errors.add(:email, :confirmation)
+        errors.add(:email, :confirmation)
       end
     end
     # Check mobile_phone confirmation
@@ -111,7 +111,7 @@ class AccountCommon <  ActiveRecord::Base
           errors.add(:mobile_suffix, :confirmation)
         end
       end
-    end    
+    end
     # Check identity document
     if self.verification_method == VERIFY_BY_DOCUMENT
       # Overrides default image presence verification performed by Imegeflex
@@ -119,9 +119,9 @@ class AccountCommon <  ActiveRecord::Base
         errors.add(:image_file, self.class.missing_image_message)
       end
     end
-    
+
     # Check "enum"-ered fields
-    
+
     @countries = Country.find :all, :conditions => "disabled = 'f'"
     unless @countries.map { |p| p.printable_name }.include?(self.state)
       errors.add_to_base("Parameter's tampering, uh? Nice try but it's going to be beported...")
@@ -136,7 +136,7 @@ class AccountCommon <  ActiveRecord::Base
     end
 
     # Check birthdate
-    
+
     unless self.birth_date.nil? || self.birth_date > Date.civil(1920,1,1)
       errors.add(:birth_date, :invalid)
     end
@@ -162,7 +162,7 @@ class AccountCommon <  ActiveRecord::Base
   end
 
   # "Virtual" accessors
-  
+
   def email_confirmation=(value)
     write_attribute(:email_confirmation, value)
   end
@@ -187,4 +187,45 @@ class AccountCommon <  ActiveRecord::Base
     read_attribute(:mobile_suffix_confirmation) ? read_attribute(:mobile_suffix_confirmation) : self.mobile_suffix
   end
 
+  def session_times_from(date)
+    (date.to_date..Date.today).map do |that_day|
+      sessions = radius_accountings.all(:conditions => "DATE(AcctStartTime) = '#{that_day.to_s}'")
+
+      duration = sessions.inject(0) do |sum, session|
+        if session.AcctStopTime
+          single_session = session.acct_stop_time - session.acct_start_time
+        else
+          single_session = Time.now - session.acct_start_time
+        end
+
+        sum + single_session
+      end
+
+      [that_day.to_time.to_i * 1000, duration]
+    end
+  end
+
+  def traffic_in_sessions_from(date)
+    (date.to_date..Date.today).map do |that_day|
+      sessions = radius_accountings.all(:conditions => "DATE(AcctStartTime) = '#{that_day.to_s}'")
+
+      bytes = sessions.inject(0) do |sum, session|
+        sum + session.AcctInputOctets
+      end
+
+      [that_day.to_time.to_i * 1000, bytes]
+    end
+  end
+
+  def traffic_out_sessions_from(date)
+    (date.to_date..Date.today).map do |that_day|
+      sessions = radius_accountings.all(:conditions => "DATE(AcctStartTime) = '#{that_day.to_s}'")
+
+      bytes = sessions.inject(0) do |sum, session|
+        sum + session.AcctOutputOctets
+      end
+
+      [that_day.to_time.to_i * 1000, bytes]
+    end
+  end
 end

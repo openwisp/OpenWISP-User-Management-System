@@ -100,9 +100,6 @@ it:
   No_user_found_with_that_email: "Nessun utente trovato per l'indirizzo e-mail inserito"
   No_user_found_with_that_mobile_phone: "Nessun utente trovato per il numero di telefono cellulare"
   Not_verified: Non verificato
-  Not_yet_connected: 
-    one: "L'utente non ha ancora effettuato connessioni oggi, non e' possibile tracciare i grafici"
-    other: "L'utente non ha ancora effettuato connessioni negli ultimi {{count}} giorni, non e' possibile tracciare i grafici"
   No_verification_possible: Per questo account non e' possibile effettuare la verifica. Contattare l'assistenza per risolvere il problema.
   Online_users: Utenti online
   Operations: Operazioni

@@ -110,6 +110,10 @@ protected
     end
   end
 
+  def require_operator_or_account
+    current_operator ? require_operator : require_account
+  end
+
   def store_location
     session[:return_to] = request.request_uri
   end

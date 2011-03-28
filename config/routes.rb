@@ -30,7 +30,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :operator_session
 
   map.resources :configurations
-  map.resources :users, :has_many => :radius_accountings
+  map.resources :users do |users|
+    users.resources :radius_accountings
+    users.resources :stats, :only => :show
+  end
   map.resources :operators
   map.resources :password_resets
   map.resources :email_password_resets

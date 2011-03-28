@@ -1,83 +1,91 @@
+<% content_for :after_defaults do %>
+    <%= javascript_include_tag 'highcharts',
+                               'owums.graphs',
+                               'owums.user_logins_graph',
+                               'owums.user_traffic_graph'
+    %>
+<% end %>
+
 <div class="grid_3">
   <div class="box">
     <ul class="nav main">
       <% if current_operator.has_role? 'users_manager' %>
-        <li><%= link_to t(:Edit), edit_user_path(@user) %></li>
+          <li><%= link_to t(:Edit), edit_user_path(@user) %></li>
       <% end %>
       <li><%= link_to t(:Back), :back %></li>
     </ul>
     <div class="block" id="general_info">
       <fieldset>
         <p>
-          <b><%=t :Given_name %></b><br />
+          <strong><%=t :Given_name %></strong><br />
           <%=h @user.given_name %>
         </p>
         <p>
-          <b><%=t :Surname %></b><br />
+          <strong><%=t :Surname %></strong><br />
           <%=h @user.surname %>
         </p>
         <% if @user.verification_method == User::VERIFY_BY_MOBILE %>
-          <p>
-            <b><%=t :Mobile_phone_number %></b><br />
-            <%=h @user.mobile_phone %>
-          </p>
+            <p>
+              <strong><%=t :Mobile_phone_number %></strong><br />
+              <%=h @user.mobile_phone %>
+            </p>
         <% end %>
         <p>
-          <b><%=t :Username %></b><br />
+          <strong><%=t :Username %></strong><br />
           <%=h @user.username %>
         </p>
         <% if @user.has_image? %>
-        <p>
-          <b><%=t :Document_photo %></b><br />
-          <p>
-            <%= link_to embedded_image_tag(@user.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
-          </p>
-        </p>
+            <p>
+              <strong><%=t :Document_photo %></strong><br />
+            <p>
+              <%= link_to embedded_image_tag(@user.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
+            </p>
+            </p>
         <% end %>
         <p>
-          <b><%=t :State %></b><br />
+          <strong><%=t :State %></strong><br />
           <%=h @user.state %>
         </p>
         <p>
-          <b><%=t :City %></b><br />
+          <strong><%=t :City %></strong><br />
           <%=h @user.city %>
         </p>
         <p>
-          <b><%=t :Address %></b><br />
+          <strong><%=t :Address %></strong><br />
           <%=h @user.address %>
         </p>
         <p>
-          <b><%=t :Email %></b><br />
+          <strong><%=t :Email %></strong><br />
           <%=h @user.email %>
         </p>
         <p>
-          <b><%=t :Registration_date %></b><br />
+          <strong><%=t :Registration_date %></strong><br />
           <%=h @user.created_at.strftime("%d/%m/%y %H:%M:%S") %>
         </p>
         <p>
           <b><%=t :Verification_date %></b><br />
           <% if @user.verified %>
-            <%=h @user.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
+              <%=h @user.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
           <% else %>
-            <font color="red"><%=t :Not_verified %></font>
+              <span style="color: red; "><%=t :Not_verified %></span>
           <% end %>
         </p>
         <p>
-          <b><%=t :User_management_logins %></b><br />
+          <strong><%=t :User_management_logins %></strong><br />
           <%=h @user.login_count %>
         </p>
         <p>
-          <b><%=t :Radius_logins %></b><br />
+          <strong><%=t :Radius_logins %></strong><br />
           <%=h @user.radius_accountings.count %>
         </p>
 
         <% if current_operator.has_role? 'users_manager' %>
-          <p>
-          <b><%=t :Radius_groups %></b><br />
-          <% @user.radius_groups.each do |g| %>
-            <%=h g.name %><br />
-          <% end %>
-          </p>
+            <p>
+              <strong><%=t :Radius_groups %></strong><br />
+              <% @user.radius_groups.each do |g| %>
+                  <%=h g.name %><br />
+              <% end %>
+            </p>
         <% end %>
       </fieldset>
     </div>
@@ -90,29 +98,16 @@
     <%= button_to t(:Refresh_data), "", :method => :get %>
   </p>
   <div class="clear"></div>
-<% if @show_graphs %>
-    <div class="box">
-      <h2><%=h t(:Logins) %></h2>
-      <div class="block" id="rad_acct_login_block">
-          <% render_chart fusionchart_path('FCF_Column2D.swf'), '', @login_xml_data, 'chart_login', 500, 200, false, false do %>
-          <% end %>
-      </div>
-      &nbsp;
-    </div>
 
-    <div class="box">
-      <h2><%=h t(:Traffic) %></h2>
-      <div class="block" id="rad_acct_traffic_block">
-          <% render_chart fusionchart_path('FCF_MSColumn2D.swf'), '', @traffic_xml_data, 'chart_traffic', 500, 200, false, false do %>
-          <% end %>
-      </div>
-      &nbsp;
-    </div>
-<% else %>
-    <div class="box">
-      <p><%=t :Not_yet_connected, :count => UsersController::STATS_PERIOD %></p>
-    </div>
-<% end %>
+  <div class="box">
+    <h2><%=h t(:Logins) %></h2>
+    <div class="block user_graph" id="user_logins_graph"></div>
+  </div>
+
+  <div class="box">
+    <h2><%=h t(:Traffic) %></h2>
+    <div class="block user_graph" id="user_traffic_graph"></div>
+  </div>
 </div>
 
 <div class="clear"></div>
