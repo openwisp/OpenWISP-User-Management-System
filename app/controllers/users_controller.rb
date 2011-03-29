@@ -76,60 +76,6 @@ class UsersController < ApplicationController
   end
   
   def show
-    now = Date.today
-    cur = now - STATS_PERIOD.days
-    ups = []
-    downs = []
-    logins = []
-    categories = []
-    yAxisMaxValue = 0
-    @show_graphs = false 
-    while cur <= now do
-      up_traffic   = @user.radius_accountings.sum( 'AcctInputOctets', :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'" )
-      down_traffic = @user.radius_accountings.sum( 'AcctOutputOctets', :conditions => "DATE(AcctStartTime) = '#{cur.to_s}'" )
-      time_count = 0
-      sessions = @user.radius_accountings.find(:all, :conditions => "Date(AcctStartTime) = '#{cur.to_s}'")
-      
-      sessions.each do |session|
-        if session.AcctStopTime
-          time_count += session.acct_stop_time - session.acct_start_time
-        else
-          time_count += Time.now - session.acct_start_time
-        end
-      end
-
-      logins.push :name => cur.to_s, :value => (time_count.to_i / 60.0)
-      categories.push cur.to_s
-      ups.push    up_traffic
-      downs.push  down_traffic
-      
-      yAxisMaxValue = down_traffic if yAxisMaxValue < down_traffic
-      yAxisMaxValue = up_traffic if yAxisMaxValue < up_traffic  
-      cur += 1.day
-    end
-    
-    if yAxisMaxValue > 0
-      @show_graphs = true
-      @login_xml_data = 
-        render_to_string :template => "common/SSFusionChart.xml", 
-                         :locals => { :caption => t(:Last_x_days_time, :count => STATS_PERIOD),
-                                      :suffix => 'Min',
-                                      :decimal_precision => 0,
-                                      :data => logins
-                                    }, :layout => false
-      @traffic_xml_data = 
-        render_to_string :template => "common/MSFusionChart.xml", 
-                         :locals => { :caption => t(:Last_x_days_traffic, :count => STATS_PERIOD),
-                                      :suffix => 'B',
-                                      :categories => categories, 
-                                      :format_number_scale => 1,
-                                      :decimalPrecision => 2,
-                                      :series => [ { :name => t(:Upload), :color => '56B9F9', :data => ups }, 
-                                                   { :name => t(:Download), :color => 'FDC12E', :data => downs } ]
-                                    }, :layout => false
-    else
-      @login_xml_data = @traffic_xml_data = "" 
-    end
   end
  
   def edit
