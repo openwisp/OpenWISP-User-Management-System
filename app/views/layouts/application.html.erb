@@ -72,10 +72,9 @@
           <% if current_operator.has_role? 'operators_manager' %>
               <li><%= link_to t(:Operators), operators_path %></li>
           <% end %>
-          <span class="right">
-              <li><%= link_to t(:Home), operator_path(current_operator) %></li>
-              <li><%= link_to t(:Logout), operator_logout_url %></li>
-           </span>
+
+          <li class="secondary"><%= link_to t(:Logout), operator_logout_url %></li>
+          <li class="secondary"><%= link_to t(:Home), operator_path(current_operator) %></li>
       <% else %>
           <% if !current_account %>
               <li><%= link_to t(:Manage_your_account), account_login_url %></li>
@@ -84,7 +83,7 @@
           <% else %>
               <li><%= link_to t(:Show_account_info), account_path %></li>
               <li><%= link_to t(:Edit_account), edit_account_path %></li>
-              <li><%= link_to t(:Logout), account_logout_url %></li>
+              <li class="secondary"><%= link_to t(:Logout), account_logout_url %></li>
           <% end %>
       <% end %>
     </ul>
