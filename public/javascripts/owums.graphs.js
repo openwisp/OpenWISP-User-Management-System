@@ -43,8 +43,9 @@ var graphs = {
     },
 
     bytes_formatter: function(bytes, label) {
-        if (bytes == 0) return '';
-        var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+	bytes = Math.floor(bytes);
+        if (bytes == 0) return '0 B';
+        var s = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         var e = Math.floor(Math.log(bytes)/Math.log(1024));
         var value = ((bytes/Math.pow(1024, Math.floor(e))).toFixed(2));
         e = (e<0) ? (-e) : e;
@@ -55,7 +56,7 @@ var graphs = {
     time_formatter: function(value) {
         var h=Math.floor(value/3600);
         var m=Math.floor(value/60)-(h*60);
-        var s=value-(h*3600)-(m*60);
+        var s=Math.floor(value-(h*3600)-(m*60));
 
         var hours = (h < 10 ? '0' : '') + h;
         var minutes = (m < 10 ? '0' : '') + m;

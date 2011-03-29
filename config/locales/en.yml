@@ -57,9 +57,12 @@ en:
   Key: Key
   Last_login_at: Last login at
   Last_login_ip: Last login from IP
-  Last_x_days_traffic:
-    one: Today traffic
-    other: Last {{count}} days traffic
+  Last_x_days_traffic_download:
+    one: Downloaded today
+    other: Downloaded last {{count}} days
+  Last_x_days_traffic_upload:
+    one: Uploaded today
+    other: Uploaded last {{count}} days
   Last_x_days_time:
     one: Time spent in the last day
     other: Time spent in the last {{count}} days

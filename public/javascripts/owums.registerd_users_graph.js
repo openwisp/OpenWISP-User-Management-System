@@ -27,11 +27,6 @@ $.getJSON('stats/registered_users', function(registered_users){
         yAxis: {
             title: { text: null }
         },
-        tooltip: {
-            formatter: function() {
-                return '<strong>'+ Highcharts.dateFormat('%a %e %b %Y', this.x) +'</strong><br/>'+ this.y;
-            }
-        },
         series: registered_users
     });
 });

@@ -10,7 +10,9 @@ $.getJSON('stats/account_traffic', function(traffic){
         xAxis: {
             gridLineWidth: 1,
             tickLength: 2,
-            type: 'datetime'
+            type: 'datetime',
+	    minPadding: 0.05,
+	    maxPadding: 0.05
         },
         yAxis: {
             title: { text: null },
@@ -20,7 +22,7 @@ $.getJSON('stats/account_traffic', function(traffic){
         },
         tooltip: {
             formatter: function() {
-                return '<strong>'+ Highcharts.dateFormat('%a %e %b %Y', this.x) +'</strong><br/>'+ graphs.bytes_formatter(this.y, true);
+                return '<span style="font-size:10px">'+Highcharts.dateFormat('%A, %b %e, %Y', this.x)+'<br/><strong>'+graphs.bytes_formatter(this.y, true)+'</strong></span>';
             }
         },
         series: traffic

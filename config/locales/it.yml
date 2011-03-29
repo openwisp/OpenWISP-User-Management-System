@@ -57,9 +57,12 @@ it:
   Key: Chiave
   Last_login_at: Data ultimo accesso
   Last_login_ip: IP ultimo accesso
-  Last_x_days_traffic:
-    one: Traffico di oggi
-    other: Traffico degli ultimi {{count}} giorni
+  Last_x_days_traffic_download:
+    one: Download odierni
+    other: Download degli ultimi {{count}} giorni
+  Last_x_days_traffic_upload:
+    one: Upload odierni
+    other: Upload degli ultimi {{count}} giorni
   Last_x_days_time:
     one: Tempo utilizzato null'ultima sessione
     other: Tempo utilizzato nelle ultime {{count}} sessioni

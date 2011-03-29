@@ -89,11 +89,11 @@ class StatsController < ApplicationController
   def user_traffic
     [
         {
-            :name => I18n.t(:Download),
+            :name => I18n.t(:Last_x_days_traffic_download, :count => 14),
             :data => User.find(params[:user_id]).traffic_out_sessions_from(14.days.ago)
         },
         {
-            :name => I18n.t(:Upload),
+            :name => I18n.t(:Last_x_days_traffic_upload, :count => 14),
             :data => User.find(params[:user_id]).traffic_in_sessions_from(14.days.ago)
         }
     ]

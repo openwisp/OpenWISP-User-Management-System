@@ -10,7 +10,9 @@ $.getJSON(window.location.pathname+'/stats/user_logins', function(logins){
         xAxis: {
             gridLineWidth: 1,
             tickLength: 2,
-            type: 'datetime'
+            type: 'datetime',
+	    minPadding: 0.05,
+	    maxPadding: 0.05
         },
         yAxis: {
             title: { text: null },
@@ -20,7 +22,7 @@ $.getJSON(window.location.pathname+'/stats/user_logins', function(logins){
         },
         tooltip: {
             formatter: function() {
-                return graphs.time_formatter(this.y);
+                return '<span style="font-size:10px">'+Highcharts.dateFormat('%A, %b %e, %Y', this.x)+'<br/><strong>'+graphs.time_formatter(this.y)+'</strong></span>';
             }
         },
         series: logins

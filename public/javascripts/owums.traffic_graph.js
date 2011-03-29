@@ -22,7 +22,8 @@ $.getJSON('stats/traffic', function(traffic){
         xAxis: {
             gridLineWidth: 1,
             tickLength: 2,
-            type: 'datetime'
+            type: 'datetime',
+	    labels: {step:2}
         },
         yAxis: {
             title: { text: null },
@@ -32,7 +33,10 @@ $.getJSON('stats/traffic', function(traffic){
         },
         tooltip: {
             formatter: function() {
-                return '<strong>'+ Highcharts.dateFormat('%a %e %b %Y', this.x) +'</strong><br/>'+ graphs.bytes_formatter(this.y, true);
+		var dateStr = Highcharts.dateFormat('%A, %b %e, %Y', this.x);
+		var nameStr = '<span style="color:'+this.series.color+'">'+this.series.name+'</span>';
+		var valStr = '<strong>'+graphs.bytes_formatter(this.y, true)+'</strong>';
+                return '<span style="font-size:10px">'+dateStr+'<br/>'+nameStr+'<span style="color:black">: </span>'+valStr+'</span>';
             }
         },
         series: traffic

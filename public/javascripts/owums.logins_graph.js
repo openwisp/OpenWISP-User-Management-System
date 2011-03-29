@@ -15,15 +15,11 @@ $.getJSON('stats/logins', function(logins){
         xAxis: {
             gridLineWidth: 1,
             tickLength: 2,
-            type: 'datetime'
+            type: 'datetime',
+	    labels: {step:2}
         },
         yAxis: {
             title: { text: null }
-        },
-        tooltip: {
-            formatter: function() {
-                return '<strong>'+ Highcharts.dateFormat('%a %e %b %Y', this.x) +'</strong><br/>'+ this.y;
-            }
         },
         series: logins
     });
