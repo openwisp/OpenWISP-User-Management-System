@@ -16,7 +16,7 @@ $.getJSON('stats/logins', function(logins){
             gridLineWidth: 1,
             tickLength: 2,
             type: 'datetime',
-	    labels: {step:2}
+            labels: {step:2}
         },
         yAxis: {
             title: { text: null }

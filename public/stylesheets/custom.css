@@ -168,6 +168,10 @@ tr:hover td {
     margin-bottom: 20px;
 }
 
+.center {
+    text-align:center;
+}
+
 .small_graph {
     height:250px;
     margin-bottom: 20px;

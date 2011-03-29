@@ -11,8 +11,8 @@ $.getJSON(window.location.pathname+'/stats/user_traffic', function(traffic){
             gridLineWidth: 1,
             tickLength: 2,
             type: 'datetime',
-	    minPadding: 0.05,
-	    maxPadding: 0.05
+            minPadding: 0.05,
+            maxPadding: 0.05
         },
         yAxis: {
             title: { text: null },
