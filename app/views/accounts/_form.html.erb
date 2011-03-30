@@ -9,7 +9,7 @@
     %>
 <% end %>
 
-<% if Configuration.get('use_mobile_phone_as_username') == "false" %>
+<% if Configuration.get('use_mobile_phone_as_username') == "false" || !form.object.new_record? %>
     <p>
       <strong><%= form.label :username %></strong>
       <br />
