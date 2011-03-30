@@ -16,7 +16,7 @@ Rails::Initializer.run do |config|
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
 
   config.action_controller.session_store = :active_record_store
-  
+
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -39,13 +39,18 @@ Rails::Initializer.run do |config|
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   config.log_level = ENV['RAILS_ENV']=='production' ?
-                                 ActiveSupport::BufferedLogger::Severity::WARN :
-                                 ActiveSupport::BufferedLogger::Severity::DEBUG
+      ActiveSupport::BufferedLogger::Severity::WARN :
+      ActiveSupport::BufferedLogger::Severity::DEBUG
 
   # initializing custom logger
   config.logger = CustomLogger.new(config.log_path, config.log_level)
 
 end
+
+ExceptionNotification::Notifier.exception_recipients = [ 'root@localhost' ]
+ExceptionNotification::Notifier.sender_address = 'root@localhost'
+ExceptionNotification::Notifier.email_prefix = "[OWUMS] "
+ExceptionNotification::Notifier.sections.unshift("owums")
 
 if ENV['RAILS_ENV'] == 'production'
   if !(system 'echo "hello" | text2wave | lame - - >/dev/null 2>&1')
@@ -55,8 +60,4 @@ if ENV['RAILS_ENV'] == 'production'
   end
 end
 
-ExceptionNotifier.exception_recipients = [ 'root@localhost' ]
-ExceptionNotifier.sender_address = 'root@localhost'
-ExceptionNotifier.email_prefix = "[OWUMS] "
-ExceptionNotifier.sections.unshift("owums")
 

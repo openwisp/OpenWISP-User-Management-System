@@ -3,6 +3,8 @@ source :gemcutter
 gem 'rails', '2.3.11'
 gem 'mysql'
 
+gem 'exception_notification', '2.3.3.0'
+
 gem 'authlogic', '2.1.3'
 gem 'acl9', '0.11.0'
 

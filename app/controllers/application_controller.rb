@@ -21,7 +21,7 @@
 class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, :with => :invalid_token
 
-  include ExceptionNotifiable
+  include ExceptionNotification::Notifiable
   include SimpleCaptcha::ControllerHelpers
   has_mobile_fu
 
