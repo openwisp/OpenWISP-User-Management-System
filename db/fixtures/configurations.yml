@@ -122,3 +122,18 @@
   system_key: f
   key: new_account_external_command
   value: ""
+
+44:
+  system_key: f
+  key: exception_notification_recipients
+  value: "root@localhost"
+
+45:
+  system_key: f
+  key: exception_notification_sender
+  value: "root@localhost"
+
+46:
+  system_key: f
+  key: new_account_external_command
+  value: "[OWUMS] "
