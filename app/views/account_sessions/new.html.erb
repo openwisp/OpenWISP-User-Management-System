@@ -1,28 +1,32 @@
 <div class="grid_6 prefix_3 suffix_3">
-	<div class="box">
-		<div class="block" id="login">
-			<% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path do |f| %>
-			<fieldset>
-				<legend><%=t :Login %></legend>       
-				<p><%= f.error_messages %></p>
+  <div class="box">
+    <div class="block" id="login">
+      <% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path do |f| %>
+          <fieldset>
+            <legend><%=t :Login %></legend>
+            <p><%= f.error_messages %></p>
 
-				<p>
-					<%= f.label t(:username) %>
-					<br />
-					<%= f.text_field :username %>
-				</p>
-				<p>
-					<%= f.label t(:password) %>
-					<br />
-					<%= f.password_field :password %>
-				</p>
-				<div id="remember_me"><%= f.check_box :remember_me %><%= f.label t(:remember_me) %></div>
-				<p>
-					<%= f.submit t(:Login), :class => 'submit' %>
-				</p>
-			</fieldset>
-			<% end %>
-		</div>
-	</div>
+            <p>
+              <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
+                  <%= f.label :username, t(:Username_or_mobile) %>
+              <% else %>
+                  <%= f.label t(:username) %>
+              <% end %>
+              <br />
+              <%= f.text_field :username %>
+            </p>
+            <p>
+              <%= f.label t(:password) %>
+              <br />
+              <%= f.password_field :password %>
+            </p>
+            <div id="remember_me"><%= f.check_box :remember_me %><%= f.label t(:remember_me) %></div>
+            <p>
+              <%= f.submit t(:Login), :class => 'submit' %>
+            </p>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
 </div>
 <div class="clear"></div>

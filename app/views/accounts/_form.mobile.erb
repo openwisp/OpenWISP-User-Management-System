@@ -9,12 +9,14 @@
     %>
 <% end %>
 
-<p>
-  <strong><%= form.label :username %></strong>
-  <br />
-  <% if form.object.new_record? %>(<%=t :registration_username_info %>)<br /><% end %>
-  <%= form.text_field :username, :disabled => !form.object.new_record? %>
-</p>
+<% if Configuration.get('use_mobile_phone_as_username') == "false" %>
+    <p>
+      <strong><%= form.label :username %></strong>
+      <br />
+      <% if form.object.new_record? %>(<%=t :registration_username_info %>)<br /><% end %>
+      <%= form.text_field :username, :disabled => !form.object.new_record? %>
+    </p>
+<% end %>
 
 <% if form.object.new_record? %>
     <p>

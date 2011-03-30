@@ -32,6 +32,9 @@ class Account < AccountCommon
   # Security and cleanup
   attr_protected :verified             # SEC: shouldn't be set with mass-assignment!
 
+  # In case a WISP uses the user's mobile phone as the username
+  before_validation_on_create :set_username_from_mobile_phone_if_required
+
   # Utilities
   
   def expire_time
@@ -185,10 +188,11 @@ class Account < AccountCommon
   end  
 
 
-
-
-
   private
+
+  def set_username_from_mobile_phone_if_required
+    self.username = self.mobile_phone if Configuration.get('use_mobile_phone_as_username') == "true"
+  end
 
   def prepare_paypal_payment(return_url, notify_url)
     values = {  

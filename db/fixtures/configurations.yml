@@ -51,7 +51,7 @@
 22:
   system_key: f
   key: credit_card_enabled
-  value: false
+  value: "false"
     
 23:
   system_key: f
@@ -91,7 +91,7 @@
 32:
   system_key: t
   key: mailer_custom_url_enabled
-  value: 'false'
+  value: "false"
 
 33:
   system_key: t
@@ -101,7 +101,7 @@
 34:
   system_key: f
   key: local_time_radius_accounting
-  value: 'true'
+  value: "true"
 
 40:
   system_key: f
@@ -137,3 +137,9 @@
   system_key: f
   key: new_account_external_command
   value: "[OWUMS] "
+
+47:
+  system_key: f
+  key: use_mobile_phone_as_username
+  value: "false"
+
