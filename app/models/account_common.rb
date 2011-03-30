@@ -29,10 +29,10 @@ class AccountCommon <  ActiveRecord::Base
   VERIFICATION_METHODS_SELECT = [ [ I18n.t(:identity_document), 'identity_document' ], [ I18n.t(:mobile_phone), 'mobile_phone' ] ]
 
   if Configuration.get("credit_card_enabled") == "true"
-    SELFVERIFICATION_METHODS = %( mobile_phone credit_card )
+    SELFVERIFICATION_METHODS = %w( mobile_phone credit_card )
     SELFVERIFICATION_METHODS_SELECT = [ [ I18n.t(:mobile_phone), 'mobile_phone' ], [ I18n.t(:credit_card), 'credit_card' ] ]
   else
-    SELFVERIFICATION_METHODS = %( mobile_phone )
+    SELFVERIFICATION_METHODS = %w( mobile_phone )
     SELFVERIFICATION_METHODS_SELECT = [ [ I18n.t(:mobile_phone), 'mobile_phone' ] ]
   end
 

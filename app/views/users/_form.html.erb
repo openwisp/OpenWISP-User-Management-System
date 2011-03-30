@@ -1,59 +1,71 @@
+<% content_for :after_defaults do %>
+    <%= javascript_tag "
+            $(document).ready(function(){
+                $('##{dom_class(form.object)}_verification_method').change(function(){
+                    $('.verification-block').toggle();
+                });
+            });
+        "
+    %>
+<% end %>
+
 <p>
-  <b><%= form.label :username %></b>
+  <strong><%= form.label :username %></strong>
   <br />
   <%= form.text_field :username, :disabled => !form.object.new_record? %>
 </p>
 <% if form.object.verification_method == User::VERIFY_BY_CREDIT_CARD %>
-  <td><b><%= form.label :verification_method %></b></td>
-  <table>
-    <tr>
-      <td><b><%=t :credit_card%></b></td>
-    </tr>
-  </table>
+    <td><strong><%= form.label :verification_method %></strong></td>
+    <table>
+      <tr>
+        <td><strong><%=t :credit_card%></strong></td>
+      </tr>
+    </table>
 <% else %>
-  <p>
-    <b><%= form.label :verification_method %></b>
-    <br />
-    <%= form.select :verification_method, 
-                    User::VERIFICATION_METHODS_SELECT, 
-                    { :multiple => false },
-                    { :onchange => "enable_verification_blocks(this);" }
-    %>
-  </p>
-  <div id="document_verification-block" style="display:<%= form.object.verification_method == 'mobile_phone' ? 'none' : 'inline' %>">
-  <p>
-    <% if form.object.has_image? %>
-      <b><%= form.label :uploaded_document_photo %></b>
-      <br />
-      <p style="text-align:center">
-        <% if form.object.new_record? %>
-          <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
-        <% else %>
-          <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
-        <% end %>
-      </p>
-    <% end %>
-    <b><%= form.label :document_photo %></b>
-    <br />
-    <%= form.file_field :image_file %>
-    <%= form.hidden_field :image_file_temp %>
-  </p>
-  </div>
-  <div id="mobile_phone_verification-block" style="display:<%= form.object.verification_method == 'mobile_phone' ? 'inline' : 'none' %>">
     <p>
-      <b><%= form.label :mobile_phone %></b>
+      <strong><%= form.label :verification_method %></strong>
       <br />
+      <%= form.select :verification_method,
+                      User::VERIFICATION_METHODS_SELECT,
+                      { :multiple => false }
+      %>
+    </p>
+
+    <div class="verification-block">
+      <p>
+        <% if form.object.has_image? %>
+            <strong><%= form.label :uploaded_document_photo %></strong>
+            <br />
+            <p style="text-align:center">
+              <% if form.object.new_record? %>
+                  <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
+              <% else %>
+                  <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
+              <% end %>
+            </p>
+        <% end %>
+        <strong><%= form.label :document_photo %></strong>
+        <br />
+        <%= form.file_field :image_file %>
+        <%= form.hidden_field :image_file_temp %>
+      </p>
+    </div>
+
+    <div class="verification-block" style="display:none">
+      <p>
+        <strong><%= form.label :mobile_phone %></strong>
+        <br />
       <table>
         <tr>
-          <td><b><%= form.label :mobile_prefix %></b></td>
+          <td><strong><%= form.label :mobile_prefix %></strong></td>
           <td>
-            <b><%= form.label :mobile_suffix %></b>
+            <strong><%= form.label :mobile_suffix %></strong>
           </td>
         </tr>
         <tr>
           <td>
-            <%= form.select :mobile_prefix, 
-                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, 
+            <%= form.select :mobile_prefix,
+                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
                             { :prompt => t(:select_prefix), :multiple => false }
             %>
           </td>
@@ -62,21 +74,21 @@
           </td>
         </tr>
       </table>
-    </p>
-    <p>
-      <b><%= form.label :mobile_phone_confirmation %></b>
-      <br />
+      </p>
+      <p>
+        <strong><%= form.label :mobile_phone_confirmation %></strong>
+        <br />
       <table>
         <tr>
-          <td><b><%= form.label :mobile_prefix_confirmation %></b></td>
+          <td><strong><%= form.label :mobile_prefix_confirmation %></strong></td>
           <td>
-            <b><%= form.label :mobile_suffix_confirmation %></b>
+            <strong><%= form.label :mobile_suffix_confirmation %></strong>
           </td>
         </tr>
         <tr>
           <td>
             <%= form.select :mobile_prefix_confirmation ,
-                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, 
+                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
                             { :prompt => t(:select_prefix), :multiple => false }
             %>
           </td>
@@ -85,78 +97,78 @@
           </td>
         </tr>
       </table>
-    </p>
-  </div>
+      </p>
+    </div>
 <% end %>
 <% if current_operator.has_role? 'users_manager' %>
-  <p align="center">
+    <p align="center">
     <table>
       <tbody>
-        <tr>
-          <td><b><%= form.label :verified %></b><%= form.check_box :verified, :checked_value => "1", :unchecked_value => "0" %></td>
-          <td><b><%= form.label :active %></b><%= form.check_box :active, :checked_value => "1", :unchecked_value => "0" %></td>
-        </tr>
+      <tr>
+        <td><strong><%= form.label :verified %></strong><%= form.check_box :verified, :checked_value => "1", :unchecked_value => "0" %></td>
+        <td><strong><%= form.label :active %></strong><%= form.check_box :active, :checked_value => "1", :unchecked_value => "0" %></td>
+      </tr>
       </tbody>
     </table>
-  </p>
+    </p>
 <% end %>
 <p>
-  <b><%= form.label :given_name %></b>
+  <strong><%= form.label :given_name %></strong>
   <br />
   <%= form.text_field :given_name, :size => 20 %>
 </p>
 <p>
-  <b><%= form.label :surname %></b>
+  <strong><%= form.label :surname %></strong>
   <br />
   <%= form.text_field :surname, :size => 20 %>
 </p>
 <p>
-  <b><%= form.label :birth_date %></b>
+  <strong><%= form.label :birth_date %></strong>
   <br />
-  <div style="text-align:center" class="date">
-    <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
-  </div>
+<div style="text-align:center" class="date">
+  <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
+</div>
 </p>
 <p>
-  <b><%= form.label :address %></b>
+  <strong><%= form.label :address %></strong>
   <br />
   <%= form.text_field :address, :size => 50 %>
 </p>
 <p>
-  <b><%= form.label :zip %></b>
+  <strong><%= form.label :zip %></strong>
   <br />
   <%= form.text_field :zip, :size => 10 %>
 </p>
 <p>
-  <b><%= form.label :city %></b>
+  <strong><%= form.label :city %></strong>
   <br />
   <%= form.text_field :city %>
 </p>
 <p>
-  <b><%= form.label :state %></b>
+  <strong><%= form.label :state %></strong>
   <br />
-  <%= form.select :state, 
-                  countries.map { |c| [ c.printable_name, c.printable_name ]}, 
+  <%= form.select :state,
+                  countries.map { |c| [ c.printable_name, c.printable_name ]},
                   { :multiple => false }
   %>
 </p>
 <p>
-  <b><%= form.label :email %></b>
+  <strong><%= form.label :email %></strong>
   <br />
   <%= form.text_field :email %>
 </p>
 <p>
-  <b><%= form.label :email_confirmation %></b>
+  <strong><%= form.label :email_confirmation %></strong>
   <br />
   <%= form.text_field :email_confirmation %>
 </p>
 <p>
-  <b><%= form.label :password, form.object.new_record? ? nil : t(:change_password) %></b>
+  <strong><%= form.label :password, form.object.new_record? ? nil : t(:change_password) %></strong>
   <br />
   <%= form.password_field :password %>
 </p>
 <p>
-  <b><%= form.label :password_confirmation %></b>
+  <strong><%= form.label :password_confirmation %></strong>
   <br />
   <%= form.password_field :password_confirmation %>
 </p>
@@ -177,19 +189,6 @@
 </p>
 
 <% if current_operator.has_role? 'users_manager' %>
-  <%= form.label :radius_groups %>
-  <%= render 'radius_group_select', :user => user, :radius_groups => radius_groups %>
+    <%= form.label :radius_groups %>
+    <%= render 'radius_group_select', :user => user, :radius_groups => radius_groups %>
 <% end %>
-
-<%= javascript_tag '
-  function enable_verification_blocks(el) {
-    if (el.value == "mobile_phone") {
-      document.getElementById("mobile_phone_verification-block").style.display = "inline";
-      document.getElementById("document_verification-block").style.display = "none";
-    } else {
-      document.getElementById("mobile_phone_verification-block").style.display = "none";
-      document.getElementById("document_verification-block").style.display = "inline";    
-    }
-  }
-'
-%>
