@@ -74,7 +74,7 @@ class User < AccountCommon
 
   def self.registered_each_day_from(date)
     (date.to_date..Date.today).map do |that_day|
-      [that_day.to_time.to_i * 1000, registered_on(that_day)]
+      [that_day.to_datetime.to_i * 1000, registered_on(that_day)]
     end
   end
 

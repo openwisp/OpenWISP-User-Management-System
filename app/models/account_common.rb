@@ -201,7 +201,7 @@ class AccountCommon <  ActiveRecord::Base
         sum + single_session
       end
 
-      [that_day.to_time.to_i * 1000, duration]
+      [that_day.to_datetime.to_i * 1000, duration]
     end
   end
 
@@ -213,7 +213,7 @@ class AccountCommon <  ActiveRecord::Base
         sum + session.AcctInputOctets
       end
 
-      [that_day.to_time.to_i * 1000, bytes]
+      [that_day.to_datetime.to_i * 1000, bytes]
     end
   end
 
@@ -225,7 +225,7 @@ class AccountCommon <  ActiveRecord::Base
         sum + session.AcctOutputOctets
       end
 
-      [that_day.to_time.to_i * 1000, bytes]
+      [that_day.to_datetime.to_i * 1000, bytes]
     end
   end
 end

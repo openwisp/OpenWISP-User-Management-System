@@ -47,7 +47,7 @@ class RadiusAccounting < ActiveRecord::Base
           :select => 'AcctStartTime',
           :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
           :group => "DATE(AcctStartTime)"
-    ).map { |on_date, count| [ on_date.to_date.to_time.to_i * 1000, count.to_i ] }
+    ).map { |on_date, count| [ on_date.to_datetime.to_i * 1000, count.to_i ] }
   end
 
   def self.unique_logins_from(date)
@@ -55,7 +55,7 @@ class RadiusAccounting < ActiveRecord::Base
           :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
           :group => "DATE(AcctStartTime)",
           :distinct => true
-    ).map { |on_date, count| [ on_date.to_date.to_time.to_i * 1000, count.to_i ] }
+    ).map { |on_date, count| [ on_date.to_datetime.to_i * 1000, count.to_i ] }
   end
 
   def self.logins_each_day_from(date)
@@ -78,21 +78,21 @@ class RadiusAccounting < ActiveRecord::Base
     sum('AcctInputOctets',
         :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
         :group => "DATE(AcctStartTime)"
-    ).map { |on_date, traffic| [ on_date.to_date.to_time.to_i * 1000, traffic.to_i ] }
+    ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
   def self.traffic_out_from(date)
     sum('AcctOutputOctets',
         :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
         :group => "DATE(AcctStartTime)"
-    ).map { |on_date, traffic| [ on_date.to_date.to_time.to_i * 1000, traffic.to_i ] }
+    ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
   def self.traffic_from(date)
     sum('AcctInputOctets + AcctOutputOctets',
         :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
         :group => "DATE(AcctStartTime)"
-    ).map { |on_date, traffic| [ on_date.to_date.to_time.to_i * 1000, traffic.to_i ] }
+    ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
   def self.traffic_each_day_from(date)
