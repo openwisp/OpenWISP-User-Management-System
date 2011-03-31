@@ -46,6 +46,6 @@ class AccountSessionsController < ApplicationController
   def destroy
     current_account_session.destroy
     flash[:notice] = I18n.t(:Logout_successful)
-    redirect_back_or_default account_login_url
+    redirect_back_or_default root_path
   end
 end

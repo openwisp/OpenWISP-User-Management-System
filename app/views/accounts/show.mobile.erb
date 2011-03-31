@@ -6,95 +6,80 @@
     %>
 <% end %>
 
-<div class="grid_3">
-  <div class="box">
-    <div class="block" id="general_info">
-      <fieldset>
+<% content_for :header do %>
+    <h1><%=t :Information %></h1>
+<% end %>
+
+<div data-role="collapsible-set">
+  <div data-role="collapsible">
+    <h2><%=h t(:Personal_details) %></h2>
+
+    <p>
+      <strong><%=t :Name %></strong>: <%=h @account.given_name %><%=h @account.surname %>
+    </p>
+    <p>
+      <strong><%=t :Username %></strong>: <%=h @account.username %>
+    </p>
+
+    <% if @account.has_image? %>
         <p>
-          <strong><%=t :Given_name %></strong><br />
-          <%=h @account.given_name %>
+          <strong><%=t :Document_photo %></strong><br />
+          <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
         </p>
-        <p>
-          <strong><%=t :Surname %></strong><br />
-          <%=h @account.surname %>
-        </p>
-        <p>
-          <strong><%=t :Username %></strong><br />
-          <%=h @account.username %>
-        </p>
-        <% if @account.has_image? %>
-            <p>
-              <strong><%=t :Document_photo %></strong><br />
-            <p>
-              <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
-            </p>
-            </p>
-        <% end %>
-        <p>
-          <strong><%=t :State %></strong><br />
-          <%=h @account.state %>
-        </p>
-        <p>
-          <strong><%=t :City %></strong><br />
-          <%=h @account.city %>
-        </p>
-        <p>
-          <strong><%=t :Address %></strong><br />
-          <%=h @account.address %>
-        </p>
-        <p>
-          <strong><%=t :Email %></strong><br />
-          <%=h @account.email %>
-        </p>
-        <p>
-          <strong><%=t :Registration_date %></strong><br />
-          <%=h @account.created_at.strftime("%d/%m/%y %H:%M:%S") %>
-        </p>
-        <p>
-          <strong><%=t :Verification_date %></strong><br />
-          <% if @account.verified %>
-              <%=h @account.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
-          <% else %>
-              <span style="color: red; "><%=t :Not_verified %></span>
-          <% end %>
-        </p>
-        <p>
-          <strong><%=t :Radius_logins %></strong><br />
-          <%=h @account.radius_accountings.count %>
-        </p>
-        <p>
-          <strong><%=t :Last_login_ip %></strong><br />
-          <%=h @account.last_login_ip %>
-        </p>
-      </fieldset>
-    </div>
+    <% end %>
+
+    <p>
+      <strong><%=t :State %></strong>: <%=h @account.state %>
+    </p>
+    <p>
+      <strong><%=t :City %></strong>: <%=h @account.city %>
+    </p>
+    <p>
+      <strong><%=t :Address %></strong>: <%=h @account.address %>
+    </p>
+    <p>
+      <strong><%=t :Email %></strong>: <%=h @account.email %>
+    </p>
+
+    <p><%= link_to t(:Edit), edit_account_path, 'data-role' => 'button', 'data-icon' => 'gear' %></p>
   </div>
-</div>
 
-<div class="grid_9">
-  <p>
-    <%= button_to t(:Refresh_data), "", :method => :get %>
-  </p>
-  <div class="clear"></div>
+  <div data-role="collapsible" data-collapsed="true">
+    <h2><%=h t(:Graphs) %></h2>
 
-  <div class="box">
-    <h2><%=h t(:Logins) %></h2>
+    <h3><%=h t(:Logins) %></h3>
     <div class="block account_graph" id="account_logins_graph"></div>
-  </div>
 
-  <div class="box">
-    <h2><%=h t(:Traffic) %></h2>
+    <h3><%=h t(:Traffic) %></h3>
     <div class="block account_graph" id="account_traffic_graph"></div>
   </div>
-</div>
 
-<div class="clear"></div>
-<div class="grid_12">
-  <div class="box">
-    <h2><%=h t(:User_sessions) %></h2>
-    <div class="block" id="rad_list_block">
-      <%= @controller.ajax_accounting_search %>
-    </div>
+  <div data-role="collapsible" data-collapsed="true">
+    <h2><%=h t(:Last_x_user_sessions, :count => 10) %></h2>
+
+    <table>
+      <thead>
+      <tr>
+        <th><strong><%=t :From %></strong></th>
+        <th><strong><%=t :To %></strong></th>
+        <th><strong><%=t :Downloaded_bytes %></strong></th>
+        <th><strong><%=t :Uploaded_bytes %></strong></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @account.last_sessions(10).each do |session| %>
+          <tr>
+            <td><%=l session.acct_start_time, :format => :short %></td>
+            <td><%=l session.acct_stop_time, :format => :short %></td>
+            <td><%=h bytes_to_human(session.acct_output_octets) %></td>
+            <td><%=h bytes_to_human(session.acct_input_octets) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
-<div class="clear"></div>
+
+<p><%= button_to t(:Refresh_data), "", :method => :get, 'data-ajax' => false,  'data-icon' => 'refresh' %></p>
+

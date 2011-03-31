@@ -187,6 +187,10 @@ class AccountCommon <  ActiveRecord::Base
     read_attribute(:mobile_suffix_confirmation) ? read_attribute(:mobile_suffix_confirmation) : self.mobile_suffix
   end
 
+  def last_sessions(count=10)
+    radius_accountings.all(:order => "AcctStartTime DESC", :limit => count)
+  end
+
   def session_times_from(date)
     (date.to_date..Date.today).map do |that_day|
       sessions = radius_accountings.all(:conditions => "DATE(AcctStartTime) = '#{that_day.to_s}'")

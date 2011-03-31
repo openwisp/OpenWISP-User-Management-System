@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
   def document_path(source)
     compute_public_path(source, 'documents')
   end
@@ -25,6 +24,10 @@ module ApplicationHelper
   def link_to_locale(locale, opts={})
     html_opts = locale.to_sym == I18n.locale ? {:class => "current_#{locale}"} : {}
     link_to(image_tag("locale/#{locale}.jpg", :size => "24x24"), {:controller => :application, :action => :set_session_locale, :locale => locale}, html_opts.merge(opts))
+  end
+
+  def back_for_mobile?
+    !(current_page?(root_path) || current_page?(account_path))
   end
 
   def for_ie(opts = {:version => nil, :if => nil}, &block)

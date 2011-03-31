@@ -47,10 +47,12 @@ en:
   From_mobile_phone_number: From phone number
   General_infos: General information
   Given_name: Name
+  Graphs: Graphs
   Home: Home
   Hours: Hours
   If_problem_with_redirect: If your browser does not get redirected after the verification procedure
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: If the mobile phone number you entered is wrong, please wait for the sign up procedure to time out, then try again.
+  Information: Information
   Instruction_reset_has_been_mailed: Instructions on how to reset your password have been emailed to you. Please check your email
   Invalid_request: "Invalid request!"
   IP_address: IP address
@@ -75,6 +77,9 @@ en:
   Last_x_registered_users: 
     one: Last registered user
     other: Last {{count}} registered users
+  Last_x_user_sessions:
+    one: Last session
+    other: Last {{count}} sessions
   Listing_users: Users list
   Loading_data: "Loading data: please wait"
   Logged_in: "Logged in?"
@@ -122,6 +127,7 @@ en:
   Password_successfully_updated: "Password updated successfully"
   Perishable_token_error: "Your account could not be found. Instead of clicking on the URL sent you via email, please try to copy and paste the URL in your browser. 
 If you still have problems resetting the password, try repeating the procedure"
+  Personal_details: "Personal details"
   Please_verify_credit_card: "To fulfill your request we need to verify your identity via credit card. Go to"
   Please_verify_mobile_number: "To fulfill your request we need to verify your mobile phone number"
   Priority: Priority

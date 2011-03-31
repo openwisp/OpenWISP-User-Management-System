@@ -44,13 +44,16 @@ it:
   Forgot_password_description_mobile_phone: Scrivi qui sotto il numero di telefono cellulare utilizzato in fase di registrazione e premi "reimposta password" per recuperare la tua password
   Forgot_password_description_select: Seleziona qui sotto il metodo con il quale vuoi effettuare il ripristino della password
   Free_call_description: "La chiamata è gratuita e, dopo alcuni squilli, terminerà automaticamente."
+  From: Da
   From_mobile_phone_number: Dall'utenza telefonica
   General_infos: Informazioni generali
   Given_name: Nome
+  Graphs: Grafici
   Home: Home
   Hours: Ore
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: Se hai inserito un numero di telefono cellulare errato, attendi la scadenza della registrazione e riprova.
   If_problem_with_redirect: Dopo la procedura di verifica, se non vieni rediretto automaticamente
+  Information: Informazioni
   Instruction_reset_has_been_mailed: Le istruzioni per il recupero della password sono state inviate. Controlla la tua posta elettronica
   Invalid_request: "Richiesta non valida!"
   IP_address: Indirizzo IP
@@ -75,6 +78,9 @@ it:
   Last_x_registered_users: 
     one: Ultimo utente registrato
     other: Ultimi {{count}} utenti registrati
+  Last_x_user_sessions:
+    one: Ultima connessione
+    other: Ultime {{count}} connessioni
   Listing_users: Lista utenti
   Loading_data: "Caricamento dati: attendere"
   Logged_in: "Connesso?"
@@ -120,8 +126,9 @@ it:
   Password_reset_instructions_4: "Nel caso in cui la precedente URL non funzionasse, prova a copiare ed incollare l'indirizzo nel tuo browser."
   Password_reset_instructions_5: "Se continui ad avere problemi per il reset della password, per piacere contattaci."
   Password_successfully_updated: "Password aggiornata correttamente"
-  Perishable_token_error: "Non è stato possibile trovare il tuo account. Invece di cliccare sull'indirizzo che ti è stato inviato per email, prova a copiarlo e incollarlo nel tuo browser. 
+  Perishable_token_error: "Non è stato possibile trovare il tuo account. Invece di cliccare sull'indirizzo che ti è stato inviato per email, prova a copiarlo e incollarlo nel tuo browser.
 Se continui ad avere problemi, ripeti la procedura di recupero password"
+  Personal_details: "Dettagli personali"
   Please_verify_credit_card: "Per procedere con l'operazione è necessario verificare la tua carta di credito. Vai su"
   Please_verify_mobile_number: "Per procedere con l'operazione è necessario verificare il tuo numero di cellulare"
   Priority: Priorità
@@ -152,6 +159,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Stop_time: Fine connessione
   Surname: Cognome
   Title: Titolo
+  To: A
   Too_many_search_results: "Troppi utenti trovati, prova ad essere piu' specifico."
   Top_x_active_users: 
     one: Utente più attivo
@@ -164,7 +172,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Update_my_password_and_log_me_in: Aggiorna la mia password e fammi entrare!
   Upload: Traffico in upload
   Uploaded_bytes: Byte inviati
-  Username: Nome Utente
+  Username: Nome utente
   Username_or_mobile: Numero di cellulare o nome utente
   Users_management: Gestione delle utenze
   User_management_logins: Accessi a questo sistema

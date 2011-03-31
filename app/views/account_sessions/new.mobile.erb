@@ -1,32 +1,39 @@
-<div class="grid_6 prefix_3 suffix_3">
-  <div class="box">
-    <div class="block" id="login">
-      <% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path do |f| %>
-          <fieldset>
-            <legend><%=t :Login %></legend>
-            <p><%= f.error_messages %></p>
+<% content_for :header do %>
+    <h1><%=t :Login %></h1>
+<% end %>
 
-            <p>
-              <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
-                  <%= f.label :username, t(:Username_or_mobile) %>
-              <% else %>
-                  <%= f.label t(:username) %>
-              <% end %>
-              <br />
-              <%= f.text_field :username %>
-            </p>
-            <p>
-              <%= f.label t(:password) %>
-              <br />
-              <%= f.password_field :password %>
-            </p>
-            <div id="remember_me"><%= f.check_box :remember_me %><%= f.label t(:remember_me) %></div>
-            <p>
-              <%= f.submit t(:Login), :class => 'submit' %>
-            </p>
-          </fieldset>
+<% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path do |f| %>
+    <fieldset>
+      <% if @account_session.errors.any? %>
+          <div data-role="fieldcontain">
+            <div data-role="collapsible">
+              <h3><%=t 'activerecord.errors.template.header', :count => @account_session.errors.count %></h3>
+              <p><%= f.error_messages %></p>
+            </div>
+          </div>
       <% end %>
-    </div>
-  </div>
-</div>
-<div class="clear"></div>
+
+      <div data-role="fieldcontain">
+        <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
+            <%= f.label :username, t(:Username_or_mobile) %>
+        <% else %>
+            <%= f.label :username, t(:Username) %>
+        <% end %>
+        <%= f.text_field :username %>
+      </div>
+
+      <div data-role="fieldcontain">
+        <%= f.label t(:password) %>
+        <%= f.password_field :password %>
+      </div>
+
+      <div data-role="fieldcontain">
+        <%= f.label :remember_me, t(:remember_me) %>
+        <%= f.check_box :remember_me, :type => 'checkbox' %>
+      </div>
+
+      <div data-role="fieldcontain">
+        <%= f.submit t(:Login) %>
+      </div>
+    </fieldset>
+<% end %>

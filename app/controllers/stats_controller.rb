@@ -19,7 +19,7 @@ class StatsController < ApplicationController
 
     respond_to do |format|
       format.js { render params[:id] }
-      format.json { render :json => @data }
+      format.any { render :json => @data }
     end
   end
 
