@@ -41,7 +41,7 @@
       <strong><%=t :Email %></strong>: <%=h @account.email %>
     </p>
 
-    <p><%= link_to t(:Edit), edit_account_path, 'data-role' => 'button', 'data-icon' => 'gear' %></p>
+    <p><%= link_to t(:Edit), edit_account_path, 'data-role' => 'button', 'data-icon' => 'gear', 'data-theme' => 'a' %></p>
   </div>
 
   <div data-role="collapsible" data-collapsed="true">
@@ -81,5 +81,5 @@
   </div>
 </div>
 
-<p><%= button_to t(:Refresh_data), "", :method => :get, 'data-ajax' => false,  'data-icon' => 'refresh' %></p>
+<p><%= button_to t(:Refresh_data), "", :method => :get, 'data-ajax' => false,  'data-icon' => 'refresh', 'data-theme' => 'a' %></p>
 

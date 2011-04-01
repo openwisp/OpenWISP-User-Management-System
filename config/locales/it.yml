@@ -17,6 +17,7 @@ it:
     one: Chiama il seguente numero di telefono
     other: Chiama uno dei seguenti numeri di telefono
   Change_password: Cambio password
+  Choose: "Scegli"
   City: Città
   Click_for_eula: Clicca qui per leggere le condizioni di utilizzo del servizio
   Click_for_privacy: "Clicca qui per leggere l'informativa sul trattamento dei dati personali"
@@ -51,6 +52,7 @@ it:
   Graphs: Grafici
   Home: Home
   Hours: Ore
+  I_agree: "Accetto"
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: Se hai inserito un numero di telefono cellulare errato, attendi la scadenza della registrazione e riprova.
   If_problem_with_redirect: Dopo la procedura di verifica, se non vieni rediretto automaticamente
   Information: Informazioni
@@ -131,6 +133,8 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Personal_details: "Dettagli personali"
   Please_verify_credit_card: "Per procedere con l'operazione è necessario verificare la tua carta di credito. Vai su"
   Please_verify_mobile_number: "Per procedere con l'operazione è necessario verificare il tuo numero di cellulare"
+  Prefix: "Prefisso"
+  Prefix_confirmation: "Conferma prefisso"
   Priority: Priorità
   Redirecting_in_x_secs:
     one: "redirezione in {{count}} secondo"
@@ -157,7 +161,11 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Start_time: Inizio connessione
   State: Stato
   Stop_time: Fine connessione
+  Suffix: "Suffisso"
+  Suffix_confirmation: "Conferma suffisso"
   Surname: Cognome
+  Tick_to_agree_to: "Spuntando la seguente casella, dichiaro di accettare i"
+  Tick_to_examine_of: "Spuntando la seguente casella, dichiaro di aver preso visione dell'"
   Title: Titolo
   To: A
   Too_many_search_results: "Troppi utenti trovati, prova ad essere piu' specifico."
@@ -205,7 +213,9 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   document_photo: copia del documento
   email: E-mail
   email_confirmation: conferma e-mail
+  eula: "termini di utilizzo del servizio"
   eula_description: "Spuntando la seguente casella, dichiaro di accettare i termini e le condizioni di utilizzo del servizio"
+  privacy: "informativa sul trattamento dei dati personali"
   privacy_description: "Spuntando la seguente casella, dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali"
   given_name: nome
   identity_document: "Documento d'identità"

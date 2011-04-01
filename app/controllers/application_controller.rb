@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   include ExceptionNotification::Notifiable
   include SimpleCaptcha::ControllerHelpers
-  has_mobile_fu
+  has_mobile_fu true
 
   helper :all
   helper_method :current_account_session, :current_account

@@ -2,7 +2,7 @@
     <h1><%=t :Login %></h1>
 <% end %>
 
-<% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path do |f| %>
+<% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path, :html => {'data-ajax' => false} do |f| %>
     <fieldset>
       <% if @account_session.errors.any? %>
           <div data-role="fieldcontain">

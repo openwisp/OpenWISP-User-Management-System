@@ -2,10 +2,17 @@
     <h1><%=t :Register %></h1>
 <% end %>
 
-<% form_for @account, :builder => ErrorFormBuilder, :url => account_path do |f| %>
+<% form_for @account, :builder => ErrorFormBuilder, :url => account_path, :html => {'data-ajax' => false} do |f| %>
     <fieldset>
-      <legend><%=t :Register %></legend>
-      <p><%=t f.error_messages %></p>
+      <% if @account.errors.any? %>
+          <div data-role="fieldcontain">
+            <div data-role="collapsible">
+              <h3><%=t 'activerecord.errors.template.header', :count => @account.errors.count %></h3>
+              <p><%= f.error_messages %></p>
+            </div>
+          </div>
+      <% end %>
+
       <%= render :partial => "form", :object => f, :locals => { :countries => @countries, :mobile_prefixes => @mobile_prefixes } %>
     </fieldset>
 <% end %>
