@@ -141,6 +141,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
     other: "redirezione in {{count}} secondi"
   Radius_logins: Accessi a Internet
   Radius_groups: Gruppi radius
+  Recover: "Ripristino"
   Refresh_data: Aggiorna dati
   Register: Registrati
   Registered_users: Utenti registrati
@@ -177,7 +178,8 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Undo: Annulla
   Unique_logins: Accessi unici
   Update: Aggiorna
-  Update_my_password_and_log_me_in: Aggiorna la mia password e fammi entrare!
+  Update_my_password: "Aggiorna la mia password"
+  Update_my_password_and_log_me_in: "Aggiorna la mia password e fammi entrare!"
   Upload: Traffico in upload
   Uploaded_bytes: Byte inviati
   Username: Nome utente
@@ -189,6 +191,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Users_management_system: Sistema di gestione delle utenze
   Users_nationality: "Nazionalita\' utenti"
   Value: Valore
+  Verification: "Verifica"
   Verification_date: Data di verifica account
   Verification_expire_time_x_mins: 
     one: "Ti rimane circa {{count}} minuto per verificare il tuo account."

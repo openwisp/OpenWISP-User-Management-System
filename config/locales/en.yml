@@ -141,6 +141,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Radius_logins: Logins to Internet
   Radius_groups: Radius groups
   Refresh_data: Refresh data
+  Recover: "Recover"
   Register: Sign up
   Registered_users: Registered users
   Registration_date: Sign up date
@@ -175,7 +176,8 @@ If you still have problems resetting the password, try repeating the procedure"
   Undo: Undo
   Unique_logins: Unique logins
   Update: Update
-  Update_my_password_and_log_me_in: Update my password and log me in!
+  Update_my_password: "Update my password"
+  Update_my_password_and_log_me_in: "Update my password and log me in!"
   Upload: Upload traffic
   Uploaded_bytes: Uploaded bytes
   Username: Username
@@ -187,6 +189,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Users_management_system: Account management system
   Users_nationality: Users nationality
   Value: Value
+  Verification: "Verification"
   Verification_date: Verification date
   Verification_expire_time_x_mins: 
     one: "You have about {{count}} minute left to verify your account."
