@@ -30,9 +30,9 @@ module ApplicationHelper
     !(
         current_page?(root_path) ||
         current_page?(account_path) ||
-        current_page?(:controller => :mobile_phone_password_resets, :action => :edit) ||
         current_page?(:controller => :email_password_resets, :action => :edit) ||
-        current_page?(:controller => :mobile_phone_password_resets)
+        current_page?(:controller => :mobile_phone_password_resets) ||
+        current_page?(:controller => :mobile_phone_password_resets, :action => :recovery_confirmation)
     )
   end
 

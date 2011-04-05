@@ -4,15 +4,15 @@
   <% else %>
       <%=t :Please_verify_mobile_number %><br /><br />
       <%=t :From_mobile_phone_number %><br />
-      <%=h @account.mobile_phone %><br /><br />
+      <p class="ui-link"><%=h @account.mobile_phone %></p><br /><br />
       <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
       <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
       <% numbers.each do |number| %>
-          <p style="background-color:green;color:white"><a href="tel:<%=h number %>"><%=h number %></a></p>
+          <p style="background-color:green"><a href="tel:<%=h number %>" class="ui-link"><%=h number %></a></p>
       <% end %>
       <%=t :Free_call_description %><br />
   <% end %>
   <p style="font-size:90%">
-    <%=t :If_problem_with_redirect %>, <%= link_to t(:click_here), recovery_confirmation_path(@account.single_access_token), 'data-ajax' => 'false' %>
+    <%=t :If_problem_with_redirect %>, <%= link_to t(:click_here), recovery_confirmation_path(@account.single_access_token), :class => 'ui-link', 'data-ajax' => 'false' %>
   </p>
 </div>

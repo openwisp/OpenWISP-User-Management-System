@@ -163,7 +163,9 @@
         </legend>
 
         <%= label_tag 'account_eula_acceptance', t(:I_agree) %>
-        <%= form.check_box :eula_acceptance %>
+        <%= check_box_tag 'account_eula_acceptance', '1', form.object.eula_acceptance?, {
+                :name => 'account[eula_acceptance]'
+        } %>
       </fieldset>
     </div>
 
@@ -174,7 +176,9 @@
         </legend>
 
         <%= label_tag 'account_privacy_acceptance', t(:I_agree) %>
-        <%= form.check_box :privacy_acceptance %>
+        <%= check_box_tag 'account_privacy_acceptance', '1', form.object.privacy_acceptance?, {
+                :name => 'account[privacy_acceptance]'
+        } %>
       </fieldset>
     </div>
 <% else %>
