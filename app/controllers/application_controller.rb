@@ -53,7 +53,14 @@ class ApplicationController < ActionController::Base
     render "common/invalid_token"
   end
 
-protected
+  protected
+
+  # Disable mobile_fu for actions
+  # that don't have the :mobile format
+  def set_format_to_html!
+    request.format = :html
+  end
+
   def current_account_session
     return @current_account_session if defined?(@current_account_session)
     @current_account_session = AccountSession.find

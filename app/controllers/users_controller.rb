@@ -18,7 +18,8 @@
 class UsersController < ApplicationController
   before_filter :require_operator
   before_filter :load_user, :except => [ :index, :new, :create, :ajax_search, :browse, :search, :find ]
- 
+  before_filter :set_format_to_html!
+
   access_control do
     default :deny
     

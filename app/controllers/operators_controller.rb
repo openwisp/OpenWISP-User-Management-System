@@ -1,5 +1,6 @@
 class OperatorsController < ApplicationController
   before_filter :require_operator
+  before_filter :set_format_to_html!
 
   access_control do
     default :deny
