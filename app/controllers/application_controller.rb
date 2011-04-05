@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   include ExceptionNotification::Notifiable
   include SimpleCaptcha::ControllerHelpers
-  has_mobile_fu
+
 
   helper :all
   helper_method :current_account_session, :current_account
@@ -37,9 +37,12 @@ class ApplicationController < ActionController::Base
   # Set locale from session
   before_filter :set_locale
 
+  # Controllers for which there is no mobile layout
+  WITHOUT_MOBILE_TEMPLATE = %w(operators operator_sessions users configurations stats)
+
   # Load mobile_fu only for controllers
   # with mobile views
-  before_filter :load_mobile_fu, :unless => :controller_has_no_mobile?
+  before_filter :load_mobile_fu
 
   def available_locales; AVAILABLE_LOCALES; end
 
@@ -60,13 +63,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def controller_has_no_mobile?
-    # Controllers for which there is no mobile layout
-    controllers = [:operators, :operator_sessions, :users, :configurations, :stats]
-    controllers.any?{ |current| controller_name == current }
+    WITHOUT_MOBILE_TEMPLATE.any?{ |current| controller_name == current }
   end
 
   def load_mobile_fu
-    self.class.has_mobile_fu
+    self.class.has_mobile_fu unless controller_has_no_mobile?
   end
 
   def current_account_session

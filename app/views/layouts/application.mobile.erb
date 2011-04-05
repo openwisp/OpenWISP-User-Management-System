@@ -20,7 +20,7 @@
         <a href="#" data-rel="back" data-icon="back"><%=t :Back %></a>
     <% end %>
 
-    <% if current_page? root_path %>
+    <% if current_page?(root_path) || current_page?(root_path.chop) %>
         <h1>
           <%= link_to image_tag("logo_caspur.png", :border => 0, :size => "64x50", :alt => 'Open WISP User Management System', :class => "wums_logo"), :root %><br/>
           Open WISP
@@ -35,7 +35,7 @@
   </div>
 
   <div data-role="content">
-    <% if current_page? root_path %>
+    <% if current_page?(root_path) || current_page?(root_path.chop) %>
         <ul data-role="listview" data-inset="true">
           <% if !current_account %>
               <li><%= link_to t(:Manage_your_account), account_login_url %></li>
@@ -45,7 +45,7 @@
         </ul>
     <% end %>
 
-    <%= yield unless current_page? root_path %>
+    <%= yield unless current_page?(root_path) || current_page?(root_path.chop) %>
   </div>
 </div>
 </body>

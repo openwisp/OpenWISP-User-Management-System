@@ -28,7 +28,8 @@ module ApplicationHelper
 
   def back_for_mobile?
     !(
-    current_page?(root_path) ||
+    	current_page?(root_path) ||
+    	current_page?(root_path.chop) ||
         current_page?(account_path) ||
         current_page?(:controller => :email_password_resets, :action => :edit) ||
         current_page?(:controller => :mobile_phone_password_resets) ||
