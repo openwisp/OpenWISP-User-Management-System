@@ -28,7 +28,7 @@ module ApplicationHelper
 
   def back_for_mobile?
     !(
-        current_page?(root_path) ||
+    current_page?(root_path) ||
         current_page?(account_path) ||
         current_page?(:controller => :email_password_resets, :action => :edit) ||
         current_page?(:controller => :mobile_phone_password_resets) ||
@@ -44,5 +44,10 @@ module ApplicationHelper
     open_tag << " #{opts[:version]}" unless opts[:version].nil?
     open_tag << "]>"
     concat(open_tag+to_include+"<![endif]-->")
+  end
+
+  def div_tag(opts = {}, &block)
+    opts[:style] = 'display:none' if opts[:hide_if]
+    content_tag(:div, opts, &block)
   end
 end
