@@ -37,6 +37,10 @@ class ApplicationController < ActionController::Base
   # Set locale from session
   before_filter :set_locale
 
+  # Load mobile_fu only for controllers
+  # with mobile views
+  before_filter :load_mobile_fu, :unless => :controller_has_no_mobile?
+
   def available_locales; AVAILABLE_LOCALES; end
 
   def set_locale
@@ -55,10 +59,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # Disable mobile_fu for actions
-  # that don't have the :mobile format
-  def set_format_to_html!
-    request.format = :html
+  def controller_has_no_mobile?
+    # Controllers for which there is no mobile layout
+    controllers = [:operators, :operator_sessions, :users, :configurations, :stats]
+    controllers.any?{ |current| controller_name == current }
+  end
+
+  def load_mobile_fu
+    self.class.has_mobile_fu
   end
 
   def current_account_session

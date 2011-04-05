@@ -18,7 +18,6 @@
 class OperatorSessionsController < ApplicationController
   before_filter :require_no_operator, :only => [:new, :create]
   before_filter :require_operator, :only => :destroy
-  before_filter :set_format_to_html!
 
   def new
     @operator_session = OperatorSession.new
