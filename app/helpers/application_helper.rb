@@ -26,15 +26,16 @@ module ApplicationHelper
     link_to(image_tag("locale/#{locale}.jpg", :size => "24x24"), {:controller => :application, :action => :set_session_locale, :locale => locale}, html_opts.merge(opts))
   end
 
-  def back_for_mobile?
-    !(
-    	current_page?(root_path) ||
-    	current_page?(root_path.chop) ||
-        current_page?(account_path) ||
-        current_page?(:controller => :email_password_resets, :action => :edit) ||
-        current_page?(:controller => :mobile_phone_password_resets) ||
-        current_page?(:controller => :mobile_phone_password_resets, :action => :recovery_confirmation)
-    )
+  def mobile_link_back_to(path, opts={})
+    link_to t(:Back), path, {'data-icon' => 'back', 'data-role' => 'button', 'data-direction' => 'reverse'}.merge(opts)
+  end
+
+  def mobile_link_to_logout(opts={})
+    link_to t(:Logout), account_logout_path, {'data-icon' => 'delete', 'data-role' => 'button', 'data-direction' => 'reverse', :class => 'ui-btn-right'}.merge(opts)
+  end
+
+  def on_root?
+    current_page?(root_path) || current_page?(root_path.chop)
   end
 
   def for_ie(opts = {:version => nil, :if => nil}, &block)

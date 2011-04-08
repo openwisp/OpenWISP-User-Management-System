@@ -9,7 +9,7 @@
       <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
       <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
       <% numbers.each do |number| %>
-        <p style="background-color:green;color:white"><%=h number %></p>
+        <p style="background-color:#90ee90"><%=h number %></p>
       <% end %>
       <%=t :Free_call_description %><br />
       <br />

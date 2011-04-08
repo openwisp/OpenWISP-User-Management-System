@@ -1,4 +1,5 @@
 table {
+    width: 96%;
 	font-size: 12px;
 	border-collapse: collapse;
 	text-align: left;
@@ -22,7 +23,15 @@ tbody tr:hover td {
 	color: #000;
 }
 
+#notice {
+    background-color:#90ee90;
+}
+
+#error {
+    background-color:#f08080;
+}
+
 .account_graph {
-    width: 100%;
+    width: 97%;
     height: 220px;
 }

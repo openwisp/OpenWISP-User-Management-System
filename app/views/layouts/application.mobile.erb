@@ -19,28 +19,27 @@
 </head>
 <body>
 
-<div data-role="page" data-backbtn="<%= back_for_mobile? %>">
-  <div data-role="header" data-position="inline">
-    <% if back_for_mobile? %>
-        <a href="#" data-rel="back" data-icon="back"><%=t :Back %></a>
-    <% end %>
-
-    <% if current_page?(root_path) || current_page?(root_path.chop) %>
-        <h1>
-          <%= link_to image_tag("logo_caspur.png", :border => 0, :size => "64x50", :alt => 'Open WISP User Management System', :class => "wums_logo"), :root %><br/>
-          OpenWISP
-        </h1>
+<div data-role="page">
+  <div data-role="header" data-position="inline" data-backbtn="false">
+    <% if on_root? %>
+        <h1><%= image_tag "logo_caspur.png", :size => "64x50", :alt => 'Open WISP User Management System' %><br/>OpenWISP</h1>
     <% else %>
-        <%= yield :header %>
+        <%= yield :header %> <%= yield :back %>
     <% end %>
 
     <% if current_account %>
-        <%= link_to t(:Logout), account_logout_path, 'data-icon' => 'delete', 'data-ajax' => false, :class => 'ui-btn-right' %>
+        <%= mobile_link_to_logout %>
     <% end %>
   </div>
 
+  <% if flash[:notice] %>
+      <ul id="notice" data-role="listview" data-theme="g">
+        <li><%= flash[:notice] %></li>
+      </ul>
+  <% end %>
+
   <div data-role="content">
-    <% if current_page?(root_path) || current_page?(root_path.chop) %>
+    <% if on_root? %>
         <ul data-role="listview" data-inset="true">
           <% if !current_account %>
               <li><%= link_to t(:Manage_your_account), account_login_path %></li>
@@ -50,7 +49,7 @@
         </ul>
     <% end %>
 
-    <%= yield unless current_page?(root_path) || current_page?(root_path.chop) %>
+    <%= yield unless on_root? %>
   </div>
 </div>
 </body>

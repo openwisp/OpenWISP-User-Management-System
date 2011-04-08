@@ -9,7 +9,7 @@
           <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
           <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
           <% numbers.each do |number| %>
-              <p style="background-color:green"><a href="tel:<%=h number %>" class="ui-link"><%=h number %></a></p>
+              <p style="background-color:#90ee90"><a href="tel:<%=h number %>" class="ui-link"><%=h number %></a></p>
           <% end %>
           <%=t :Free_call_description %><br />
           <br />
@@ -27,6 +27,8 @@
           <% end %>
       <% end %>
   <% end %>
-  <p style="font-size:90%"><%=t :If_problem_with_redirect %> <%= link_to t(:click_here), account_url, :class => 'ui-link', 'data-ajax' => false %></p>
+  <% unless js_enabled_mobile_device? %>
+      <p style="font-size:90%"><%=t :If_problem_with_redirect %> <%= link_to t(:click_here), account_url, :class => 'ui-link', 'data-ajax' => false %></p>
+  <% end %>
 </div>
 

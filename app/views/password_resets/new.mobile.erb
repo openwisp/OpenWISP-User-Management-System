@@ -2,6 +2,10 @@
     <h1><%=t :Recover %></h1>
 <% end %>
 
+<% content_for :back do %>
+    <%= mobile_link_back_to root_path %>
+<% end %>
+
 <% form_tag password_resets_path do %>
     <fieldset>
       <div data-role="fieldcontain">

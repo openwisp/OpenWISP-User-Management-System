@@ -2,6 +2,10 @@
     <h1><%=t :Register %></h1>
 <% end %>
 
+<% content_for :back do %>
+    <%= mobile_link_back_to root_path %>
+<% end %>
+
 <% form_for @account, :builder => ErrorFormBuilder, :url => account_path, :html => {'data-ajax' => false} do |f| %>
     <fieldset>
       <% if @account.errors.any? %>
