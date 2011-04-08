@@ -7,37 +7,35 @@
 <% end %>
 
 <% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path, :html => {'data-ajax' => false} do |f| %>
-    <fieldset>
+    <ul data-role="listview" data-inset="true">
       <% if @account_session.errors.any? %>
-          <div data-role="fieldcontain">
-            <div data-role="collapsible">
-              <h3><%=t 'activerecord.errors.template.header', :count => @account_session.errors.count %></h3>
-              <p><%= f.error_messages %></p>
-            </div>
+          <div data-role="collapsible">
+            <h3><%=t 'activerecord.errors.template.header', :count => @account_session.errors.count %></h3>
+            <p><%= f.error_messages %></p>
           </div>
       <% end %>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
             <%= f.label :username, t(:Username_or_mobile) %>
         <% else %>
             <%= f.label :username, t(:Username) %>
         <% end %>
         <%= f.text_field :username %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <%= f.label t(:password) %>
         <%= f.password_field :password %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <%= f.label :remember_me, t(:remember_me) %>
         <%= f.check_box :remember_me, :type => 'checkbox' %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li>
         <%= f.submit t(:Login) %>
-      </div>
-    </fieldset>
+      </li>
+    </ul>
 <% end %>

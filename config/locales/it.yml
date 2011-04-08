@@ -245,7 +245,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   registration_mobile_phone_info: Dovrai effettuare una chiamata da questo numero. Puoi utilizzare solo numeri di operatori italiani
   registration_password_info: Dovrà contenere almeno una lettera ed un numero e dovrà essere di almeno 8 caratteri
   registration_username_info: Dovrai utilizzare questo username e la tua password per accedere al servizio
-  remember_me: ricorda il mio login
+  remember_me: ricorda il login
   results: risultati
   select_prefix: Prefisso telefonico
   state: stato

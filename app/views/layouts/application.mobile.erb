@@ -3,10 +3,12 @@
 <head>
   <title><%=t :Users_management %></title>
 
-  <!-- Apple Webapp -->
-  <link rel="apple-touch-icon" href="<%= image_path 'logo_caspur.png' %>" />
-  <link rel="apple-touch-startup-image" href="<%= image_path 'logo_caspur.png' %>" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <% if is_apple_device? %>
+      <!-- Apple Webapp -->
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="viewport" content="initial-scale=1,user-scalable=no" />
+      <link rel="apple-touch-icon" href="<%= image_path 'logo_caspur.png' %>" />
+  <% end %>
 
   <%= stylesheet_link_tag 'jquery.mobile/styles', 'custom-mobile' %>
 
