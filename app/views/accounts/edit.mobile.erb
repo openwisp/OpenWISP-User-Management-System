@@ -3,6 +3,15 @@
 <% end %>
 
 <% content_for :back do %>
+    <%#
+     TODO:
+        graphs don't work when going back
+        because jQuery mobile gets the wrong
+        url from history so the json path
+        for graphs cannot be reached...
+        Should find a solution or wait for
+        jQuery mobile's fix.
+    %>
     <%= mobile_link_back_to account_path %>
 <% end %>
 
