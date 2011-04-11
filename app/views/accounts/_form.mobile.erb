@@ -58,6 +58,7 @@
       <% if form.object.verification_method == Account::VERIFY_BY_MOBILE %>
           <li data-role="fieldcontain">
             <%= form.label :mobile_phone %>
+            <p>&nbsp;</p>
 
             <%= form.label :mobile_prefix, t(:Prefix) %>
             <%= form.select :mobile_prefix,
@@ -89,6 +90,8 @@
 
   <li data-role="fieldcontain">
     <%= form.label :birth_date %>
+    <p>&nbsp;</p>
+
     <% if form.object.new_record? %>
         <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
     <% else %>
@@ -118,11 +121,11 @@
 
   <li data-role="fieldcontain">
     <%= form.label :email %>
+    <%= form.text_field :email %>
 
     <% if form.object.new_record? %>
         (<%=t :registration_email_info %>)
     <% end %>
-    <%= form.text_field :email %>
   </li>
 
   <li data-role="fieldcontain">
@@ -132,8 +135,9 @@
 
   <li data-role="fieldcontain">
     <%= form.label :password, form.object.new_record? ? nil : t(:change_password) %>
-    (<%=t :registration_password_info %>)
     <%= form.password_field :password %>
+
+    (<%=t :registration_password_info %>)
   </li>
 
   <li data-role="fieldcontain">
