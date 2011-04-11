@@ -12,8 +12,7 @@
 
   <%= stylesheet_link_tag 'jquery.mobile/styles', 'custom-mobile' %>
 
-  <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag 'jquery.mobile' %>
+  <%= javascript_include_tag :defaults, 'application-mobile', 'jquery.mobile' %>
 
   <%= yield :after_defaults %>
 

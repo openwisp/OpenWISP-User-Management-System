@@ -1,14 +1,3 @@
-<% content_for :after_defaults do %>
-    <%= javascript_tag "
-            $(document).ready(function(){
-                $('##{dom_class(form.object)}_verification_method').change(function(){
-                    $('.verification-block').toggle();
-                });
-            });
-        "
-    %>
-<% end %>
-
 <p>
   <strong><%= form.label :username %></strong>
   <br />

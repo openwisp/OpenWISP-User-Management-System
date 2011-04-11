@@ -454,7 +454,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
         radius_groups: "Gruppi RADIUS"
         eula_acceptance: "Condizioni e termini di utilizzo del servizio"
         privacy_acceptance: "Informativa sul trattamento dei dati personali"
-        document_photo: "Fotocopia di un documento d'identità"
+        document_photo: "Fotocopia del documento d'identità"
       account:
         mobile_phone: "Numero di cellulare"
         mobile_phone_confirmation: "Conferma numero di cellulare"
@@ -482,7 +482,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
         radius_groups: "Gruppi RADIUS"
         eula_acceptance: "Condizioni e termini di utilizzo del servizio"
         privacy_acceptance: "Informativa sul trattamento dei dati personali"
-        document_photo: "Fotocopia di un documento d'identità"
+        document_photo: "Fotocopia del documento d'identità"
 
   authlogic:
     error_messages:

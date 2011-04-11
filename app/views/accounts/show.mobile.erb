@@ -23,7 +23,7 @@
 
     <% if @account.has_image? %>
         <p>
-          <strong><%=t :Document_photo %></strong><br />
+          <strong><%=t :Document_photo %></strong>:<br />
           <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
         </p>
     <% end %>
@@ -81,5 +81,7 @@
   </div>
 </div>
 
-<p><%= button_to t(:Refresh_data), "", :method => :get, 'data-ajax' => false,  'data-icon' => 'refresh', 'data-theme' => 'a' %></p>
+<% form_tag account_path, :method => :get, 'data-ajax' => false, :class => 'button-to' do %>
+    <p><%= submit_tag t(:Refresh_data), 'data-icon' => 'refresh', 'data-theme' => 'a', :name => "" %></p>
+<% end %>
 
