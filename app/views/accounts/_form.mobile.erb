@@ -124,6 +124,7 @@
     <%= form.text_field :email %>
 
     <% if form.object.new_record? %>
+        <p>&nbsp;</p>
         (<%=t :registration_email_info %>)
     <% end %>
   </li>
@@ -137,6 +138,7 @@
     <%= form.label :password, form.object.new_record? ? nil : t(:change_password) %>
     <%= form.password_field :password %>
 
+    <p>&nbsp;</p>
     (<%=t :registration_password_info %>)
   </li>
 
