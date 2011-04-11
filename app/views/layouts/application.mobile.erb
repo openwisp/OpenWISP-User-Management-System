@@ -49,9 +49,20 @@
               <li><%= link_to t(:Forgot_password), password_reset_path %></li>
           <% end %>
         </ul>
+
+        <fieldset class="ui-grid-a">
+          <div class="ui-block-a"><%= link_to_locale 'it', 'data-role' => 'button', 'data-transition' => 'flip' %></div>
+          <div class="ui-block-b"><%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %></div>
+        </fieldset>
     <% end %>
 
     <%= yield unless on_root? %>
+  </div>
+
+  <p>&nbsp;</p>
+
+  <div id="footer" data-role="footer">
+    <p><%=t :Created_by %> <a href="https://spider.caspur.it/" target="_blank">CASPUR</a></p>
   </div>
 </div>
 </body>

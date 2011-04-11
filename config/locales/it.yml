@@ -25,7 +25,8 @@ it:
   Configuration_key_updated: Chiave di configurazione aggiornata
   Cookies_disabled_or_session_expired: Il tuo browser ha i cookie disabilitati oppure la sessione è scaduta.
   Create: Crea
-  Create_user: Crea utente 
+  Create_user: Crea utente
+  Created_by: "Creato da"
   Current_login_at: Data accesso corrente
   Current_login_ip: IP accesso corrente
   Destroy: Elimina

@@ -1,26 +1,34 @@
 table {
     width: 96%;
-	font-size: 12px;
-	border-collapse: collapse;
-	text-align: left;
+    font-size: 12px;
+    border-collapse: collapse;
+    text-align: left;
 }
 
 th {
-	font-size: 14px;
-	font-weight: normal;
-	color: #333;
-	padding: 10px 8px;
-	border-bottom: 2px solid #999;
+    font-size: 14px;
+    font-weight: normal;
+    color: #333;
+    padding: 10px 8px;
+    border-bottom: 2px solid #999;
 }
 
 td {
-	border-bottom: 1px solid #ccc;
-	color: #666;
-	padding: 6px 8px;
+    border-bottom: 1px solid #ccc;
+    color: #666;
+    padding: 6px 8px;
 }
 
 tbody tr:hover td {
-	color: #000;
+    color: #000;
+}
+
+#footer {
+    font-size:80%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 #notice {
