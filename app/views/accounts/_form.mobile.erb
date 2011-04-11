@@ -182,10 +182,12 @@
         <fieldset data-role="controlgroup">
           <%= label_tag 'account_disable_account', t(:disable_account) %>
           <%= check_box_tag 'account_disable_account', '1', false, {
-                  :onclick => "if (this.checked) { return #{confirm_javascript_function(t(:Account_disable_confirmation))};}",
                   :name => 'account[disable_account]',
                   :type => 'checkbox'
           } %>
+
+          <p>&nbsp;</p>
+          (<%=t :Account_disable_confirmation %>)
         </fieldset>
       </li>
   <% end %>
