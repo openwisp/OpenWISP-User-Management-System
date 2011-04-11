@@ -7,14 +7,14 @@
 <% end %>
 
 <% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path, :html => {'data-ajax' => false} do |f| %>
-    <ul data-role="listview" data-inset="true">
-      <% if @account_session.errors.any? %>
-          <div data-role="collapsible">
-            <h3><%=t 'activerecord.errors.template.header', :count => @account_session.errors.count %></h3>
-            <p><%= f.error_messages %></p>
-          </div>
-      <% end %>
+    <% if @account_session.errors.any? %>
+        <div data-role="collapsible">
+          <h3><%=t 'activerecord.errors.template.header', :count => @account_session.errors.count %></h3>
+          <p><%= f.error_messages %></p>
+        </div>
+    <% end %>
 
+    <ul data-role="listview" data-inset="true">
       <li data-role="fieldcontain">
         <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
             <%= f.label :username, t(:Username_or_mobile) %>

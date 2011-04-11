@@ -7,26 +7,28 @@
 <% end %>
 
 <% form_tag mobile_phone_password_resets_path, 'data-ajax' => false do %>
-    <fieldset>
-      <div data-role="fieldcontain">
-        <p><%=t :Forgot_password_description_mobile_phone %></p>
-      </div>
+    <ul data-role="listview" data-inset="true">
+      <li data-role="fieldcontain">
+        <%=t :Forgot_password_description_mobile_phone_for_mobile %>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <%= label_tag t(:mobile_phone) %>
+        <p>&nbsp;</p>
+
         <%= label_tag 'mobile_phone_password_reset_mobile_prefix', t(:mobile_prefix) %>
         <%= select_tag 'mobile_phone_password_reset_mobile_prefix', options_for_select(@mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ] }),
                        { :prompt => t(:select_prefix), :multiple => false, :name => 'mobile_phone_password_reset[mobile_prefix]' }
         %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <%= label_tag 'mobile_phone_password_reset_mobile_suffix', t(:mobile_suffix) %>
         <%= text_field_tag 'mobile_phone_password_reset_mobile_suffix', {}, :name => 'mobile_phone_password_reset[mobile_suffix]' %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
-        <%= submit_tag t(:Reset_password) %>
-      </div>
-    </fieldset>
+      <li>
+        <%= submit_tag t(:Reset) %>
+      </li>
+    </ul>
 <% end %>

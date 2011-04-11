@@ -42,7 +42,9 @@ en:
   Flash_not_supported: Flash not supported
   Forgot_password: Password forgotten
   Forgot_password_description_email: Use the email you used to sign up to fill the form below and click "reset password" to get a new password
+  Forgot_password_description_email_for_mobile: Use the email you used to sign up to fill the form below and click "reset" to get a new password
   Forgot_password_description_mobile_phone: Use the mobile phone's number you used to sign up to fill the form below and click "reset password" to get a new password
+  Forgot_password_description_mobile_phone_for_mobile: Use the mobile phone's number you used to sign up to fill the form below and click "reset" to get a new password
   Forgot_password_description_select: Select below how to reset your password
   Free_call_description: "This is a free call, after a few tones it will hang up by itself."
   From_mobile_phone_number: From phone number
@@ -146,6 +148,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Registered_users: Registered users
   Registration_date: Sign up date
   Repeat_registration: "To repeat registration click here"
+  Reset: "Reset"
   Reset_password: Reset password
   Roles: Roles
   Search: Search

@@ -40,9 +40,11 @@ it:
   Edit_operator: Modifica operatore
   Email: E-mail
   Flash_not_supported: Flash non supportato
-  Forgot_password: Password dimenticata
+  Forgot_password: "Password dimenticata"
   Forgot_password_description_email: Scrivi qui sotto l'indirizzo email utilizzato in fase di registrazione e premi "reimposta password" per recuperare la tua password
+  Forgot_password_description_email_for_mobile: Scrivi qui sotto l'indirizzo email utilizzato in fase di registrazione e premi "reimposta" per recuperare la tua password
   Forgot_password_description_mobile_phone: Scrivi qui sotto il numero di telefono cellulare utilizzato in fase di registrazione e premi "reimposta password" per recuperare la tua password
+  Forgot_password_description_mobile_phone_for_mobile: Scrivi qui sotto il numero di telefono cellulare utilizzato in fase di registrazione e premi "reimposta" per recuperare la tua password
   Forgot_password_description_select: Seleziona qui sotto il metodo con il quale vuoi effettuare il ripristino della password
   Free_call_description: "La chiamata è gratuita e, dopo alcuni squilli, terminerà automaticamente."
   From: Da
@@ -146,6 +148,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Register: Registrati
   Registered_users: Utenti registrati
   Registration_date: Data di registrazione
+  Reset: "Reimposta"
   Reset_password: Reimposta password
   Repeat_registration: "Puoi ripetere la registrazione cliccando qui."
   Roles: Ruoli
@@ -436,7 +439,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
         password: "Password"
         change_password: "Nuova password"
         password_confirmation: "Conferma password"
-        email_confirmation: "Conferma email"
+        email_confirmation: "Conferma e-mail"
         birth_date: "Data di nascita"
         given_name: "Nome"
         surname: "Cognome"

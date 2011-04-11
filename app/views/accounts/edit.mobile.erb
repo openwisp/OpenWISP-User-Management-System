@@ -1,5 +1,5 @@
 <% content_for :header do %>
-    <h1><%=t :Edit_account %></h1>
+    <h1><%=t :Edit %></h1>
 <% end %>
 
 <% content_for :back do %>
@@ -7,17 +7,13 @@
 <% end %>
 
 <% form_for @account, :builder => ErrorFormBuilder, :url => account_path, :html => {'data-ajax' => false} do |f| %>
-    <fieldset>
-      <% if @account.errors.any? %>
-          <div data-role="fieldcontain">
-            <div data-role="collapsible">
-              <h3><%=t 'activerecord.errors.template.header', :count => @account.errors.count %></h3>
-              <p><%= f.error_messages %></p>
-            </div>
-          </div>
-      <% end %>
+    <% if @account.errors.any? %>
+        <div data-role="collapsible">
+          <h3><%=t 'activerecord.errors.template.header', :count => @account.errors.count %></h3>
+          <p><%= f.error_messages %></p>
+        </div>
+    <% end %>
 
-      <%= render :partial => "form", :object => f, :locals => { :countries => @countries, :mobile_prefixes => @mobile_prefixes } %>
-    </fieldset>
+    <%= render :partial => "form", :object => f, :locals => { :countries => @countries, :mobile_prefixes => @mobile_prefixes } %>
 <% end %>
 

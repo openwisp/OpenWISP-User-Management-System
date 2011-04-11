@@ -7,16 +7,14 @@
 <% end %>
 
 <% form_tag password_resets_path do %>
-    <fieldset>
-      <div data-role="fieldcontain">
+    <ul data-role="listview" data-inset="true">
+      <li data-role="fieldcontain">
         <%=t :Forgot_password_description_select %>
         <%= select_tag "recovery_method", options_for_select(@recovery_methods.map { |r| [t(r), r] }),
                        { :prompt => t(:select_recovery_method), :multiple => false }
         %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
-        <%= submit_tag t(:Next) %>
-      </div>
-    </fieldset>
+      <li><%= submit_tag t(:Next) %></li>
+    </ul>
 <% end %>

@@ -7,18 +7,18 @@
 <% end %>
 
 <% form_tag email_password_resets_path, 'data-ajax' => false do %>
-    <fieldset>
-      <div data-role="fieldcontain">
-        <%=t :Forgot_password_description_email %><br />
-      </div>
+    <ul data-role="listview" data-inset="true">
+      <li data-role="fieldcontain">
+        <%=t :Forgot_password_description_email_for_mobile %>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <label><%=t :Email %></label>
         <%= text_field_tag "email_password_reset_email", {}, :name => 'email_password_reset[email]' %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
-        <%= submit_tag t(:Reset_password) %>
-      </div>
-    </fieldset>
+      <li data-role="fieldcontain">
+        <%= submit_tag t(:Reset) %>
+      </li>
+    </ul>
 <% end %>

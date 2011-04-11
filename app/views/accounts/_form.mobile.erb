@@ -9,191 +9,180 @@
     %>
 <% end %>
 
-<% if Configuration.get('use_mobile_phone_as_username') == "false" || !form.object.new_record? %>
-    <div data-role="fieldcontain">
-      <%= form.label :username %>
-      <%= form.text_field :username, :disabled => !form.object.new_record? %>
-    </div>
-<% end %>
+<ul data-role="listview" data-inset="true">
+  <% if Configuration.get('use_mobile_phone_as_username') == "false" || !form.object.new_record? %>
+      <li data-role="fieldcontain">
+        <%= form.label :username %>
+        <%= form.text_field :username, :disabled => !form.object.new_record? %>
+      </li>
+  <% end %>
 
-<% if form.object.new_record? %>
-    <% if Account::SELFVERIFICATION_METHODS.length == 1 %>
-        <%= form.hidden_field :verification_method %>
-    <% else %>
-        <div data-role="fieldcontain">
-          <%= form.label :verification_method %>
-          <%= form.select :verification_method, Account::SELFVERIFICATION_METHODS_SELECT, {:multiple => false} %>
-        </div>
-    <% end %>
+  <% if form.object.new_record? %>
+      <% if Account::SELFVERIFICATION_METHODS.length == 1 %>
+          <%= form.hidden_field :verification_method %>
+      <% else %>
+          <li data-role="fieldcontain">
+            <%= form.label :verification_method %>
+            <%= form.select :verification_method, Account::SELFVERIFICATION_METHODS_SELECT, {:multiple => false} %>
+          </li>
+      <% end %>
 
-    <div class="verification-block">
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain" class="verification-block">
         <%= form.label :mobile_phone %>
+        <p>&nbsp;</p>
 
-        <div data-role="fieldcontain">
-          <%= form.label :mobile_prefix, t(:Prefix) %>
-          <%= form.select :mobile_prefix, mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, { :prompt => t(:Choose), :multiple => false } %>
-        </div>
+        <%= form.label :mobile_prefix, t(:Prefix) %>
+        <%= form.select :mobile_prefix, mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, { :prompt => t(:Choose), :multiple => false } %>
 
-        <div data-role="fieldcontain">
-          <%= form.label :mobile_suffix, t(:Suffix) %>
-          <%= form.text_field :mobile_suffix %>
-        </div>
-      </div>
+        <%= form.label :mobile_suffix, t(:Suffix) %>
+        <%= form.text_field :mobile_suffix %>
+      </li>
 
-
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain" class="verification-block">
         <%= form.label :mobile_phone_confirmation %>
+        <p>&nbsp;</p>
 
-        <div data-role="fieldcontain">
-          <%= form.label :mobile_prefix_confirmation, t(:Suffix) %>
-          <%= form.select :mobile_prefix_confirmation, mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, { :prompt => t(:Choose), :multiple => false } %>
-        </div>
+        <%= form.label :mobile_prefix_confirmation, t(:Prefix_confirmation) %>
+        <%= form.select :mobile_prefix_confirmation, mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]}, { :prompt => t(:Choose), :multiple => false } %>
 
-        <div data-role="fieldcontain">
-          <%= form.label :mobile_suffix_confirmation, t(:Suffix_confirmation) %>
-          <%= form.text_field :mobile_suffix_confirmation %>
-        </div>
-      </div>
-    </div>
+        <%= form.label :mobile_suffix_confirmation, t(:Suffix_confirmation) %>
+        <%= form.text_field :mobile_suffix_confirmation %>
+      </li>
 
-    <% if Configuration.get('credit_card_enabled') == "true" %>
-        <div class="verification-block" style="display:none">
-          <div data-role="fieldcontain">
+      <% if Configuration.get('credit_card_enabled') == "true" %>
+          <li data-role="fieldcontain" class="verification-block" style="display:none">
             <%=t :credit_card_instructions, :count => Configuration.get("credit_card_verification_cost") %>
-          </div>
-        </div>
-    <% end %>
-<% else %>
-    <% if form.object.verification_method == Account::VERIFY_BY_MOBILE %>
-        <div data-role="fieldcontain">
-          <%= form.label :mobile_phone %>
+          </li>
+      <% end %>
+  <% else %>
+      <% if form.object.verification_method == Account::VERIFY_BY_MOBILE %>
+          <li data-role="fieldcontain">
+            <%= form.label :mobile_phone %>
 
-          <div data-role="fieldcontain">
             <%= form.label :mobile_prefix, t(:Prefix) %>
             <%= form.select :mobile_prefix,
                             mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
                             { :prompt => t(:select_prefix), :multiple => false },
                             :class => 'disabled'
             %>
-          </div>
-          <div data-role="fieldcontain">
+
             <%= form.label :mobile_suffix, t(:Suffix) %>
             <%= form.text_field :mobile_suffix, :disabled => true %>
-          </div>
-        </div>
-    <% elsif form.object.verification_method == Account::VERIFY_BY_DOCUMENT %>
-        <div data-role="fieldcontain">
-          <%= form.label :document_photo %>
-          <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
-        </div>
-    <% end %>
-<% end %>
-
-<div data-role="fieldcontain">
-  <%= form.label :given_name %>
-  <%= form.text_field :given_name, :size => 20, :disabled => !form.object.new_record?  %>
-</div>
-
-<div data-role="fieldcontain">
-  <%= form.label :surname %>
-  <%= form.text_field :surname, :size => 20, :disabled => !form.object.new_record?  %>
-</div>
-
-<div data-role="fieldcontain">
-  <%= form.label :birth_date %>
-  <% if form.object.new_record? %>
-      <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
-  <% else %>
-      <%= form.date_select :birth_date, {:start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true}, :class => 'disabled' %>
+          </li>
+      <% elsif form.object.verification_method == Account::VERIFY_BY_DOCUMENT %>
+          <li data-role="fieldcontain">
+            <%= form.label :document_photo %>
+            <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
+          </li>
+      <% end %>
   <% end %>
-</div>
 
-<div data-role="fieldcontain">
-  <%= form.label :address %>
-  <%= form.text_field :address, :size => 50 %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :given_name %>
+    <%= form.text_field :given_name, :size => 20, :disabled => !form.object.new_record?  %>
+  </li>
 
-<div data-role="fieldcontain">
-  <%= form.label :zip %>
-  <%= form.text_field :zip, :size => 10 %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :surname %>
+    <%= form.text_field :surname, :size => 20, :disabled => !form.object.new_record?  %>
+  </li>
 
-<div data-role="fieldcontain">
-  <%= form.label :city %>
-  <%= form.text_field :city %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :birth_date %>
+    <% if form.object.new_record? %>
+        <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
+    <% else %>
+        <%= form.date_select :birth_date, {:start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true}, :class => 'disabled' %>
+    <% end %>
+  </li>
 
-<div data-role="fieldcontain">
-  <%= form.label :state %>
-  <%= form.select :state, countries.map { |c| [ c.printable_name, c.printable_name ]}, {:multiple => false}, :prompt => false %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :address %>
+    <%= form.text_field :address, :size => 50 %>
+  </li>
 
-<div data-role="fieldcontain">
-  <%= form.label :email %>
-  <% if form.object.new_record? %>(<%=t :registration_email_info %>)<% end %>
-  <%= form.text_field :email %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :zip %>
+    <%= form.text_field :zip, :size => 10 %>
+  </li>
 
-<div data-role="fieldcontain">
-  <%= form.label :email_confirmation %>
-  <%= form.text_field :email_confirmation %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </li>
 
-<div data-role="fieldcontain">
-  <%= form.label :password, form.object.new_record? ? nil : t(:change_password) %>
-  (<%=t :registration_password_info %>)
-  <%= form.password_field :password %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :state %>
+    <%= form.select :state, countries.map { |c| [ c.printable_name, c.printable_name ]}, {:multiple => false}, :prompt => false %>
+  </li>
 
-<div data-role="fieldcontain">
-  <%= form.label :password_confirmation %>
-  <%= form.password_field :password_confirmation %>
-</div>
+  <li data-role="fieldcontain">
+    <%= form.label :email %>
 
-<% if form.object.new_record? %>
-    <div data-role="fieldcontain">
-      <%= show_simple_captcha( :label => t(:registration_captcha_info), :object => form.object_name, :distorsion => :medium, :image_style => :simply_red ) %>
-    </div>
+    <% if form.object.new_record? %>
+        (<%=t :registration_email_info %>)
+    <% end %>
+    <%= form.text_field :email %>
+  </li>
 
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup">
-        <legend>
-          <%=t :Tick_to_agree_to %> <%= link_to t(:eula), document_path('eula.pdf'), :target => '_blank' %>
-        </legend>
+  <li data-role="fieldcontain">
+    <%= form.label :email_confirmation %>
+    <%= form.text_field :email_confirmation %>
+  </li>
 
-        <%= label_tag 'account_eula_acceptance', t(:I_agree) %>
-        <%= check_box_tag 'account_eula_acceptance', '1', form.object.eula_acceptance?, {
-                :name => 'account[eula_acceptance]'
-        } %>
-      </fieldset>
-    </div>
+  <li data-role="fieldcontain">
+    <%= form.label :password, form.object.new_record? ? nil : t(:change_password) %>
+    (<%=t :registration_password_info %>)
+    <%= form.password_field :password %>
+  </li>
 
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup">
-        <legend>
-          <%=t :Tick_to_examine_of %><%= link_to t(:privacy), document_path('privacy.pdf'), :target => '_blank' %>
-        </legend>
+  <li data-role="fieldcontain">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </li>
 
-        <%= label_tag 'account_privacy_acceptance', t(:I_agree) %>
-        <%= check_box_tag 'account_privacy_acceptance', '1', form.object.privacy_acceptance?, {
-                :name => 'account[privacy_acceptance]'
-        } %>
-      </fieldset>
-    </div>
-<% else %>
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup">
-        <%= label_tag 'account_disable_account', t(:disable_account) %>
-        <%= check_box_tag 'account_disable_account', '1', false, {
-                :onclick => "if (this.checked) { return #{confirm_javascript_function(t(:Account_disable_confirmation))};}",
-                :name => 'account[disable_account]',
-                :type => 'checkbox'
-        } %>
-      </fieldset>
-    </div>
-<% end %>
+  <% if form.object.new_record? %>
+      <li data-role="fieldcontain">
+        <%= show_simple_captcha( :label => t(:registration_captcha_info), :object => form.object_name, :distorsion => :medium, :image_style => :simply_red ) %>
+      </li>
 
-<div data-role="fieldcontain">
-  <%= form.submit form.object.new_record? ? t(:Register) : t(:Update) %>
-</div>
+      <li data-role="fieldcontain">
+        <fieldset data-role="controlgroup">
+          <legend>
+            <%=t :Tick_to_agree_to %> <%= link_to t(:eula), document_path('eula.pdf'), :target => '_blank' %>
+          </legend>
+
+          <%= label_tag 'account_eula_acceptance', t(:I_agree) %>
+          <%= check_box_tag 'account_eula_acceptance', '1', form.object.eula_acceptance?, {
+                  :name => 'account[eula_acceptance]'
+          } %>
+        </fieldset>
+      </li>
+
+      <li data-role="fieldcontain">
+        <fieldset data-role="controlgroup">
+          <legend>
+            <%=t :Tick_to_examine_of %><%= link_to t(:privacy), document_path('privacy.pdf'), :target => '_blank' %>
+          </legend>
+
+          <%= label_tag 'account_privacy_acceptance', t(:I_agree) %>
+          <%= check_box_tag 'account_privacy_acceptance', '1', form.object.privacy_acceptance?, {
+                  :name => 'account[privacy_acceptance]'
+          } %>
+        </fieldset>
+      </li>
+  <% else %>
+      <li data-role="fieldcontain">
+        <fieldset data-role="controlgroup">
+          <%= label_tag 'account_disable_account', t(:disable_account) %>
+          <%= check_box_tag 'account_disable_account', '1', false, {
+                  :onclick => "if (this.checked) { return #{confirm_javascript_function(t(:Account_disable_confirmation))};}",
+                  :name => 'account[disable_account]',
+                  :type => 'checkbox'
+          } %>
+        </fieldset>
+      </li>
+  <% end %>
+
+  <li><%= form.submit form.object.new_record? ? t(:Register) : t(:Update) %></li>
+</ul>

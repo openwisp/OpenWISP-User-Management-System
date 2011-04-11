@@ -7,32 +7,31 @@
 <% end %>
 
 <% form_for @account, :builder => ErrorFormBuilder, :url => mobile_phone_password_reset_path, :method => :put, :html => {'data-ajax' => false} do |f| %>
-    <fieldset>
       <% if @account.errors.any? %>
-          <div data-role="fieldcontain">
-            <div data-role="collapsible">
-              <h3><%=t 'activerecord.errors.template.header', :count => @account.errors.count %></h3>
-              <p><%= f.error_messages %></p>
-            </div>
+          <div data-role="collapsible">
+            <h3><%=t 'activerecord.errors.template.header', :count => @account.errors.count %></h3>
+            <p><%= f.error_messages %></p>
           </div>
       <% end %>
 
-      <div data-role="fieldcontain">
-        <legend><%=t :Change_password %></legend>
-      </div>
 
-      <div data-role="fieldcontain">
+    <ul data-role="listview" data-inset="true">
+      <li data-role="fieldcontain">
+        <legend><%=t :Change_password %></legend>
+      </li>
+
+      <li data-role="fieldcontain">
         <%= f.label :password %>
         <%= f.password_field :password %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation %>
-      </div>
+      </li>
 
-      <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
         <%= f.submit t(:Update_my_password) %>
-      </div>
-    </fieldset>
+      </li>
+    </ul>
 <% end %>
