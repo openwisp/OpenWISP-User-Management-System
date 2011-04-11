@@ -30,8 +30,10 @@ module ApplicationHelper
     link_to t(:Back), path, {'data-icon' => 'back', 'data-role' => 'button', 'data-direction' => 'reverse'}.merge(opts)
   end
 
-  def mobile_link_to_logout(opts={})
-    link_to t(:Logout), account_logout_path, {'data-icon' => 'delete', 'data-role' => 'button', 'data-direction' => 'reverse', :class => 'ui-btn-right'}.merge(opts)
+  def mobile_link_to_logout
+    form_tag account_logout_path, :method => :get, 'data-ajax' => false, :class => 'ui-btn-right' do
+      submit_tag t(:Logout), 'data-icon' => 'delete', :name => "", 'data-theme' => 'a'
+    end
   end
 
   def on_root?
