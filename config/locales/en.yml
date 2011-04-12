@@ -1,127 +1,127 @@
 en:
-  Account_disabled: Account disabled
+  Account_disabled: "Account disabled"
   Account_disable_confirmation: "Warning: if you disable your account, you won't be able to login. You can enable your account again by repeating the account confirmation procedure."
-  Account_registered: Account signed up succesfully
-  Account_updated: Account updated successfully
-  Account_verification_status: Account's verification status
-  Active_qm: Enabled?
-  Additional_info: Additional Information
-  Address: Address
-  Add_new_operator: Add a new operator
-  Add_new_user: Add a new user
-  Are_you_sure: Are you sure? The procedure cannot be undone.
-  Back: Back
-  Birth_date: Birthdate
-  Browse_users: Browse users
+  Account_registered: "Account signed up succesfully"
+  Account_updated: "Account updated successfully"
+  Account_verification_status: "Account's verification status"
+  Active_qm: "Enabled?"
+  Additional_info: "Additional Information"
+  Address: "Address"
+  Add_new_operator: "Add a new operator"
+  Add_new_user: "Add a new user"
+  Are_you_sure: "Are you sure? The procedure cannot be undone."
+  Back: "Back"
+  Birth_date: "Birthdate"
+  Browse_users: "Browse users"
   Call_one_of_the_following_numbers:
-    one: Call this phone number
-    other: Call one of the following phone numbers
-  Change_password: Change password
+    one: "Call this phone number"
+    other: "Call one of the following phone numbers"
+  Change_password: "Change password"
   Choose: "Choose"
-  City: City
-  Click_for_eula: Click here to read the Terms of Service
-  Click_for_privacy: Click here to the Privacy Policy
-  Configuration_keys: Configuration keys
-  Configuration_key_updated: Configuration key updated
-  Cookies_disabled_or_session_expired: Your browser has disabled cookies or the session has expired.
-  Create: Create
-  Create_user: Create user 
+  City: "City"
+  Click_for_eula: "Click here to read the Terms of Service"
+  Click_for_privacy: "Click here to the Privacy Policy"
+  Configuration_keys: "Configuration keys"
+  Configuration_key_updated: "Configuration key updated"
+  Cookies_disabled_or_session_expired: "Your browser has disabled cookies or the session has expired."
+  Create: "Create"
+  Create_user: "Create user "
   Created_by: "Created by"
-  Current_login_at: Current login at
-  Current_login_ip: Current login IP
-  Destroy: Delete
-  Document_photo: ID card scan
-  Download: Download traffic
-  Downloaded_bytes: Downloaded bytes
-  Dunno_how_to_register_click_here: Have trouble signing up? Click here
-  Edit: Edit
-  Edit_user: Edit user
-  Edit_account: Edit account
-  Edit_configuration_key: Edit configuration
-  Edit_operator: Edit operator
-  Email: E-mail
-  Flash_not_supported: Flash not supported
-  Forgot_password: Password forgotten
-  Forgot_password_description_email: Use the email you used to sign up to fill the form below and click "reset password" to get a new password
-  Forgot_password_description_email_for_mobile: Use the email you used to sign up to fill the form below and click "reset" to get a new password
-  Forgot_password_description_mobile_phone: Use the mobile phone's number you used to sign up to fill the form below and click "reset password" to get a new password
-  Forgot_password_description_mobile_phone_for_mobile: Use the mobile phone's number you used to sign up to fill the form below and click "reset" to get a new password
-  Forgot_password_description_select: Select below how to reset your password
+  Current_login_at: "Current login at"
+  Current_login_ip: "Current login IP"
+  Destroy: "Delete"
+  Document_photo: "ID card scan"
+  Download: "Download traffic"
+  Downloaded_bytes: "Downloaded bytes"
+  Dunno_how_to_register_click_here: "Have trouble signing up? Click here"
+  Edit: "Edit"
+  Edit_user: "Edit user"
+  Edit_account: "Edit account"
+  Edit_configuration_key: "Edit configuration"
+  Edit_operator: "Edit operator"
+  Email: "E-mail"
+  Flash_not_supported: "Flash not supported"
+  Forgot_password: "Password forgotten"
+  Forgot_password_description_email: "Use the email you used to sign up to fill the form below and click \"reset password\" to get a new password"
+  Forgot_password_description_email_for_mobile: "Use the email you used to sign up to fill the form below and click \"reset\" to get a new password"
+  Forgot_password_description_mobile_phone: "Use the mobile phone's number you used to sign up to fill the form below and click \"reset password\" to get a new password"
+  Forgot_password_description_mobile_phone_for_mobile: "Use the mobile phone's number you used to sign up to fill the form below and click \"reset\" to get a new password"
+  Forgot_password_description_select: "Select below how to reset your password"
   Free_call_description: "This is a free call, after a few tones it will hang up by itself."
-  From_mobile_phone_number: From phone number
-  General_infos: General information
-  Given_name: Name
-  Graphs: Graphs
-  Home: Home
-  Hours: Hours
+  From_mobile_phone_number: "From phone number"
+  General_infos: "General information"
+  Given_name: "Name"
+  Graphs: "Graphs"
+  Home: "Home"
+  Hours: "Hours"
   I_agree: "I agree"
-  If_problem_with_redirect: If your browser does not get redirected after the verification procedure
-  If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: If the mobile phone number you entered is wrong, please wait for the sign up procedure to time out, then try again.
-  Information: Information
-  Instruction_reset_has_been_mailed: Instructions on how to reset your password have been emailed to you. Please check your email
+  If_problem_with_redirect: "If your browser does not get redirected after the verification procedure"
+  If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: "If the mobile phone number you entered is wrong, please wait for the sign up procedure to time out, then try again."
+  Information: "Information"
+  Instruction_reset_has_been_mailed: "Instructions on how to reset your password have been emailed to you. Please check your email"
   Invalid_request: "Invalid request!"
-  IP_address: IP address
-  Key: Key
-  Last_login_at: Last login at
-  Last_login_ip: Last login from IP
+  IP_address: "IP address"
+  Key: "Key"
+  Last_login_at: "Last login at"
+  Last_login_ip: "Last login from IP"
   Last_x_days_traffic_download:
-    one: Downloaded today
-    other: Downloaded last {{count}} days
+    one: "Downloaded today"
+    other: "Downloaded last {{count}} days"
   Last_x_days_traffic_upload:
-    one: Uploaded today
-    other: Uploaded last {{count}} days
+    one: "Uploaded today"
+    other: "Uploaded last {{count}} days"
   Last_x_days_time:
-    one: Time spent in the last day
-    other: Time spent in the last {{count}} days
+    one: "Time spent in the last day"
+    other: "Time spent in the last {{count}} days"
   Last_x_logins: 
-    one: Last login
-    other: Last {{count}} logins
+    one: "Last login"
+    other: "Last {{count}} logins"
   Last_x_online_users:
-    one: Last online user
-    other: Last {{count}} online users
+    one: "Last online user"
+    other: "Last {{count}} online users"
   Last_x_registered_users: 
-    one: Last registered user
-    other: Last {{count}} registered users
+    one: "Last registered user"
+    other: "Last {{count}} registered users"
   Last_x_user_sessions:
-    one: Last session
-    other: Last {{count}} sessions
-  Listing_users: Users list
+    one: "Last session"
+    other: "Last {{count}} sessions"
+  Listing_users: "Users list"
   Loading_data: "Loading data: please wait"
   Logged_in: "Logged in?"
-  Loggedin_users: Currently loggedin users
-  Login: Login
-  Logins: Logins
-  Login_successful: Login successful
-  Login_count: Login count
+  Loggedin_users: "Currently loggedin users"
+  Login: "Login"
+  Logins: "Logins"
+  Login_successful: "Login successful"
+  Login_count: "Login count"
   Login_error: "Wrong username or password"
-  Logout: Logout
-  Logout_successful: Logout successful
-  Mac_address: MAC address
-  Manage_your_account: Manage your account
-  Minutes: Minutes
-  Mobile_phone_number: Mobile phone number
-  My_account: My account
-  My_profile: My profile
-  Must_be_logged_in: You must be logged in to view this page
-  Must_be_logged_out: You must be logged out to view this page
-  Name: Name
-  New_operator: New operator
-  New_user: New user
-  Next: Next
-  Notes: Notes
-  No_ajax_verification_success: Your account has been verified now
+  Logout: "Logout"
+  Logout_successful: "Logout successful"
+  Mac_address: "MAC address"
+  Manage_your_account: "Manage your account"
+  Minutes: "Minutes"
+  Mobile_phone_number: "Mobile phone number"
+  My_account: "My account"
+  My_profile: "My profile"
+  Must_be_logged_in: "You must be logged in to view this page"
+  Must_be_logged_out: "You must be logged out to view this page"
+  Name: "Name"
+  New_operator: "New operator"
+  New_user: "New user"
+  Next: "Next"
+  Notes: "Notes"
+  No_ajax_verification_success: "Your account has been verified now"
   No_user_found_with_that_email: "No user found with that e-mail address"
   No_user_found_with_that_mobile_phone: "No user found with that mobile phone number"
-  Not_verified: Not verified
-  No_verification_possible: It is not currently possible to verify this account. Please call the support number to solve the problem.
-  Online_users: Online users
-  Operations: Operations
-  Operator: Operator
-  Operators: Operators
-  Operator_created_success: Operator successfully created
-  Operator_deleted_success: Operator successfully deleted
-  Operator_login: Operator login
-  Operator_updated_success: Operator successfully updated
+  Not_verified: "Not verified"
+  No_verification_possible: "It is not currently possible to verify this account. Please call the support number to solve the problem."
+  Online_users: "Online users"
+  Operations: "Operations"
+  Operator: "Operator"
+  Operators: "Operators"
+  Operator_created_success: "Operator successfully created"
+  Operator_deleted_success: "Operator successfully deleted"
+  Operator_login: "Operator login"
+  Operator_updated_success: "Operator successfully updated"
   Password_format_error: "Password must contain at least one alphabetic character and one digit"
   Password_successfully_updated: "Password updated successfully"
   Perishable_token_error: "Your account could not be found. Instead of clicking on the URL sent you via email, please try to copy and paste the URL in your browser. 
@@ -131,132 +131,132 @@ If you still have problems resetting the password, try repeating the procedure"
   Please_verify_mobile_number: "To fulfill your request we need to verify your mobile phone number"
   Prefix: "Prefix"
   Prefix_confirmation: "Confirm prefix"
-  Priority: Priority
+  Priority: "Priority"
   Redirecting_in_x_secs:
     one: "redirect in {{count}} second"
     other: "redirect in {{count}} seconds"
-  Radius_logins: Logins to Internet
-  Radius_groups: Radius groups
-  Refresh_data: Refresh data
+  Radius_logins: "Logins to Internet"
+  Radius_groups: "Radius groups"
+  Refresh_data: "Refresh data"
   Recover: "Recover"
-  Register: Sign up
-  Registered_users: Registered users
-  Registration_date: Sign up date
+  Register: "Sign up"
+  Registered_users: "Registered users"
+  Registration_date: "Sign up date"
   Repeat_registration: "To repeat registration click here"
   Reset: "Reset"
-  Reset_password: Reset password
-  Roles: Roles
-  Search: Search
+  Reset_password: "Reset password"
+  Roles: "Roles"
+  Search: "Search"
   Search_by_user_mobile_email: "Search by username, phone number or email"
   Search_by_user_name_surname_mobile: "Search by username, name, surname or phone number"
-  Search_user: search user
-  Search_users: Search users
-  Select: Select
-  Sort_by_this_field: Sort by this field
-  Show: Show
-  Show_account_info: Show account info
-  Show_stats: Show stats
-  Start_time: Connection start
-  State: State
-  Stop_time: Connection end
+  Search_user: "search user"
+  Search_users: "Search users"
+  Select: "Select"
+  Sort_by_this_field: "Sort by this field"
+  Show: "Show"
+  Show_account_info: "Show account info"
+  Show_stats: "Show stats"
+  Start_time: "Connection start"
+  State: "State"
+  Stop_time: "Connection end"
   Suffix: "Suffix"
   Suffix_confirmation: "Confirm suffix"
-  Surname: Surname
+  Surname: "Surname"
   Tick_to_agree_to: "By ticking the checkbox below, I agree to the"
   Tick_to_examine_of: "By ticking the checkbox below, I declare to have read the "
-  Title: Title
+  Title: "Title"
   Too_many_search_results: "Too many search results, be more specific please."
   Top_x_active_users: 
-    one: Most active user
-    other: Top {{count}} active users
-  Traffic: Traffic
-  Traffic_total: Total traffic
-  Undo: Undo
-  Unique_logins: Unique logins
-  Update: Update
+    one: "Most active user"
+    other: "Top {{count}} active users"
+  Traffic: "Traffic"
+  Traffic_total: "Total traffic"
+  Undo: "Undo"
+  Unique_logins: "Unique logins"
+  Update: "Update"
   Update_my_password: "Update my password"
   Update_my_password_and_log_me_in: "Update my password and log me in!"
-  Upload: Upload traffic
-  Uploaded_bytes: Uploaded bytes
-  Username: Username
-  Username_or_mobile: Mobile phone or username
-  Users_management: Account management
-  User_management_logins: Logins to this system
-  User_not_found: User not found
-  User_sessions: User sessions
-  Users_management_system: Account management system
-  Users_nationality: Users nationality
-  Value: Value
+  Upload: "Upload traffic"
+  Uploaded_bytes: "Uploaded bytes"
+  Username: "Username"
+  Username_or_mobile: "Mobile phone or username"
+  Users_management: "Account management"
+  User_management_logins: "Logins to this system"
+  User_not_found: "User not found"
+  User_sessions: "User sessions"
+  Users_management_system: "Account management system"
+  Users_nationality: "Users nationality"
+  Value: "Value"
   Verification: "Verification"
-  Verification_date: Verification date
+  Verification_date: "Verification date"
   Verification_expire_time_x_mins: 
     one: "You have about {{count}} minute left to verify your account."
     other: "You have about {{count}} minutes left to verify your account."
   Verification_time_expired: "Verification time expired" 
-  Verified: Verified
-  Verified_qm: Verified?
-  Your_account_is_not_yet_verified: Your account has not been verified yet
-  Zip: Zip
-  active: active
-  address: address 
+  Verified: "Verified"
+  Verified_qm: "Verified?"
+  Your_account_is_not_yet_verified: "Your account has not been verified yet"
+  Zip: "Zip"
+  active: "active"
+  address: "address "
   affermative: "yes"
-  birth_date: birthdate
-  captcha_error: Text and picture differ
-  change_password: New password
-  city: city
-  click_here: click here
-  credit_card: Credit card
+  birth_date: "birthdate"
+  captcha_error: "Text and picture differ"
+  change_password: "New password"
+  city: "city"
+  click_here: "click here"
+  credit_card: "Credit card"
   credit_card_instructions: 
     one: "After signing up, you will be asked to pay {{count}} euro to verify your identity" 
     other: "After signing up, you will be asked to pay {{count}} euros to verify your identity" 
-  credit_card_item_name: Surfinsardinia registration via credit card
-  disable_account: disable account
-  document_photo: ID card scan
-  email: E-mail
-  email_confirmation: e-mail confirmation
+  credit_card_item_name: "Surfinsardinia registration via credit card"
+  disable_account: "disable account"
+  document_photo: "ID card scan"
+  email: "E-mail"
+  email_confirmation: "e-mail confirmation"
   eula: "Terms of Service"
   eula_description: "By clicking on the checkbox below you are agreeing to the Terms of Service"
   privacy: "Privacy Policy"
   privacy_description: "By clicking on the checkbox below you are agreeing to the Privacy Policy"
-  given_name: name
-  identity_document: ID card
-  key: key
-  listen: listen
-  login: login
+  given_name: "name"
+  identity_document: "ID card"
+  key: "key"
+  listen: "listen"
+  login: "login"
   mobile_phone: "Mobile phone number"
   mobile_prefix: "Mobile phone number prefix"
   mobile_prefix_confirmation: "Confirm mobile phone number prefix"
   mobile_suffix: "Mobile phone number without prefix"
   mobile_suffix_confirmation: "Confirm mobile phone number without prefix"
-  mobile_phone_number: mobile phone number
-  mobile_phone_confirmation: confirm mobile phone number
+  mobile_phone_number: "mobile phone number"
+  mobile_phone_confirmation: "confirm mobile phone number"
   negative: "no"
-  next: next
-  notes: notes
-  online: online
-  password: password
-  password_confirmation: confirm password
-  previous: previous
-  radius_groups: radius groups
-  registration_captcha_info: Fill the form below with the text you see in the picture
+  next: "next"
+  notes: "notes"
+  online: "online"
+  password: "password"
+  password_confirmation: "confirm password"
+  previous: "previous"
+  radius_groups: "radius groups"
+  registration_captcha_info: "Fill the form below with the text you see in the picture"
   registration_email_info: "The e-mail address can be used to reset your password in case you forget it"
-  registration_mobile_phone_info: You will need this number to make a call. You can only use italian mobile phone carriers
-  registration_password_info: It must contain at least one alphabetic character and one digit and be at least 8 character long
-  registration_username_info: You must use this username and your password to log in
-  remember_me: remember me
-  results: results
-  select_prefix: Phone prefix
-  state: state
-  surname: surname
-  total_results: Total results
-  uploaded_document_photo: ID card scan preview
-  username: username
-  value: value
-  verification_method: ID verification method
-  verified: verified
-  verified_qm: verified?
+  registration_mobile_phone_info: "You will need this number to make a call. You can only use italian mobile phone carriers"
+  registration_password_info: "It must contain at least one alphabetic character and one digit and be at least 8 character long"
+  registration_username_info: "You must use this username and your password to log in"
+  remember_me: "remember me"
+  results: "results"
+  select_prefix: "Phone prefix"
+  state: "state"
+  surname: "surname"
+  total_results: "Total results"
+  uploaded_document_photo: "ID card scan preview"
+  username: "username"
+  value: "value"
+  verification_method: "ID verification method"
+  verified: "verified"
+  verified_qm: "verified?"
   will_be_your_username: "will be your username"
-  zip: zip
+  zip: "zip"
 
   activerecord:
     errors:
