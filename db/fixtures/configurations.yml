@@ -100,7 +100,7 @@
 
 32:
   system_key: f
-  key: "new_account_external_command"
+  key: "external_command_for_new_accounts"
   value: ""
 
 40:

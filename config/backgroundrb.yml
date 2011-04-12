@@ -8,6 +8,8 @@
   :house_keeper_worker:
     :remove_unverified_users:
       :trigger_args: 0 */1 * * * *
+    :external_command_for_new_accounts:
+      :trigger_args: 0  0  1 * * * *
     :remove_stale_sessions:
       :trigger_args: 0  0  2 * * 0 *
     :remove_stale_bdrbs:

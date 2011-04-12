@@ -82,6 +82,10 @@ class User < AccountCommon
     count :conditions => "Date(verified_at) <= '#{date.to_s}'"
   end
 
+  def self.registered_yesterday
+    find(:all, :conditions => { :created_at => 1.day.ago..DateTime.now })
+  end
+
   # Utilities
 
   def total_traffic
@@ -127,7 +131,6 @@ class User < AccountCommon
     if self.verification_method == User::VERIFY_BY_CREDIT_CARD
       self.verified = true
       self.save!
-      MiddleMan.worker(:house_keeper_worker).async_new_account_external_command(:arg => self.id)
     else
       Rails.logger.error("Verification method is not 'credit_card'!")
     end
@@ -137,7 +140,6 @@ class User < AccountCommon
     if self.verification_method == User::VERIFY_BY_MOBILE
       self.verified = true
       self.save!
-      MiddleMan.worker(:house_keeper_worker).async_new_account_external_command(:arg => self.id)
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end

@@ -19,27 +19,22 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
     end
   end
 
-  def new_account_external_command(user_id = nil)
-    unless user_id.nil?
-      user = User.find(user_id)
-      if !user.nil?
-        puts "[#{Time.now()}] Executing external command for user '#{user.given_name} #{user.surname}' - (#{user.username})"
+  def external_command_for_new_accounts
+    command = Configuration.get('external_command_for_new_accounts')
+
+    unless command.blank?
+      new_accounts = User.registered_yesterday
+
+      new_accounts.each do |account|
+        puts "[#{Time.now()}] Executing external command for account '#{account.given_name} #{account.surname}' - (#{account.username})"
+
         begin
-          command = Configuration.get('new_account_external_command')
-          if command.length > 0
-            begin
-              fd = IO.popen(command, "w")
-              fd.puts(user.to_xml( :except => [ :crypted_password, :password_salt, :perishable_token, :persistence_token, :single_access_token ] ))
-              puts "[#{Time.now()}] External command exit status: " + $?.exitstatus.to_s
-              fd.close
-            rescue
-              puts "[#{Time.now()}] Problem executing external command '#{command}'"
-            end
-          else
-            puts "[#{Time.now()}] No external command specified"
-          end
+          fd = IO.popen(command, "w")
+          fd.puts(account.to_xml( :except => [ :crypted_password, :password_salt, :perishable_token, :persistence_token, :single_access_token ] ))
+          puts "[#{Time.now()}] External command exit status: " + $?.exitstatus.to_s
+          fd.close
         rescue
-          puts "[#{Time.now()}] Missing 'new_account_external_command' configuration key"
+          puts "[#{Time.now()}] Problem executing external command '#{command}'"
         end
       end
     end
