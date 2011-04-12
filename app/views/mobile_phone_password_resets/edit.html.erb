@@ -1,21 +1,25 @@
 <div class="grid_6 prefix_3 suffix_3">
   <div class="box">
     <% form_for @account, :builder => ErrorFormBuilder, :url => mobile_phone_password_reset_path, :method => :put do |f| %>
-      <fieldset>
-        <legend><%=t :Change_password %></legend>
-        <p><%= f.error_messages %></p>
-        <p>
-          <b><%= f.label :password %></b>
-          <br />
-          <%= f.password_field :password %>
-        </p>
-        <p>
-          <b><%= f.label :password_confirmation %></b>
-          <br />
-          <%= f.password_field :password_confirmation %>
-        </p>
-        <p><%= f.submit t(:Update_my_password_and_log_me_in) %></p>
-      </fieldset>
+        <fieldset>
+          <legend><%=t :Change_password %></legend>
+          <p><%= f.error_messages %></p>
+          <p>
+            <b><%= f.label :username %>:</b>
+            <%=h @account.username %>
+          </p>
+          <p>
+            <b><%= f.label :password %></b>
+            <br />
+            <%= f.password_field :password %>
+          </p>
+          <p>
+            <b><%= f.label :password_confirmation %></b>
+            <br />
+            <%= f.password_field :password_confirmation %>
+          </p>
+          <p><%= f.submit t(:Update_my_password_and_log_me_in) %></p>
+        </fieldset>
     <% end %>
   </div>
 </div>

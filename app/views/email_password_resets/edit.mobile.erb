@@ -20,6 +20,10 @@
       </li>
 
       <li data-role="fieldcontain">
+        <span style="font-size:16px;font-weight:normal"><%= t(:username).capitalize %>:</span> <%=h @account.username %>
+      </li>
+
+      <li data-role="fieldcontain">
         <%= f.label :password %>
         <%= f.password_field :password %>
       </li>

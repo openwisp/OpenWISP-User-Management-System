@@ -5,6 +5,10 @@
         <legend><%=t :Change_password %></legend>
         <p><%= f.error_messages %></p>
         <p>
+          <b><%= f.label :username %>:</b>
+          <%=h @account.username %>
+        </p>
+        <p>
           <b><%= f.label :password %></b>
           <br />
           <%= f.password_field :password %>
