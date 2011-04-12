@@ -80,11 +80,7 @@ class Account < AccountCommon
     self.save
   end
 
-  def self.find_by_mobile_phone(mobile_phone, params={})
-    Account.find(:first, :conditions => [ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ])
-  end
-
-  def deliver_password_reset_instructions!  
+  def deliver_password_reset_instructions!
     reset_perishable_token!  
     Notifier.deliver_password_reset_instructions(self)  
   end
@@ -212,13 +208,12 @@ class Account < AccountCommon
       "item_name_1" => I18n.t(:credit_card_item_name),
       "item_number_1" => self.id,  
       "quantity_1" => 1
-    })  
+    })
 
-    case RAILS_ENV
-    when "development"
-      paypal_base_url = Configuration.get("sandbox_ipn_url")
-    when "production"
+    if RAILS_ENV == "production"
       paypal_base_url = Configuration.get("ipn_url")
+    else
+      paypal_base_url = Configuration.get("sandbox_ipn_url")
     end
 
     {:paypal_base_url => paypal_base_url, :values => values}

@@ -1,5 +1,5 @@
 <div id="_rad_list_">
-  <div align="center">
+  <div style="text-align:center">
     <%=h total_accountings %> <%=t :total_results %>
     <%= will_paginate accountings, :renderer => 'RemoteLinkRenderer',
                                    :params => params.merge( { :action => action } ),

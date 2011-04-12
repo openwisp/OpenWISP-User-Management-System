@@ -25,9 +25,7 @@
         <% if @account.has_image? %>
             <p>
               <strong><%=t :Document_photo %></strong><br />
-            <p>
               <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
-            </p>
             </p>
         <% end %>
         <p>

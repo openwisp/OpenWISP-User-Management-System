@@ -109,12 +109,10 @@
           </tr>
         </table>
     <% elsif form.object.verification_method == Account::VERIFY_BY_DOCUMENT %>
-        <p>
-          <strong><%= form.label :document_photo %></strong>
-          <br />
+        <strong><%= form.label :document_photo %></strong>
+        <br />
         <p style="text-align:center">
           <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
-        </p>
         </p>
     <% end %>
 <% end %>

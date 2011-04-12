@@ -1,15 +1,15 @@
 <% form_for @operator do |f| %>
-  <fieldset>
-    <legend><strong><%=t :Operator %>:</strong> <%= @operator.login %></legend>
-			<p><%= f.error_messages %></p>
+    <fieldset>
+      <legend><strong><%=t :Operator %>:</strong> <%= @operator.login %></legend>
+      <p><%= f.error_messages %></p>
 
       <p>
         <strong><%= label_tag t(:login) %>:</strong>
         <br />
         <% if @operator.new_record? %>
-          <%= f.text_field :login %>
+            <%= f.text_field :login %>
         <% else %>
-          <%= f.text_field :login, :disabled => true %>
+            <%= f.text_field :login, :disabled => true %>
         <% end %>
       </p>
       <p>
@@ -22,25 +22,25 @@
         <br />
         <%= f.password_field :password_confirmation %>
       </p>
-      <p>
-        <strong><%= label_tag t(:Roles) %>:</strong>
-        <table id="operator_roles">
-          <thead>
+
+      <p><strong><%= label_tag t(:Roles) %>:</strong></p>
+      <table id="operator_roles">
+        <thead>
+        <tr>
+          <th><%=t :Select %></th>
+          <th><%=t :Name %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% Operator::ROLES.each do |role| %>
             <tr>
-              <th><%=t :Select %></th>
-              <th><%=t :Name %></th>
+              <td><%= check_box_tag("operator[roles][]", role, @operator.roles.include?(role)) %></td>
+              <td><%= role %></td>
             </tr>
-          </thead>
-          <tbody>
-            <% Operator::ROLES.each do |role| %>
-              <tr>
-                <td><%= check_box_tag("operator[roles][]", role, @operator.roles.include?(role)) %></td>
-                <td><%= role %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </p>
+        <% end %>
+        </tbody>
+      </table>
+
       <p>
         <strong><%= label_tag t(:notes) %>:</strong>
         <br />
@@ -49,11 +49,11 @@
 
       <p>
         <% if @operator.new_record? %>
-          <%= f.submit t(:Create), :class => 'submit' %>
+            <%= f.submit t(:Create), :class => 'submit' %>
         <% else %>
-          <%= f.submit t(:Edit), :class => 'submit' %>
+            <%= f.submit t(:Edit), :class => 'submit' %>
         <% end %>
       </p>
-  </fieldset>
+    </fieldset>
 <% end %>
 

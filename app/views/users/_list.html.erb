@@ -1,5 +1,5 @@
 <div id="_search_">
-  <div align="center">
+  <div style="text-align:center">
     <%=h total_users %> <%=t :results %>
     <%= will_paginate users, :renderer => 'RemoteLinkRenderer', 
                              :params => params.merge( { :action => action } ),
@@ -86,14 +86,14 @@
           <td><%=h user.city %></td>
           <td><%=h user.address %></td>
           <% if user.verified? %>
-            <td><font color="green"><%=t :affermative %> </font></td>
+            <td><span class="green"><%=t :affermative %> </span></td>
 	  <% else %>
-            <td><font color="red"><%=t :negative %> </font></td>
+            <td><span class="red"><%=t :negative %> </span></td>
           <% end %>
           <% if user.active? %>
-            <td><font color="green"><%=t :affermative %> </font></td>
+            <td><span class="green"><%=t :affermative %> </span></td>
           <% else %>
-            <td><font color="red"><%=t :negative %> </font></td>
+            <td><span class="red"><%=t :negative %> </span></td>
           <% end %>
           <% if current_operator.has_role? 'users_manager' %>
             <td><%= link_to t(:Edit), edit_user_path(user) %></td>

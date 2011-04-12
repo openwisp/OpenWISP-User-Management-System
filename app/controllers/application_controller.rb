@@ -80,6 +80,7 @@ class ApplicationController < ActionController::Base
     @current_account = current_account_session && current_account_session.record
   end
 
+  #noinspection RubyUnnecessaryReturn
   def require_account
     unless current_account
       store_location
@@ -89,6 +90,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #noinspection RubyUnnecessaryReturn
   def require_no_account
     if current_account
       store_location
@@ -108,6 +110,7 @@ class ApplicationController < ActionController::Base
     @current_operator = current_operator_session && current_operator_session.record
   end
 
+  #noinspection RubyUnnecessaryReturn
   def require_operator
     unless current_operator
       store_location
@@ -117,6 +120,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #noinspection RubyUnnecessaryReturn
   def require_no_operator
     if current_operator
       store_location

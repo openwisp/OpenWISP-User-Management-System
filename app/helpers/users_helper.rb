@@ -6,7 +6,7 @@ module UsersHelper
       when param + "_rev" then result = 'class="sortdown"'
       else result = 'class="nosort"'
     end
-    return result
+    result
   end
   
   def sort_remote_link_helper(text, field, remotes = {})

@@ -64,11 +64,7 @@ class User < AccountCommon
     ret
   end
 
-  def self.find_by_mobile_phone(mobile_phone, params={})
-    find(:first, :conditions => [ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ])
-  end
-
-  def self.find_all_by_user_phone_or_mail(query, params={})
+  def self.find_all_by_user_phone_or_mail(query)
     find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
   end
 
@@ -154,6 +150,7 @@ class User < AccountCommon
     end
   end
 
+  #noinspection RubyUnnecessaryReturn
   def mobile_phone_identity_verify_or_password_recover!
     if self.verified?
       Rails.logger.info("Password recover for '#{self.username}' (id: #{self.id})")

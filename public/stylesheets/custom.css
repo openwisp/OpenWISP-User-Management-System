@@ -176,3 +176,11 @@ tr:hover td {
     height:250px;
     margin-bottom: 20px;
 }
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}

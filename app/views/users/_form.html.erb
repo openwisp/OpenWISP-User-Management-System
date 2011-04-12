@@ -21,29 +21,25 @@
     </p>
 
     <% div_tag :class => 'verification-block', :hide_if => form.object.verification_method != User::VERIFY_BY_DOCUMENT do %>
-        <p>
-          <% if form.object.has_image? %>
-              <strong><%= form.label :uploaded_document_photo %></strong>
-              <br />
-              <p style="text-align:center">
-                <% if form.object.new_record? %>
-                    <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
-                <% else %>
-                    <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
-                <% end %>
-              </p>
-          <% end %>
-          <strong><%= form.label :document_photo %></strong>
-          <br />
-          <%= form.file_field :image_file %>
-          <%= form.hidden_field :image_file_temp %>
-          </p>
+        <% if form.object.has_image? %>
+            <strong><%= form.label :uploaded_document_photo %></strong>
+            <br />
+            <p style="text-align:center">
+              <% if form.object.new_record? %>
+                  <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
+              <% else %>
+                  <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
+              <% end %>
+            </p>
+        <% end %>
+        <strong><%= form.label :document_photo %></strong>
+        <br />
+        <%= form.file_field :image_file %>
+        <%= form.hidden_field :image_file_temp %>
     <% end %>
 
     <% div_tag :class => 'verification-block', :hide_if => form.object.verification_method != User::VERIFY_BY_MOBILE do %>
-        <p>
-          <strong><%= form.label :mobile_phone %></strong>
-          <br />
+        <p><strong><%= form.label :mobile_phone %></strong></p>
         <table>
           <tr>
             <td><strong><%= form.label :mobile_prefix %></strong></td>
@@ -63,10 +59,8 @@
             </td>
           </tr>
         </table>
-        </p>
-        <p>
-          <strong><%= form.label :mobile_phone_confirmation %></strong>
-          <br />
+
+        <p><strong><%= form.label :mobile_phone_confirmation %></strong></p>
         <table>
           <tr>
             <td><strong><%= form.label :mobile_prefix_confirmation %></strong></td>
@@ -86,12 +80,10 @@
             </td>
           </tr>
         </table>
-        </p>
     <% end %>
 <% end %>
 
 <% if current_operator.has_role? 'users_manager' %>
-    <p align="center">
     <table>
       <tbody>
       <tr>
@@ -100,7 +92,6 @@
       </tr>
       </tbody>
     </table>
-    </p>
 <% end %>
 <p>
   <strong><%= form.label :given_name %></strong>
@@ -114,11 +105,11 @@
 </p>
 <p>
   <strong><%= form.label :birth_date %></strong>
-  <br />
+</p>
 <div style="text-align:center" class="date">
   <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
 </div>
-</p>
+
 <p>
   <strong><%= form.label :address %></strong>
   <br />

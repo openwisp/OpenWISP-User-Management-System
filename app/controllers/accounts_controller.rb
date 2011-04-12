@@ -202,7 +202,6 @@ class AccountsController < ApplicationController
       sort = "AcctStartTime DESC"
     end
 
-    search = params[:search]
     page = params[:page].nil? ? 1 : params[:page]
 
     @total_accountings =  @account.radius_accountings.count

@@ -144,6 +144,10 @@ class AccountCommon <  ActiveRecord::Base
   end
 
 
+  def self.find_by_mobile_phone(mobile_phone)
+    find(:first, :conditions => [ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ])
+  end
+
   # Accessors
 
   def verified?

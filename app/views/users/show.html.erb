@@ -37,9 +37,7 @@
         <% if @user.has_image? %>
             <p>
               <strong><%=t :Document_photo %></strong><br />
-            <p>
               <%= link_to embedded_image_tag(@user.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
-            </p>
             </p>
         <% end %>
         <p>
