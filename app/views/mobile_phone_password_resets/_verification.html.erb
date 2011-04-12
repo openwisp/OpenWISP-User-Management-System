@@ -1,16 +1,18 @@
 <div style="text-align:center;font-size:200%">
-<% if @account.recovered? %>
-    <script type="text/javascript">document.location="<%= edit_mobile_phone_password_reset_path(@account.perishable_token) %>"</script>
-<% else %>
-  <%=t :Please_verify_mobile_number %><br /><br />
-  <%=t :From_mobile_phone_number %><br />
-  <%=h @account.mobile_phone %><br /><br />
-  <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
-  <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
-  <% numbers.each do |number| %>
-    <p style="background-color:#90ee90"><a href="tel:<%=h number %>"><%=h number %></a></p>
+  <% if @account.recovered? %>
+      <script type="text/javascript">document.location="<%= edit_mobile_phone_password_reset_path(@account.perishable_token) %>"</script>
+  <% else %>
+      <%=t :Please_verify_mobile_number %><br /><br />
+      <%=t :From_mobile_phone_number %><br />
+      <%=h @account.mobile_phone %><br /><br />
+      <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
+      <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
+      <% numbers.each do |number| %>
+          <p style="background-color:#90ee90"><a href="tel:<%=h number %>"><%=h number %></a></p>
+      <% end %>
+      <%=t :Free_call_description %><br />
   <% end %>
-  <%=t :Free_call_description %><br />
-<% end %>
-<p style="font-size:80%"><%=t :If_problem_with_redirect %>, <%= link_to t(:click_here), recovery_confirmation_path(@account.single_access_token) %></p>
+  <p style="font-size:80%" class="no_js">
+    <%=t :If_problem_with_redirect %>, <%= link_to t(:click_here), recovery_confirmation_path(@account.single_access_token) %>
+  </p>
 </div>

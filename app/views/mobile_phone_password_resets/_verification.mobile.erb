@@ -12,9 +12,7 @@
       <% end %>
       <%=t :Free_call_description %><br />
   <% end %>
-  <% unless js_enabled_mobile_device? %>
-      <p style="font-size:90%">
-        <%=t :If_problem_with_redirect %>, <%= link_to t(:click_here), recovery_confirmation_path(@account.single_access_token), :class => 'ui-link', 'data-ajax' => 'false' %>
-      </p>
-  <% end %>
+  <p style="font-size:90%" class="no_js">
+    <%=t :If_problem_with_redirect %>, <%= link_to t(:click_here), recovery_confirmation_path(@account.single_access_token), :class => 'ui-link', 'data-ajax' => 'false' %>
+  </p>
 </div>
