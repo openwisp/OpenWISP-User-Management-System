@@ -27,7 +27,7 @@
             <td><%= operator.last_login_ip.nil? ? '-' : operator.last_login_ip %></td>
             <td><%= operator.login_count %></td>
             <td>
-              <%= link_to t(:Edit), edit_operator_path(operator) %>
+              <%= link_to t(:Edit), edit_operator_path(operator) %> -
               <%= link_to t(:Destroy), operator_path(operator), :method => :delete, :confirm => t(:Are_you_sure) %>
             </td>
           </tr>
