@@ -13,7 +13,7 @@
           <th><%=t :Last_login_at %></th>
           <th><%=t :Last_login_ip %></th>
           <th><%=t :Login_count %></th>
-          <th></th>
+          <th colspan="2"><%=t :Operations %></th>
         </tr>
       </thead>
       <tbody>
@@ -26,10 +26,8 @@
             <td><%= operator.last_login_at.nil? ? '-' : operator.last_login_at.strftime("%d/%m/%y %H:%M:%S") %></td>
             <td><%= operator.last_login_ip.nil? ? '-' : operator.last_login_ip %></td>
             <td><%= operator.login_count %></td>
-            <td>
-              <%= link_to t(:Edit), edit_operator_path(operator) %> -
-              <%= link_to t(:Destroy), operator_path(operator), :method => :delete, :confirm => t(:Are_you_sure) %>
-            </td>
+            <td><%= link_to t(:Edit), edit_operator_path(operator) %></td>
+            <td><%= link_to t(:Destroy), operator_path(operator), :method => :delete, :confirm => t(:Are_you_sure) %></td>
           </tr>
         <% end %>
       </tbody>
