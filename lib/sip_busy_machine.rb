@@ -67,16 +67,13 @@ eor
     @port = params[:port] || 5060
     @address = params[:address] || '0.0.0.0'
 
-    #noinspection RubyResolve
     @serving_m = Mutex.new
     @serving_h = {}
   end
 
   def run
     begin
-      #noinspection RubyResolve
       self.sd = UDPSocket.open
-      #noinspection RubyResolve
       sd.setsockopt(Socket::SOL_SOCKET,Socket::SO_REUSEADDR, true)
       self.sd.bind(@address, @port)
       loop do
