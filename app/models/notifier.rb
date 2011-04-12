@@ -20,13 +20,13 @@ class Notifier < ActionMailer::Base
   default_url_options[:protocol]  =  Configuration.get('notifier_protocol')
   
   def password_reset_instructions(account)
-    if Configuration.get('mailer_custom_url_enabled') == 'true'
-      reset_url = Configuration.get('mailer_custom_url') + account.perishable_token
+    if Configuration.get('password_reset_custom_url_enabled') == 'true'
+      reset_url = Configuration.get('password_reset_custom_url') + account.perishable_token
     else
       reset_url = edit_email_password_reset_url(account.perishable_token)
     end
     
-    subject       I18n.t(:Password_reset_subject)
+    subject       Configuration.get("password_reset_subject_#{I18n.locale}")
     from          Configuration.get('password_reset_from')
     recipients    account.email  
     sent_on       Time.now  

@@ -123,12 +123,6 @@ en:
   Operator_login: Operator login
   Operator_updated_success: Operator successfully updated
   Password_format_error: "Password must contain at least one alphabetic character and one digit"
-  Password_reset_subject: "Password recovery instructions"
-  Password_reset_instructions_1: "It has been requested a password reset for your account."
-  Password_reset_instructions_2: "If you did not request to reset your password, please ignore this message."
-  Password_reset_instructions_3: "If it was really you who requested to reset your password, click the following URL."
-  Password_reset_instructions_4: "If the URL is not working, please try to copy and paste the URL in your browser."
-  Password_reset_instructions_5: "If you still have problems resetting your password, please contact us."
   Password_successfully_updated: "Password updated successfully"
   Perishable_token_error: "Your account could not be found. Instead of clicking on the URL sent you via email, please try to copy and paste the URL in your browser. 
 If you still have problems resetting the password, try repeating the procedure"
