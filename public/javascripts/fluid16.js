@@ -34,7 +34,7 @@ Kwicks : function(){
     $("#kwick .kwick")
         .bind("mouseenter", function(e) {
             if (animating) return false;
-            animating == true;
+            animating = true;
             $("#kwick .kwick").not(this).animate({ "width": 125 }, 200);
             $(this).animate({ "width": 485 }, 200, function() {
                 animating = false;
@@ -74,7 +74,8 @@ Accordion: function(){
         "background": "#fff"
     });
 }
-}
+};
+
 jQuery(function ($) {
 	if($("#accordion").length){fluid.Accordion();}
 	if($("[id$='ajax']").length){fluid.Ajax();}
