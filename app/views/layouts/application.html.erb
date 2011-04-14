@@ -106,7 +106,7 @@
     <div class="box" style="text-align:center">
       <p>Open WISP User Management System - <%=t :Created_by %> <a href="https://spider.caspur.it/">CASPUR</a></p>
 
-      <% if is_mobile_device? %>
+      <% if has_mobile? && is_mobile_device? %>
           <p><%= link_to_toggle_mobile %></p>
       <% end %>
     </div>

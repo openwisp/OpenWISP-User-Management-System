@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
   helper :all
   helper_method :current_account_session, :current_account
   helper_method :current_operator_session, :current_operator
+  helper_method :has_mobile?
   filter_parameter_logging :password, :password_confirmation, :crypted_password
   protect_from_forgery
 
@@ -69,12 +70,12 @@ class ApplicationController < ActionController::Base
     I18n.locale = available_locales.include?(session[:locale]) ? session[:locale] : nil
   end
 
-  def controller_has_no_mobile?
-    WITHOUT_MOBILE_TEMPLATE.any?{ |current| controller_name == current }
+  def has_mobile?
+    !WITHOUT_MOBILE_TEMPLATE.include?(controller_name)
   end
 
   def load_mobile_fu
-    self.class.has_mobile_fu unless controller_has_no_mobile?
+    self.class.has_mobile_fu if has_mobile?
   end
 
   def current_account_session
