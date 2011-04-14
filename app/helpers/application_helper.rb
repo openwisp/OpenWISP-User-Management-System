@@ -26,6 +26,12 @@ module ApplicationHelper
     link_to(image_tag("locale/#{locale}.jpg", :size => "24x24"), {:controller => :application, :action => :set_session_locale, :locale => locale}, html_opts.merge(opts))
   end
 
+  def link_to_toggle_mobile(opts={})
+    url = {:controller => :application, :action => :toggle_mobile_view}
+    text = session[:mobile_view] ? t(:Switch_to_full_site) : t(:Switch_to_mobile_site)
+    link_to text, url, opts
+  end
+
   def mobile_link_back_to(path, opts={})
     link_to t(:Back), path, {'data-icon' => 'back', 'data-role' => 'button', 'data-direction' => 'reverse'}.merge(opts)
   end

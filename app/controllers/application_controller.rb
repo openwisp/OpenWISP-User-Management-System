@@ -44,15 +44,14 @@ class ApplicationController < ActionController::Base
   # with mobile views
   before_filter :load_mobile_fu
 
-  def available_locales; AVAILABLE_LOCALES; end
-
-  def set_locale
-    I18n.locale = available_locales.include?(session[:locale]) ? session[:locale] : nil
-  end
-
   def set_session_locale
     session[:locale] = params[:locale]
     redirect_to request.env['HTTP_REFERER'] || :root
+  end
+
+  def toggle_mobile_view
+    session[:mobile_view] = !session[:mobile_view]
+    redirect_to root_path
   end
 
   # Invalid authenticity token custom error page
@@ -61,6 +60,14 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def available_locales
+    AVAILABLE_LOCALES
+  end
+
+  def set_locale
+    I18n.locale = available_locales.include?(session[:locale]) ? session[:locale] : nil
+  end
 
   def controller_has_no_mobile?
     WITHOUT_MOBILE_TEMPLATE.any?{ |current| controller_name == current }
