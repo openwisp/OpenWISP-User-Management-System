@@ -26,7 +26,7 @@ class Operator < ActiveRecord::Base
   acts_as_authentic do |c|
     c.merge_validates_length_of_password_field_options( { :minimum => 8 } )
     c.validates_length_of_login_field_options = { :in => 4..16 }
-    c.validates_format_of_login_field_options = { :with => /\A[a-z0-9\_\-\.]+\Z/i }
+    c.validates_format_of_login_field_options = { :with => /\A[a-z0-9_\-\.]+\Z/i }
     c.session_class = OperatorSession
     c.maintain_sessions = false
   end

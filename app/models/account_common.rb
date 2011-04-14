@@ -43,7 +43,7 @@ class AccountCommon <  ActiveRecord::Base
     c.merge_validates_length_of_password_field_options( { :minimum => 8 } )
     c.merge_validates_format_of_email_field_options(:message => :email_invalid)
     c.validates_length_of_login_field_options = { :in => 4..16 }
-    c.validates_format_of_login_field_options = { :with => /\A[a-z0-9\_\-\.]+\Z/i }
+    c.validates_format_of_login_field_options = { :with => /\A[a-z0-9_\-\.]+\Z/i }
     c.session_class = AccountSession
   end
 
@@ -61,7 +61,7 @@ class AccountCommon <  ActiveRecord::Base
 
   # Validations
   # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
-  validates_format_of :password, :with => /\A((\d|[a-z\_]|\s)*\d(\d|[a-z\_]|\s)*[a-z](\d|[a-z\_]|\s)*)|((\d|[a-z\_]|\s)*[a-z](\d|[a-z\_]|\s)*\d(\d|[a-z\_]|\s)*)\Z/i, :message => :password_format, :allow_nil => true
+  validates_format_of :password, :with => /\A((\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*)|((\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*)\Z/i, :message => :password_format, :allow_nil => true
   validates_presence_of :eula_acceptance, :message => :eula_must_be_accepted
   validates_presence_of :privacy_acceptance, :message => :privacy_must_be_accepted
   validates_presence_of :mobile_prefix, :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
@@ -74,15 +74,15 @@ class AccountCommon <  ActiveRecord::Base
                       :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
   validates_presence_of :birth_date
   validates_presence_of :given_name
-  validates_format_of :given_name, :with => /\A(\w|[\ \'])+\Z/i, :message => :name_format
+  validates_format_of :given_name, :with => /\A(\w|[\s'])+\Z/i, :message => :name_format
   validates_presence_of :surname
-  validates_format_of :surname, :with => /\A(\w|[\ \'])+\Z/i, :message => :name_format
+  validates_format_of :surname, :with => /\A(\w|[\s'])+\Z/i, :message => :name_format
   validates_presence_of :state
-  validates_format_of :state, :with => /\A[a-z\ \'\.\,]+\Z/i, :message => :addres_format
+  validates_format_of :state, :with => /\A[a-z\s'\.,]+\Z/i, :message => :addres_format
   validates_presence_of :city
-  validates_format_of :city, :with => /\A(\w|[\ \'\.\,\-])+\Z/i, :message => :address_format
+  validates_format_of :city, :with => /\A(\w|[\s'\.,\-])+\Z/i, :message => :address_format
   validates_presence_of :address
-  validates_format_of :address, :with => /\A(\w|[\ \'\.\,\/\-])+\Z/i, :message => :address_format
+  validates_format_of :address, :with => /\A(\w|[\s'\.,\/\-])+\Z/i, :message => :address_format
   validates_presence_of :zip
   validates_format_of :zip, :with => /[a-z0-9]/, :message => :zip_format
 
