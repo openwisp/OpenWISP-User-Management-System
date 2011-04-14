@@ -17,6 +17,11 @@
 
 class User < AccountCommon
 
+  # Authlogic
+  acts_as_authentic do |c|
+    c.maintain_sessions = false
+  end
+
   self.before_validation { |record|
     # Cleaning up unused fields... just in case..
 

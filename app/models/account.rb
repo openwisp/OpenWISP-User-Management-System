@@ -17,6 +17,11 @@
 
 class Account < AccountCommon
 
+  # Authlogic
+  acts_as_authentic do |c|
+    c.maintain_sessions = true
+  end
+
   # Captcha
   
   apply_simple_captcha :message => I18n.t(:captcha_error), :add_to_base => true
@@ -77,7 +82,7 @@ class Account < AccountCommon
   def save_from_mobile_phone_password_recovery
     self.reset_single_access_token
     self.reset_perishable_token
-    self.save
+    self.save_without_session_maintenance
   end
 
   def deliver_password_reset_instructions!

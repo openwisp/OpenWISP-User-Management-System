@@ -28,7 +28,9 @@ class Operator < ActiveRecord::Base
     c.validates_length_of_login_field_options = { :in => 4..16 }
     c.validates_format_of_login_field_options = { :with => /\A[a-z0-9\_\-\.]+\Z/i }
     c.session_class = OperatorSession
+    c.maintain_sessions = false
   end
+
   acts_as_authorization_subject
   acts_as_authorization_object :subject_class_name => 'Operator'
 

@@ -40,9 +40,9 @@ class EmailPasswordResetsController < ApplicationController
   def update
     @account.password = params[:account][:password]
     @account.password_confirmation = params[:account][:password_confirmation]
-    if @account.save
+    if @account.save_without_session_maintenance
       flash[:notice] = I18n.t(:Password_successfully_updated)
-      redirect_to account_url
+      redirect_to root_url
     else
       render :action => :edit
     end
