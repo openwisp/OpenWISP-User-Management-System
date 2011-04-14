@@ -78,7 +78,6 @@ Accordion: function(){
 
 jQuery(function ($) {
 	if($("#accordion").length){fluid.Accordion();}
-	if($("[id$='ajax']").length){fluid.Ajax();}
 	if($("[id^='toggle']").length){fluid.Toggle();}
 	if($("#kwick .kwick").length){fluid.Kwicks();}
 	if($("#section-menu").length){fluid.SectionMenu();}
