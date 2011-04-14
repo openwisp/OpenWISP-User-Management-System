@@ -32,10 +32,6 @@ class UsersController < ApplicationController
 
   STATS_PERIOD = 14
 
-  def load_user
-    @user = User.find(params[:id])
-  end
-  
   def index
   end
   
@@ -208,4 +204,10 @@ class UsersController < ApplicationController
     render :partial => "common/radius_accounting_list", :locals => { :action => 'ajax_accounting_search', :accountings => @radius_accountings, :total_accountings => @total_accountings } 
   end
 
+
+  private
+
+  def load_user
+    @user = User.find(params[:id])
+  end
 end

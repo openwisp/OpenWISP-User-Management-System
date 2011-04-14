@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :back do %>
-    <%= mobile_link_back_to new_mobile_phone_password_reset_path %>
+    <%= mobile_link_back_to root_path, 'data-ajax' => false %>
 <% end %>
 
 <% form_for @account, :builder => ErrorFormBuilder, :url => mobile_phone_password_reset_path, :method => :put, :html => {'data-ajax' => false} do |f| %>

@@ -1,3 +1,5 @@
+<%= content_for :data_url, account_registration_path %>
+
 <% content_for :header do %>
     <h1><%=t :Register %></h1>
 <% end %>
@@ -6,7 +8,7 @@
     <%= mobile_link_back_to root_path %>
 <% end %>
 
-<% form_for @account, :builder => ErrorFormBuilder, :url => account_path, :html => {'data-ajax' => false} do |f| %>
+<% form_for @account, :builder => ErrorFormBuilder, :url => account_path do |f| %>
     <% if @account.errors.any? %>
         <div data-role="collapsible">
           <h3><%=t 'activerecord.errors.template.header', :count => @account.errors.count %></h3>

@@ -56,7 +56,7 @@ class MobilePhonePasswordResetsController < ApplicationController
     @account.password_confirmation = params[:account][:password_confirmation]
     if @account.save_from_mobile_phone_password_recovery
       flash[:notice] = I18n.t(:Password_successfully_updated)
-      redirect_to account_url
+      redirect_to root_url
     else
       render :action => :edit
     end

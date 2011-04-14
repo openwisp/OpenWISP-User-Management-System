@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def mobile_link_to_logout
-    form_tag account_logout_path, :method => :get, 'data-ajax' => false, :class => 'ui-btn-right' do
+    form_tag account_logout_path, :method => :get, :class => 'ui-btn-right', 'data-ajax' => false do
       submit_tag t(:Logout), 'data-icon' => 'delete', :name => "", 'data-theme' => 'a'
     end
   end

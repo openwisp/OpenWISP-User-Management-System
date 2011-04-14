@@ -1,6 +1,6 @@
-<% content_for :after_defaults do %>
-    <%= javascript_tag "owums.hideWhenJsIsAvailable('.no_js');" %>
-<% end %>
+<%= content_for :data_url, verification_path %>
+
+<%= javascript_tag "owums.hideWhenJsIsAvailable('.no_js');" %>
 
 <% content_for :header do %>
     <h1><%=t :Verification %></h1>

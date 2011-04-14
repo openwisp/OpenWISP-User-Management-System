@@ -1,4 +1,4 @@
-$.getJSON('stats/registered_users', function(registered_users){
+$.getJSON(owums.jsonPath('/stats/registered_users'), function(registered_users){
     graphs.init({
         chart: {
             renderTo: 'registered_users_graph',

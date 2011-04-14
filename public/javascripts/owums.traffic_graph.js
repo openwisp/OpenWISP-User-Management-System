@@ -1,4 +1,4 @@
-$.getJSON('stats/traffic', function(traffic){
+$.getJSON(owums.jsonPath('/stats/traffic'), function(traffic){
     graphs.init({
         chart: {
             renderTo: 'traffic_graph',

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title><%=t :Users_management %></title>
+  <title>OpenWISP</title>
 
   <% if is_apple_device? %>
       <!-- Apple Webapp -->
@@ -12,15 +12,14 @@
 
   <%= stylesheet_link_tag 'jquery.mobile/styles', 'custom-mobile' %>
 
-  <%= javascript_include_tag :defaults, 'application-mobile', 'jquery.mobile' %>
-
-  <%= yield :after_defaults %>
+  <%= javascript_include_tag :defaults, 'application-mobile', 'jquery.mobile', 'highcharts', 'owums.graphs' %>
 
   <%= javascript_include_tag 'fluid16' %>
 </head>
 <body>
 
-<div data-role="page">
+<div data-role="page" data-url="<%= on_root? ? '' : yield(:data_url) %>">
+
   <div data-role="header" data-position="inline" data-backbtn="false">
     <% if on_root? %>
         <h1><%= image_tag "logo_caspur.png", :size => "64x50", :alt => 'Open WISP User Management System' %><br/>OpenWISP</h1>
