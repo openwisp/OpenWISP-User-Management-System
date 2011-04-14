@@ -38,6 +38,6 @@ class OperatorSessionsController < ApplicationController
   def destroy
     current_operator_session.destroy
     flash[:notice] = I18n.t(:Logout_successful)
-    redirect_back_or_default operator_login_url
+    redirect_to operator_login_url
   end
 end

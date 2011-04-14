@@ -34,7 +34,7 @@ class AccountSessionsController < ApplicationController
       flash[:notice] = I18n.t(:Login_successful)
       #Avoids session fixations
       reset_session
-      redirect_back_or_default account_url
+      redirect_to account_url
     else
       respond_to do |format|
         format.html   { render :action => :new }
@@ -46,6 +46,6 @@ class AccountSessionsController < ApplicationController
   def destroy
     current_account_session.destroy
     flash[:notice] = I18n.t(:Logout_successful)
-    redirect_back_or_default root_path
+    redirect_to root_path
   end
 end
