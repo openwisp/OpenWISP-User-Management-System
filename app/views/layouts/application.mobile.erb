@@ -49,8 +49,12 @@
         </ul>
 
         <fieldset class="ui-grid-a">
-          <div class="ui-block-a"><%= link_to_locale 'it', 'data-role' => 'button', 'data-transition' => 'flip' %></div>
-          <div class="ui-block-b"><%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %></div>
+          <div class="ui-block-a">
+            <%= link_to_locale 'it', :class => 'locale_link', 'data-role' => 'button', 'data-transition' => 'flip' %>
+          </div>
+          <div class="ui-block-b">
+            <%= link_to_locale 'en', :class => 'locale_link', 'data-role' => 'button', 'data-transition' => 'flip' %>
+          </div>
         </fieldset>
     <% end %>
 
