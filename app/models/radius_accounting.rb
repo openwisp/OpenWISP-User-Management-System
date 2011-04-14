@@ -21,8 +21,11 @@ class RadiusAccounting < ActiveRecord::Base
 
   def self.table_name() "radacct" end
 
-
-  belongs_to :account_common, :foreign_key => :UserName, :primary_key => :username
+  with_options :foreign_key => :UserName, :primary_key => :username do |assoc|
+    assoc.belongs_to :account_common
+    assoc.belongs_to :account
+    assoc.belongs_to :user
+  end
 
   # Class methods
 
