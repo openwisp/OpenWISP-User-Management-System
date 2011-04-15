@@ -73,7 +73,7 @@
       <% @account.last_sessions(10).each do |session| %>
           <tr>
             <td><%=l session.acct_start_time, :format => :short %></td>
-            <% if session.acct_stop_time.nil? %>
+            <% if session.acct_stop_time.blank? %>
                 <td><%=t :online %></td>
             <% else %>
                 <td><%=l session.acct_stop_time, :format => :short %></td>

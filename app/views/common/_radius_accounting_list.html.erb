@@ -50,7 +50,7 @@
       <% accountings.each do |accounting| %>
         <tr>
           <td><%=h accounting.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
-          <% if accounting.acct_stop_time.nil? %>
+          <% if accounting.acct_stop_time.blank? %>
             <td><%=t :online %></td>
           <% else %>
             <td><%=h accounting.acct_stop_time.strftime("%d/%m/%y - %H:%M") %></td>

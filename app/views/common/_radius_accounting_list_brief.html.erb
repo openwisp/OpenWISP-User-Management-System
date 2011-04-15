@@ -24,7 +24,7 @@
         <% end %>
       </td>
       <td><%=h acct.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
-      <% if acct.acct_stop_time.nil? %>
+      <% if acct.acct_stop_time.blank? %>
         <td><%=t :online %></td>
       <% else %>
         <td><%=h acct.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
