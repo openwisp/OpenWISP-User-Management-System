@@ -73,7 +73,11 @@
       <% @account.last_sessions(10).each do |session| %>
           <tr>
             <td><%=l session.acct_start_time, :format => :short %></td>
-            <td><%=l session.acct_stop_time, :format => :short %></td>
+            <% if session.acct_stop_time.nil? %>
+                <td><%=t :online %></td>
+            <% else %>
+                <td><%=l session.acct_stop_time, :format => :short %></td>
+            <% end %>
             <td><%=h bytes_to_human(session.acct_output_octets) %></td>
             <td><%=h bytes_to_human(session.acct_input_octets) %></td>
           </tr>
