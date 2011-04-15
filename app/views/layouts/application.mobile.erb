@@ -1,14 +1,13 @@
 <!doctype html>
 <html>
 <head>
-  <title>OpenWISP</title>
-
   <% if is_apple_device? %>
       <!-- Apple Webapp -->
       <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="viewport" content="initial-scale=1,user-scalable=no" />
       <link rel="apple-touch-icon" href="<%= image_path 'logo_caspur.png' %>" />
   <% end %>
+
+  <title>OpenWISP</title>
 
   <%= stylesheet_link_tag 'jquery.mobile/styles', 'custom-mobile' %>
 

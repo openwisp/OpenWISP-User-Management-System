@@ -20,10 +20,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 body {
 	line-height: 1;
-  margin:auto;
-  width:100%;
-  min-width: 1140px;
-  min-height: 690px;
 }
 ol, ul {
 	list-style: none;
