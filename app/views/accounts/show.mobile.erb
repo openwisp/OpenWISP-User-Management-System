@@ -2,6 +2,7 @@
 
 <% content_for :header do %>
     <h1><%=t :Information %></h1>
+    <%= link_to t(:Instructions), account_instructions_path, :class => 'clear_cache', 'data-icon' => 'info', 'data-role' => 'button' %>
 <% end %>
 
 <%# Reload the graphs every time, skipping jQuery Mobile cache %>

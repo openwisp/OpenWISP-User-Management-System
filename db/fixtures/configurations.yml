@@ -178,3 +178,8 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   key: "password_reset_custom_url"
   value: "http://placeholder.url.com/&t="
 
+60:
+  system_key: t
+  key: "custom_account_instructions"
+  value: ""
+

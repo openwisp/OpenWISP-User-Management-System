@@ -57,34 +57,35 @@
     <ul class="nav main">
       <% if current_operator %>
           <% if current_operator.has_role? 'stats_viewer' %>
-              <li><%= link_to t(:Show_stats), users_path %></li>
+              <li><%= menu_link_to t(:Show_stats), users_path %></li>
           <% end %>
           <% if current_operator.has_role? 'users_browser' %>
-              <li><%= link_to t(:Browse_users), users_browse_path %></li>
+              <li><%= menu_link_to t(:Browse_users), users_browse_path %></li>
           <% end %>
           <% if current_operator.has_role? 'users_finder' %>
-              <li><%= link_to t(:Search_users), users_search_path %></li>
+              <li><%= menu_link_to t(:Search_users), users_search_path %></li>
           <% end %>
           <% if current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant' %>
-              <li><%= link_to t(:Add_new_user), new_user_path %></li>
+              <li><%= menu_link_to t(:Add_new_user), new_user_path %></li>
           <% end %>
           <% if current_operator.has_role? 'configurations_manager' %>
-              <li><%= link_to t(:Configuration_keys), configurations_path %></li>
+              <li><%= menu_link_to t(:Configuration_keys), configurations_path %></li>
           <% end %>
           <% if current_operator.has_role? 'operators_manager' %>
-              <li><%= link_to t(:Operators), operators_path %></li>
+              <li><%= menu_link_to t(:Operators), operators_path %></li>
           <% end %>
 
           <li class="secondary"><%= link_to t(:Logout), operator_logout_url %></li>
-          <li class="secondary"><%= link_to t(:Home), operator_path(current_operator) %></li>
+          <li class="secondary"><%= menu_link_to t(:Home), operator_path(current_operator) %></li>
       <% else %>
+          <li><%= menu_link_to t(:How_to_use_service), account_instructions_url, :disable_if => on_root? %></li>
           <% if !current_account %>
-              <li><%= link_to t(:Manage_your_account), account_login_url %></li>
-              <li><%= link_to t(:Register), account_registration_url %></li>
-              <li><%= link_to t(:Forgot_password), password_reset_url %></li>
+              <li><%= menu_link_to t(:Manage_your_account), account_login_url %></li>
+              <li><%= menu_link_to t(:Register), account_registration_url %></li>
+              <li><%= menu_link_to t(:Forgot_password), password_reset_url %></li>
           <% else %>
-              <li><%= link_to t(:Show_account_info), account_path %></li>
-              <li><%= link_to t(:Edit_account), edit_account_path %></li>
+              <li><%= menu_link_to t(:Show_account_info), account_path %></li>
+              <li><%= menu_link_to t(:Edit_account), edit_account_path %></li>
               <li class="secondary"><%= link_to t(:Logout), account_logout_url %></li>
           <% end %>
       <% end %>
@@ -92,9 +93,9 @@
   </div>
   <div class="clear"></div>
   <div class="grid_12">
-    <div class="box" style="text-align:right">
+    <div id="notice" class="box">
       <% if flash[:notice]%>
-          <p style="color: green"><%= flash[:notice] %>&nbsp;</p>
+          <p><%= flash[:notice] %>&nbsp;</p>
       <% end %>
     </div>
   </div>

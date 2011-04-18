@@ -42,6 +42,14 @@ module ApplicationHelper
     end
   end
 
+  def menu_link_to(text, path, opts={})
+    if current_page?(path) || opts[:disable_if]
+      link_to text, "#", {:class => 'off'}.merge(opts)
+    else
+      link_to text, path, opts
+    end
+  end
+
   def on_root?
     current_page?(root_path) || current_page?(root_path.chop)
   end

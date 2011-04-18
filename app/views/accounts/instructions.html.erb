@@ -1,0 +1,51 @@
+<div class="grid_12">
+  <div class="box articles">
+    <div class="block" id="articles">
+      <div class="first article">
+        <h3><%=t :General_infos %></h3>
+        <p class="meta"><%=t :General_infos_subheading %></p>
+
+        <p style="font-size:105%">
+          <%=t :General_infos_howto, :login => t(:Manage_your_account) %>
+          <br />
+          <%= @custom_instructions %>
+        </p>
+      </div>
+
+      <div class="article">
+        <h3><%=t :Manage_your_account %></h3>
+        <p class="meta"><%=t :Manage_your_account_subheading %></p>
+
+        <p style="font-size:105%">
+          <%=t :Manage_your_account_howto, :login => t(:Manage_your_account) %>
+        </p>
+      </div>
+
+      <div class="article">
+        <h3><%=t :Register %></h3>
+        <p class="meta"><%=t :Register_subheading %></p>
+
+        <p style="font-size:105%">
+          <%=t :Register_howto_1, :registration => t(:Register) %>
+        </p>
+        <ol>
+          <li><%=t :Data_insertion %></li>
+          <li><%=t :Data_verification %></li>
+        </ol>
+        <p style="font-size:105%">
+          <%=t :Register_howto_2, :registration => t(:Register) %>
+        </p>
+      </div>
+
+      <div class="article">
+        <h3><%=t :Reset_password %></h3>
+        <p class="meta"><%=t :Reset_password_subheading %></p>
+
+        <p style="font-size:105%">
+          <%=t :Reset_password_howto, :reset_password => t(:Reset_password) %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -16,8 +16,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class AccountsController < ApplicationController
-  before_filter :require_account, :only => [ :show, :edit, :update, :ajax_accounting_search ]
-  before_filter :require_no_account, :only => [ :new, :create, :verify_credit_card, :secure_verify_credit_card ]
+  before_filter :require_account, :only => [
+      :show, :edit, :update, :ajax_accounting_search
+  ], :except => :instructions
+
+  before_filter :require_no_account, :only => [
+      :new, :create, :verify_credit_card, :secure_verify_credit_card
+  ], :except => :instructions
+
   before_filter :require_no_operator
 
   before_filter :load_account, :except => [ :new, :create, :verify ]
@@ -182,6 +188,10 @@ class AccountsController < ApplicationController
       end
     end
     render :nothing => true
+  end
+
+  def instructions
+    @custom_instructions = Configuration.get('custom_account_instructions')
   end
 
   def ajax_accounting_search

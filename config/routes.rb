@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.account_login '/account/login', :controller => "account_sessions", :action => "new"
   map.account_logout '/account/logout', :controller => "account_sessions", :action => "destroy", :method => "delete"
   map.account_registration '/account/signup', :controller => "accounts", :action => "new"
+  map.account_instructions '/account/instructions', :controller => "accounts", :action => "instructions"
   map.password_reset '/account/reset', :controller => "password_resets", :action => "new"
   map.verification '/account/verification', :controller => 'accounts', :action => 'verification'
   map.verify_credit_card '/account/verify_credit_card', :controller => 'accounts', :action => 'verify_credit_card', :method => 'post'
@@ -40,7 +41,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mobile_phone_password_resets
   map.resources :stats, :only => :show
 
-  map.root :account_login
+  map.root :account_instructions
 
   # The priority is based upon order of creation: first created -> highest priority.
 

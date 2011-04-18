@@ -41,6 +41,7 @@
     <% if on_root? %>
         <ul data-role="listview" data-inset="true">
           <% if !current_account %>
+              <li><%= link_to t(:How_to_use_service), account_instructions_path %></li>
               <li><%= link_to t(:Manage_your_account), account_login_path %></li>
               <li><%= link_to t(:Register), account_registration_path %></li>
               <li><%= link_to t(:Forgot_password), password_reset_path %></li>
@@ -49,11 +50,12 @@
 
         <fieldset class="ui-grid-a">
           <div class="ui-block-a">
-            <%= link_to_locale 'it', :class => 'locale_link', 'data-role' => 'button', 'data-transition' => 'flip' %>
+            <%= link_to_locale 'it', :class => 'clear_cache', 'data-role' => 'button', 'data-transition' => 'flip' %>
           </div>
           <div class="ui-block-b">
-            <%= link_to_locale 'en', :class => 'locale_link', 'data-role' => 'button', 'data-transition' => 'flip' %>
+            <%= link_to_locale 'en', :class => 'clear_cache', 'data-role' => 'button', 'data-transition' => 'flip' %>
           </div>
+          <p>&nbsp;</p>
         </fieldset>
     <% end %>
 

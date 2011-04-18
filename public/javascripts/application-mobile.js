@@ -8,7 +8,7 @@ $(document).bind('pageshow', function(){
 });
 
 $(document).bind('pageshow', function(){
-    $('.locale_link').bind('click', function() {
+    $('.clear_cache').bind('click', function() {
         $(document).one('pagehide', function(){
             $('[data-url=""]').remove();
             $('[data-url="/"]').remove();

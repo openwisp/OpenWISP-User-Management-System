@@ -145,6 +145,16 @@ tr:hover td {
   background-color: #ffffee;
 }
 
+li > .off {
+    background-color: #4A4344 !important;
+}
+
+#notice {
+    color:green;
+    font-weight:bold;
+    text-align:right;
+}
+
 #operator_info {
   background-color: #eee;
 }

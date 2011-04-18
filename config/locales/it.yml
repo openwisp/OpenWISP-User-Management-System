@@ -29,6 +29,8 @@ it:
   Created_by: "Creato da"
   Current_login_at: "Data accesso corrente"
   Current_login_ip: "IP accesso corrente"
+  Data_insertion: "Inserimento dati personali"
+  Data_verification: "Verifica dati personali"
   Destroy: "Elimina"
   Document_photo: "Copia del documento"
   Download: "Traffico in download"
@@ -51,15 +53,24 @@ it:
   From: "Da"
   From_mobile_phone_number: "Dall'utenza telefonica"
   General_infos: "Informazioni generali"
+  General_infos_howto: "
+    Owums è la piattaforma di registrazione degli utenti. Tramite Owums puoi registrare il tuo account personale per usufruire del servizio e per monitorarne l'utilizzo giornaliero.<br />
+    In seguito alla registrazione, ti sarà possibile visualizzare e modificare i tuoi dati personali.<br />
+    Se già disponi di un account, vai su '<strong>{{login}}</strong>' dal menù principale per effettuare l'accesso con le tue credenziali o consulta l'omonima sezione
+    sottostante per avere maggiori informazioni.
+  "
+  General_infos_subheading: "Cos'è Owums e cosa ci posso fare?"
   Given_name: "Nome"
   Graphs: "Grafici"
   Home: "Home"
   Hours: "Ore"
+  How_to_use_service: "Come usare il servizio"
   I_agree: "Accetto"
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: "Se hai inserito un numero di telefono cellulare errato, attendi la scadenza della registrazione e riprova."
   If_problem_with_redirect: "Dopo la procedura di verifica, se non vieni rediretto automaticamente"
   Information: "Informazioni"
   Instruction_reset_has_been_mailed: "Le istruzioni per il recupero della password sono state inviate. Controlla la tua posta elettronica"
+  Instructions: "Istruzioni"
   Invalid_request: "Richiesta non valida!"
   IP_address: "Indirizzo IP"
   Key: "Chiave"
@@ -99,6 +110,13 @@ it:
   Logout_successful: "Logout riuscito"
   Mac_address: "MAC address"
   Manage_your_account: "Gestisci il tuo account"
+  Manage_your_account_howto: "
+    Una volta aver eseguito la procedura di registrazione, seguendo '<strong>{{login}}</strong>' dal menù principale ed inserendo il nome utente (ad es. il numero di cellulare)
+    e la password scelti, potrai accedere alla sezione privata dove potrai consultare le statistiche di utilizzo ed i tuoi dati personali.<br />
+    Nel caso in cui volessi disabilitare il tuo account (ad es. per essere sicuro che nessuno lo utilizzi quando sei fuori città) puoi farlo, dopo aver effettuato l'acesso,
+    nella sezione 'Modifica' dei tuoi dati personali. Potrai riabilitare il tuo account quando vuoi ma ti verrà chiesto di ripetere la procedura di verifica dei tuoi dati personali.
+  "
+  Manage_your_account_subheading: "Dopo la registrazione"
   Minutes: "Minuti"
   Mobile_phone_number: "Numero di cellulare"
   My_account: "Il mio account"
@@ -141,10 +159,31 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Recover: "Ripristino"
   Refresh_data: "Aggiorna dati"
   Register: "Registrati"
+  Register_howto_1: "
+    Se ancora non disponi di un account, puoi eseguire la procedura di registrazione seguendo '<strong>{{registration}}</strong>' dal menù principale.<br />
+    La procedura di registrazione è composta principalmente di due fasi:
+  "
+  Register_howto_2: "
+    Durante la prima fase è necessario inserire i propri dati anagrafici, seguendo le indicazioni raggiungibili da '<strong>{{registration}}</strong>'.<br />
+    Una volta inseriti i propri dati, per utilizzare il servizio è necessario procedere con la seconda fase, quella di verifica dei propri dati. Nella maggior parte dei
+    casi la verifica viene fatta tramite una telefontata gratuita al numero indicato con il <strong>cellulare inserito in fase di registrazione</strong>,
+    avendo cura di <strong>non nascondere il numero chiamante</strong>. Nel caso la telefonata venga effettuata nascondendo il proprio numero, l'account non verrà
+    verificato e, pertanto, sarà impossibile usufruire del servizio.<br />
+    Dopo aver verificato i propri dati, l'utente si troverà sulla propria pagina personale. Per utilizzare il servizio basterà aprire una nuova pagina (ad es. www.google.com)
+    per iniziare la navigazione.
+  "
+  Register_subheading: "Cosa devo fare e cosa mi serve per registrarmi?"
   Registered_users: "Utenti registrati"
   Registration_date: "Data di registrazione"
   Reset: "Reimposta"
   Reset_password: "Reimposta password"
+  Reset_password_subheading: "In caso dimentichi la password"
+  Reset_password_howto: "
+    Nel caso dimenticassi la password, puoi andare su '<strong>{{reset_password}}</strong>' dal menù principale per recuperarla. La procedura di recupero password
+    può essere effettuata sia tramite e-mail che tramite chiamata telefonica gratuita.<br />
+    Durante la procedura di recupero ti verrà comunicato anche il nome utente. Una volta reimpostata la password, per entrare dovrai effettuare l'accesso con
+    le nuove credenziali.
+  "
   Repeat_registration: "Puoi ripetere la registrazione cliccando qui."
   Roles: "Ruoli"
   Search: "Cerca"

@@ -1,0 +1,54 @@
+<%= content_for :data_url, account_instructions_path %>
+
+<% content_for :header do %>
+    <h1><%=t :Instructions %></h1>
+<% end %>
+
+<% content_for :back do %>
+    <% if current_account %>
+        <%= mobile_link_back_to account_path %>
+    <% else %>
+        <%= mobile_link_back_to root_path %>
+    <% end %>
+<% end %>
+
+<div data-role="collapsible-set">
+  <div data-role="collapsible">
+    <h3><%=t :General_infos %></h3>
+    <h4><%=t :General_infos_subheading %></h4>
+
+    <p>
+      <%=t :General_infos_howto, :login => t(:Manage_your_account) %>
+      <br />
+      <%= @custom_instructions %>
+    </p>
+  </div>
+
+  <div data-role="collapsible" data-collapsed="true">
+    <h3><%=t :Manage_your_account %></h3>
+    <h4><%=t :Manage_your_account_subheading %></h4>
+
+    <p><%=t :Manage_your_account_howto, :login => t(:Manage_your_account) %></p>
+  </div>
+
+  <div data-role="collapsible" data-collapsed="true">
+    <h3><%=t :Register %></h3>
+    <h4><%=t :Register_subheading %></h4>
+
+    <p><%=t :Register_howto_1, :registration => t(:Register) %></p>
+
+    <ol>
+      <li><%=t :Data_insertion %></li>
+      <li><%=t :Data_verification %></li>
+    </ol>
+
+    <p><%=t :Register_howto_2, :registration => t(:Register) %></p>
+  </div>
+
+  <div data-role="collapsible" data-collapsed="true">
+    <h3><%=t :Reset_password %></h3>
+    <h4><%=t :Reset_password_subheading %></h4>
+    <p><%=t :Reset_password_howto, :reset_password => t(:Reset_password) %></p>
+  </div>
+</div>
+

@@ -29,6 +29,8 @@ en:
   Created_by: "Created by"
   Current_login_at: "Current login at"
   Current_login_ip: "Current login IP"
+  Data_insertion: "Insert personal data"
+  Data_verification: "Verify personal data"
   Destroy: "Delete"
   Document_photo: "ID card scan"
   Download: "Download traffic"
@@ -50,15 +52,23 @@ en:
   Free_call_description: "This is a free call, after a few tones it will hang up by itself."
   From_mobile_phone_number: "From phone number"
   General_infos: "General information"
+  General_infos_howto: "
+    Owums is the users' registration platform. With Owums you can register your personal account to use the service and monitor your daily usage stats.<br />
+    After registering yourself, you will be able to look and edit your personal data.<br />
+    If you already have an account, go to '<strong>{{login}}</strong>' from the main menu to login with your credentials or look below to get more info.
+  "
+  General_infos_subheading: "What is Owums and what can I do with it?"
   Given_name: "Name"
   Graphs: "Graphs"
   Home: "Home"
   Hours: "Hours"
+  How_to_use_service: "How to use the service"
   I_agree: "I agree"
   If_problem_with_redirect: "If your browser does not get redirected after the verification procedure"
   If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: "If the mobile phone number you entered is wrong, please wait for the sign up procedure to time out, then try again."
   Information: "Information"
   Instruction_reset_has_been_mailed: "Instructions on how to reset your password have been emailed to you. Please check your email"
+  Instructions: "Instructions"
   Invalid_request: "Invalid request!"
   IP_address: "IP address"
   Key: "Key"
@@ -98,6 +108,13 @@ en:
   Logout_successful: "Logout successful"
   Mac_address: "MAC address"
   Manage_your_account: "Manage your account"
+  Manage_your_account_howto: "
+    After signing up, by going to '<strong>{{login}}</strong>' from the main menu and filling up the form with your user name (i.e. your mobile phone number) and your password,
+    you'll be granted access to your private section with usage stats and personal data.<br />
+    In case you wanted to disable your account (i.e. to be sure no one uses it while you are out of town), you can disable it in the 'Edit' section of your personal section (after
+    logging in). You can later re-enable your account by repeating the data verification procedure.
+  "
+  Manage_your_account_subheading: "After signing up"
   Minutes: "Minutes"
   Mobile_phone_number: "Mobile phone number"
   My_account: "My account"
@@ -140,11 +157,32 @@ If you still have problems resetting the password, try repeating the procedure"
   Refresh_data: "Refresh data"
   Recover: "Recover"
   Register: "Sign up"
+  Register_howto_1: "
+    If you don't have an account, you can follow the signup procedure by going to '<strong>{{registration}}</strong>' from the main menu.<br />
+    Signing up requires two steps:
+  "
+  Register_howto_2: "
+    In the first step you are required to fill in your personal data, following the given instructions on '<strong>{{registration}}</strong>'.
+    Signing up <strong>requires an Italian mobile phone number</strong>. In case you don't have one the Help Desk will signup for you if you
+    can provide valid ID.<br />
+    After filling up the forms with your info, to use the service it's required that the data is verified. Most of the times the verification
+    step is made by calling (no charge applied) with your mobile phone (the one used in the signup form). The verification procedure only works if
+    <strong>the telephone number of the caller is not hidden</strong> and the mobile phone number is an Italian number.<br />
+    In case the previous conditions are not met, you will not be able to use the service. After the verifications step is complete, you will be
+    taken to your personal, private page. To use the service, it'll be enough to open a new page (i.e. www.google.com) to begin browsing.
+  "
+  Register_subheading: "What do I need to do to signup?"
   Registered_users: "Registered users"
   Registration_date: "Sign up date"
   Repeat_registration: "To repeat registration click here"
   Reset: "Reset"
   Reset_password: "Reset password"
+  Reset_password_subheading: "Forgot your password?"
+  Reset_password_howto: "
+    In case you forgot your password, you can go to '<strong>{{reset_password}}</strong>' from the main menu to recover it. The password can be recovered
+    either via e-mail or via telephone call (only if you signed up with an Italian mobile phone number).<br />
+    While recovering your password you will also be told your username. Once the password has been reset, you will be able to login with your new credentials.
+  "
   Roles: "Roles"
   Search: "Search"
   Search_by_user_mobile_email: "Search by username, phone number or email"
