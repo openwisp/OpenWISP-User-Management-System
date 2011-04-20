@@ -27,6 +27,13 @@ $.getJSON(owums.path('/stats/registered_users'), function(registered_users){
         yAxis: {
             title: { text: null }
         },
+        exporting: {
+            url: owums.path('/stats/export'),
+            buttons: {
+                printButton: {enabled: false},
+                exportButton: {y: 235}
+            }
+        },
         series: registered_users
     });
 });

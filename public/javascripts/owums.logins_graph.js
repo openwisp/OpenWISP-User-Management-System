@@ -21,6 +21,13 @@ $.getJSON('stats/logins', function(logins){
         yAxis: {
             title: { text: null }
         },
+        exporting: {
+            url: owums.path('/stats/export'),
+            buttons: {
+                printButton: {enabled: false},
+                exportButton: {y: 235}
+            }
+        },
         series: logins
     });
 });

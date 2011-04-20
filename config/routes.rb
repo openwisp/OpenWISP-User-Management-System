@@ -33,13 +33,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :configurations
   map.resources :users do |users|
     users.resources :radius_accountings
-    users.resources :stats, :only => :show
+    users.resources :stats, :only => :show, :collection => { :export => :post }
   end
   map.resources :operators
   map.resources :password_resets
   map.resources :email_password_resets
   map.resources :mobile_phone_password_resets
-  map.resources :stats, :only => :show
+  map.resources :stats, :only => :show, :collection => { :export => :post }
 
   map.root :account_instructions
 

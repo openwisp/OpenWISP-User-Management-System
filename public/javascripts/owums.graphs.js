@@ -7,7 +7,11 @@ var graphs = {
                 resetZoom: 'Reimposta Zoom',
                 months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto',
                     'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
-                weekdays: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']
+                weekdays: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
+                downloadPNG: 'Esporta immagine PNG',
+                downloadJPEG: 'Esporta immagine JPEG',
+                downloadPDF: 'Esporta documento PDF',
+                downloadSVG: 'Esporta immagine vettoriale SVG'
             }
         },
         {

@@ -39,6 +39,13 @@ $.getJSON(owums.path('/stats/traffic'), function(traffic){
                 return '<span style="font-size:10px">'+dateStr+'<br/>'+nameStr+'<span style="color:black">: </span>'+valStr+'</span>';
             }
         },
+        exporting: {
+            url: owums.path('/stats/export'),
+            buttons: {
+                printButton: {enabled: false},
+                exportButton: {y: 235}
+            }
+        },
         series: traffic
     });
 });

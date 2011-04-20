@@ -4,7 +4,7 @@ class StatsController < ApplicationController
   access_control do
     default :deny
 
-    action :show do
+    action :show, :export do
       allow :stats_viewer, :if => :current_operator
       allow anonymous, :if => :current_account
     end
@@ -21,6 +21,24 @@ class StatsController < ApplicationController
       format.js { render params[:id] }
       format.any { render :json => @data }
     end
+  end
+
+  def export
+    require 'RMagick'
+    svg, mime_type, filename, width = params[:svg], params[:type], params[:filename], params[:width]
+    extension = mime_type == 'image/svg+xml' ? 'svg' : mime_type.split('/').last
+
+    tmp = Tempfile.open("#{filename}", "#{Rails.root}/tmp/stat_exports/")
+    tmp << svg
+    tmp.close
+
+    unless extension == 'svg'
+      exported = Magick::ImageList.new("#{tmp.path}"){ self.format = 'svg' }.to_blob{ self.format = extension }
+    else
+      exported = svg
+    end
+
+    send_data exported, :filename => "#{filename}.#{extension}", :type => mime_type
   end
 
   private
