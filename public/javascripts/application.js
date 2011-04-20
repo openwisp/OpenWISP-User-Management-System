@@ -28,7 +28,7 @@ var owums = {
         });
     },
 
-    jsonPath: function(path) {
+    path: function(path) {
         if (path[0] === '/') {
             if (window.location.pathname.substr(1, owums.subUri.length) === owums.subUri) {
                 return '/'+owums.subUri+path;
