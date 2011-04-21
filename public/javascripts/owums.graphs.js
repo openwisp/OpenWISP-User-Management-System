@@ -9,7 +9,6 @@ var graphs = {
                     'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
                 weekdays: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
                 downloadPNG: 'Esporta immagine PNG',
-                downloadJPEG: 'Esporta immagine JPEG',
                 downloadPDF: 'Esporta documento PDF',
                 downloadSVG: 'Esporta immagine vettoriale SVG'
             }

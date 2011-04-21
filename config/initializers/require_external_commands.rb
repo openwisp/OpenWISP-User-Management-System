@@ -7,8 +7,8 @@ if ENV['RAILS_ENV'] == 'production'
   end
 
   # ImageMagick and RSVG for exporting graphs
-  if !(system 'rsvg-convert --help >/dev/null 2>&1') && !(system 'convert >/dev/null 2>&1')
-    raise "Missing 'rsvg-convert' or 'convert' command! (on Ubuntu run the following command as root: 'apt-get install librsvg2-bin imagemagick')"
+  if !(system 'rsvg-convert --help >/dev/null 2>&1')
+    raise "Missing 'rsvg-convert' command! (on Ubuntu run the following command as root: 'apt-get install librsvg2-bin')"
   end
 end
 

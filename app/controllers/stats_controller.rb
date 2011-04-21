@@ -30,8 +30,8 @@ class StatsController < ApplicationController
   end
 
   def export
-    supported = ['svg', 'jpeg', 'png', 'pdf']
-    svg, mime_type, filename, width = params[:svg], params[:type], params[:filename], params[:width]
+    supported = ['svg', 'png', 'pdf']
+    svg, mime_type, filename, width = params[:svg], params[:type], params[:filename], params[:width].to_i
     extension = mime_type.split('/').last
 
     # Svg mimetype is svg+xml (so not a valid file extension)
@@ -39,24 +39,11 @@ class StatsController < ApplicationController
     # will be executed on cli
     extension = 'svg' if extension == 'svg+xml' || !supported.include?(extension)
 
-    exported = ''
-    Tempfile.open("#{filename}", "#{Rails.root}/tmp/stat_exports/") do |tmp|
-      tmp << svg
-      tmp.flush
-      tmp.rewind
+    temp = Tempfile.open("temp", "#{Rails.root}/tmp/stat_exports/")
+    temp << svg
+    temp.close
 
-      resized = %x{rsvg-convert #{tmp.path} --width #{width} --format svg}
-      tmp.truncate(0)
-      tmp.flush
-      tmp << resized
-      tmp.flush
-
-      if extension == 'jpeg'
-        exported = %x{convert #{tmp.path} jpeg:-}
-      else
-        exported = %x{rsvg-convert #{tmp.path} --format #{extension}}
-      end
-    end
+    exported = %x{ rsvg-convert #{temp.path} --width #{width} --format #{extension} }
 
     send_data exported, :filename => "#{filename}.#{extension}", :type => mime_type
   end
