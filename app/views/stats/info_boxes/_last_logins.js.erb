@@ -1,0 +1,6 @@
+$('#toggle-last_logins').removeAttr('onclick');
+
+$('#last_logins').slideToggle(function() {
+    $(this).html('<%= escape_javascript render(:partial => 'common/radius_accounting_list_brief', :locals => { :accountings => data }) %>');
+    $(this).slideToggle();
+});

@@ -1,4 +1,4 @@
-$.getJSON(owums.path('/stats/traffic'), function(traffic){
+$.getJSON(owums.path('/stats/traffic.json'), function(traffic){
     graphs.init({
         chart: {
             renderTo: 'traffic_graph',
@@ -41,10 +41,9 @@ $.getJSON(owums.path('/stats/traffic'), function(traffic){
         },
         exporting: {
             url: owums.path('/stats/export'),
-            width: 280,
             buttons: {
                 printButton: {enabled: false},
-                exportButton: {y: 235}
+                exportButton: {verticalAlign: 'bottom', y:-5}
             }
         },
         series: traffic

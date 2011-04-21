@@ -1,0 +1,11 @@
+<% content_for :after_defaults do %>
+    <%= javascript_include_tag 'highcharts', 'highcharts.exporting', 'owums.graphs' %>
+<% end %>
+
+<div class="grid_12">
+  <div class="box">
+    <%= render "stats/graphs/#{@stat}" %>
+  </div>
+</div>
+
+<div class="clear"></div>

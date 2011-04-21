@@ -1,0 +1,10 @@
+<% content_for :after_defaults do %>
+    <%= javascript_include_tag 'owums.traffic_graph' %>
+<% end %>
+
+<h2><%=h t(:Traffic) %></h2>
+<div class="block">
+  <div class="block big_graph" id="traffic_graph">
+    <h5 class="center"><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
+  </div>
+</div>

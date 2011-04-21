@@ -236,4 +236,8 @@ class AccountCommon <  ActiveRecord::Base
       [that_day.to_datetime.to_i * 1000, bytes]
     end
   end
+
+  def traffic_sessions_from(date)
+    [traffic_in_sessions_from(date), traffic_in_sessions_from(date)]
+  end
 end

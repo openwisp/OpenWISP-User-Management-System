@@ -1,4 +1,4 @@
-$.getJSON(owums.path('/stats/registered_users'), function(registered_users){
+$.getJSON(owums.path('/stats/registered_users.json'), function(registered_users){
     graphs.init({
         chart: {
             renderTo: 'registered_users_graph',
@@ -29,10 +29,9 @@ $.getJSON(owums.path('/stats/registered_users'), function(registered_users){
         },
         exporting: {
             url: owums.path('/stats/export'),
-            width: 280,
             buttons: {
                 printButton: {enabled: false},
-                exportButton: {y: 235}
+                exportButton: {verticalAlign: 'bottom', y:-5}
             }
         },
         series: registered_users

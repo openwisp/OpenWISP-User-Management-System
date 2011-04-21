@@ -187,6 +187,11 @@ li > .off {
     margin-bottom: 20px;
 }
 
+.big_graph {
+    height:350px;
+    margin-bottom: 20px;
+}
+
 .red {
     color: red;
 }
