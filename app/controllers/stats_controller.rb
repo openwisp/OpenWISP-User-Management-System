@@ -24,18 +24,32 @@ class StatsController < ApplicationController
   end
 
   def export
-    require 'RMagick'
+    supported = ['svg', 'jpeg', 'png', 'pdf']
     svg, mime_type, filename, width = params[:svg], params[:type], params[:filename], params[:width]
-    extension = mime_type == 'image/svg+xml' ? 'svg' : mime_type.split('/').last
+    extension = mime_type.split('/').last
 
-    tmp = Tempfile.open("#{filename}", "#{Rails.root}/tmp/stat_exports/")
-    tmp << svg
-    tmp.close
+    # Svg mimetype is svg+xml (so not a valid file extension)
+    # Also check to see if someone is tampering with params[:type] which
+    # will be executed on cli
+    extension = 'svg' if extension == 'svg+xml' || !supported.include?(extension)
 
-    unless extension == 'svg'
-      exported = Magick::ImageList.new("#{tmp.path}"){ self.format = 'svg' }.to_blob{ self.format = extension }
-    else
-      exported = svg
+    exported = ''
+    Tempfile.open("#{filename}", "#{Rails.root}/tmp/stat_exports/") do |tmp|
+      tmp << svg
+      tmp.flush
+      tmp.rewind
+
+      resized = %x{rsvg-convert #{tmp.path} --width #{width} --format svg}
+      tmp.truncate(0)
+      tmp.flush
+      tmp << resized
+      tmp.flush
+
+      if extension == 'jpeg'
+        exported = %x{convert #{tmp.path} jpeg:-}
+      else
+        exported = %x{rsvg-convert #{tmp.path} --format #{extension}}
+      end
     end
 
     send_data exported, :filename => "#{filename}.#{extension}", :type => mime_type
