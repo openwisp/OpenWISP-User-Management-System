@@ -4,10 +4,16 @@ class StatsController < ApplicationController
   access_control do
     default :deny
 
-    action :show, :export do
+    action :index, :show, :export do
       allow :stats_viewer, :if => :current_operator
+    end
+
+    actions :show do
       allow anonymous, :if => :current_account
     end
+  end
+
+  def index
   end
 
   def show

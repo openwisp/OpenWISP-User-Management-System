@@ -22,12 +22,11 @@ class UsersController < ApplicationController
   access_control do
     default :deny
     
-    allow :users_browser,    :to => [ :show, :browse, :ajax_search, :ajax_accounting_search ]
+    allow :users_browser,    :to => [ :index, :show, :ajax_search, :ajax_accounting_search ]
     allow :users_registrant, :to => [ :new, :create ]
     allow :users_manager,    :to => [ :new, :create, :edit, :update ]
     allow :users_destroyer,  :to => [ :destroy ]
     allow :users_finder,     :to => [ :find, :search, :show ]
-    allow :stats_viewer,     :to => [ :index ]
   end
 
   STATS_PERIOD = 14
@@ -125,9 +124,6 @@ class UsersController < ApplicationController
   end
 
   def search
-  end
-
-  def browse
   end
 
   def ajax_search

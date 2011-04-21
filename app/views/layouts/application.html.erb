@@ -57,7 +57,7 @@
     <ul class="nav main">
       <% if current_operator %>
           <% if current_operator.has_role? 'stats_viewer' %>
-              <li><%= menu_link_to t(:Show_stats), users_path %></li>
+              <li><%= menu_link_to t(:Show_stats), stats_path %></li>
           <% end %>
           <% if current_operator.has_role? 'users_browser' %>
               <li><%= menu_link_to t(:Browse_users), users_browse_path %></li>

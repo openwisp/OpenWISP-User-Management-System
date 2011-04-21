@@ -12,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.recovery_confirmation 'mobile_phone_password_resets/:id/recovery_confirmation', :controller => 'mobile_phone_password_resets', :action => 'recovery_confirmation'
 
-  map.users_browse '/users/browse', :controller => 'users', :action => 'browse'
+  map.users_browse '/users/browse', :controller => 'users', :action => 'index'
   map.users_search '/users/search', :controller => 'users', :action => 'search'
 
   # Operator user (admin) named routes
@@ -23,7 +23,7 @@ ActionController::Routing::Routes.draw do |map|
   map.simple_captcha_read '/simple_captcha_read.mp3', :controller => 'simple_captcha_reader', :action => 'simple_captcha_read'
 
 
-  map.connect 'users/ajax_search', :controller => 'users', :action => 'ajax_search'
+  map.connect '/users/ajax_search', :controller => 'users', :action => 'ajax_search'
   map.connect '/users/find', :controller => 'users', :action => 'find', :method => 'post'
 
   map.resource :account
@@ -33,13 +33,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :configurations
   map.resources :users do |users|
     users.resources :radius_accountings
-    users.resources :stats, :only => :show, :collection => { :export => :post }
+    users.resources :stats, :only => :show
   end
   map.resources :operators
   map.resources :password_resets
   map.resources :email_password_resets
   map.resources :mobile_phone_password_resets
-  map.resources :stats, :only => :show, :collection => { :export => :post }
+  map.resources :stats, :only => [:index, :show], :collection => { :export => :post }
 
   map.root :account_instructions
 
