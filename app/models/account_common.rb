@@ -238,6 +238,6 @@ class AccountCommon <  ActiveRecord::Base
   end
 
   def traffic_sessions_from(date)
-    [traffic_in_sessions_from(date), traffic_in_sessions_from(date)]
+    [traffic_out_sessions_from(date), traffic_in_sessions_from(date)]
   end
 end
