@@ -29,6 +29,7 @@ $.getJSON(owums.path('/stats/registered_users.json'), function(registered_users)
         },
         exporting: {
             url: owums.path('/stats/export'),
+            width: 1200,
             buttons: {
                 printButton: {enabled: false},
                 exportButton: {verticalAlign: 'bottom', y:-5}
