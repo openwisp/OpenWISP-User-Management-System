@@ -25,7 +25,8 @@ $.getJSON(owums.path('/stats/registered_users.json'), function(registered_users)
             type: 'datetime'
         },
         yAxis: {
-            title: { text: null }
+            title: { text: null },
+            allowDecimals: false
         },
         exporting: {
             url: owums.path('/stats/export'),

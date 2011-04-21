@@ -19,7 +19,8 @@ $.getJSON(owums.path('/stats/logins.json'), function(logins){
             labels: {step:2}
         },
         yAxis: {
-            title: { text: null }
+            title: { text: null },
+            allowDecimals: false
         },
         exporting: {
             url: owums.path('/stats/export'),
