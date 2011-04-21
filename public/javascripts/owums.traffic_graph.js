@@ -41,6 +41,7 @@ $.getJSON(owums.path('/stats/traffic.json'), function(traffic){
         },
         exporting: {
             url: owums.path('/stats/export'),
+            width: 1200,
             buttons: {
                 printButton: {enabled: false},
                 exportButton: {verticalAlign: 'bottom', y:-5}
