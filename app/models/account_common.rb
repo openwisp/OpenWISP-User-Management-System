@@ -173,7 +173,7 @@ class AccountCommon <  ActiveRecord::Base
     end
   end
 
-  def expire_timeout
+  def verification_expire_timeout
     if self.verified?
       Rails.logger.error("Account already verified")
       raise "Account already verified"
@@ -189,12 +189,17 @@ class AccountCommon <  ActiveRecord::Base
     end
   end
 
+
   def verification_expired?
-    self.created_at + self.expire_timeout <= Time.now
+    self.created_at + self.verification_expire_timeout <= Time.now
   end
 
   def recovered?
     read_attribute(:recovered)
+  end
+
+  def disabled?
+    !read_attribute(:verified) && !read_attribute(:verified_at).blank?
   end
 
   # "Virtual" accessors

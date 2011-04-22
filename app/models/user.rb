@@ -91,6 +91,10 @@ class User < AccountCommon
     find(:all, :conditions => [ "verified_at is NULL AND NOT verified" ])
   end
 
+  def self.disabled
+    find(:all, :conditions => [ "verified_at is NOT NULL AND NOT verified" ])
+  end
+
   # Utilities
 
   def total_traffic
@@ -179,6 +183,20 @@ class User < AccountCommon
       return true
     end
     return false
+  end
+
+  def registration_expire_timeout
+    if !self.disabled?
+      Rails.logger.error("Account not disabled")
+      raise "Account not disabled"
+    else
+      Configuration.get('disabled_account_expire_days').to_i.days
+    end
+  end
+
+  def registration_expired?
+    expire_in = self.registration_expire_timeout
+    expire_in != 0 && (self.updated_at + expire_in) <= Time.now
   end
 
   # Accessors

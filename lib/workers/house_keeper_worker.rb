@@ -14,6 +14,15 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
     end
   end
 
+  def remove_disabled_users
+    User.disabled.each do |user|
+      if user.registration_expired?
+        puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate it's account. I'm going to remove him/her..."
+        user.destroy
+      end
+    end
+  end
+
   def external_command_for_new_accounts
     command = Configuration.get('external_command_for_new_accounts')
 
