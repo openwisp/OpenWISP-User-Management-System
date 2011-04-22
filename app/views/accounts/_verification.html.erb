@@ -25,6 +25,8 @@
           <% if @account.verify_with_mobile_phone? %>
               <p style="font-size:80%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
           <% end %>
+      <% else %>
+          <p style="font-size:80%"><%= t(:Verification_expire_time_less_than_a_minute) %></p>
       <% end %>
   <% end %>
   <p style="font-size:80%" class="no_js">

@@ -232,7 +232,8 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Value: "Valore"
   Verification: "Verifica"
   Verification_date: "Data di verifica account"
-  Verification_expire_time_x_mins: 
+  Verification_expire_time_less_than_a_minute: "Ti rimane meno di un minuto per verificare il tuo account."
+  Verification_expire_time_x_mins:
     one: "Ti rimane circa {{count}} minuto per verificare il tuo account."
     other: "Ti rimangono circa {{count}} minuti per verificare il tuo account."
   Verification_time_expired: "Hai esaurito il tempo a tua disposizione per la verifica."
