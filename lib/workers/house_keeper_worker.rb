@@ -5,16 +5,11 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
 
   end
 
-  def remove_unverified_users()
-    User.find(:all, :conditions => [ "verified_at is NULL AND NOT verified" ]).each do |unverified_user|
-      if unverified_user.verification_method == Account::VERIFY_BY_MOBILE and
-          unverified_user.created_at + Configuration.get('mobile_phone_registration_expire').to_i <= Time.now()
-        puts "[#{Time.now()}] User '#{unverified_user.given_name} #{unverified_user.surname}' - (#{unverified_user.username}) didn't validate it's account. I'm going to remove him/her..."
-        unverified_user.destroy
-      elsif unverified_user.verification_method == Account::VERIFY_BY_CREDIT_CARD and
-          unverified_user.created_at + Configuration.get('credit_card_registration_expire').to_i <= Time.now()
-        puts "[#{Time.now()}] User '#{unverified_user.given_name} #{unverified_user.surname}' - (#{unverified_user.username}) didn't validate it's account. I'm going to remove him/her..."
-        unverified_user.destroy
+  def remove_unverified_users
+    User.unverified.each do |user|
+      if user.verification_expired?
+        puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate it's account. I'm going to remove him/her..."
+        user.destroy
       end
     end
   end

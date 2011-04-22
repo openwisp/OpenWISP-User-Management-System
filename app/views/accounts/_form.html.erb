@@ -83,7 +83,7 @@
         </div>
     <% end %>
 <% else %>
-    <% if form.object.verification_method == Account::VERIFY_BY_MOBILE %>
+    <% if form.object.verify_with_mobile_phone? %>
         <p>
           <strong><%= form.label :mobile_phone %></strong>
           <br />
@@ -108,7 +108,7 @@
             </td>
           </tr>
         </table>
-    <% elsif form.object.verification_method == Account::VERIFY_BY_DOCUMENT %>
+    <% elsif form.object.verify_with_document? %>
         <strong><%= form.label :document_photo %></strong>
         <br />
         <p style="text-align:center">

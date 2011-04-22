@@ -64,14 +64,14 @@ class AccountCommon <  ActiveRecord::Base
   validates_format_of :password, :with => /\A((\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*)|((\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*)\Z/i, :message => :password_format, :allow_nil => true
   validates_presence_of :eula_acceptance, :message => :eula_must_be_accepted
   validates_presence_of :privacy_acceptance, :message => :privacy_must_be_accepted
-  validates_presence_of :mobile_prefix, :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
-  validates_presence_of :mobile_suffix, :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
+  validates_presence_of :mobile_prefix, :if => Proc.new { |user| user.verify_with_mobile_phone? }
+  validates_presence_of :mobile_suffix, :if => Proc.new { |user| user.verify_with_mobile_phone? }
   validates_uniqueness_of :mobile_suffix, :scope => :mobile_prefix, :allow_nil => true,
-                          :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
+                          :if => Proc.new { |user| user.verify_with_mobile_phone? }
   validates_format_of :mobile_prefix, :allow_nil => true, :with => /\A[0-9]+\Z/, :message => :mobile_prefix_format,
-                      :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
+                      :if => Proc.new { |user| user.verify_with_mobile_phone? }
   validates_format_of :mobile_suffix, :allow_nil => true, :with => /\A[0-9]+\Z/, :message => :mobile_suffix_format,
-                      :if => Proc.new { |user| user.verification_method == VERIFY_BY_MOBILE }
+                      :if => Proc.new { |user| user.verify_with_mobile_phone? }
   validates_presence_of :birth_date
   validates_presence_of :given_name
   validates_format_of :given_name, :with => /\A(\w|[\s'])+\Z/i, :message => :name_format
@@ -100,7 +100,7 @@ class AccountCommon <  ActiveRecord::Base
       end
     end
     # Check mobile_phone confirmation
-    if self.verification_method == VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       if self.mobile_prefix_changed? or !read_attribute(:mobile_prefix_confirmation).nil?
         if self.mobile_prefix != read_attribute(:mobile_prefix_confirmation)
           errors.add(:mobile_prefix, :confirmation)
@@ -113,7 +113,7 @@ class AccountCommon <  ActiveRecord::Base
       end
     end
     # Check identity document
-    if self.verification_method == VERIFY_BY_DOCUMENT
+    if self.verify_with_document?
       # Overrides default image presence verification performed by Imegeflex
       if !self.has_image?
         errors.add(:image_file, self.class.missing_image_message)
@@ -124,13 +124,13 @@ class AccountCommon <  ActiveRecord::Base
 
     @countries = Country.find :all, :conditions => "disabled = 'f'"
     unless @countries.map { |p| p.printable_name }.include?(self.state)
-      errors.add_to_base("Parameter's tampering, uh? Nice try but it's going to be beported...")
+      errors.add_to_base("Parameter's tampering, uh? Nice try but it's going to be reported...")
       Rails.logger.error("'state' attribute tampering")
     end
-    if self.verification_method == VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       @prefixes  = MobilePrefix.find :all, :conditions => "disabled = 'f'"
       unless @prefixes.map { |p| p.prefix }.include?(self.mobile_prefix.to_i) or self.mobile_prefix.blank? or self.mobile_prefix.nil?
-        errors.add_to_base("Parameter's tampering, uh? Nice try but it's going to be beported")
+        errors.add_to_base("Parameter's tampering, uh? Nice try but it's going to be reported")
         Rails.logger.error("'mobile_prefix' attribute tampering")
       end
     end
@@ -154,11 +154,43 @@ class AccountCommon <  ActiveRecord::Base
     read_attribute(:verified)
   end
 
+  def verify_with_credit_card?
+    self.verification_method == VERIFY_BY_CREDIT_CARD
+  end
+
+  def verify_with_mobile_phone?
+    self.verification_method == VERIFY_BY_MOBILE
+  end
+
+  def verify_with_document?
+    self.verification_method == VERIFY_BY_DOCUMENT
+  end
+
   def verified=(value)
     write_attribute(:verified, value)
     if value
       self.verified_at = Time.now()
     end
+  end
+
+  def expire_timeout
+    if self.verified?
+      Rails.logger.error("Account already verified")
+      raise "Account already verified"
+    else
+      if self.verify_with_mobile_phone?
+        Configuration.get('mobile_phone_registration_expire').to_i
+      elsif self.verify_with_credit_card?
+        Configuration.get('credit_card_registration_expire').to_i
+      else
+        Rails.logger.error("Invalid verification method")
+        raise "Invalid verification method"
+      end
+    end
+  end
+
+  def verification_expired?
+    self.created_at + self.expire_timeout <= Time.now
   end
 
   def recovered?

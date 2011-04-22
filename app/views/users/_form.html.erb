@@ -3,7 +3,7 @@
   <br />
   <%= form.text_field :username, :disabled => !form.object.new_record? %>
 </p>
-<% if form.object.verification_method == User::VERIFY_BY_CREDIT_CARD %>
+<% if form.object.verify_with_credit_card? %>
     <td><strong><%= form.label :verification_method %></strong></td>
     <table>
       <tr>
@@ -20,7 +20,7 @@
       %>
     </p>
 
-    <% div_tag :class => 'verification-block', :hide_if => form.object.verification_method != User::VERIFY_BY_DOCUMENT do %>
+    <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_document? do %>
         <% if form.object.has_image? %>
             <strong><%= form.label :uploaded_document_photo %></strong>
             <br />
@@ -38,7 +38,7 @@
         <%= form.hidden_field :image_file_temp %>
     <% end %>
 
-    <% div_tag :class => 'verification-block', :hide_if => form.object.verification_method != User::VERIFY_BY_MOBILE do %>
+    <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_mobile_phone? do %>
         <p><strong><%= form.label :mobile_phone %></strong></p>
         <table>
           <tr>

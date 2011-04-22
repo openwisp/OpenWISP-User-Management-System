@@ -43,23 +43,11 @@ class Account < AccountCommon
   # Utilities
   
   def expire_time
-    if self.verified?
-      Rails.logger.error("Account already verified")
-      raise "Account already verified"
-    else
-      if self.verification_method == Account::VERIFY_BY_MOBILE
-        (Configuration.get('mobile_phone_registration_expire').to_i - (Time.now() - self.created_at).to_i + 60) / 60
-      elsif self.verification_method == Account::VERIFY_BY_CREDIT_CARD
-        (Configuration.get('credit_card_registration_expire').to_i - (Time.now() - self.created_at).to_i + 60) / 60
-      else
-        Rails.logger.error("Invalid verification method")
-        raise "Invalid verification method"
-      end
-    end
+    (self.expire_timeout - (Time.now - self.created_at).to_i + 60) / 60
   end
   
   def ask_for_mobile_phone_password_recovery!
-    if self.verification_method == Account::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       self.reset_single_access_token
       self.reset_perishable_token
       self.recovered = false
@@ -71,7 +59,7 @@ class Account < AccountCommon
   end
   
   def ask_for_mobile_phone_identity_verification!
-    if self.verification_method == Account::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       self.verified = false
       self.save!
     else
@@ -104,7 +92,7 @@ class Account < AccountCommon
   end
 
   def mobile_phone
-    if self.verification_method == Account::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       "#{self.mobile_prefix}#{self.mobile_suffix}"
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
@@ -112,7 +100,7 @@ class Account < AccountCommon
   end
 
   def mobile_phone=(value)
-    if self.verification_method == Account::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       self.mobile_prefix = value[0..2]
       self.mobile_suffix = value[3,-1]
     else

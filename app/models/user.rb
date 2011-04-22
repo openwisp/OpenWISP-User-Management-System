@@ -25,10 +25,10 @@ class User < AccountCommon
   self.before_validation { |record|
     # Cleaning up unused fields... just in case..
 
-    if record.verification_method == User::VERIFY_BY_DOCUMENT
+    if record.verify_with_document?
       record.mobile_prefix = nil
       record.mobile_suffix = nil
-    elsif record.verification_method == User::VERIFY_BY_MOBILE
+    elsif record.verify_with_mobile_phone?
       record.image_file_data = nil
     end
   }
@@ -87,6 +87,10 @@ class User < AccountCommon
     find(:all, :conditions => { :created_at => 1.day.ago..DateTime.now })
   end
 
+  def self.unverified
+    find(:all, :conditions => [ "verified_at is NULL AND NOT verified" ])
+  end
+
   # Utilities
 
   def total_traffic
@@ -112,7 +116,7 @@ class User < AccountCommon
   end
 
   def mobile_phone
-    if self.verification_method == User::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       "#{self.mobile_prefix}#{self.mobile_suffix}"
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
@@ -120,7 +124,7 @@ class User < AccountCommon
   end
 
   def mobile_phone=(value)
-    if self.verification_method == User::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       self.mobile_prefix = value[0..2]
       self.mobile_suffix = value[3,-1]
     else
@@ -129,7 +133,7 @@ class User < AccountCommon
   end
 
   def credit_card_identity_verify!
-    if self.verification_method == User::VERIFY_BY_CREDIT_CARD
+    if self.verify_with_credit_card?
       self.verified = true
       self.save!
     else
@@ -138,7 +142,7 @@ class User < AccountCommon
   end
 
   def mobile_phone_identity_verify!
-    if self.verification_method == User::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       self.verified = true
       self.save!
     else
@@ -147,7 +151,7 @@ class User < AccountCommon
   end
 
   def mobile_phone_password_recover!
-    if self.verification_method == User::VERIFY_BY_MOBILE
+    if self.verify_with_mobile_phone?
       self.recovered = true
       self.save!
     else

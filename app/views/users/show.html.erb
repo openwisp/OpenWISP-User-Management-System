@@ -24,7 +24,7 @@
           <strong><%=t :Surname %></strong><br />
           <%=h @user.surname %>
         </p>
-        <% if @user.verification_method == User::VERIFY_BY_MOBILE %>
+        <% if @user.verify_with_mobile_phone? %>
             <p>
               <strong><%=t :Mobile_phone_number %></strong><br />
               <%=h @user.mobile_phone %>

@@ -44,7 +44,7 @@
           </li>
       <% end %>
   <% else %>
-      <% if form.object.verification_method == Account::VERIFY_BY_MOBILE %>
+      <% if form.object.verify_with_mobile_phone? %>
           <li data-role="fieldcontain">
             <%= form.label :mobile_phone %>
             <p>&nbsp;</p>
@@ -59,7 +59,7 @@
             <%= form.label :mobile_suffix, t(:Suffix) %>
             <%= form.text_field :mobile_suffix, :disabled => true %>
           </li>
-      <% elsif form.object.verification_method == Account::VERIFY_BY_DOCUMENT %>
+      <% elsif form.object.verify_with_document? %>
           <li data-role="fieldcontain">
             <%= form.label :document_photo %>
             <p>&nbsp;</p>

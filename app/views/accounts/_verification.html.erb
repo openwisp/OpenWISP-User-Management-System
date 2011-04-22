@@ -2,7 +2,7 @@
   <% if @account.verified %>
       <script type="text/javascript">document.location="<%= account_url %>"</script>
   <% else %>
-      <% if @account.verification_method == Account::VERIFY_BY_MOBILE %>
+      <% if @account.verify_with_mobile_phone? %>
           <%=t :Please_verify_mobile_number %><br /><br />
           <%=t :From_mobile_phone_number %><br />
           <%=h @account.mobile_phone %><br /><br />
@@ -13,7 +13,7 @@
           <% end %>
           <%=t :Free_call_description %><br />
           <br />
-      <% elsif @account.verification_method == Account::VERIFY_BY_CREDIT_CARD %>
+      <% elsif @account.verify_with_credit_card? %>
           <%=t :Please_verify_credit_card %><br />
           <%= link_to_paypal image_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
           <%# encrypted_submit_to_paypal image_submit_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
@@ -22,7 +22,7 @@
 
       <% if @account.expire_time > 0 %>
           <p style="font-size:80%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
-          <% if @account.verification_method == Account::VERIFY_BY_MOBILE %>
+          <% if @account.verify_with_mobile_phone? %>
               <p style="font-size:80%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
           <% end %>
       <% end %>
