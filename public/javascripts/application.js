@@ -29,14 +29,15 @@ var owums = {
     },
 
     path: function(path) {
-        if (path[0] === '/') {
-            if (window.location.pathname.substr(1, owums.subUri.length) === owums.subUri) {
+        var _curr = window.location.pathname;
+        if (path.charAt(0) === '/') {
+            if (_curr.substr(1, owums.subUri.length) === owums.subUri) {
                 return '/'+owums.subUri+path;
             } else {
                 return path;
             }
         } else {
-            return window.location.pathname+'/'+path;
+            return _curr+'/'+path;
         }
     }
 };
