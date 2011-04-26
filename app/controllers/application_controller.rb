@@ -47,7 +47,10 @@ class ApplicationController < ActionController::Base
 
   def set_session_locale
     session[:locale] = params[:locale]
-    redirect_to request.env['HTTP_REFERER'] || :root
+
+    # Redirect to HTTP_REFERER without parameters or root
+    back = request.env['HTTP_REFERER']
+    redirect_to(back ? back.split('?').first : root_path)
   end
 
   def toggle_mobile_view

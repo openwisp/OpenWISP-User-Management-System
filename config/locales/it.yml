@@ -42,6 +42,7 @@ it:
   Edit_configuration_key: "Modifica configurazione"
   Edit_operator: "Modifica operatore"
   Email: "E-mail"
+  Filter_data_by_date: "Consultando i dati nel periodo:"
   Flash_not_supported: "Flash non supportato"
   Forgot_password: "Password dimenticata"
   Forgot_password_description_email: "Scrivi qui sotto l'indirizzo email utilizzato in fase di registrazione e premi \"reimposta password\" per recuperare la tua password"
@@ -343,7 +344,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
 
   date:
     formats:
-      default: "%d-%m-%Y"
+      default: "%d/%m/%Y"
       short: "%d %b"
       long: "%d %B %Y"
 

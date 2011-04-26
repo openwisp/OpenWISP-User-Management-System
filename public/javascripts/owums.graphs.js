@@ -4,19 +4,33 @@ var graphs = {
             locale: 'it',
             triggerIfExists: '.current_it',
             lang: {
+                // Highcharts specific
                 resetZoom: 'Reimposta Zoom',
                 months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto',
                     'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
                 weekdays: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
                 downloadPNG: 'Esporta immagine PNG',
                 downloadPDF: 'Esporta documento PDF',
-                downloadSVG: 'Esporta immagine vettoriale SVG'
+                downloadSVG: 'Esporta immagine vettoriale SVG',
+                // jQueryUI datepicker specific
+                dateFormat: 'dd/mm/yy',
+                firstDay: 1,
+                closeText: 'Chiudi',
+                prevText: '&#x3c;Prec',
+                nextText: 'Succ&#x3e;',
+                currentText: 'Oggi',
+                monthsShort: ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'],
+                weekdaysShort: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
+                weekdaysMin: ['Do','Lu','Ma','Me','Gi','Ve','Sa']
             }
         },
         {
             locale: 'en',
             triggerIfExists: '.current_en',
-            lang: {resetZoom: 'Reset Zoom'}
+            lang: {
+                // Highcharts specific
+                resetZoom: 'Reset Zoom'
+            }
         }
     ],
 
@@ -24,6 +38,7 @@ var graphs = {
     _plotted: [],
     init: function(_graph) {
         $(document).ready(function() {
+            graphs.dateRangePicker();
             graphs.setLocale();
             graphs._plotted.push(new Highcharts.Chart(_graph));
         });
@@ -32,9 +47,38 @@ var graphs = {
     setLocale: function() {
         $.each(graphs.locales, function(){
             if (owums.exists(this.triggerIfExists)) {
-                Highcharts.setOptions({lang: this.lang});
+                var _lang = this.lang;
+                Highcharts.setOptions({lang: _lang});
+                // Load localization for datepicker if enabled
+                if ($.datepicker != undefined && this.locale !== 'en') {
+                    $.datepicker.setDefaults({
+                        firstDay: _lang.firstDay, monthNames: _lang.months,
+                        monthNamesShort: _lang.monthsShort, dayNames: _lang.weekdays,
+                        dayNamesShort: _lang.weekdaysShort, dayNamesMin: _lang.weekdaysMin,
+                        closeText: _lang.closeText, prevText: _lang.prevText,
+                        nextText: _lang.nextText, currentText: _lang.currentText,
+                        dateFormat: _lang.dateFormat
+                    });
+                }
             }
         });
+    },
+
+    dateRangePicker: function(){
+        if (owums.exists('#from') && owums.exists('#to')) {
+            var dates = $( "#from, #to" ).datepicker({
+                maxDate: graphs.today(),
+                defaultDate: "+1w",
+                showButtonPanel: true,
+                changeMonth: true,
+                onSelect: function(selectedDate) {
+                    var option = this.id == "from" ? "minDate" : "maxDate",
+                            instance = $(this).data("datepicker"),
+                            date = $.datepicker.parseDate(instance.settings.dateFormat, selectedDate, instance.settings);
+                    dates.not(this).datepicker("option", option, date);
+                }
+            });
+        }
     },
 
     daysAgo: function(days) {
@@ -46,7 +90,7 @@ var graphs = {
     },
 
     bytes_formatter: function(bytes, label) {
-	bytes = Math.floor(bytes);
+        bytes = Math.floor(bytes);
         if (bytes == 0) return '0 B';
         var s = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         var e = Math.floor(Math.log(bytes)/Math.log(1024));

@@ -1,10 +1,22 @@
 <% content_for :after_defaults do %>
-    <%= javascript_include_tag 'highcharts', 'highcharts.exporting', 'owums.graphs' %>
+    <%= stylesheet_link_tag 'jquery-ui/styles' %>
+    <%= javascript_include_tag 'highcharts', 'highcharts.exporting', 'jquery-ui', 'owums.graphs' %>
 <% end %>
 
 <div class="grid_12">
   <div class="box">
     <%= render "stats/graphs/#{@stat}" %>
+
+    <div class="box">
+      <h5><%=t :Filter_data_by_date %></h5>
+
+      <% form_tag stat_path(@stat), :method => :get do %>
+          <%= text_field_tag 'from', l(@from) %>
+          <strong>-</strong>
+          <%= text_field_tag 'to', l(@to) %>
+          <%= tag :input, :type => 'submit', :value => t(:Update) %>
+      <% end %>
+    </div>
   </div>
 </div>
 

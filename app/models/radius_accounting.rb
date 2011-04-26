@@ -45,24 +45,24 @@ class RadiusAccounting < ActiveRecord::Base
     count('UserName', :distinct => true, :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
   end
 
-  def self.logins_from(date)
+  def self.logins_from(from, to)
     count('Username',
           :select => 'AcctStartTime',
-          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
           :group => "DATE(AcctStartTime)"
     ).map { |on_date, count| [ on_date.to_datetime.to_i * 1000, count.to_i ] }
   end
 
-  def self.unique_logins_from(date)
+  def self.unique_logins_from(from, to)
     count('Username',
-          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
           :group => "DATE(AcctStartTime)",
           :distinct => true
     ).map { |on_date, count| [ on_date.to_datetime.to_i * 1000, count.to_i ] }
   end
 
-  def self.logins_each_day_from(date)
-    [ logins_from(date), unique_logins_from(date) ]
+  def self.logins_each_day(from, to)
+    [ logins_from(from, to), unique_logins_from(from, to) ]
   end
 
   def self.traffic_in_on(date)
@@ -77,29 +77,29 @@ class RadiusAccounting < ActiveRecord::Base
     traffic_in_on(date) + traffic_out_on(date)
   end
 
-  def self.traffic_in_from(date)
+  def self.traffic_in(from, to)
     sum('AcctInputOctets',
-        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
         :group => "DATE(AcctStartTime)"
     ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
-  def self.traffic_out_from(date)
+  def self.traffic_out(from, to)
     sum('AcctOutputOctets',
-        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
         :group => "DATE(AcctStartTime)"
     ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
-  def self.traffic_from(date)
+  def self.traffic(from, to)
     sum('AcctInputOctets + AcctOutputOctets',
-        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", date.to_s, Date.today.to_s ],
+        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
         :group => "DATE(AcctStartTime)"
     ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
-  def self.traffic_each_day_from(date)
-    [ traffic_from(date), traffic_in_from(date), traffic_out_from(date) ]
+  def self.traffic_each_day(from, to)
+    [ traffic(from, to), traffic_in(from, to), traffic_out(from, to) ]
   end
 
   # Accessors

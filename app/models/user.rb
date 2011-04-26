@@ -73,8 +73,8 @@ class User < AccountCommon
     find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
   end
 
-  def self.registered_each_day_from(date)
-    (date.to_date..Date.today).map do |that_day|
+  def self.registered_each_day(from, to)
+    (from..to).map do |that_day|
       [that_day.to_datetime.to_i * 1000, registered_on(that_day)]
     end
   end
