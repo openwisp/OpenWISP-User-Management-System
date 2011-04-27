@@ -46,12 +46,12 @@
         </p>
         <p>
           <strong><%=t :Registration_date %></strong><br />
-          <%=h @account.created_at.strftime("%d/%m/%y %H:%M:%S") %>
+          <%=l @account.created_at %>
         </p>
         <p>
           <strong><%=t :Verification_date %></strong><br />
           <% if @account.verified %>
-              <%=h @account.verified_at.strftime("%d/%m/%y %H:%M:%S") %>
+              <%=l @account.verified_at %>
           <% else %>
               <span style="color: red; "><%=t :Not_verified %></span>
           <% end %>

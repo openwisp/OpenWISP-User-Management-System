@@ -78,7 +78,7 @@
     <tbody>
       <% users.each do |user| %>
         <tr>
-          <td><%=h user.created_at.strftime("%d/%m/%Y - %H:%M:%S") %></td>
+          <td><%=l user.created_at %></td>
           <td><%= link_to h(user.username), user %></td>
           <td><%=h user.given_name %></td>
           <td><%=h user.surname %></td>

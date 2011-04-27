@@ -21,10 +21,10 @@
           <tr class="hover">
             <td><%= link_to operator.login, operator %></td>
             <td><%= operator.logged_in? %></td>
-            <td><%= operator.current_login_at.nil? ? '-' : operator.current_login_at.strftime("%d/%m/%y %H:%M:%S") %></td>
-            <td><%= operator.current_login_ip.nil? ? '-' : operator.current_login_ip %></td>
-            <td><%= operator.last_login_at.nil? ? '-' : operator.last_login_at.strftime("%d/%m/%y %H:%M:%S") %></td>
-            <td><%= operator.last_login_ip.nil? ? '-' : operator.last_login_ip %></td>
+            <td><%=l operator.current_login_at rescue t(:blank) %></td>
+            <td><%= operator.current_login_ip || t(:blank) %></td>
+            <td><%=l operator.last_login_at rescue t(:blank) %></td>
+            <td><%= operator.last_login_ip || t(:blank) %></td>
             <td><%= operator.login_count %></td>
             <td><%= link_to t(:Edit), edit_operator_path(operator) %></td>
             <td><%= link_to t(:Destroy), operator_path(operator), :method => :delete, :confirm => t(:Are_you_sure) %></td>

@@ -245,6 +245,7 @@ If you still have problems resetting the password, try repeating the procedure"
   address: "address "
   affermative: "yes"
   birth_date: "birthdate"
+  blank: "-"
   captcha_error: "Text and picture differ"
   change_password: "New password"
   city: "city"
@@ -305,6 +306,10 @@ If you still have problems resetting the password, try repeating the procedure"
   date:
     formats:
       default: "%m/%d/%Y"
+
+  time:
+    formats:
+      default: "%m/%d/%y - %H:%M"
 
   activerecord:
     errors:

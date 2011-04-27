@@ -246,6 +246,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   address: "indirizzo "
   affermative: "si"
   birth_date: "data di nascita"
+  blank: "-"
   captcha_error: "Testo e immagine non erano uguali"
   change_password: "Nuova password"
   city: "città"
@@ -357,7 +358,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
 
   time:
     formats:
-      default: "%a %d %b %Y, %H:%M:%S %z"
+      default: "%d/%m/%y - %H:%M"
       short: "%d %b %H:%M"
       long: "%d %B %Y %H:%M"
 

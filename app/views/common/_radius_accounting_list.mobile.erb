@@ -49,11 +49,11 @@
     <tbody>
       <% accountings.each do |accounting| %>
         <tr>
-          <td><%=h accounting.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
+          <td><%=l accounting.acct_start_time %></td>
           <% if accounting.acct_stop_time.blank? %>
             <td><%=t :online %></td>
           <% else %>
-            <td><%=h accounting.acct_stop_time.strftime("%d/%m/%y - %H:%M") %></td>
+            <td><%=l accounting.acct_stop_time %></td>
           <% end %>
           <td><%=h bytes_to_human(accounting.acct_input_octets) %></td>
           <td><%=h bytes_to_human(accounting.acct_output_octets) %></td>

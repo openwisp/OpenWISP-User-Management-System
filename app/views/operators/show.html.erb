@@ -26,19 +26,19 @@
       </tr>
       <tr>
         <td><strong><%=t :Current_login_at %></strong></td>
-        <td><%= @operator.current_login_at.nil? ? '-' : @operator.current_login_at.strftime("%d/%m/%y %H:%M:%S") %></td>
+        <td><%=l @operator.current_login_at rescue t(:blank) %></td>
       </tr>
       <tr>
         <td><strong><%=t :Current_login_ip %></strong></td>
-        <td><%= @operator.current_login_ip.nil? ? '-' : @operator.current_login_ip %></td>
+        <td><%= @operator.current_login_ip || t(:blank) %></td>
       </tr>
       <tr>
         <td><strong><%=t :Last_login_at %></strong></td>
-        <td><%= @operator.last_login_at.nil? ? '-' : @operator.last_login_at.strftime("%d/%m/%y %H:%M:%S") %></td>
+        <td><%=l @operator.last_login_at rescue t(:blank) %></td>
       </tr>
       <tr>
         <td><strong><%=t :Last_login_ip %></strong></td>
-        <td><%= @operator.last_login_ip.nil? ? '-' : @operator.last_login_ip %></td>
+        <td><%= @operator.last_login_ip || t(:blank) %></td>
       </tr>
       <tr>
         <td><strong><%=t :Login_count %></strong></td>

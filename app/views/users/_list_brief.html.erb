@@ -21,7 +21,7 @@
           <%= h(user.username[0..-4] + "xxx") %>
         <% end %>
       </td>
-      <td><%=h user.created_at.strftime("%d/%m/%y - %H:%M") %></td>
+      <td><%=l user.created_at %></td>
     </tr>
     <% end %>
   </tbody>

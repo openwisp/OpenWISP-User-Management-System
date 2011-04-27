@@ -23,11 +23,11 @@
           <%= h(acct.username[0..-4] + "xxx") %>
         <% end %>
       </td>
-      <td><%=h acct.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
+      <td><%=l acct.acct_start_time %></td>
       <% if acct.acct_stop_time.blank? %>
         <td><%=t :online %></td>
       <% else %>
-        <td><%=h acct.acct_start_time.strftime("%d/%m/%y - %H:%M") %></td>
+        <td><%=l acct.acct_start_time %></td>
       <% end %>
     </tr>
     <% end %>
