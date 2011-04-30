@@ -43,7 +43,7 @@ class Account < AccountCommon
   # Utilities
   
   def expire_time
-    (self.expire_timeout - (Time.now - self.created_at).to_i + 60) / 60
+    (self.verification_expire_timeout - (Time.now - self.created_at).to_i + 60) / 60
   end
   
   def ask_for_mobile_phone_password_recovery!
