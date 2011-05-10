@@ -33,10 +33,6 @@ class RadiusAccounting < ActiveRecord::Base
     find(:all, :order => "AcctStartTime DESC", :limit => num)
   end
 
-  def self.online_users(num = 5)
-    find(:all, :conditions => "AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL", :order => "AcctStartTime DESC", :limit => num)
-  end
-
   def self.logins_on(date)
     count(:conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
   end

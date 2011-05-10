@@ -77,7 +77,6 @@ class StatsController < ApplicationController
 
       when 'top_traffic_users' then User.top_traffic(5)
       when 'last_logins' then RadiusAccounting.last_logins(5)
-      when 'online_users' then RadiusAccounting.online_users(5)
       when 'last_registered' then User.last_registered(5)
 
       else raise "Stat #{id} not found!"
