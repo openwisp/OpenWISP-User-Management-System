@@ -32,6 +32,10 @@ class UsersController < ApplicationController
   STATS_PERIOD = 14
 
   def index
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => User.all.to_xml }
+    end
   end
   
   def new
@@ -71,6 +75,10 @@ class UsersController < ApplicationController
   end
   
   def show
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @user.to_xml }
+    end
   end
  
   def edit
