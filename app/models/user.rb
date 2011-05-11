@@ -69,14 +69,6 @@ class User < AccountCommon
     ret
   end
 
-
-  def self.find_online_users(id_or_all, num = nil)
-    options = {:joins => :radius_accountings, :conditions => "AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL", :order => "AcctStartTime DESC"}
-    options.merge!(:limit => num) if num
-
-    find(id_or_all,  options)
-  end
-
   def self.find_all_by_user_phone_or_mail(query)
     find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
   end
