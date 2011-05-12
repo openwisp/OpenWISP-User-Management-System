@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
     users.resources :radius_accountings
     users.resources :stats, :only => :show
   end
-  map.resources :online_users, :only => [:index, :show]
+  map.resources :online_users, :only => :index
   map.resources :operators
   map.resources :password_resets
   map.resources :email_password_resets

@@ -98,6 +98,10 @@ class RadiusAccounting < ActiveRecord::Base
     [ traffic(from, to), traffic_in(from, to), traffic_out(from, to) ]
   end
 
+  def self.still_open
+    find(:first, :conditions => "AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL", :order => "AcctStartTime DESC")
+  end
+
   # Accessors
 
   ## Read
@@ -123,6 +127,14 @@ class RadiusAccounting < ActiveRecord::Base
     else
       self.AcctStopTime
     end
+  end
+
+  def acct_session_id
+    read_attribute :AcctSessionId
+  end
+
+  def acct_unique_id
+    read_attribute :AcctUniqueId
   end
 
   def acct_input_octets
