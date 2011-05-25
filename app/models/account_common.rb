@@ -167,10 +167,10 @@ class AccountCommon <  ActiveRecord::Base
   end
 
   def verified=(value)
-    write_attribute(:verified, value)
-    if value
+    if value and value != read_attribute(:verified)
       self.verified_at = Time.now()
     end
+    write_attribute(:verified, value)
   end
 
   def verification_expire_timeout
