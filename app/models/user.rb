@@ -56,13 +56,13 @@ class User < AccountCommon
   # Output
   #   Hash { :user => <User model instance>,  :total_traffic => <total traffic (bytes)> }
   def self.top_traffic(num = 5)
-    top = RadiusAccounting.all(:select => 'Username',
+    top = RadiusAccounting.all(:select => 'UserName',
                                :group => :UserName,
                                :order => 'sum(AcctInputOctets + AcctOutputOctets) DESC',
                                :limit => num)
     ret = []
     top.each do |t|
-        user = User.find_by_username(t.username)
+        user = User.find_by_username(t.UserName) # See the above select
         ret.push(user) unless user.nil?
     end
 
