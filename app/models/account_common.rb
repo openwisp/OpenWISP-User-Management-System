@@ -150,10 +150,6 @@ class AccountCommon <  ActiveRecord::Base
 
   # Accessors
 
-  def verified?
-    read_attribute(:verified)
-  end
-
   def verify_with_credit_card?
     self.verification_method == VERIFY_BY_CREDIT_CARD
   end
@@ -167,8 +163,10 @@ class AccountCommon <  ActiveRecord::Base
   end
 
   def verified=(value)
-    if value and value != read_attribute(:verified)
-      self.verified_at = Time.now()
+    if value and !verified?
+      self.verified_at = Time.now
+    elsif !value
+      self.verified_at = nil
     end
     write_attribute(:verified, value)
   end
@@ -189,13 +187,8 @@ class AccountCommon <  ActiveRecord::Base
     end
   end
 
-
   def verification_expired?
     self.created_at + self.verification_expire_timeout <= Time.now
-  end
-
-  def recovered?
-    read_attribute(:recovered)
   end
 
   def disabled?

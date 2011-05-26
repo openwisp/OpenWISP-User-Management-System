@@ -62,7 +62,7 @@ class User < AccountCommon
                                :limit => num)
     ret = []
     top.each do |t|
-        user = User.find_by_username(t.Username)
+        user = User.find_by_username(t.username)
         ret.push(user) unless user.nil?
     end
 
@@ -75,7 +75,7 @@ class User < AccountCommon
 
   def self.registered_each_day(from, to)
     (from..to).map do |that_day|
-      [that_day.to_datetime.to_i * 1000, registered_on(that_day)]
+      [that_day.to_datetime.to_i * 1000, User::registered_on(that_day)]
     end
   end
 
@@ -171,7 +171,7 @@ class User < AccountCommon
         return true
       end
     else
-      Rails.logger.info("Verifing '#{self.username}' (id: #{self.id})")
+      Rails.logger.info("Verifying '#{self.username}' (id: #{self.id})")
       self.mobile_phone_identity_verify!
       # If the user is not verified because she has disabled her account
       # (i.e. verified == false and recovered == false)
@@ -182,7 +182,7 @@ class User < AccountCommon
       end
       return true
     end
-    return false
+    false
   end
 
   def registration_expire_timeout
