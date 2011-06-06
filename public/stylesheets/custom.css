@@ -199,3 +199,7 @@ li > .off {
 .green {
     color: green;
 }
+
+.right {
+    float: right;
+}

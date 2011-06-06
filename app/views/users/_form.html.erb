@@ -1,3 +1,13 @@
+<% content_for :after_defaults do %>
+    <%= javascript_include_tag 'jquery.password' %>
+    <%= javascript_tag "$(function(){
+            $('#pwgen').click(function(e){
+                $('#user_password, #user_password_confirmation').val($.password(8, 1));
+                e.preventDefault();
+            });
+    });" %>
+<% end %>
+
 <p>
   <strong><%= form.label :username %></strong>
   <br />
@@ -144,14 +154,19 @@
   <%= form.text_field :email_confirmation %>
 </p>
 <p>
-  <strong><%= form.label :password, form.object.new_record? ? nil : t(:change_password) %></strong>
+  <% if form.object.new_record? %>
+      <strong><%= form.label :password %></strong>
+      <a href="#" id="pwgen" class="right"><%=t :autogenerate %></a>
+  <% else %>
+      <strong><%= form.label :password, t(:change_password) %></strong>
+  <% end %>
   <br />
-  <%= form.password_field :password %>
+  <%= form.text_field :password %>
 </p>
 <p>
   <strong><%= form.label :password_confirmation %></strong>
   <br />
-  <%= form.password_field :password_confirmation %>
+  <%= form.text_field :password_confirmation %>
 </p>
 
 <br />
