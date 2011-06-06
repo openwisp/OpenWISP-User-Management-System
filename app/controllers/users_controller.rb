@@ -59,17 +59,12 @@ class UsersController < ApplicationController
 
     if @user.save
       current_account_session.destroy unless current_account_session.nil?
-            
-      unless current_operator.has_role? 'users_manager'
-        redirect_to new_user_url
-      else
-        redirect_to users_url
-      end
+      render :ticket
     else
       render :action => :new
     end
   end
-  
+
   def show
     respond_to do |format|
       format.html

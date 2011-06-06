@@ -1,0 +1,9 @@
+body{visibility:hidden;}
+.noprintarea{visibility:hidden;display:none}
+.noprintcontent{visibility:hidden;}
+#print{position: absolute;top: 0;}
+#print, .print {
+    visibility:visible;
+    display:block;
+}
+

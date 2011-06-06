@@ -16,6 +16,8 @@
 
   <%= stylesheet_link_tag 'custom' %>
 
+  <%= yield :after_css_defaults %>
+
   <% for_ie :version => '6' do %>
       <%= stylesheet_link_tag 'fluid960/ie6' %>
   <% end %>

@@ -1,0 +1,40 @@
+<% content_for :after_css_defaults do %>
+    <%= stylesheet_link_tag 'custom-print', :media => 'print' %>
+<% end %>
+
+<% content_for :after_defaults do %>
+    <%= javascript_tag "$(function(){
+            $('#printer').click(function(e){
+                window.print();
+                e.preventDefault();
+            });
+    });" %>
+<% end %>
+
+<div class="grid_12 center">
+  <p style="font-size:200%" class="green"><%=t :User_created_success %></p>
+
+  <div class="grid_8 prefix_2 suffix_2">
+    <p style="font-size:150%">
+      <%=t :please_no_reload_no_back_1 %><br />
+      <span class="red"><%=t :please_no_reload_no_back_2 %></span>
+    </p>
+
+    <br />
+
+    <div id="print" class="box">
+      <h2><%=h t(:User_credentials) %></h2>
+
+      <div class="block" style="font-size:150%">
+        <p><%=t :Username %>: <strong><%=h @user.username %></strong></p>
+        <p><%=t :Password %>: <strong><%=h @user.crypted_password %></strong></p>
+      </div>
+    </div>
+
+    <br />
+
+    <p style="font-size:120%">
+      <%= link_to t(:Print_credentials), '#', :id => 'printer' %> | <%= link_to t(:Create_new_user), new_user_path %>
+    </p>
+  </div>
+</div>
