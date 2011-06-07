@@ -22,6 +22,7 @@ class User < AccountCommon
     c.maintain_sessions = false
   end
 
+
   self.before_validation { |record|
     # Cleaning up unused fields... just in case..
 
@@ -33,13 +34,18 @@ class User < AccountCommon
     end
   }
 
+
   # Validations
   # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
-  validates_inclusion_of :verification_method, :in => User::VERIFICATION_METHODS,
-    :unless => Proc.new{|user| User::SELFVERIFICATION_METHODS.include? user.verification_method }
+  validates_inclusion_of :verification_method, :in => VERIFICATION_METHODS,
+    :if => Proc.new{|user| user.new_record? }
+  validates_inclusion_of :verification_method, :in => [VERIFICATION_METHODS, SELFVERIFICATION_METHODS].flatten,
+    :if => Proc.new{|user| !user.new_record? }
+
 
   has_many :radius_checks,  :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
+
 
   # Class methods
 

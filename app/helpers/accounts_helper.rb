@@ -23,4 +23,12 @@ module AccountsHelper
 
     paypal_form
   end
+
+  def account_verification_methods
+    Account::SELFVERIFICATION_METHODS
+  end
+
+  def account_verification_select
+    account_verification_methods.map{ |method| [ t(method.to_sym), method ] }
+  end
 end

@@ -7,12 +7,12 @@
   <% end %>
 
   <% if form.object.new_record? %>
-      <% if Account::SELFVERIFICATION_METHODS.length == 1 %>
+      <% if account_verification_methods.length == 1 %>
           <%= form.hidden_field :verification_method %>
       <% else %>
           <li data-role="fieldcontain">
             <%= form.label :verification_method %>
-            <%= form.select :verification_method, Account::SELFVERIFICATION_METHODS_SELECT, {:multiple => false} %>
+            <%= form.select :verification_method, account_verification_select, :multiple => false %>
           </li>
       <% end %>
 

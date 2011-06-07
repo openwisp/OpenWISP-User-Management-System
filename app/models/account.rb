@@ -23,19 +23,18 @@ class Account < AccountCommon
   end
 
   # Captcha
-  
   apply_simple_captcha :message => I18n.t(:captcha_error), :add_to_base => true
 
-  # Security and cleanup
 
+  # Security and cleanup
   attr_readonly  :given_name, :surname, :birth_date, :verification_method
+  attr_protected :verified             # SEC: shouldn't be set with mass-assignment!
+
 
   # Validations
   # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
-  validates_inclusion_of :verification_method, :in => Account::SELFVERIFICATION_METHODS, :if => Proc.new{|account| account.new_record? }
+  validates_inclusion_of :verification_method, :in => SELFVERIFICATION_METHODS, :if => Proc.new{|account| account.new_record? }
 
-  # Security and cleanup
-  attr_protected :verified             # SEC: shouldn't be set with mass-assignment!
 
   # In case a WISP uses the user's mobile phone as the username
   before_validation_on_create :set_username_from_mobile_phone_if_required

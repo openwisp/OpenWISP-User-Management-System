@@ -41,4 +41,12 @@ module UsersHelper
     end
   end
 
+  def user_verification_methods
+    User::VERIFICATION_METHODS
+  end
+
+  def user_verification_select
+    user_verification_methods.map{ |method| [ t(method.to_sym), method ] }
+  end
+
 end

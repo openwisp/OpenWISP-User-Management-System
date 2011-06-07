@@ -18,23 +18,16 @@
 class AccountCommon <  ActiveRecord::Base
   set_table_name 'users'
 
-  attr_readonly  :username
+  attr_readonly  :username, :verification_method
 
   # Macros
 
   VERIFY_BY_MOBILE = "mobile_phone"
   VERIFY_BY_DOCUMENT = "identity_document"
   VERIFY_BY_CREDIT_CARD = "credit_card"
-  VERIFICATION_METHODS = %w( identity_document mobile_phone )
-  VERIFICATION_METHODS_SELECT = [ [ I18n.t(:identity_document), 'identity_document' ], [ I18n.t(:mobile_phone), 'mobile_phone' ] ]
 
-  if Configuration.get("credit_card_enabled") == "true"
-    SELFVERIFICATION_METHODS = %w( mobile_phone credit_card )
-    SELFVERIFICATION_METHODS_SELECT = [ [ I18n.t(:mobile_phone), 'mobile_phone' ], [ I18n.t(:credit_card), 'credit_card' ] ]
-  else
-    SELFVERIFICATION_METHODS = %w( mobile_phone )
-    SELFVERIFICATION_METHODS_SELECT = [ [ I18n.t(:mobile_phone), 'mobile_phone' ] ]
-  end
+  VERIFICATION_METHODS = [ VERIFY_BY_DOCUMENT ]
+  SELFVERIFICATION_METHODS = Configuration.get("credit_card_enabled") == "true" ? [ VERIFY_BY_MOBILE, VERIFY_BY_CREDIT_CARD ] : [ VERIFY_BY_MOBILE ]
 
   # Authlogic
   acts_as_authentic do |c|

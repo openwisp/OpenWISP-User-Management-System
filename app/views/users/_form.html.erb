@@ -13,21 +13,18 @@
   <br />
   <%= form.text_field :username, :disabled => !form.object.new_record? %>
 </p>
-<% if form.object.verify_with_credit_card? %>
+<% unless form.object.new_record? %>
     <td><strong><%= form.label :verification_method %></strong></td>
     <table>
       <tr>
-        <td><strong><%=t :credit_card%></strong></td>
+        <td><strong><%=t form.object.verification_method %></strong></td>
       </tr>
     </table>
 <% else %>
     <p>
       <strong><%= form.label :verification_method %></strong>
       <br />
-      <%= form.select :verification_method,
-                      User::VERIFICATION_METHODS_SELECT,
-                      { :multiple => false }
-      %>
+      <%= form.select :verification_method, user_verification_select, :multiple => false %>
     </p>
 
     <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_document? do %>
@@ -93,7 +90,10 @@
     <% end %>
 <% end %>
 
-<% if current_operator.has_role? 'users_manager' %>
+<% if form.object.new_record? %>
+    <%= form.hidden_field :verified, :value => 1 %>
+    <%= form.hidden_field :active, :value => 1 %>
+<% else %>
     <table>
       <tbody>
       <tr>
