@@ -1,7 +1,7 @@
 source :gemcutter
 
-gem 'rails', '~> 2.3.11'
-gem 'mysql'
+gem 'rails', '2.3.11'
+gem 'mysql', '2.8.1'
 
 gem 'exception_notification', '~> 2.3.3.0'
 
@@ -17,5 +17,3 @@ gem 'rmagick', '~> 2.12.2', :require => 'RMagick'
 gem 'fleximage', '~> 1.0.4'
 
 gem 'daemons', '~> 1.0.10'
-
-gem 'i18n', '~> 0.4.1'
