@@ -16,5 +16,6 @@ gem 'will_paginate', '~> 2.3.11'
 
 gem 'rmagick', '~> 2.12.2', :require => 'RMagick'
 gem 'fleximage', '~> 1.0.4'
+gem 'simple_captcha', '~> 0.1.3'
 
 gem 'daemons', '~> 1.0.10'
