@@ -20,11 +20,3 @@ rescue Bundler::GemNotFound
     "Did you run `bundle install`?"
 end
 ###
-
-# I18n fix
-begin
-  gem 'i18n', "~> 0.4.0"
-rescue LoadError
-  # no biggie, optional anyway
-end
-###
