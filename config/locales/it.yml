@@ -58,7 +58,7 @@ it:
   General_infos_howto: "
     Owums è la piattaforma di registrazione degli utenti. Tramite Owums puoi registrare il tuo account personale per usufruire del servizio e per monitorarne l'utilizzo giornaliero.<br />
     In seguito alla registrazione, ti sarà possibile visualizzare e modificare i tuoi dati personali.<br />
-    Se già disponi di un account, vai su '<strong>{{login}}</strong>' dal menù principale per effettuare l'accesso con le tue credenziali o consulta l'omonima sezione
+    Se già disponi di un account, vai su '<strong>%{login}</strong>' dal menù principale per effettuare l'accesso con le tue credenziali o consulta l'omonima sezione
     sottostante per avere maggiori informazioni.
   "
   General_infos_subheading: "Cos'è Owums e cosa ci posso fare?"
@@ -80,25 +80,25 @@ it:
   Last_login_ip: "IP ultimo accesso"
   Last_x_days_traffic_download:
     one: "Download odierni"
-    other: "Download degli ultimi {{count}} giorni"
+    other: "Download degli ultimi %{count} giorni"
   Last_x_days_traffic_upload:
     one: "Upload odierni"
-    other: "Upload degli ultimi {{count}} giorni"
+    other: "Upload degli ultimi %{count} giorni"
   Last_x_days_time:
     one: "Tempo utilizzato null'ultima sessione"
-    other: "Tempo utilizzato nelle ultime {{count}} sessioni"
+    other: "Tempo utilizzato nelle ultime %{count} sessioni"
   Last_x_logins: 
     one: "Ultimo login"
-    other: "Ultimi {{count}} login"
+    other: "Ultimi %{count} login"
   Last_x_online_users:
     one: "Ultimo utente online"
-    other: "Ultimi {{count}} utenti online"
+    other: "Ultimi %{count} utenti online"
   Last_x_registered_users: 
     one: "Ultimo utente registrato"
-    other: "Ultimi {{count}} utenti registrati"
+    other: "Ultimi %{count} utenti registrati"
   Last_x_user_sessions:
     one: "Ultima connessione"
-    other: "Ultime {{count}} connessioni"
+    other: "Ultime %{count} connessioni"
   Listing_users: "Lista utenti"
   Loading_data: "Caricamento dati: attendere"
   Logged_in: "Connesso?"
@@ -113,7 +113,7 @@ it:
   Mac_address: "MAC address"
   Manage_your_account: "Gestisci il tuo account"
   Manage_your_account_howto: "
-    Una volta aver eseguito la procedura di registrazione, seguendo '<strong>{{login}}</strong>' dal menù principale ed inserendo il nome utente (ad es. il numero di cellulare)
+    Una volta aver eseguito la procedura di registrazione, seguendo '<strong>%{login}</strong>' dal menù principale ed inserendo il nome utente (ad es. il numero di cellulare)
     e la password scelti, potrai accedere alla sezione privata dove potrai consultare le statistiche di utilizzo ed i tuoi dati personali.<br />
     Nel caso in cui volessi disabilitare il tuo account (ad es. per essere sicuro che nessuno lo utilizzi quando sei fuori città) puoi farlo, dopo aver effettuato l'acesso,
     nella sezione 'Modifica' dei tuoi dati personali. Potrai riabilitare il tuo account quando vuoi ma ti verrà chiesto di ripetere la procedura di verifica dei tuoi dati personali.
@@ -156,19 +156,19 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Print_credentials: "Stampa credenziali"
   Priority: "Priorità"
   Redirecting_in_x_secs:
-    one: "redirezione in {{count}} secondo"
-    other: "redirezione in {{count}} secondi"
+    one: "redirezione in %{count} secondo"
+    other: "redirezione in %{count} secondi"
   Radius_logins: "Accessi a Internet"
   Radius_groups: "Gruppi radius"
   Recover: "Ripristino"
   Refresh_data: "Aggiorna dati"
   Register: "Registrati"
   Register_howto_1: "
-    Se ancora non disponi di un account, puoi eseguire la procedura di registrazione seguendo '<strong>{{registration}}</strong>' dal menù principale.<br />
+    Se ancora non disponi di un account, puoi eseguire la procedura di registrazione seguendo '<strong>%{registration}</strong>' dal menù principale.<br />
     La procedura di registrazione è composta principalmente di due fasi:
   "
   Register_howto_2: "
-    Durante la prima fase è necessario inserire i propri dati anagrafici, seguendo le indicazioni raggiungibili da '<strong>{{registration}}</strong>'.<br />
+    Durante la prima fase è necessario inserire i propri dati anagrafici, seguendo le indicazioni raggiungibili da '<strong>%{registration}</strong>'.<br />
     Una volta inseriti i propri dati, per utilizzare il servizio è necessario procedere con la seconda fase, quella di verifica dei propri dati. Nella maggior parte dei
     casi la verifica viene fatta tramite una telefontata gratuita al numero indicato con il <strong>cellulare inserito in fase di registrazione</strong>,
     avendo cura di <strong>non nascondere il numero chiamante</strong>. Nel caso la telefonata venga effettuata nascondendo il proprio numero, l'account non verrà
@@ -183,7 +183,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Reset_password: "Reimposta password"
   Reset_password_subheading: "In caso dimentichi la password"
   Reset_password_howto: "
-    Nel caso dimenticassi la password, puoi andare su '<strong>{{reset_password}}</strong>' dal menù principale per recuperarla. La procedura di recupero password
+    Nel caso dimenticassi la password, puoi andare su '<strong>%{reset_password}</strong>' dal menù principale per recuperarla. La procedura di recupero password
     può essere effettuata sia tramite e-mail che tramite chiamata telefonica gratuita.<br />
     Durante la procedura di recupero ti verrà comunicato anche il nome utente. Una volta reimpostata la password, per entrare dovrai effettuare l'accesso con
     le nuove credenziali.
@@ -215,7 +215,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Too_many_search_results: "Troppi utenti trovati, prova ad essere piu' specifico."
   Top_x_active_users: 
     one: "Utente più attivo"
-    other: "I {{count}} utenti più attivi"
+    other: "I %{count} utenti più attivi"
   Traffic: "Traffico"
   Traffic_total: "Traffico totale"
   Undo: "Annulla"
@@ -240,8 +240,8 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Verification_date: "Data di verifica account"
   Verification_expire_time_less_than_a_minute: "Ti rimane meno di un minuto per verificare il tuo account."
   Verification_expire_time_x_mins:
-    one: "Ti rimane circa {{count}} minuto per verificare il tuo account."
-    other: "Ti rimangono circa {{count}} minuti per verificare il tuo account."
+    one: "Ti rimane circa %{count} minuto per verificare il tuo account."
+    other: "Ti rimangono circa %{count} minuti per verificare il tuo account."
   Verification_time_expired: "Hai esaurito il tempo a tua disposizione per la verifica."
   Verified: "Verificato"
   Verified_qm: "Verificato?"
@@ -258,7 +258,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   city: "città"
   click_here: "clicca qui"
   credit_card: "Carta di credito"
-  credit_card_instructions: "Al termine della procedura di registrazione ti verra' chiesto di effettuare un acquisto da {{count}} euro per verificare la tua identita'"
+  credit_card_instructions: "Al termine della procedura di registrazione ti verra' chiesto di effettuare un acquisto da %{count} euro per verificare la tua identita'"
   credit_card_item_name: "Registrazione a Surfinsardinia con carta di credito"
   disable_account: "disabilita account"
   document_photo: "copia del documento"
@@ -382,34 +382,34 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
       half_a_minute: "mezzo minuto"
       less_than_x_seconds:
         one:  "meno di un secondo"
-        other: "meno di {{count}} secondi"
+        other: "meno di %{count} secondi"
       x_seconds:
         one:  "1 secondo"
-        other: "{{count}} secondi"
+        other: "%{count} secondi"
       less_than_x_minutes:
         one:  "meno di un minuto"
-        other: "meno di {{count}} minuti"
+        other: "meno di %{count} minuti"
       x_minutes:
         one:  "1 minuto"
-        other: "{{count}} minuti"
+        other: "%{count} minuti"
       about_x_hours:
         one:  "circa un'ora"
-        other: "circa {{count}} ore"
+        other: "circa %{count} ore"
       x_days:
         one:  "1 giorno"
-        other: "{{count}} giorni"
+        other: "%{count} giorni"
       about_x_months:
         one:  "circa un mese"
-        other: "circa {{count}} mesi"
+        other: "circa %{count} mesi"
       x_months:
         one:  "1 mese"
-        other: "{{count}} mesi"
+        other: "%{count} mesi"
       about_x_years:
         one:  "circa un anno"
-        other: "circa {{count}} anni"
+        other: "circa %{count} anni"
       over_x_years:
         one:  "oltre un anno"
-        other: "oltre {{count}} anni"
+        other: "oltre %{count} anni"
 
     prompts:
       year:   "Anno"
@@ -430,7 +430,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
       template:
         header:
           one: "Si è verificato un errore"
-          other: "Si sono verificati {{count}} errori"
+          other: "Si sono verificati %{count} errori"
         body: "Per favore correggi i seguenti errori:"
       messages:
         inclusion: "non è incluso nella lista"
@@ -441,16 +441,16 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
         email_invalid: "non sembra un indirizzo e-mail"
         empty: "non può essere vuoto"
         blank: "deve essere specificato"
-        too_long: "è troppo lungo (il massimo è {{count}} lettere)"
-        too_short: "è troppo corto (il minimo è {{count}} lettere)"
-        wrong_length: "è della lunghezza sbagliata (deve essere di {{count}} lettere)"
+        too_long: "è troppo lungo (il massimo è %{count} lettere)"
+        too_short: "è troppo corto (il minimo è %{count} lettere)"
+        wrong_length: "è della lunghezza sbagliata (deve essere di %{count} lettere)"
         taken: "è già stato utilizzato per un'altro account"
         not_a_number: "non è un numero"
-        greater_than: "deve essere superiore a {{count}}"
-        greater_than_or_equal_to: "deve essere superiore o uguale a {{count}}"
-        equal_to: "deve essere uguale a {{count}}"
-        less_than: "deve essere meno di {{count}}"
-        less_than_or_equal_to: "deve essere meno o uguale a {{count}}"
+        greater_than: "deve essere superiore a %{count}"
+        greater_than_or_equal_to: "deve essere superiore o uguale a %{count}"
+        equal_to: "deve essere uguale a %{count}"
+        less_than: "deve essere meno di %{count}"
+        less_than_or_equal_to: "deve essere meno o uguale a %{count}"
         odd: "deve essere dispari"
         even: "deve essere pari"
         not_valid_f: "non valida"
@@ -458,7 +458,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
         record_invalid: "record non valido"
         missing_image: "mancante"
         invalid_image: "non è valida"
-        image_too_small: "è troppo piccola (deve essere >= {{minimum}})"
+        image_too_small: "è troppo piccola (deve essere >= %{minimum})"
         password_format: "deve essere composta solo da caratteri alfabetici, spazi, numeri ed il carattere '_' e deve contenere almeno un carattere ed un numero"
         mobile_phone_format: "deve contenere solo numeri"
         mobile_prefix_format: "deve contenere solo numeri"

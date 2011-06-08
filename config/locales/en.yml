@@ -58,7 +58,7 @@ en:
   General_infos_howto: "
     Owums is the users' registration platform. With Owums you can register your personal account to use the service and monitor your daily usage stats.<br />
     After registering yourself, you will be able to look and edit your personal data.<br />
-    If you already have an account, go to '<strong>{{login}}</strong>' from the main menu to login with your credentials or look below to get more info.
+    If you already have an account, go to '<strong>%{login}</strong>' from the main menu to login with your credentials or look below to get more info.
   "
   General_infos_subheading: "What is Owums and what can I do with it?"
   Given_name: "Name"
@@ -79,25 +79,25 @@ en:
   Last_login_ip: "Last login from IP"
   Last_x_days_traffic_download:
     one: "Downloaded today"
-    other: "Downloaded last {{count}} days"
+    other: "Downloaded last %{count} days"
   Last_x_days_traffic_upload:
     one: "Uploaded today"
-    other: "Uploaded last {{count}} days"
+    other: "Uploaded last %{count} days"
   Last_x_days_time:
     one: "Time spent in the last day"
-    other: "Time spent in the last {{count}} days"
+    other: "Time spent in the last %{count} days"
   Last_x_logins: 
     one: "Last login"
-    other: "Last {{count}} logins"
+    other: "Last %{count} logins"
   Last_x_online_users:
     one: "Last online user"
-    other: "Last {{count}} online users"
+    other: "Last %{count} online users"
   Last_x_registered_users: 
     one: "Last registered user"
-    other: "Last {{count}} registered users"
+    other: "Last %{count} registered users"
   Last_x_user_sessions:
     one: "Last session"
-    other: "Last {{count}} sessions"
+    other: "Last %{count} sessions"
   Listing_users: "Users list"
   Loading_data: "Loading data: please wait"
   Logged_in: "Logged in?"
@@ -112,7 +112,7 @@ en:
   Mac_address: "MAC address"
   Manage_your_account: "Manage your account"
   Manage_your_account_howto: "
-    After signing up, by going to '<strong>{{login}}</strong>' from the main menu and filling up the form with your user name (i.e. your mobile phone number) and your password,
+    After signing up, by going to '<strong>%{login}</strong>' from the main menu and filling up the form with your user name (i.e. your mobile phone number) and your password,
     you'll be granted access to your private section with usage stats and personal data.<br />
     In case you wanted to disable your account (i.e. to be sure no one uses it while you are out of town), you can disable it in the 'Edit' section of your personal section (after
     logging in). You can later re-enable your account by repeating the data verification procedure.
@@ -155,19 +155,19 @@ If you still have problems resetting the password, try repeating the procedure"
   Print_credentials: "Print credentials"
   Priority: "Priority"
   Redirecting_in_x_secs:
-    one: "redirect in {{count}} second"
-    other: "redirect in {{count}} seconds"
+    one: "redirect in %{count} second"
+    other: "redirect in %{count} seconds"
   Radius_logins: "Logins to Internet"
   Radius_groups: "Radius groups"
   Refresh_data: "Refresh data"
   Recover: "Recover"
   Register: "Sign up"
   Register_howto_1: "
-    If you don't have an account, you can follow the signup procedure by going to '<strong>{{registration}}</strong>' from the main menu.<br />
+    If you don't have an account, you can follow the signup procedure by going to '<strong>%{registration}</strong>' from the main menu.<br />
     Signing up requires two steps:
   "
   Register_howto_2: "
-    In the first step you are required to fill in your personal data, following the given instructions on '<strong>{{registration}}</strong>'.
+    In the first step you are required to fill in your personal data, following the given instructions on '<strong>%{registration}</strong>'.
     Signing up <strong>requires an Italian mobile phone number</strong>. In case you don't have one the Help Desk will signup for you if you
     can provide valid ID.<br />
     After filling up the forms with your info, to use the service it's required that the data is verified. Most of the times the verification
@@ -184,7 +184,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Reset_password: "Reset password"
   Reset_password_subheading: "Forgot your password?"
   Reset_password_howto: "
-    In case you forgot your password, you can go to '<strong>{{reset_password}}</strong>' from the main menu to recover it. The password can be recovered
+    In case you forgot your password, you can go to '<strong>%{reset_password}</strong>' from the main menu to recover it. The password can be recovered
     either via e-mail or via telephone call (only if you signed up with an Italian mobile phone number).<br />
     While recovering your password you will also be told your username. Once the password has been reset, you will be able to login with your new credentials.
   "
@@ -214,7 +214,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Too_many_search_results: "Too many search results, be more specific please."
   Top_x_active_users: 
     one: "Most active user"
-    other: "Top {{count}} active users"
+    other: "Top %{count} active users"
   Traffic: "Traffic"
   Traffic_total: "Total traffic"
   Undo: "Undo"
@@ -239,8 +239,8 @@ If you still have problems resetting the password, try repeating the procedure"
   Verification_date: "Verification date"
   Verification_expire_time_less_than_a_minute: "You have less than a minute to verify your account."
   Verification_expire_time_x_mins:
-    one: "You have about {{count}} minute left to verify your account."
-    other: "You have about {{count}} minutes left to verify your account."
+    one: "You have about %{count} minute left to verify your account."
+    other: "You have about %{count} minutes left to verify your account."
   Verification_time_expired: "Verification time expired" 
   Verified: "Verified"
   Verified_qm: "Verified?"
@@ -258,8 +258,8 @@ If you still have problems resetting the password, try repeating the procedure"
   click_here: "click here"
   credit_card: "Credit card"
   credit_card_instructions: 
-    one: "After signing up, you will be asked to pay {{count}} euro to verify your identity" 
-    other: "After signing up, you will be asked to pay {{count}} euros to verify your identity" 
+    one: "After signing up, you will be asked to pay %{count} euro to verify your identity" 
+    other: "After signing up, you will be asked to pay %{count} euros to verify your identity" 
   credit_card_item_name: "Surfinsardinia registration via credit card"
   disable_account: "disable account"
   document_photo: "ID card scan"
