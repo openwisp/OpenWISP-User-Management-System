@@ -11,6 +11,7 @@ gem 'acl9', '~> 0.11.0'
 gem 'chronic', '~> 0.2.3'
 gem 'packet', '~> 0.1.15'
 
+gem 'jrails', '~> 0.6.0'
 gem 'will_paginate', '~> 2.3.11'
 
 gem 'rmagick', '~> 2.12.2', :require => 'RMagick'

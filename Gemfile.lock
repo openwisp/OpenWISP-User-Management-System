@@ -28,6 +28,7 @@ GEM
       rmagick
     hoe (2.9.4)
       rake (>= 0.8.7)
+    jrails (0.6.0)
     mime-types (1.16)
     mysql (2.8.1)
     packet (0.1.15)
@@ -54,6 +55,7 @@ DEPENDENCIES
   daemons (~> 1.0.10)
   exception_notification (~> 2.3.3.0)
   fleximage (~> 1.0.4)
+  jrails (~> 0.6.0)
   mysql (= 2.8.1)
   packet (~> 0.1.15)
   rails (= 2.3.11)
