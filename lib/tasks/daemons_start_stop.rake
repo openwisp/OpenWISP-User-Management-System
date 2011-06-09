@@ -26,7 +26,6 @@ namespace :daemons do
     puts 'Restarting OWUMS daemons...'
     Rake::Task['daemons:stop'].execute
     Rake::Task['daemons:start'].execute
-    Rake::Task['daemons:status'].execute
   end
 
   desc "Status of daemons required to run OWUMS"
@@ -36,7 +35,7 @@ namespace :daemons do
     puts $? == 0 ? 'running...' : 'not running...'
 
     print 'MobilePhoneSipBusyMachine: '
-    out = %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl stop]
+    out = %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl status]
     puts out =~ /running \[pid .\d+\]/ ? 'running...' : 'not running...'
   end
 end
