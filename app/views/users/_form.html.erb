@@ -13,19 +13,41 @@
   <br />
   <%= form.text_field :username, :disabled => !form.object.new_record? %>
 </p>
+
+<p>
+  <strong><%= form.label :verification_method %></strong>
+  <br />
+  <% if form.object.new_record? %>
+    <%= form.select :verification_method, user_verification_select, :multiple => false %>
+  <% end %>
+</p>
+
 <% unless form.object.new_record? %>
-    <td><strong><%= form.label :verification_method %></strong></td>
     <table>
       <tr>
         <td><strong><%=t form.object.verification_method %></strong></td>
       </tr>
     </table>
+
+    <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_document? do %>
+        <% if form.object.has_image? %>
+            <strong><%= form.label :uploaded_document_photo %></strong>
+            <br />
+            <p style="text-align:center">
+              <% if form.object.new_record? %>
+                  <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
+              <% else %>
+                  <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
+              <% end %>
+            </p>
+        <% end %>
+        <strong><%= form.label :document_photo %></strong>
+        <br />
+        <%= form.file_field :image_file %>
+        <%= form.hidden_field :image_file_temp %>
+    <% end %>
+
 <% else %>
-    <p>
-      <strong><%= form.label :verification_method %></strong>
-      <br />
-      <%= form.select :verification_method, user_verification_select, :multiple => false %>
-    </p>
 
     <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_document? do %>
         <% if form.object.has_image? %>
