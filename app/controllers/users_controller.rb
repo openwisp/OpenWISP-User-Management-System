@@ -68,6 +68,7 @@ class UsersController < ApplicationController
   def show
     respond_to do |format|
       format.html
+      format.jpg
       format.xml { render :xml => @user.to_xml }
     end
   end
