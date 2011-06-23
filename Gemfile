@@ -9,7 +9,7 @@ gem 'authlogic', '~> 2.1.3'
 gem 'acl9', '~> 0.11.0'
 
 gem 'chronic', '~> 0.2.3'
-gem 'packet', '~> 0.1.15'
+gem 'packet', '0.1.15', :git => 'git://github.com/dguerri/packet.git'
 
 gem 'jrails', '~> 0.6.0'
 gem 'will_paginate', '~> 2.3.11'

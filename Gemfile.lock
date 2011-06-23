@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/dguerri/packet.git
+  revision: f4630410bfe4552607a5747bb11f6ee4740d9870
+  specs:
+    packet (0.1.15)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -31,7 +37,6 @@ GEM
     jrails (0.6.0)
     mime-types (1.16)
     mysql (2.8.1)
-    packet (0.1.15)
     rack (1.1.2)
     rails (2.3.11)
       actionmailer (= 2.3.11)
@@ -58,7 +63,7 @@ DEPENDENCIES
   fleximage (~> 1.0.4)
   jrails (~> 0.6.0)
   mysql (= 2.8.1)
-  packet (~> 0.1.15)
+  packet (= 0.1.15)!
   rails (= 2.3.11)
   rmagick (~> 2.12.2)
   simple_captcha (~> 0.1.3)
