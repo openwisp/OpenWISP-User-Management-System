@@ -156,12 +156,18 @@ class AccountCommon <  ActiveRecord::Base
   end
 
   def verified=(value)
-    if value and !verified?
+    # PLEASE NOTE: verified_at should
+    # not be reset to nil (see already_verified_once?)
+    if value and !already_verified_once?
       self.verified_at = Time.now
-    elsif !value
-      self.verified_at = nil
     end
     write_attribute(:verified, value)
+  end
+
+  def already_verified_once?
+    # An account has verified once
+    # if verified_at is not nil
+    self.verified_at.present?
   end
 
   def verification_expire_timeout
