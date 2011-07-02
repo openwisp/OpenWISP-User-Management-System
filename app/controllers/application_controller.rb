@@ -132,7 +132,7 @@ class ApplicationController < ActionController::Base
     if current_operator
       store_location
       flash[:notice] = I18n.t(:Must_be_logged_out)
-      redirect_to users_url
+      redirect_to operator_url current_operator
       return false
     end
   end
