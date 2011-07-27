@@ -9,7 +9,7 @@
 <% form_for @account, :builder => ErrorFormBuilder, :url => mobile_phone_password_reset_path, :method => :put, :html => {'data-ajax' => false} do |f| %>
       <% if @account.errors.any? %>
           <div data-role="collapsible">
-            <h3><%=t 'activerecord.errors.template.header', :count => @account.errors.count %></h3>
+            <h3><%=t :there_are_x_errors, :count => @account.errors.count %></h3>
             <p><%= f.error_messages %></p>
           </div>
       <% end %>

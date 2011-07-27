@@ -9,7 +9,7 @@
 <% form_for @account_session, :builder => ErrorFormBuilder, :url => account_session_path do |f| %>
     <% if @account_session.errors.any? %>
         <div data-role="collapsible">
-          <h3><%=t 'activerecord.errors.template.header', :count => @account_session.errors.count %></h3>
+          <h3><%=t :there_are_x_errors, :count => @account_session.errors.count %></h3>
           <p><%= f.error_messages %></p>
         </div>
     <% end %>
