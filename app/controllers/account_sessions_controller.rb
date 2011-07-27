@@ -32,8 +32,6 @@ class AccountSessionsController < ApplicationController
     @account_session = AccountSession.new(params[:account_session])
     if @account_session.save
       flash[:notice] = I18n.t(:Login_successful)
-      #Avoids session fixations
-      reset_session
       redirect_to account_url
     else
       respond_to do |format|

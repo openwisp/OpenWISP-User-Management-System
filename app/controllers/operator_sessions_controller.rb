@@ -26,8 +26,6 @@ class OperatorSessionsController < ApplicationController
   def create
     @operator_session = OperatorSession.new(params[:operator_session])
     if @operator_session.save
-      #Avoids session fixations
-      reset_session
       flash[:notice] = I18n.t(:Login_successful)
       redirect_to operator_url(@operator_session.record)
     else
