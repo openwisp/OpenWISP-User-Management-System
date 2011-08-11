@@ -1,108 +1,90 @@
-<div id="_search_">
+<div id="search_results">
   <div style="text-align:center">
-    <%=h total_users %> <%=t :results %>
-    <%= will_paginate users, :renderer => 'RemoteLinkRenderer', 
-                             :params => params.merge( { :action => action } ),
-                             :remote => { :update => '_search_' }, 
-                             :next_label => t(:next), 
-                             :previous_label => t(:previous)
-    %>
+    <%= total_users %> <%=t :results %>
+    <%= paginate users, :remote => true %>
   </div>
   <table>
     <thead>
-      <tr>
-        <th scope="col" <%= sort_td_class_helper "registered_at" %>>
-          <%= sort_remote_link_helper t(:Registration_date), 'registered_at', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "username" %>>
-          <%= sort_remote_link_helper t(:Username), 'username', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "given_name" %>>
-          <%= sort_remote_link_helper t(:Given_name), 'given_name', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "surname" %>>
-          <%= sort_remote_link_helper t(:Surname), 'surname', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "state" %>>
-          <%= sort_remote_link_helper t(:State), 'state', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "city" %>>
-          <%= sort_remote_link_helper t(:City), 'city', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "address" %>>
-          <%= sort_remote_link_helper t(:Address), 'address', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "verified" %>>
-          <%= sort_remote_link_helper t(:Verified_qm), 'verified', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "active" %>>
-          <%= sort_remote_link_helper t(:Active_qm), 'active', { :action => :ajax_search, :update => '_search_', :search => params[:search], :before => "jQuery( '#sort_spinner' ).show();", :success => "jQuery( '#sort_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <% if current_operator.has_role? 'users_manager' %>
+    <tr>
+      <th scope="col" <%= sort_td_class_helper "registered_at" %>>
+        <%= sort_remote_link_helper t(:Registration_date), 'registered_at' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "username" %>>
+        <%= sort_remote_link_helper t(:Username), 'username' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "given_name" %>>
+        <%= sort_remote_link_helper t(:Given_name), 'given_name' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "surname" %>>
+        <%= sort_remote_link_helper t(:Surname), 'surname' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "state" %>>
+        <%= sort_remote_link_helper t(:State), 'state' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "city" %>>
+        <%= sort_remote_link_helper t(:City), 'city' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "address" %>>
+        <%= sort_remote_link_helper t(:Address), 'address' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "verified" %>>
+        <%= sort_remote_link_helper t(:Verified_qm), 'verified' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "active" %>>
+        <%= sort_remote_link_helper t(:Active_qm), 'active' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <% if current_operator.has_role? 'users_manager' %>
           <th scope="col" colspan="2"><%=t :Operations %></th>
-        <% end %>
-      </tr>
+      <% end %>
+    </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <td colspan="12">
-          <%= image_tag("spinner.gif",
-                        :align => "absmiddle",
-                        :border => 0,
-                        :id =>"sort_spinner",
-                        :style =>"display:none;",
-                        :size => "12x12")
-          %>
-          &nbsp;
-        </td>
-      </tr>
-    </tfoot>
+
     <tbody>
-      <% users.each do |user| %>
+    <% users.each do |user| %>
         <tr>
           <td><%=l user.created_at %></td>
           <td><%= link_to h(user.username), user %></td>
-          <td><%=h user.given_name %></td>
-          <td><%=h user.surname %></td>
-          <td><%=h user.state %></td>
-          <td><%=h user.city %></td>
-          <td><%=h user.address %></td>
+          <td><%= user.given_name %></td>
+          <td><%= user.surname %></td>
+          <td><%= user.state %></td>
+          <td><%= user.city %></td>
+          <td><%= user.address %></td>
           <% if user.verified? %>
-            <td><span class="green"><%=t :affermative %> </span></td>
-	  <% else %>
-            <td><span class="red"><%=t :negative %> </span></td>
+              <td><span class="green"><%=t :affermative %> </span></td>
+          <% else %>
+              <td><span class="red"><%=t :negative %> </span></td>
           <% end %>
           <% if user.active? %>
-            <td><span class="green"><%=t :affermative %> </span></td>
+              <td><span class="green"><%=t :affermative %> </span></td>
           <% else %>
-            <td><span class="red"><%=t :negative %> </span></td>
+              <td><span class="red"><%=t :negative %> </span></td>
           <% end %>
           <% if current_operator.has_role? 'users_manager' %>
-            <td><%= link_to t(:Edit), edit_user_path(user) %></td>
+              <td><%= link_to t(:Edit), edit_user_path(user) %></td>
           <% end %>
           <% if current_operator.has_role? 'users_destroyer' %>
-            <td><%= link_to t(:Destroy), user, :confirm => t(:Are_you_sure), :method => :delete %></td>
+              <td><%= link_to t(:Destroy), user, :confirm => t(:Are_you_sure), :method => :delete %></td>
           <% end %>
         </tr>
-      <% end %>
+    <% end %>
     </tbody>
   </table>
 </div>

@@ -1,0 +1,9 @@
+<% if owner.verify_with_document? && !owner.new_record? %>
+    <%# We have an already existing Account %>
+    <li data-role="fieldcontain">
+      <%= form.label :image_file %>
+      <p>&nbsp;</p>
+
+      <p><%= document_of owner %></p>
+    </li>
+<% end %>

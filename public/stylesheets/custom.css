@@ -1,152 +1,160 @@
-div.fieldWithErrors {
-  padding: 3px;
-  background-color: red;
-  display: inline;
-  width:99%;
+select {
+    text-align:center;
+    margin-left: 8px;
+    width:99%;
 }
 
-div.fieldWithErrors input {
-  width:98%;
+div.field_with_errors .lbl, div.field_with_errors .error {
+    padding: 2px;
+    background-color: #ff6666;
 }
 
-div.fieldWithErrors select {
-  width:99%;
-  margin-left:2px;
+div.field_with_errors input {
+    width:98%;
 }
 
-.date select {
-  width:15%;
-  margin-left:5px;
+.date .lbl {
+    margin-right:500px;
 }
 
-.date div.fieldWithErrors select {
-  width:15%;
-  margin-left:5px;
+.date .error {
+    margin-right:500px;
 }
 
-div.fieldWithErrors checkbox {
+.date.field_with_errors .lbl {
+    margin-right:0;
+}
+
+.date select, .date.field_with_errors select {
+    text-align:center;
+    margin-left: 8px;
+    width:30%;
 }
 
 fieldset textarea {
-  width:98%;
-  margin-left:5px;
+    width:98%;
+    margin-left:5px;
 }
 
 input:focus {
-  outline: green solid thin;
+    outline: green solid thin;
 }
 
 select:focus {
-  outline: green solid thin;
+    outline: green solid thin;
 }
 
 textarea:focus {
-  outline: green solid thin;
+    outline: green solid thin;
 }
 
 img.wispmanager_logo {
-  vertical-align:sub;
+    vertical-align:sub;
 }
 
 h4 {
-  text-align:center;
+    text-align:center;
 }
 
 fieldset p div {
-  width:98%;
-  margin-left:5px;
+    width:98%;
+    margin-left:5px;
 }
 
 fieldset p textarea {
-  width:98%;
-  margin-left:5px;
+    width:98%;
+    margin-left:5px;
 }
 
 fieldset p label {
-  width:98%;
-  margin-left:5px;
+    width:98%;
+    margin-left:5px;
 }
 
 fieldset p input {
-  width:98%;
-  margin-left:5px;
+    width:98%;
+    margin-left:5px;
 }
 
 fieldset input {
-  width:98%;
-  margin-left:5px;
+    width:98%;
+    margin-left:5px;
 }
 
 fieldset p select {
-  width:99%;
-  margin-left:5px;
+    width:99%;
+    margin-left:5px;
 }
 
 th, td {
-  text-align:center;
+    text-align:center;
 }
 
 td label {
-  font-weight:bold;
-  font-style:italic;
+    font-weight:bold;
+    font-style:italic;
 }
 
 tr.labels_row td {
-  background-color:lightgray;
+    background-color:lightgray;
 }
 
 th.sortup img.arrow_up {
-  display:inline;
+    display:inline;
 }
 
 th.sortdown img.arrow_up {
-  display:none;
+    display:none;
 }
 
 th.nosort img.arrow_up {
-  display:none;
+    display:none;
 }
 
 th.sortup img.arrow_down {
-  display:none;
+    display:none;
 }
 
 th.sortdown img.arrow_down {
-  display:inline;
+    display:inline;
 }
 
 th.nosort img.arrow_down {
-  display:none;
+    display:none;
 }
 
 div.simple_captcha_image {
-  text-align:center;
+    text-align:center;
 }
 
 div.simple_captcha_wave {
-  text-align:center;
+    text-align:center;
 }
 
 div.simple_captcha_label {
-  text-align:center;
+    text-align:center;
 }
 
 div.simple_captcha_field {
-  text-align:center;
+    text-align:center;
 }
 
 table.branding tr td {
-  background:#aaa;
-  margin:0;
-  border:0;
+    background:#aaa;
+    margin:0;
+    border:0;
 }
 
 tr:hover td {
-  background-color: #ffffee;
+    background-color: #ffffee;
 }
 
 li > .off {
     background-color: #4A4344 !important;
+}
+
+#eula_priv {
+    margin:30px 5px 0 5px;
 }
 
 #notice {
@@ -156,20 +164,41 @@ li > .off {
 }
 
 #operator_info {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 #operator_info td strong {
-  float: left;
+    float: left;
 }
 
 #operator_roles {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 #remember_me *{
-  margin-bottom: 8px;
-  width: auto;
+    margin-bottom: 8px;
+    width: auto;
+}
+
+#loading {
+    float: right;
+    margin: -1px -5px 0 0;
+}
+
+#disable_account, #eula_priv {
+    margin-bottom: 20px;
+}
+
+#disable_account label {
+    display:inline-block;
+}
+
+#eula_priv label, #user_status label {
+    display:block;
+}
+
+#disable_account input, #eula_priv input, #user_status input {
+    width: 20px;
 }
 
 .account_graph, .user_graph {
@@ -178,8 +207,25 @@ li > .off {
     margin-bottom: 20px;
 }
 
+.button {
+    margin: 5px 0 15px 7px;
+}
+
 .center {
     text-align:center;
+}
+
+.hidden {
+    display:none;
+}
+
+.hint {
+    margin: 0 5px 3px 0;
+    float:right;
+}
+
+.input {
+    margin-bottom:20px;
 }
 
 .small_graph {
@@ -190,6 +236,10 @@ li > .off {
 .big_graph {
     height:350px;
     margin-bottom: 20px;
+}
+
+.lbl {
+    font-weight: bold;
 }
 
 .red {

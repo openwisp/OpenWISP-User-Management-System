@@ -1,223 +1,49 @@
-<% if Configuration.get('use_mobile_phone_as_username') == "false" || !form.object.new_record? %>
-    <p>
-      <strong><%= form.label :username %></strong>
-      <br />
-      <% if form.object.new_record? %>(<%=t :registration_username_info %>)<br /><% end %>
-      <%= form.text_field :username, :disabled => !form.object.new_record? %>
-    </p>
+<% if Configuration.get('use_mobile_phone_as_username') == "false" || !account.new_record? %>
+    <%= f.input :username, :disabled => !account.new_record? %>
 <% end %>
 
-<% if form.object.new_record? %>
-    <p>
-      <% if account_verification_methods.length == 1 %>
-          <%= form.hidden_field :verification_method %>
-      <% else %>
-          <strong><%= form.label :verification_method %></strong>
-          <br />
-          <%= form.select :verification_method, account_verification_select, :multiple => false %>
-      <% end %>
-    </p>
 
-    <div class="verification-block">
-      <p>
-        <strong><%= form.label :mobile_phone %></strong>
-        <br />
-      </p>
-      <table>
-        <tr>
-          <td><strong><%= form.label :mobile_prefix %></strong></td>
-          <td>
-            <strong><%= form.label :mobile_suffix %></strong>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= form.select :mobile_prefix,
-                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
-                            { :prompt => t(:select_prefix), :multiple => false }
-            %>
-          </td>
-          <td>
-            <%= form.text_field :mobile_suffix %>
-          </td>
-        </tr>
-      </table>
+<% if account.new_record? %>
+    <% if account_verification_methods.length == 1 %>
+        <%= f.input :verification_method, :as => :hidden %>
+    <% else %>
+        <%= f.input :verification_method, :collection => account_verification_select, :prompt => false %>
+    <% end %>
+<% end %>
 
-      <p>
-        <strong><%= form.label :mobile_phone_confirmation %></strong>
-        <br />
+
+<%= render 'common/form_elements/mobile_phone', :form => f, :owner => account, :prefixes => mobile_prefixes %>
+
+<%= render 'common/form_elements/identity_document', :form => f, :owner => account %>
+
+<%= render 'common/form_elements/credit_card', :form => f, :owner => account %>
+
+<%= render 'common/form_elements/personal_data', :form => f, :owner => account, :countries => countries %>
+
+
+<% if account.new_record? %>
+    <div id="captcha">
+      <p class="center">
+        <%= captcha_tag %><br />
+        <%= link_to t(:listen), spoken_captcha_url %><br />
       </p>
-      <table>
-        <tr>
-          <td><strong><%= form.label :mobile_prefix_confirmation %></strong></td>
-          <td>
-            <strong><%= form.label :mobile_suffix_confirmation %></strong>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= form.select :mobile_prefix_confirmation ,
-                            mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
-                            { :prompt => t(:select_prefix), :multiple => false }
-            %>
-          </td>
-          <td>
-            <%= form.text_field :mobile_suffix_confirmation %>
-          </td>
-        </tr>
-      </table>
+      <%= f.input :captcha %>
     </div>
 
-    <% if Configuration.get('credit_card_enabled') == "true" %>
-        <div class="verification-block" style="display:none">
-          <table>
-            <tr>
-              <td>
-                <strong><%=t :credit_card_instructions, :count => Configuration.get("credit_card_verification_cost") %></strong>
-              </td>
-            </tr>
-          </table>
-        </div>
-    <% end %>
-<% else %>
-    <% if form.object.verify_with_mobile_phone? %>
-        <p>
-          <strong><%= form.label :mobile_phone %></strong>
-          <br />
-        </p>
-        <table>
-          <tr>
-            <td><strong><%= form.label :mobile_prefix %></strong></td>
-            <td>
-              <strong><%= form.label :mobile_suffix %></strong>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= form.select :mobile_prefix,
-                              mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
-                              { :prompt => t(:select_prefix), :multiple => false },
-                              :disabled => true
-              %>
-            </td>
-            <td>
-              <%= form.text_field :mobile_suffix, :disabled => true %>
-            </td>
-          </tr>
-        </table>
-    <% elsif form.object.verify_with_document? %>
-        <strong><%= form.label :document_photo %></strong>
-        <br />
-        <p style="text-align:center">
-          <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
-        </p>
-    <% end %>
-<% end %>
-
-<p>
-  <strong><%= form.label :given_name %></strong>
-  <br />
-  <%= form.text_field :given_name, :size => 20, :disabled => !form.object.new_record?  %>
-</p>
-
-<p>
-  <strong><%= form.label :surname %></strong>
-  <br />
-  <%= form.text_field :surname, :size => 20, :disabled => !form.object.new_record?  %>
-</p>
-
-<p>
-  <strong><%= form.label :birth_date %></strong>
-  <br />
-</p>
-<div style="text-align:center" class="date">
-  <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :disabled => !form.object.new_record?, :prompt => true %>
-</div>
-
-<p>
-  <strong><%= form.label :address %></strong>
-  <br />
-  <%= form.text_field :address, :size => 50 %>
-</p>
-
-<p>
-  <strong><%= form.label :zip %></strong>
-  <br />
-  <%= form.text_field :zip, :size => 10 %>
-</p>
-
-<p>
-  <strong><%= form.label :city %></strong>
-  <br />
-  <%= form.text_field :city %>
-</p>
-
-<p>
-  <strong><%= form.label :state %></strong>
-  <br />
-  <%= form.select :state,
-                  countries.map { |c| [ c.printable_name, c.printable_name ]},
-                  { :multiple => false }
-  %>
-</p>
-
-<p>
-  <strong><%= form.label :email %></strong>
-  <br />
-  <% if form.object.new_record? %>(<%=t :registration_email_info %>)<br /><% end %>
-  <%= form.text_field :email %>
-</p>
-
-<p>
-  <strong><%= form.label :email_confirmation %></strong>
-  <br />
-  <%= form.text_field :email_confirmation %>
-</p>
-
-<p>
-  <strong><%= form.label :password, form.object.new_record? ? nil : t(:change_password) %></strong>
-  <br />
-  (<%=t :registration_password_info %>)<br />
-  <%= form.password_field :password %>
-</p>
-
-<p>
-  <strong><%= form.label :password_confirmation %></strong>
-  <br />
-  <%= form.password_field :password_confirmation %>
-</p>
-
-<% if form.object.new_record? %>
-    <%= show_simple_captcha( :label => t(:registration_captcha_info), :object => form.object_name, :distorsion => :medium, :image_style => :simply_red ) %>
-    <br />
-    <br />
-    <p>
+    <div id="eula_priv">
       <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
-      <br />
-      <%= label_tag 'account_eula_acceptance', t(:eula_description) %><br />
-      <%= form.check_box :eula_acceptance %>
-      <br />
-      <br />
-      <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
-      <br />
-      <%= label_tag 'account_privacy_acceptance', t(:privacy_description) %><br />
-      <%= form.check_box :privacy_acceptance %>
-    </p>
+      <%= f.input :eula_acceptance, :error => false %>
 
+      <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
+      <%= f.input :privacy_acceptance, :error => false %>
+    </div>
 <% else %>
-    <p>
-      <strong><%= label_tag t(:disable_account) %></strong>
-      <br />
-      <%= check_box_tag 'account_disable_account', '1', false, { :onclick => "if (this.checked) { return #{confirm_javascript_function(t(:Account_disable_confirmation))};}", :name => 'account[disable_account]' } %>
-      <br />
-    </p>
+    <div id="disable_account">
+      <strong><%= label_tag t(:disable_account) %></strong><br/>
+      <%= check_box_tag 'account_disable_account', '1', false, 'data-warning' => t(:Account_disable_confirmation), :name => 'account[disable_account]'  %>
+    </div>
 <% end %>
 
-<table>
-  <tbody>
-  <tr>
-    <td><%= form.submit form.object.new_record? ? t(:Register) : t(:Update) %></td>
-    <td><%= link_to t(:Undo), :back %></td>
-  </tr>
-  </tbody>
-</table>
+
+<%= f.button :submit %>
+<%= link_to t(:Undo), :back %>

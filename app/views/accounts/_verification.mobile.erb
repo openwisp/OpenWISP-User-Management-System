@@ -5,11 +5,11 @@
       <% if @account.verify_with_mobile_phone? %>
           <%=t :Please_verify_mobile_number %><br /><br />
           <%=t :From_mobile_phone_number %><br />
-          <p class="ui-link"><%=h @account.mobile_phone %></p><br /><br />
+          <p class="ui-link"><%= @account.mobile_phone %></p><br /><br />
           <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
           <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
           <% numbers.each do |number| %>
-              <p style="background-color:#90ee90"><a href="tel:<%=h number %>" class="ui-link"><%=h number %></a></p>
+              <p style="background-color:#90ee90"><a href="tel:<%= number %>" class="ui-link"><%= number %></a></p>
           <% end %>
           <%=t :Free_call_description %><br />
           <br />
@@ -20,19 +20,18 @@
           <br /><br /><br />
       <% end %>
 
-     <% unless @account.already_verified_once? %>
-      <% if @account.expire_time > 0 %>
-          <p style="font-size:100%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
-          <% if @account.verify_with_mobile_phone? %>
-              <p style="font-size:100%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
+      <% unless @account.already_verified_once? %>
+          <% if @account.expire_time > 0 %>
+              <p style="font-size:100%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
+              <% if @account.verify_with_mobile_phone? %>
+                  <p style="font-size:100%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
+              <% end %>
+          <% else %>
+              <p style="font-size:80%"><%= t(:Verification_expire_time_less_than_a_minute) %></p>
           <% end %>
-      <% else %>
-          <p style="font-size:80%"><%= t(:Verification_expire_time_less_than_a_minute) %></p>
       <% end %>
-     <% end %>
   <% end %>
   <p style="font-size:90%" class="no_js">
     <%=t :If_problem_with_redirect %> <%= link_to t(:click_here), account_url, :class => 'ui-link', 'data-ajax' => false %>
   </p>
 </div>
-

@@ -8,13 +8,13 @@
     <%= mobile_link_back_to root_path %>
 <% end %>
 
-<% form_for @account, :builder => ErrorFormBuilder, :url => account_path do |f| %>
+<%= simple_form_for @account, :url => account_path do |f| %>
     <% if @account.errors.any? %>
         <div data-role="collapsible">
-          <h3><%=t :there_are_x_errors, :count => @account.errors.count %></h3>
+          <h3><%=t :header, :count => @account.errors.count, :scope => [ :errors, :template ] %></h3>
           <p><%= f.error_messages %></p>
         </div>
     <% end %>
 
-    <%= render :partial => "form", :object => f, :locals => { :countries => @countries, :mobile_prefixes => @mobile_prefixes } %>
+    <%= render 'form', :f => f, :account => @account, :countries => @countries, :mobile_prefixes => @mobile_prefixes %>
 <% end %>

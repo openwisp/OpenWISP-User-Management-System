@@ -1,0 +1,15 @@
+* operator: <%# raw PP.pp(@request.env['authlogic_operator'], "") %>
+  <% if @request.env['authlogic_operator'] %>
+    - login: <%= raw @request.env['authlogic_operator'].login %>
+    - ip: <%= raw @request.env['authlogic_operator'].current_login_ip %>
+  <% else %>
+    No operator connected...
+  <% end %>
+
+* user: <%# raw PP.pp(@request.env['authlogic_user'], "") %>
+  <% if @request.env['authlogic_user'] %>
+    - login: <%= raw @request.env['authlogic_user'].login %>
+    - ip: <%= raw @request.env['authlogic_user'].current_login_ip %>
+  <% else %>
+    No user connected...
+  <% end %>

@@ -1,11 +1,9 @@
 #!/usr/bin/env ruby
 
-# You might want to change this
-ENV["RAILS_ENV"] ||= "production"
+require File.dirname(__FILE__) + "/../../config/application"
+Rails.application.require_environment!
 
-require File.dirname(__FILE__) + "/../../config/environment"
 require File.dirname(__FILE__) + "/../../lib/mobile_phone_sip_busy_machine"
-require File.dirname(__FILE__) + "/../../app/models/configuration"
 
 $running = true
 Signal.trap("TERM") do 

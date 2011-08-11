@@ -18,11 +18,11 @@
 class AccountsController < ApplicationController
   before_filter :require_account, :only => [
       :show, :edit, :update, :ajax_accounting_search
-  ], :except => :instructions
+  ]
 
   before_filter :require_no_account, :only => [
       :new, :create, :verify_credit_card, :secure_verify_credit_card
-  ], :except => :instructions
+  ]
 
   before_filter :require_no_operator
 
@@ -32,14 +32,10 @@ class AccountsController < ApplicationController
 
   STATS_PERIOD = 14
 
-  def load_account
-    @account = @current_account
-  end
-
   def new
     @account = Account.new( :verification_method => Account::VERIFY_BY_MOBILE, :state => 'Italy' )
-    @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+    @countries = Country.all
+    @mobile_prefixes = MobilePrefix.all
 
     respond_to do |format|
       format.html
@@ -49,12 +45,14 @@ class AccountsController < ApplicationController
 
   def create
     @account = Account.new(params[:account])
-    @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+    @countries = Country.all
+    @mobile_prefixes = MobilePrefix.all
 
     @account.radius_groups << RadiusGroup.find_by_name(Configuration.get('default_radius_group'))
 
-    if @account.save_with_captcha
+    @account.captcha_verification = session[:captcha]
+
+    if @account.save
       redirect_to account_path
     else
       respond_to do |format|
@@ -76,9 +74,13 @@ class AccountsController < ApplicationController
         format.mobile { render :action => :verification }
       end
     else
+      sort_and_paginate_accountings unless request.format.jpg?
+      
       respond_to do |format|
         format.html
         format.mobile
+        format.jpg
+        format.js
       end
     end
   end
@@ -95,8 +97,8 @@ class AccountsController < ApplicationController
         format.mobile { render :action => :verification }
       end
     else
-      @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-      @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+      @countries = Country.all
+      @mobile_prefixes = MobilePrefix.all
       respond_to do |format|
         format.html
         format.mobile
@@ -108,8 +110,8 @@ class AccountsController < ApplicationController
     if !@current_operator.nil? or !@account.verified?
       render :action => :verification
     else
-      @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-      @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+      @countries = Country.all
+      @mobile_prefixes = MobilePrefix.all
 
       to_disable = false
 
@@ -194,7 +196,13 @@ class AccountsController < ApplicationController
     @custom_instructions = Configuration.get('custom_account_instructions')
   end
 
-  def ajax_accounting_search
+  private
+
+  def load_account
+    @account = current_account
+  end
+
+  def sort_and_paginate_accountings
     items_per_page = Configuration.get('default_radacct_results_per_page')
 
     sort = case params[:sort]
@@ -215,9 +223,6 @@ class AccountsController < ApplicationController
     page = params[:page].nil? ? 1 : params[:page]
 
     @total_accountings =  @account.radius_accountings.count
-    @radius_accountings = @account.radius_accountings.paginate :page => page, :order => sort, :per_page => items_per_page
-
-    render :partial => "common/radius_accounting_list", :locals => { :action => 'ajax_accounting_search', :accountings => @radius_accountings, :total_accountings => @total_accountings }
+    @radius_accountings = @account.radius_accountings.order(sort).page(page).per(items_per_page)
   end
-
 end

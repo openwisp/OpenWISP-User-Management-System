@@ -18,14 +18,14 @@
 class EmailPasswordResetsController < ApplicationController
   before_filter :load_account_using_perishable_token, :only => [:edit, :update]
   before_filter :require_no_account
-  
+
   def new
   end
-  
+
   def create
     @account = Account.find_by_email(params[:email_password_reset][:email]) if params[:email_password_reset]
     if @account
-      @account.deliver_password_reset_instructions!
+      @account.password_reset_instructions!
       flash[:notice] = I18n.t(:Instruction_reset_has_been_mailed)
       redirect_to root_url
     else
@@ -33,15 +33,17 @@ class EmailPasswordResetsController < ApplicationController
       render :action => :new
     end
   end
-  
+
   def edit
   end
- 
+
   def update
     @account.password = params[:account][:password]
     @account.password_confirmation = params[:account][:password_confirmation]
+    password_changed = @account.changed?
+
     if @account.save_without_session_maintenance
-      flash[:notice] = I18n.t(:Password_successfully_updated)
+      flash[:notice] = I18n.t(password_changed ? :Password_successfully_updated : :Password_not_successfully_updated)
       redirect_to root_url
     else
       render :action => :edit
@@ -49,11 +51,11 @@ class EmailPasswordResetsController < ApplicationController
   end
 
   private
-    def load_account_using_perishable_token
-      @account = Account.find_using_perishable_token(params[:id])
-      unless @account
-        flash[:notice] = I18n.t(:Perishable_token_error)
-        redirect_to root_url
-      end
+  def load_account_using_perishable_token
+    @account = Account.find_using_perishable_token(params[:id])
+    unless @account
+      flash[:notice] = I18n.t(:Perishable_token_error)
+      redirect_to root_url
     end
+  end
 end

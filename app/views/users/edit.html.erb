@@ -1,20 +1,11 @@
 <div class="grid_10 prefix_1 suffix_1">
   <div class="box">
-    <% form_for @user, :builder => ErrorFormBuilder, :html => { :multipart => true } do |f| %>
+    <%= simple_form_for @user, :html => {:multipart => true} do |f| %>
         <fieldset>
           <legend><%=t :Edit_user %></legend>
           <p><%= f.error_messages %></p>
 
-          <%= render :partial => "form", :object => f, :locals => { :user => @user, :radius_groups => @radius_groups, :countries => @countries, :mobile_prefixes => @mobile_prefixes } %>
-
-          <table>
-            <tbody>
-            <tr>
-              <td><%= f.submit t(:Update) %></td>
-              <td><%= link_to t(:Undo), :back %></td>
-            </tr>
-            </tbody>
-          </table>
+          <%= render 'form', :f => f, :user => @user, :radius_groups => @radius_groups, :countries => @countries, :mobile_prefixes => @mobile_prefixes %>
         </fieldset>
     <% end %>
   </div>

@@ -21,12 +21,12 @@ class MobilePhonePasswordResetsController < ApplicationController
   before_filter :require_no_account
   
   def new
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+    @mobile_prefixes = MobilePrefix.all
     render
   end
   
   def create
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+    @mobile_prefixes = MobilePrefix.all
     if params[:mobile_phone_password_reset]
       @account = Account.find_by_mobile_suffix(params[:mobile_phone_password_reset][:mobile_suffix], 
       :conditions => ["mobile_prefix = ?", params[:mobile_phone_password_reset][:mobile_prefix]])
@@ -37,7 +37,7 @@ class MobilePhonePasswordResetsController < ApplicationController
       @single_access_token = @account.single_access_token
       render :action => :verification
     else
-      @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+      @mobile_prefixes = MobilePrefix.all
       flash[:notice] = I18n.t(:No_user_found_with_that_mobile_phone)
       render :action => :new
     end
@@ -54,8 +54,10 @@ class MobilePhonePasswordResetsController < ApplicationController
   def update
     @account.password = params[:account][:password]
     @account.password_confirmation = params[:account][:password_confirmation]
+    password_changed = @account.changed?
+
     if @account.save_from_mobile_phone_password_recovery
-      flash[:notice] = I18n.t(:Password_successfully_updated)
+      flash[:notice] = I18n.t(password_changed ? :Password_successfully_updated : :Password_not_successfully_updated)
       redirect_to root_url
     else
       render :action => :edit
@@ -77,8 +79,9 @@ class MobilePhonePasswordResetsController < ApplicationController
         format.html   { render :partial => 'verification' }
         format.mobile { render :partial => 'verification' }
       else
-        format.html   { render :action => 'verification' }
-        format.mobile { render :action => 'verification' }
+        @single_access_token = @account.single_access_token
+        format.html
+        format.mobile
       end
     end
   end

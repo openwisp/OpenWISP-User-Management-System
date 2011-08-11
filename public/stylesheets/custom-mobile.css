@@ -26,9 +26,6 @@ tbody tr:hover td {
 #footer {
     font-size:80%;
     text-align: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
 }
 
 #notice {
@@ -39,7 +36,36 @@ tbody tr:hover td {
     background-color:#f08080;
 }
 
+#listen_captcha {
+    text-transform:capitalize;
+    font-weight:normal;
+}
+
 .account_graph {
     width: 96%;
     height: 220px;
+}
+
+.date .lbl {
+    width: 200px;
+    padding-right: 500px;
+}
+
+.date.field_with_errors .lbl {
+    padding-right:16px;
+}
+
+.error {
+    background-color: #ff6666;
+    font-weight: normal;
+    color: black;
+}
+
+.hint {
+    margin-top: 15px;
+    display:block;
+}
+
+.input {
+    margin: 5px 0 20px 0;
 }

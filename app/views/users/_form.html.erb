@@ -1,212 +1,51 @@
-<% content_for :after_defaults do %>
-    <%= javascript_include_tag 'jquery.password' %>
-    <%= javascript_tag "$(function(){
-            $('#pwgen').click(function(e){
-                $('#user_password, #user_password_confirmation').val($.password(8, 1));
-                e.preventDefault();
-            });
-    });" %>
-<% end %>
+<%= f.input :username, :disabled => !user.new_record? %>
 
-<p>
-  <strong><%= form.label :username %></strong>
-  <br />
-  <%= form.text_field :username, :disabled => !form.object.new_record? %>
-</p>
 
-<p>
-  <strong><%= form.label :verification_method %></strong>
-  <br />
-  <% if form.object.new_record? %>
-    <%= form.select :verification_method, user_verification_select, :multiple => false %>
-  <% end %>
-</p>
-
-<% unless form.object.new_record? %>
-    <table>
-      <tr>
-        <td><strong><%=t form.object.verification_method %></strong></td>
-      </tr>
-    </table>
-
-    <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_document? do %>
-        <% if form.object.has_image? %>
-            <strong><%= form.label :uploaded_document_photo %></strong>
-            <br />
-            <p style="text-align:center">
-              <% if form.object.new_record? %>
-                  <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
-              <% else %>
-                  <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
-              <% end %>
-            </p>
-        <% end %>
-        <strong><%= form.label :document_photo %></strong>
-        <br />
-        <%= form.file_field :image_file %>
-        <%= form.hidden_field :image_file_temp %>
+<% if user.new_record? %>
+    <% if user_verification_methods.length == 1 %>
+        <%= f.input :verification_method, :as => :hidden %>
+    <% else %>
+        <%= f.input :verification_method, :collection => user_verification_select, :prompt => false %>
     <% end %>
-
 <% else %>
-
-    <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_document? do %>
-        <% if form.object.has_image? %>
-            <strong><%= form.label :uploaded_document_photo %></strong>
-            <br />
-            <p style="text-align:center">
-              <% if form.object.new_record? %>
-                  <%= embedded_image_tag(form.object.operate { |img| img.resize 100 }) %>
-              <% else %>
-                  <%= link_to embedded_image_tag(form.object.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
-              <% end %>
-            </p>
-        <% end %>
-        <strong><%= form.label :document_photo %></strong>
-        <br />
-        <%= form.file_field :image_file %>
-        <%= form.hidden_field :image_file_temp %>
-    <% end %>
-
-    <% div_tag :class => 'verification-block', :hide_if => !form.object.verify_with_mobile_phone? do %>
-        <p><strong><%= form.label :mobile_phone %></strong></p>
-        <table>
-          <tr>
-            <td><strong><%= form.label :mobile_prefix %></strong></td>
-            <td>
-              <strong><%= form.label :mobile_suffix %></strong>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= form.select :mobile_prefix,
-                              mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
-                              { :prompt => t(:select_prefix), :multiple => false }
-              %>
-            </td>
-            <td>
-              <%= form.text_field :mobile_suffix %>
-            </td>
-          </tr>
-        </table>
-
-        <p><strong><%= form.label :mobile_phone_confirmation %></strong></p>
-        <table>
-          <tr>
-            <td><strong><%= form.label :mobile_prefix_confirmation %></strong></td>
-            <td>
-              <strong><%= form.label :mobile_suffix_confirmation %></strong>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= form.select :mobile_prefix_confirmation ,
-                              mobile_prefixes.map { |m| [ m.prefix, m.prefix.to_s ]},
-                              { :prompt => t(:select_prefix), :multiple => false }
-              %>
-            </td>
-            <td>
-              <%= form.text_field :mobile_suffix_confirmation %>
-            </td>
-          </tr>
-        </table>
-    <% end %>
+    <%= f.input :verification_method,
+                :collection => account_verification_select + user_verification_select,
+                :disabled => true
+    %>
 <% end %>
 
-<% if form.object.new_record? %>
-    <%= form.hidden_field :verified, :value => 1 %>
-    <%= form.hidden_field :active, :value => 1 %>
+<%= render 'common/form_elements/mobile_phone', :form => f, :owner => user, :prefixes => mobile_prefixes %>
+
+<%= render 'common/form_elements/identity_document', :form => f, :owner => user %>
+
+<% if user.new_record? %>
+    <%= f.input :verified, :as => :hidden, :value => 1 %>
+    <%= f.input :active, :as => :hidden, :value => 1 %>
 <% else %>
-    <table>
-      <tbody>
-      <tr>
-        <td><strong><%= form.label :verified %></strong><%= form.check_box :verified, :checked_value => "1", :unchecked_value => "0" %></td>
-        <td><strong><%= form.label :active %></strong><%= form.check_box :active, :checked_value => "1", :unchecked_value => "0" %></td>
-      </tr>
-      </tbody>
-    </table>
+    <div id="user_status">
+      <%= f.input :verified %>
+      <%= f.input :active %>
+    </div>
 <% end %>
-<p>
-  <strong><%= form.label :given_name %></strong>
-  <br />
-  <%= form.text_field :given_name, :size => 20 %>
-</p>
-<p>
-  <strong><%= form.label :surname %></strong>
-  <br />
-  <%= form.text_field :surname, :size => 20 %>
-</p>
-<p>
-  <strong><%= form.label :birth_date %></strong>
-</p>
-<div style="text-align:center" class="date">
-  <%= form.date_select :birth_date, :start_year => Time.now.year - 90, :end_year => Time.now.year - 14, :prompt => true %>
+
+
+<%= render 'common/form_elements/personal_data', :form => f, :owner => user, :countries => countries %>
+
+
+<div id="eula_priv">
+  <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
+  <%= f.input :eula_acceptance, :error => false %>
+
+  <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
+  <%= f.input :privacy_acceptance, :error => false %>
 </div>
 
-<p>
-  <strong><%= form.label :address %></strong>
-  <br />
-  <%= form.text_field :address, :size => 50 %>
-</p>
-<p>
-  <strong><%= form.label :zip %></strong>
-  <br />
-  <%= form.text_field :zip, :size => 10 %>
-</p>
-<p>
-  <strong><%= form.label :city %></strong>
-  <br />
-  <%= form.text_field :city %>
-</p>
-<p>
-  <strong><%= form.label :state %></strong>
-  <br />
-  <%= form.select :state,
-                  countries.map { |c| [ c.printable_name, c.printable_name ]},
-                  { :multiple => false }
-  %>
-</p>
-<p>
-  <strong><%= form.label :email %></strong>
-  <br />
-  <%= form.text_field :email %>
-</p>
-<p>
-  <strong><%= form.label :email_confirmation %></strong>
-  <br />
-  <%= form.text_field :email_confirmation %>
-</p>
-<p>
-  <% if form.object.new_record? %>
-      <strong><%= form.label :password %></strong>
-      <a href="#" id="pwgen" class="right"><%=t :autogenerate %></a>
-  <% else %>
-      <strong><%= form.label :password, t(:change_password) %></strong>
-  <% end %>
-  <br />
-  <%= form.text_field :password %>
-</p>
-<p>
-  <strong><%= form.label :password_confirmation %></strong>
-  <br />
-  <%= form.text_field :password_confirmation %>
-</p>
-
-<br />
-<br />
-<p>
-  <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
-  <br />
-  <%= label_tag 'eula', t(:eula_description) %><br />
-  <%= form.check_box :eula_acceptance %>
-  <br />
-  <br />
-  <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
-  <br />
-  <%= label_tag 'privacy', t(:privacy_description) %><br />
-  <%= form.check_box :privacy_acceptance %>
-</p>
 
 <% if current_operator.has_role? 'users_manager' %>
-    <%= form.label :radius_groups %>
+    <%= f.label :radius_groups %>
     <%= render 'radius_group_select', :user => user, :radius_groups => radius_groups %>
 <% end %>
+
+
+<%= f.button :submit %>
+<%= link_to t(:Undo), :back %>

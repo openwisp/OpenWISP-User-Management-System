@@ -1,4 +1,4 @@
-if ENV['RAILS_ENV'] == 'production'
+if Rails.env.production?
   # Festival for captcha to voice
   if !(system 'echo "hello" | text2wave | lame - - >/dev/null 2>&1')
     raise "Missing 'lame' or festival 'text2wave' command!  (on Ubuntu run the following command as root: 'apt-get install lame festival festvox-italp16k festvox-rablpc16k')"

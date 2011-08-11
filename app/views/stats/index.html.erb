@@ -9,7 +9,7 @@
 
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-registered_users_graph"><%=h t(:Registered_users) %></a></h2>
+    <h2><a href="#" id="toggle-registered_users_graph"><%= t(:Registered_users) %></a></h2>
     <div class="block small_graph" id="registered_users_graph">
       <h5 class="center"><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
     </div>
@@ -18,7 +18,7 @@
 
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-logins_graph"><%=h t(:Logins) %></a></h2>
+    <h2><a href="#" id="toggle-logins_graph"><%= t(:Logins) %></a></h2>
     <div class="block small_graph" id="logins_graph">
       <h5 class="center"><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
     </div>
@@ -27,7 +27,7 @@
 
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-traffic_graph"><%=h t(:Traffic) %></a></h2>
+    <h2><a href="#" id="toggle-traffic_graph"><%= t(:Traffic) %></a></h2>
     <div class="block small_graph" id="traffic_graph">
       <h5 class="center"><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
     </div>
@@ -39,11 +39,7 @@
 <div class="grid_3">
   <div class="box">
     <h2>
-      <%= link_to_remote t(:Top_x_active_users, :count => 5),
-                         :url => stat_path('top_traffic_users'),
-                         :method => :get,
-                         :html => {:id => 'toggle-top_traffic_users'}
-      %>
+      <%= link_to t(:Top_x_active_users, :count => 5), stat_path('top_traffic_users'), :remote => true, :id => 'toggle-top_traffic_users' %>
     </h2>
     <div class="block" id="top_traffic_users">
       <h5><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
@@ -54,11 +50,7 @@
 <div class="grid_5">
   <div class="box">
     <h2>
-      <%= link_to_remote t(:Last_x_logins, :count => 5),
-                         :url => stat_path('last_logins'),
-                         :method => :get,
-                         :html => {:id => 'toggle-last_logins'}
-      %>
+      <%= link_to t(:Last_x_logins, :count => 5), stat_path('last_logins'), :remote => true, :id => 'toggle-last_logins' %>
     </h2>
     <div class="block" id="last_logins">
       <h5><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
@@ -69,11 +61,7 @@
 <div class="grid_4">
   <div class="box">
     <h2>
-      <%= link_to_remote t(:Last_x_registered_users, :count => 5),
-                         :url => stat_path('last_registered'),
-                         :method => :get,
-                         :html => {:id => 'toggle-last_registered'}
-      %>
+      <%= link_to t(:Last_x_registered_users, :count => 5), stat_path('last_registered'), :remote => true, :id => 'toggle-last_registered' %>
     </h2>
     <div class="block" id="last_registered">
       <h5><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>

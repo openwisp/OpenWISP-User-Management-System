@@ -1,0 +1,33 @@
+<% if owner.is_a? Account %>
+    <% if owner.verify_with_document? %>
+        <strong><%=t :Document_photo %></strong><br/>
+
+        <p class="center"><%= document_of owner %></p>
+    <% end %>
+<% elsif owner.is_a? User %>
+    <% if owner.can_signup_via?(AccountCommon::VERIFY_BY_DOCUMENT) %>
+        <% if owner.new_record? %>
+            <%# We have a new User %>
+            <div class="verification-block">
+              <% if owner.has_image? %>
+                  <strong><%=t :Document_photo_preview %></strong><br/>
+
+                  <p class="center"><%= document_of owner, :inline => true %></p>
+              <% end %>
+
+              <%= form.input :image_file %>
+              <%= form.input :image_file_temp, :as => :hidden %>
+            </div>
+        <% else %>
+            <% if owner.verify_with_document? %>
+                <strong><%=t :Document_photo %></strong><br/>
+
+                <%# We have an already existing User %>
+                <p class="center"><%= document_of owner, :inline => true %></p>
+
+                <%= form.input :image_file %>
+                <%= form.input :image_file_temp, :as => :hidden %>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>

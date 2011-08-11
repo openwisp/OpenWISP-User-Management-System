@@ -23,20 +23,18 @@ class User < AccountCommon
   end
 
 
-  self.before_validation { |record|
+  self.before_validation do |record|
     # Cleaning up unused fields... just in case..
-
     if record.verify_with_document?
       record.mobile_prefix = nil
       record.mobile_suffix = nil
     elsif record.verify_with_mobile_phone?
       record.image_file_data = nil
     end
-  }
+  end
 
 
   # Validations
-  # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
   validates_inclusion_of :verification_method, :in => VERIFICATION_METHODS,
     :if => Proc.new{|user| user.new_record? }
   validates_inclusion_of :verification_method, :in => [VERIFICATION_METHODS, SELFVERIFICATION_METHODS].flatten,
@@ -50,7 +48,7 @@ class User < AccountCommon
   # Class methods
 
   def self.last_registered(num = 5)
-    User.find(:all, :order => "created_at DESC", :limit => num)
+    User.order("created_at DESC").limit(num)
   end
 
   # Class Method:
@@ -76,13 +74,14 @@ class User < AccountCommon
   end
 
   def self.find_all_by_user_phone_or_mail(query)
-    find(:all, :conditions => [ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
+    where([ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
   end
 
   def self.registered_each_day(from, to)
-    (from..to).map do |that_day|
-      [that_day.to_datetime.to_i * 1000, User::registered_on(that_day)]
-    end
+    (from..to).map{ |that_day|
+      on_that_day = User.registered_on(that_day)
+      [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
+    }.compact
   end
 
   def self.registered_on(date)
@@ -90,26 +89,28 @@ class User < AccountCommon
   end
 
   def self.registered_yesterday
-    find(:all, :conditions => { :created_at => 1.day.ago..DateTime.now })
+    where({ :created_at => 1.day.ago..DateTime.now })
   end
 
   def self.unverified
-    find(:all, :conditions => [ "verified_at is NULL AND NOT verified" ])
+    where("verified_at is NULL AND NOT verified")
   end
 
   def self.disabled
-    find(:all, :conditions => [ "verified_at is NOT NULL AND NOT verified" ])
+    # This method uses verified_at and verified instead
+    # of active, to let the user disable (and subsequent remove)
+    # itself autonomously
+    where("verified_at is NOT NULL AND NOT verified")
   end
 
   # Utilities
 
-  def total_traffic
-    self.radius_accountings.sum('AcctInputOctets + AcctOutputOctets')
+  def can_signup_via?(verification_method)
+    VERIFICATION_METHODS.include? verification_method
   end
 
-  def deliver_password_reset_instructions!
-    reset_perishable_token!
-    Notifier.deliver_password_reset_instructions(self)
+  def total_traffic
+    self.radius_accountings.sum('AcctInputOctets + AcctOutputOctets')
   end
 
   def radius_name

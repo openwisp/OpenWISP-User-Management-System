@@ -1,4 +1,4 @@
-$('#toggle-last_logins').removeAttr('onclick');
+$('#toggle-last_logins').removeAttr('data-remote');
 
 $('#last_logins').slideToggle(function() {
     $(this).html('<%= escape_javascript render(:partial => 'common/radius_accounting_list_brief', :locals => { :accountings => data }) %>');

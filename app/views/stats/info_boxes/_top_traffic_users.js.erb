@@ -1,4 +1,4 @@
-$('#toggle-top_traffic_users').removeAttr('onclick');
+$('#toggle-top_traffic_users').removeAttr('data-remote');
 
 $('#top_traffic_users').slideToggle(function() {
     $(this).html('<%= escape_javascript render(:partial => 'common/top_traffic_users_brief', :locals => { :top_traffic_users => data }) %>');

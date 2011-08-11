@@ -18,7 +18,7 @@
         <% if auth?(:users_browser)%>
           <%= link_to h(user.username), user %>
         <% else %>
-          <%= h(user.username[0..-4] + "xxx") %>
+          <%= user.username[0..-4] + "xxx" %>
         <% end %>
       </td>
       <td><%=l user.created_at %></td>

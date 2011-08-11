@@ -1,5 +1,6 @@
 class ConfigurationsController < ApplicationController
   before_filter :require_operator
+  skip_before_filter :set_mobile_format
 
   access_control do
     default :deny
@@ -22,7 +23,7 @@ class ConfigurationsController < ApplicationController
   end
 
   def index
-    @configurations = Configuration.find(:all, :order => "configurations.key")
+    @configurations = Configuration.order("configurations.key")
   end
 
 end

@@ -7,9 +7,6 @@ class CreateMobilePrefixes < ActiveRecord::Migration
 
       t.timestamps
     end
-    
-    add_index :mobile_prefixes, :prefix
-    
   end
 
   def self.down

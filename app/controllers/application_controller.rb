@@ -21,64 +21,45 @@
 class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, :with => :invalid_token
 
-  include ExceptionNotification::Notifiable
-  include SimpleCaptcha::ControllerHelpers
-
-
   helper :all
   helper_method :current_account_session, :current_account
   helper_method :current_operator_session, :current_operator
   helper_method :has_mobile?
-  filter_parameter_logging :password, :password_confirmation, :crypted_password
   protect_from_forgery
 
-  # Access current_operator from models
-  before_filter :set_current_operator
+  before_filter :set_locale, :set_current_operator, :load_additional_exception_data
+  after_filter :reset_last_captcha_code! # reset captcha code after each request for security
 
-  # Set locale from session
-  before_filter :set_locale
+  # Additional gem/plugin functionality
+  has_mobile_fu
 
-  # Controllers for which there is no mobile layout
-  WITHOUT_MOBILE_TEMPLATE = %w(operators operator_sessions users configurations stats)
 
-  # Load mobile_fu only for controllers
-  # with mobile views
-  before_filter :load_mobile_fu
-
-  def set_session_locale
-    session[:locale] = params[:locale]
-
-    # Redirect to HTTP_REFERER without parameters or root
-    back = request.env['HTTP_REFERER']
-    redirect_to(back ? back.split('?').first : root_path)
-  end
-
-  def toggle_mobile_view
+  def toggle_mobile
     session[:mobile_view] = !session[:mobile_view]
-    redirect_to root_path
+    redirect_to current_account ? account_path : root_path
   end
 
+  # TODO: check to see if it works (and if it's still needed)
   # Invalid authenticity token custom error page
   def invalid_token
     render "common/invalid_token"
   end
 
+
   protected
 
-  def available_locales
-    AVAILABLE_LOCALES
-  end
-
   def set_locale
-    I18n.locale = available_locales.include?(session[:locale]) ? session[:locale] : nil
-  end
+    if params[:locale]
+      locale = params[:locale]
+    elsif session[:locale]
+      locale = session[:locale]
+    else
+      locale = I18n.default_locale
+    end
 
-  def has_mobile?
-    !WITHOUT_MOBILE_TEMPLATE.include?(controller_name)
-  end
-
-  def load_mobile_fu
-    self.class.has_mobile_fu if has_mobile?
+    if I18n.available_locales.include? locale.to_sym
+      I18n.locale = session[:locale] = locale
+    end
   end
 
   def current_account_session
@@ -96,7 +77,7 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = I18n.t(:Must_be_logged_in)
       redirect_to new_account_session_url
-      return false
+      false
     end
   end
 
@@ -105,7 +86,7 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = I18n.t(:Must_be_logged_out)
       redirect_to account_url
-      return false
+      false
     end
   end
 
@@ -124,7 +105,7 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = I18n.t(:Must_be_logged_in)
       redirect_to new_operator_session_url
-      return false
+      false
     end
   end
 
@@ -132,8 +113,8 @@ class ApplicationController < ActionController::Base
     if current_operator
       store_location
       flash[:notice] = I18n.t(:Must_be_logged_out)
-      redirect_to operator_url current_operator
-      return false
+      redirect_to operator_url(current_operator)
+      false
     end
   end
 
@@ -142,7 +123,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   def redirect_back_or_default(default)
@@ -155,12 +136,14 @@ class ApplicationController < ActionController::Base
     Operator.current_operator = self.current_operator
   end
 
-  # ExceptionNotify extra data
-  exception_data :additional_data
-
-  def additional_data
-    { :operator => current_operator,
-      :user => current_account }
+  def keep_session_data(data)
+    old_session_data = session[data]
+    yield
+    session[data] = old_session_data
   end
 
+  def load_additional_exception_data
+    request.env['authlogic_operator'] = current_operator rescue nil
+    request.env['authlogic_user'] = current_user rescue nil
+  end
 end

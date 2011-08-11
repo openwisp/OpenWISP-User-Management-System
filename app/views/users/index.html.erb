@@ -1,36 +1,22 @@
 <div class="grid_12">
   <div class="box">
-    <h2><%=h t(:Browse_users) %></h2>
+    <h2><%=t :Browse_users %> <%= image_tag 'spinner_black.gif', :id => 'loading', :class => 'hidden' %></h2>
     <div class="block" id="search">
-      <fieldset>
-        <legend><%=t :Search_user %></legend>
-        <p>
-          <%= label_tag t(:Search_by_user_name_surname_mobile) %>
-          <%= image_tag("spinner.gif",
-                        :align => "absmiddle",
-                        :border => 0,
-                        :id =>"search_spinner",
-                        :style =>"display:none;",
-                        :size => "12x12")
-          %>
-          <%= text_field_tag :search_user %>
-        </p>
-      </fieldset>
+      <div id="quicksearch">
+        <fieldset>
+          <legend><%=t :Search_user %></legend>
+          <%= form_tag users_path, :method => :get, :remote => true do %>
+              <%= label_tag :search, t(:Search_by_user_name_surname_mobile) %>
+              <%= text_field_tag :search %>
+          <% end %>
+        </fieldset>
+      </div>
+
       <div class="block" id="search_block">
-        <%= @controller.ajax_search %>
+        <%= render 'list', :users => @users, :total_users => @total_users %>
       </div>
     </div>
   </div>
 </div>
 
 <div class="clear"></div>
-
-<%= 
-  observe_field :search_user,
-    :with => :search,
-    :frequency => 0.5,
-    :update => 'search_block',
-    :before => "jQuery( '#search_spinner' ).show();",
-    :success => "jQuery( '#search_spinner' ).hide();",
-    :url => { :action => :ajax_search }
-%>

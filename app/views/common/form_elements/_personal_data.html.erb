@@ -1,0 +1,42 @@
+<%= form.input :given_name, :disabled => !owner.new_record? %>
+
+<%= form.input :surname, :disabled => !owner.new_record? %>
+
+<%= form.input :birth_date, :as => :date,
+               :disabled => !owner.new_record?,
+               :start_year => Date.today.year - 90,
+               :end_year => Date.today.year - 14,
+               :order => [:day, :month, :year],
+               :prompt => true
+%>
+
+<%= form.input :address %>
+
+<%= form.input :zip %>
+
+<%= form.input :city %>
+
+<%= form.input :state, :collection => countries, :prompt => false %>
+
+<%= form.input :email %>
+
+<%= form.input :email_confirmation %>
+
+<% if current_operator %>
+    <% content_for :after_defaults do %>
+        <%= javascript_include_tag 'jquery.password' %>
+        <%= javascript_tag "$(function(){
+                $('#pwgen').click(function(e){
+                    $('#user_password, #user_password_confirmation').val($.password(8, 1));
+                    e.preventDefault();
+                });
+        });" %>
+    <% end %>
+
+    <a href="#" id="pwgen" class="right"><%=t :autogenerate %></a>
+    <%= form.input :password, :as => :string, :hint => false %>
+    <%= form.input :password_confirmation, :as => :string %>
+<% else %>
+    <%= form.input :password %>
+    <%= form.input :password_confirmation %>
+<% end %>

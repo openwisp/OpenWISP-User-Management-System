@@ -6,35 +6,6 @@
     <%= mobile_link_back_to root_path, 'data-ajax' => false %>
 <% end %>
 
-<% form_for @account, :builder => ErrorFormBuilder, :url => mobile_phone_password_reset_path, :method => :put, :html => {'data-ajax' => false} do |f| %>
-      <% if @account.errors.any? %>
-          <div data-role="collapsible">
-            <h3><%=t :there_are_x_errors, :count => @account.errors.count %></h3>
-            <p><%= f.error_messages %></p>
-          </div>
-      <% end %>
-
-    <ul data-role="listview" data-inset="true">
-      <li data-role="fieldcontain">
-        <legend><%=t :Change_password %></legend>
-      </li>
-
-      <li data-role="fieldcontain">
-        <span style="font-size:16px;font-weight:normal"><%= t(:username).capitalize %>:</span> <%=h @account.username %>
-      </li>
-
-      <li data-role="fieldcontain">
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-      </li>
-
-      <li data-role="fieldcontain">
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation %>
-      </li>
-
-      <li data-role="fieldcontain">
-        <%= f.submit t(:Update_my_password) %>
-      </li>
-    </ul>
+<%= simple_form_for @account, :url => mobile_phone_password_reset_path, :html => {'data-ajax' => false} do |f| %>
+    <%= render 'common/form_elements/password_reset', :form => f, :owner => @account %>
 <% end %>

@@ -3,7 +3,7 @@
     <h2><%=t :Edit_configuration_key %></h2>
     <br />
 
-    <% form_for @configuration do |f| %>
+    <%= form_for @configuration do |f| %>
       <fieldset>
         <legend><strong><%=t :Key %>:</strong> <%= @configuration.key %></legend>
           <p>

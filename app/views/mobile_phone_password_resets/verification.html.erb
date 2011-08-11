@@ -1,16 +1,17 @@
 <% content_for :after_defaults do %>
-    <%= javascript_tag "owums.hideWhenJsIsAvailable('.no_js');" %>
+    <%= javascript_tag "$(function(){
+        owums.hideWhenJsIsAvailable('.no_js');
+        owums.periodicallyCheckVerification({
+            frequency: 2,
+            url: '#{ url_for(:action => 'verification', :id => @single_access_token) }',
+            update: '#verification'
+        });
+    }); " %>
 <% end %>
 
 <div class="grid_12">
-
-  <div id="verification_div">
+  <div id="verification">
     <%= render :partial => 'verification' %>
   </div>
 </div>
 <div class="clear"></div>
-
-<%= periodically_call_remote( :url => { :action => 'verification' , :id => @single_access_token },
-                              :frequency => '2',
-                              :update => 'verification_div')
-%>

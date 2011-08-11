@@ -1,19 +1,10 @@
 $(document).bind("mobileinit", function(){
     $.mobile.loadingMessage=' ';
+    $.mobile.ajaxEnabled=false;
 });
 
 $(document).bind('pageshow', function(){
     $('select.disabled').selectmenu('disable');
     owums.toggleVerificationMethod();
+    $('#footer').css({'position':'absolute','bottom':0,'left':0});
 });
-
-$(document).bind('pageshow', function(){
-    $('.clear_cache').bind('click', function() {
-        $(document).one('pagehide', function(){
-            $('[data-url=""]').remove();
-            $('[data-url="/"]').remove();
-        });
-        $('.ui-page').not('.ui-page-active').remove();
-    });
-});
-

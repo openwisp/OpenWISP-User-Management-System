@@ -5,11 +5,11 @@
       <% if @account.verify_with_mobile_phone? %>
           <%=t :Please_verify_mobile_number %><br /><br />
           <%=t :From_mobile_phone_number %><br />
-          <%=h @account.mobile_phone %><br /><br />
+          <%= @account.mobile_phone %><br /><br />
           <% numbers =  Configuration.get('verification_numbers').split(',').map { |n| n.strip } %>
           <%= t(:Call_one_of_the_following_numbers, :count => numbers.length) %><br />
           <% numbers.each do |number| %>
-              <p style="background-color:#90ee90"><%=h number %></p>
+              <p style="background-color:#90ee90"><%= number %></p>
           <% end %>
           <%=t :Free_call_description %><br />
           <br />
@@ -20,16 +20,16 @@
           <br /><br /><br />
       <% end %>
 
-    <% unless @account.already_verified_once? %>
-      <% if @account.expire_time > 0 %>
-          <p style="font-size:80%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
-          <% if @account.verify_with_mobile_phone? %>
-              <p style="font-size:80%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
+      <% unless @account.already_verified_once? %>
+          <% if @account.expire_time > 0 %>
+              <p style="font-size:80%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
+              <% if @account.verify_with_mobile_phone? %>
+                  <p style="font-size:80%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
+              <% end %>
+          <% else %>
+              <p style="font-size:80%"><%= t(:Verification_expire_time_less_than_a_minute) %></p>
           <% end %>
-      <% else %>
-          <p style="font-size:80%"><%= t(:Verification_expire_time_less_than_a_minute) %></p>
       <% end %>
-    <% end %>
   <% end %>
   <p style="font-size:80%" class="no_js">
     <%=t :If_problem_with_redirect %> <%= link_to t(:click_here), account_url %>

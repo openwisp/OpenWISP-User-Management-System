@@ -14,23 +14,23 @@
         <tbody>
           <tr>
             <td>Your IP</td>
-            <td><%=h request.remote_ip %></td>
+            <td><%= request.remote_ip %></td>
           </tr>
           <tr>
             <td>Request User Agent</td>
-            <td><%=h request.env["HTTP_USER_AGENT"] %></td>
+            <td><%= request.env["HTTP_USER_AGENT"] %></td>
           </tr>
           <tr>
             <td>Request URI</td>
-            <td><%=h request.request_uri %></td>
+            <td><%= request.request_uri %></td>
           </tr>
           <tr>
             <td>Request method</td>
-            <td><%=h request.method %></td>
+            <td><%= request.method %></td>
           </tr>
           <tr>
             <td>Request Parameters</td>
-            <td><%=h request.request_parameters %></td>
+            <td><%= request.request_parameters %></td>
           </tr>
         </tbody>
       </table>

@@ -67,15 +67,21 @@ var graphs = {
     dateRangePicker: function(){
         if (owums.exists('#from') && owums.exists('#to')) {
             var dates = $( "#from, #to" ).datepicker({
+                minDate: '-10y',
                 maxDate: graphs.today(),
                 defaultDate: "+1w",
                 showButtonPanel: true,
                 changeMonth: true,
-                onSelect: function(selectedDate) {
+                changeYear: true,
+                yearRange: 'c-10:',
+                onSelect: function( selectedDate ) {
                     var option = this.id == "from" ? "minDate" : "maxDate",
-                            instance = $(this).data("datepicker"),
-                            date = $.datepicker.parseDate(instance.settings.dateFormat, selectedDate, instance.settings);
-                    dates.not(this).datepicker("option", option, date);
+                            instance = $( this ).data( "datepicker" ),
+                            date = $.datepicker.parseDate(
+                                    instance.settings.dateFormat || $.datepicker._defaults.dateFormat,
+                                    selectedDate, instance.settings
+                            );
+                    dates.not( this ).datepicker( "option", option, date );
                 }
             });
         }

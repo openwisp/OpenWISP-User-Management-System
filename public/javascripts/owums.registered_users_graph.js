@@ -22,6 +22,7 @@ $.getJSON(owums.path('/stats/registered_users.json'), function(registered_users)
             minPadding: 0.03,
             maxPadding: 0.03,
             tickLength: 2,
+            maxZoom: 7 * 24 * 3600000,
             type: 'datetime'
         },
         yAxis: {

@@ -8,13 +8,11 @@
     <%= mobile_link_back_to root_path %>
 <% end %>
 
-<% form_tag password_resets_path do %>
+<%= form_tag password_resets_path do %>
     <ul data-role="listview" data-inset="true">
       <li data-role="fieldcontain">
         <%=t :Forgot_password_description_select %>
-        <%= select_tag "recovery_method", options_for_select(@recovery_methods.map { |r| [t(r), r] }),
-                       { :prompt => t(:select_recovery_method), :multiple => false }
-        %>
+        <%= select_tag "recovery_method", options_for_select(@recovery_methods.map { |r| [t(r), r] }) %>
       </li>
 
       <li><%= submit_tag t(:Next) %></li>

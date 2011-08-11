@@ -23,6 +23,7 @@ $.getJSON(owums.path('/stats/traffic.json'), function(traffic){
             gridLineWidth: 1,
             tickLength: 2,
             type: 'datetime',
+            maxZoom: 7 * 24 * 3600000,
             labels: {step:2}
         },
         yAxis: {

@@ -1,13 +1,57 @@
 $(document).ready(function(){
     owums.toggleVerificationMethod();
+    owums.ajaxQuickSearch();
+    owums.ajaxLoading();
+    owums.loadCheckboxWarnings();
+    owums.hideWhenJsIsAvailable('.no_js');
+    owums.hideWhenGraphsAreAvailable('.no_graphs');
 });
 
 
 var owums = {
     subUri: 'owums',
+    quickSearchDiv: '#quicksearch',
+    loadingDiv: '#loading',
 
-    exists: function (selector) {
+    exists: function(selector) {
         return ($(selector).length > 0);
+    },
+
+    loadCheckboxWarnings: function() {
+        $('input[type=checkbox][data-warning]').live('click', function(){
+            if ($(this).is(':not:checked')) {
+                var _answer = confirm($(this).data('warning'));
+                if (!_answer) {
+                    $(this).attr('checked', false);
+                }
+            }
+        });
+    },
+
+    supportsVml: function() {
+        if (typeof vmlSupported == "undefined") {
+            var a = document.body.appendChild(document.createElement('div'));
+            a.innerHTML = '<v:shape id="vml_flag1" adj="1" />';
+            var b = a.firstChild;
+            b.style.behavior = "url(#default#VML)";
+            vmlSupported = b ? typeof b.adj == "object": true;
+            a.parentNode.removeChild(a);
+        }
+        return vmlSupported;
+    },
+
+    supportsSvg: function() {
+        return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+    },
+
+    periodicallyCheckVerification: function(opts){
+        var _freq = opts.frequency*1000;
+        var _url = opts.url;
+        var _update = opts.update;
+
+        setInterval(function(){
+            $(_update).load(_url);
+        }, _freq);
     },
 
     hideWhenJsIsAvailable: function(selector) {
@@ -21,10 +65,35 @@ var owums = {
         }
     },
 
+    hideWhenGraphsAreAvailable: function(selector) {
+      if (owums.supportsSvg() || owums.supportsVml()) {
+          $(document).ready(function(){
+                $(selector).hide();
+            });
+      }
+    },
+
     //Change verification methods on signup
     toggleVerificationMethod: function() {
         $('[id$=verification_method]').change(function(){
             $('.verification-block').toggle();
+        });
+    },
+
+    ajaxQuickSearch: function() {
+        var inputField = $(this.quickSearchDiv).find('input[type=text]');
+        inputField.observe(function() {
+            $(owums.loadingDiv).fadeIn();
+            inputField.parent('form').submit();
+            $(owums.loadingDiv).ajaxStop(function(){$(this).fadeOut();});
+        }, 1);
+    },
+
+    ajaxLoading: function() {
+        $('[data-remote=true]').live('click', function(){
+            $(owums.loadingDiv).fadeIn().ajaxStop(function(){
+                $(owums.loadingDiv).fadeOut();
+            });
         });
     },
 

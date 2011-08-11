@@ -1,8 +1,8 @@
 <div class="grid_12">
   <div class="box">
-    <h2><%=h t(:Search_users) %></h2>
+    <h2><%= t(:Search_users) %></h2>
     <div class="block" id="search">
-      <% form_for :user, :url => {:action => 'find'} do |f| %>
+      <%= form_for :user, :url => {:action => 'find'} do |f| %>
         <fieldset>
           <legend><%=t :Search_user %></legend>
           <p>

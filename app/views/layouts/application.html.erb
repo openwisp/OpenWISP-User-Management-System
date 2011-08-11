@@ -3,9 +3,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <link rel="shortcut icon" href="<%= image_path 'caspur.ico' %>" />
-
   <title><%=t :Users_management %></title>
 
   <%= stylesheet_link_tag 'fluid960/reset' %>
@@ -16,25 +13,28 @@
 
   <%= stylesheet_link_tag 'custom' %>
 
-  <%= yield :after_css_defaults %>
+  <%= content_for :after_css_defaults %>
 
-  <% for_ie :version => '6' do %>
+  <%= for_ie :version => '6' do %>
       <%= stylesheet_link_tag 'fluid960/ie6' %>
   <% end %>
 
-  <% for_ie :version => '7' do %>
+  <%= for_ie :version => '7' do %>
       <%= stylesheet_link_tag 'fluid960/ie' %>
   <% end %>
 
-  <% for_ie do %>
+  <%= for_ie do %>
       <%= stylesheet_link_tag 'custom-ie' %>
   <% end %>
 
   <%= javascript_include_tag :defaults %>
 
-  <%= yield :after_defaults %>
+  <%= content_for :after_defaults %>
 
   <%= javascript_include_tag 'fluid16' %>
+
+  <link rel="shortcut icon" href="<%= image_path 'caspur.ico' %>" />
+  <%= csrf_meta_tag %>
 </head>
 <body>
 
@@ -84,7 +84,7 @@
               <li><%= menu_link_to t(:Operators), operators_path %></li>
           <% end %>
 
-          <li class="secondary"><%= link_to t(:Logout), operator_logout_url %></li>
+          <li class="secondary"><%= link_to t(:Logout), operator_logout_url, :method => :delete %></li>
           <li class="secondary"><%= menu_link_to t(:Home), operator_path(current_operator) %></li>
       <% else %>
           <li><%= menu_link_to t(:How_to_use_service), account_instructions_url, :disable_if => on_root? %></li>
@@ -95,7 +95,7 @@
           <% else %>
               <li><%= menu_link_to t(:Show_account_info), account_path %></li>
               <li><%= menu_link_to t(:Edit_account), edit_account_path %></li>
-              <li class="secondary"><%= link_to t(:Logout), account_logout_url %></li>
+              <li class="secondary"><%= link_to t(:Logout), account_logout_url, :method => :delete %></li>
           <% end %>
       <% end %>
     </ul>
@@ -116,7 +116,7 @@
     <div class="box" style="text-align:center">
       <p>Open WISP User Management System - <%=t :Created_by %> <a href="https://spider.caspur.it/">CASPUR</a></p>
 
-      <% if has_mobile? && is_mobile_device? %>
+      <% if is_mobile_device? %>
           <p><%= link_to_toggle_mobile %></p>
       <% end %>
     </div>

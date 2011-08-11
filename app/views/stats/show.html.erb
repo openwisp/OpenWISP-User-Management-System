@@ -10,7 +10,7 @@
     <div class="box">
       <h5><%=t :Filter_data_by_date %></h5>
 
-      <% form_tag stat_path(@stat), :method => :get do %>
+      <%= form_tag stat_path(@stat), :method => :get do %>
           <%= text_field_tag 'from', l(@from) %>
           <strong>-</strong>
           <%= text_field_tag 'to', l(@to) %>

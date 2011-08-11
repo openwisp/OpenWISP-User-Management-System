@@ -18,43 +18,43 @@
       <fieldset>
         <p>
           <strong><%=t :Given_name %></strong><br />
-          <%=h @user.given_name %>
+          <%= @user.given_name %>
         </p>
         <p>
           <strong><%=t :Surname %></strong><br />
-          <%=h @user.surname %>
+          <%= @user.surname %>
         </p>
         <% if @user.verify_with_mobile_phone? %>
             <p>
               <strong><%=t :Mobile_phone_number %></strong><br />
-              <%=h @user.mobile_phone %>
+              <%= @user.mobile_phone %>
             </p>
         <% end %>
         <p>
           <strong><%=t :Username %></strong><br />
-          <%=h @user.username %>
+          <%= @user.username %>
         </p>
         <% if @user.has_image? %>
             <p>
               <strong><%=t :Document_photo %></strong><br />
-              <%= link_to embedded_image_tag(@user.operate { |img| img.resize 100 }), user_path(@user, :jpg), :target => '_blank' %>
+              <%= document_of @user, :link => true %>
             </p>
         <% end %>
         <p>
           <strong><%=t :State %></strong><br />
-          <%=h @user.state %>
+          <%= @user.state %>
         </p>
         <p>
           <strong><%=t :City %></strong><br />
-          <%=h @user.city %>
+          <%= @user.city %>
         </p>
         <p>
           <strong><%=t :Address %></strong><br />
-          <%=h @user.address %>
+          <%= @user.address %>
         </p>
         <p>
           <strong><%=t :Email %></strong><br />
-          <%=h @user.email %>
+          <%= @user.email %>
         </p>
         <p>
           <strong><%=t :Registration_date %></strong><br />
@@ -70,18 +70,18 @@
         </p>
         <p>
           <strong><%=t :User_management_logins %></strong><br />
-          <%=h @user.login_count %>
+          <%= @user.login_count %>
         </p>
         <p>
           <strong><%=t :Radius_logins %></strong><br />
-          <%=h @user.radius_accountings.count %>
+          <%= @user.radius_accountings.count %>
         </p>
 
         <% if current_operator.has_role? 'users_manager' %>
             <p>
               <strong><%=t :Radius_groups %></strong><br />
               <% @user.radius_groups.each do |g| %>
-                  <%=h g.name %><br />
+                  <%= g.name %><br />
               <% end %>
             </p>
         <% end %>
@@ -92,28 +92,30 @@
 
 
 <div class="grid_9">
-  <p>
-    <%= button_to t(:Refresh_data), "", :method => :get %>
-  </p>
-  <div class="clear"></div>
-
   <div class="box">
-    <h2><%=h t(:Logins) %></h2>
+    <h2><%= t(:Logins) %></h2>
     <div class="block user_graph" id="user_logins_graph"></div>
   </div>
 
   <div class="box">
-    <h2><%=h t(:Traffic) %></h2>
+    <h2><%= t(:Traffic) %></h2>
     <div class="block user_graph" id="user_traffic_graph"></div>
   </div>
+  <div class="clear"></div>
+  
+  <p>
+    <%= button_to t(:Refresh_data), "", :method => :get %>
+  </p>
+  <div class="clear"></div>
 </div>
 
 <div class="clear"></div>
 <div class="grid_12">
   <div class="box">
-    <h2><%=h t(:User_sessions) %></h2>
+    <h2><%=t :User_sessions %> <%= image_tag 'spinner_black.gif', :id => 'loading', :class => 'hidden' %></h2>
+
     <div class="block" id="rad_list_block">
-      <%= @controller.ajax_accounting_search %>
+      <%= render 'common/radius_accounting_list', :accountings => @radius_accountings, :total_accountings => @total_accountings %>
     </div>
   </div>
 </div>

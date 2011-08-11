@@ -16,4 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class MobilePrefix < ActiveRecord::Base
+  default_scope where("disabled = 'f'").order(:prefix)
+
+  def to_s
+    prefix.to_s
+  end
 end

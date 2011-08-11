@@ -18,29 +18,34 @@
 class AccountSessionsController < ApplicationController
   before_filter :require_no_account, :only => [:new, :create]
   before_filter :require_account, :only => :destroy
-  
+
   def new
     @account_session = AccountSession.new
-    
+
     respond_to do |format|
       format.html
       format.mobile
     end
   end
-  
+
   def create
     @account_session = AccountSession.new(params[:account_session])
     if @account_session.save
       flash[:notice] = I18n.t(:Login_successful)
+      #Avoids session fixations
+      keep_session_data :locale do
+        reset_session
+      end
+      
       redirect_to account_url
     else
       respond_to do |format|
         format.html   { render :action => :new }
         format.mobile { render :action => :new }
-     end
+      end
     end
   end
-  
+
   def destroy
     current_account_session.destroy
     flash[:notice] = I18n.t(:Logout_successful)

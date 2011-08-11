@@ -1,15 +1,16 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110317145357) do
+ActiveRecord::Schema.define(:version => 20110614081904) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -112,10 +113,8 @@ ActiveRecord::Schema.define(:version => 20110317145357) do
   add_index "operators", ["persistence_token"], :name => "index_operators_on_persistence_token"
 
   create_table "operators_roles", :id => false, :force => true do |t|
-    t.integer  "operator_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "operator_id"
+    t.integer "role_id"
   end
 
   create_table "radacct", :primary_key => "RadAcctId", :force => true do |t|
@@ -200,10 +199,8 @@ ActiveRecord::Schema.define(:version => 20110317145357) do
   add_index "radius_groups", ["name"], :name => "index_radius_groups_on_name"
 
   create_table "radius_groups_users", :id => false, :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "radius_group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "user_id"
+    t.integer "radius_group_id"
   end
 
   add_index "radius_groups_users", ["radius_group_id"], :name => "index_radius_groups_users_on_radius_group_id"

@@ -18,10 +18,10 @@
         <% if auth?(:users_browser)%>
           <%= link_to h(user.username), user %>
         <% else %>
-          <%= h(user.username[0..-4] + "xxx") %>
+          <%= user.username[0..-4] + "xxx" %>
         <% end %>
       </td>
-      <td><%=h bytes_to_human(user.total_traffic) %></td>
+      <td><%= bytes_to_human(user.total_traffic) %></td>
     </tr>
     <% end %>
   </tbody>

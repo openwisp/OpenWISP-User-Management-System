@@ -15,6 +15,7 @@ $.getJSON(owums.path('/stats/logins.json'), function(logins){
         xAxis: {
             gridLineWidth: 1,
             tickLength: 2,
+            maxZoom: 7 * 24 * 3600000,
             type: 'datetime',
             labels: {step:2}
         },

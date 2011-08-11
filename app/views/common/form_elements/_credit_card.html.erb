@@ -1,0 +1,15 @@
+<% if Configuration.get('credit_card_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_CREDIT_CARD) %>
+
+    <% if owner.new_record? %>
+        <div class="verification-block" style="display:none">
+          <table>
+            <tr>
+              <td>
+                <strong><%=t :credit_card_instructions, :count => Configuration.get("credit_card_verification_cost") %></strong>
+              </td>
+            </tr>
+          </table>
+        </div>
+    <% end %>
+
+<% end %>

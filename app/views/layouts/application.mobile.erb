@@ -1,33 +1,33 @@
 <!doctype html>
 <html>
 <head>
-  <% if is_apple_device? %>
-      <!-- Apple Webapp -->
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <link rel="apple-touch-icon" href="<%= image_path 'logo_caspur.png' %>" />
-  <% end %>
-
   <title>OpenWISP</title>
 
   <%= stylesheet_link_tag 'jquery.mobile/styles', 'custom-mobile' %>
 
   <%= javascript_include_tag :defaults, 'application-mobile', 'jquery.mobile', 'highcharts', 'owums.graphs' %>
 
+  <%= content_for :after_defaults %>
+
   <%= javascript_include_tag 'fluid16' %>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="<%= image_path 'caspur.ico' %>" />
+  <%= csrf_meta_tag %>
 </head>
 <body>
 
-<div data-role="page" data-url="<%= on_root? ? '' : yield(:data_url) %>">
+<div data-role="page" data-url="<%= on_root? ? '' : content_for(:data_url) %>">
 
   <div data-role="header" data-position="inline" data-backbtn="false">
     <% if on_root? %>
         <h1><%= image_tag "logo_caspur.png", :size => "64x50", :alt => 'Open WISP User Management System' %><br/>OpenWISP</h1>
     <% else %>
-        <%= yield :header %> <%= yield :back %>
+        <%= content_for :header %> <%= content_for :back %>
     <% end %>
 
     <% if current_account %>
-        <% mobile_link_to_logout %>
+        <%= mobile_link_to_logout %>
     <% end %>
   </div>
 
@@ -48,12 +48,13 @@
           <% end %>
         </ul>
 
+	<p>&nbsp;</p>
         <fieldset class="ui-grid-a">
           <div class="ui-block-a">
-            <%= link_to_locale 'it', :class => 'clear_cache', 'data-role' => 'button', 'data-transition' => 'flip' %>
+            <%= link_to_locale 'it', 'data-role' => 'button', 'data-transition' => 'flip' %>
           </div>
           <div class="ui-block-b">
-            <%= link_to_locale 'en', :class => 'clear_cache', 'data-role' => 'button', 'data-transition' => 'flip' %>
+            <%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %>
           </div>
           <p>&nbsp;</p>
         </fieldset>

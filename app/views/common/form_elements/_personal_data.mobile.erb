@@ -1,0 +1,50 @@
+<li data-role="fieldcontain">
+  <%= form.input :given_name, :disabled => !owner.new_record? %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :surname, :disabled => !owner.new_record? %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :birth_date, :as => :date,
+                 :disabled => !owner.new_record?,
+                 :start_year => Date.today.year - 90,
+                 :end_year => Date.today.year - 14,
+                 :order => [:day, :month, :year],
+                 :prompt => true
+  %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :address %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :zip %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :city %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :state, :collection => countries, :prompt => false %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :email %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :email_confirmation %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :password %>
+</li>
+
+<li data-role="fieldcontain">
+  <%= form.input :password_confirmation %>
+</li>
+

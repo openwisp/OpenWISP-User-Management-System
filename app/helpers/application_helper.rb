@@ -1,5 +1,13 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def j(javascript)
+    escape_javascript(raw(javascript))
+  end
+
+  def t_safe(*args)
+    translate(*args).html_safe
+  end
+
   def document_path(source)
     compute_public_path(source, 'documents')
   end
@@ -22,14 +30,14 @@ module ApplicationHelper
   end
 
   def link_to_locale(locale, opts={})
+    destination = on_root? ? root_path(:locale => locale) : {:locale => locale}
     html_opts = locale.to_sym == I18n.locale ? {:class => "current_#{locale}"} : {}
-    link_to(image_tag("locale/#{locale}.jpg", :size => "24x24"), {:controller => :application, :action => :set_session_locale, :locale => locale}, html_opts.merge(opts))
+    link_to(image_tag("locale/#{locale}.jpg", :size => "24x24"), destination, html_opts.merge(opts))
   end
 
   def link_to_toggle_mobile(opts={})
-    url = {:controller => :application, :action => :toggle_mobile_view}
     text = session[:mobile_view] ? t(:Switch_to_full_site) : t(:Switch_to_mobile_site)
-    link_to text, url, opts
+    link_to text, toggle_mobile_url, opts
   end
 
   def mobile_link_back_to(path, opts={})
@@ -37,13 +45,13 @@ module ApplicationHelper
   end
 
   def mobile_link_to_logout
-    form_tag account_logout_path, :method => :get, :class => 'ui-btn-right', 'data-ajax' => false do
+    form_tag account_logout_path, :method => :delete, :class => 'ui-btn-right' do
       submit_tag t(:Logout), 'data-icon' => 'delete', :name => "", 'data-theme' => 'a'
     end
   end
 
   def menu_link_to(text, path, opts={})
-    if current_page?(path) || opts[:disable_if]
+    if opts.delete(:disable_if) || current_page?(path)
       link_to text, "#", {:class => 'off'}.merge(opts)
     else
       link_to text, path, opts
@@ -61,11 +69,30 @@ module ApplicationHelper
     open_tag << "IE"
     open_tag << " #{opts[:version]}" unless opts[:version].nil?
     open_tag << "]>"
-    concat(open_tag+to_include+"<![endif]-->")
+    raw(open_tag+to_include+"<![endif]-->")
   end
 
   def div_tag(opts = {}, &block)
     opts[:style] = 'display:none' if opts[:hide_if]
     content_tag(:div, opts, &block)
+  end
+
+  def document_of(owner, opts={})
+    inline = opts[:inline]
+    link   = opts[:link]
+
+    if inline
+      embedded_image_tag(owner.operate {|img| img.resize 100 })
+    else
+      big = {:action => 'show', :format => :jpg}
+      big.merge!(:id => owner.id) if owner.is_a?(User)
+      thumb = big.merge({:size => 'thumb'})
+
+      if link
+        link_to image_tag(url_for(thumb)), url_for(big), :target => '_blank'
+      else
+        image_tag(url_for(thumb))
+      end
+    end
   end
 end

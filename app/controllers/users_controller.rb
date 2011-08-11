@@ -18,11 +18,12 @@
 class UsersController < ApplicationController
   before_filter :require_operator
   before_filter :load_user, :except => [ :index, :new, :create, :ajax_search, :browse, :search, :find ]
+  skip_before_filter :set_mobile_format
 
   access_control do
     default :deny
-    
-    allow :users_browser,    :to => [ :index, :show, :ajax_search, :ajax_accounting_search ]
+
+    allow :users_browser,    :to => [ :index, :show, :ajax_search ]
     allow :users_registrant, :to => [ :new, :create ]
     allow :users_manager,    :to => [ :new, :create, :edit, :update ]
     allow :users_destroyer,  :to => [ :destroy ]
@@ -32,29 +33,35 @@ class UsersController < ApplicationController
   STATS_PERIOD = 14
 
   def index
+    sort_and_paginate_users
+    
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
-  
+
   def new
     @user = User.new( :eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT )
     @user.verified = true
     @user.radius_group_ids = [ RadiusGroup::users_group ]
 
-    @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+    @countries = Country.all
+    @mobile_prefixes = MobilePrefix.all
     @radius_groups = RadiusGroup.all
   end
-  
+
   def create
     @user = User.new(params[:user])
-    
+
     # Parameter anti-tampering
     unless current_operator.has_role? 'users_manager'
       @user.radius_group_ids = [ RadiusGroup::users_group ]
       @user.verified = @user.active = true
     end
-    
-    @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+
+    @countries = Country.all
+    @mobile_prefixes = MobilePrefix.all
     @radius_groups = RadiusGroup.all
 
     if @user.save
@@ -66,30 +73,35 @@ class UsersController < ApplicationController
   end
 
   def show
+    if request.format.html? || request.format.js?
+      sort_and_paginate_accountings
+    end
+
     respond_to do |format|
       format.html
+      format.js
       format.jpg
       format.xml { render :xml => @user.to_xml }
     end
   end
- 
+
   def edit
-    @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+    @countries = Country.all
+    @mobile_prefixes = MobilePrefix.all
     @radius_groups = RadiusGroup.all
   end
-  
+
   def update
     # Parameter anti-tampering
     params[:user][:radius_group_ids] = nil unless current_operator.has_role? 'users_manager'
-    
-    @countries = Country.find :all, :conditions => "disabled = 'f'", :order => :printable_name
-    @mobile_prefixes = MobilePrefix.find :all, :conditions => "disabled = 'f'", :order => :prefix
+
+    @countries = Country.all
+    @mobile_prefixes = MobilePrefix.all
     @radius_groups = RadiusGroup.all
-    
+
     if @user.update_attributes(params[:user])
       current_account_session.destroy unless current_account_session.nil?
-            
+
       flash[:notice] = I18n.t(:Account_updated)
       redirect_to user_url
     else
@@ -123,70 +135,29 @@ class UsersController < ApplicationController
     end
   end
 
-  def search
+  private
+
+  def load_user
+    @user = User.find(params[:id])
   end
 
-  def ajax_search
-    items_per_page = Configuration.get('default_user_search_results_per_page')
-
-    sort = case params[:sort]
-      when 'registered_at'      then "created_at"
-      when 'username'           then "username"
-      when 'given_name'         then "given_name"
-      when 'surname'            then "surname"
-      when 'state'              then "state"
-      when 'city'               then "city"
-      when 'address'            then "address"
-      when 'verified'           then "verified"
-      when 'active'             then "active"
-      when 'registered_at_rev'  then "created_at DESC"
-      when 'username_rev'       then "username DESC"
-      when 'given_name_rev'     then "given_name DESC"
-      when 'surname_rev'        then "surname DESC"
-      when 'state_rev'          then "state DESC"
-      when 'city_rev'           then "city DESC"
-      when 'address_rev'        then "address DESC"
-      when 'verified_rev'       then "verified DESC"
-      when 'active_rev'         then "active DESC"
-    end
-    if sort.nil?
-      params[:sort] = "registered_at_rev"
-      sort = "created_at DESC"
-    end  
-
-    search = params[:search]
-    page = params[:page].nil? ? 1 : params[:page]
-    
-    unless search.nil?
-      search.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      conditions = [ "given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%" ] 
-    else
-      conditions = []
-    end
-
-    @total_users = User.count :conditions => conditions
-    @users = User.paginate :page => page, :order => sort, :conditions => conditions, :per_page => items_per_page
-
-    render :partial => "list", :locals => { :action => 'ajax_search', :users => @users, :total_users => @total_users }
-  end
-
-  def ajax_accounting_search
+  def sort_and_paginate_accountings
     items_per_page = Configuration.get('default_radacct_results_per_page')
 
     sort = case params[:sort]
-      when 'acct_start_time'          then "AcctStartTime"
-      when 'acct_stop_time'           then "AcctStopTime"
-      when 'acct_input_octets'       then "AcctInputOctets"
-      when 'acct_output_octets'      then "AcctOutputOctets"
-      when 'calling_station_id'       then "CallingStationId"
-      when 'framed_ip_address'        then "FramedIPAddress"
-      when 'acct_start_time_rev'      then "AcctStartTime DESC"
-      when 'acct_stop_time_rev'       then "AcctStopTime DESC"
-      when 'acct_input_octets_rev'   then "AcctInputOctets DESC"
-      when 'acct_output_octets_rev'  then "AcctOutputOctets DESC"
-      when 'calling_station_id_rev'   then "CallingStationId DESC"
-      when 'framed_ip_address_rev'    then "FramedIPAddress DESC"
-    end
+             when 'acct_start_time'          then "AcctStartTime"
+             when 'acct_stop_time'           then "AcctStopTime"
+             when 'acct_input_octets'        then "AcctInputOctets"
+             when 'acct_output_octets'       then "AcctOutputOctets"
+             when 'calling_station_id'       then "CallingStationId"
+             when 'framed_ip_address'        then "FramedIPAddress"
+             when 'acct_start_time_rev'      then "AcctStartTime DESC"
+             when 'acct_stop_time_rev'       then "AcctStopTime DESC"
+             when 'acct_input_octets_rev'    then "AcctInputOctets DESC"
+             when 'acct_output_octets_rev'   then "AcctOutputOctets DESC"
+             when 'calling_station_id_rev'   then "CallingStationId DESC"
+             when 'framed_ip_address_rev'    then "FramedIPAddress DESC"
+           end
     if sort.nil?
       params[:sort] = "acct_start_time_rev"
       sort = "AcctStartTime DESC"
@@ -195,15 +166,48 @@ class UsersController < ApplicationController
     page = params[:page].nil? ? 1 : params[:page]
 
     @total_accountings =  @user.radius_accountings.count
-    @radius_accountings = @user.radius_accountings.paginate :page => page, :order => sort, :per_page => items_per_page
-
-    render :partial => "common/radius_accounting_list", :locals => { :action => 'ajax_accounting_search', :accountings => @radius_accountings, :total_accountings => @total_accountings } 
+    @radius_accountings = @user.radius_accountings.order(sort).page(page).per(items_per_page)
   end
 
+  def sort_and_paginate_users
+    items_per_page = Configuration.get('default_user_search_results_per_page')
 
-  private
+    sort = case params[:sort]
+             when 'registered_at'      then "created_at"
+             when 'username'           then "username"
+             when 'given_name'         then "given_name"
+             when 'surname'            then "surname"
+             when 'state'              then "state"
+             when 'city'               then "city"
+             when 'address'            then "address"
+             when 'verified'           then "verified"
+             when 'active'             then "active"
+             when 'registered_at_rev'  then "created_at DESC"
+             when 'username_rev'       then "username DESC"
+             when 'given_name_rev'     then "given_name DESC"
+             when 'surname_rev'        then "surname DESC"
+             when 'state_rev'          then "state DESC"
+             when 'city_rev'           then "city DESC"
+             when 'address_rev'        then "address DESC"
+             when 'verified_rev'       then "verified DESC"
+             when 'active_rev'         then "active DESC"
+           end
+    if sort.nil?
+      params[:sort] = "registered_at_rev"
+      sort = "created_at DESC"
+    end
 
-  def load_user
-    @user = User.find(params[:id])
+    search = params[:search]
+    page = params[:page].nil? ? 1 : params[:page]
+
+    unless search.nil?
+      search.gsub(/\\/, '\&\&').gsub(/'/, "''")
+      conditions = [ "given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%" ]
+    else
+      conditions = []
+    end
+
+    @total_users = User.count :conditions => conditions
+    @users = User.where(conditions).order(sort).page(page).per(items_per_page)
   end
 end

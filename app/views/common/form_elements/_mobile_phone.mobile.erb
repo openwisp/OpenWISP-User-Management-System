@@ -1,0 +1,34 @@
+<% if owner.can_signup_via? AccountCommon::VERIFY_BY_MOBILE %>
+
+    <% if owner.new_record? %>
+        <li data-role="fieldcontain" class="verification-block">
+          <%= form.label :mobile_phone %>
+          <p>&nbsp;</p>
+
+          <%=t :mobile_phone, :scope => [:simple_form, :hints] %>
+          <p>&nbsp;</p>
+
+          <%= form.input :mobile_prefix, :collection => prefixes, :label => t(:Prefix), :prompt => t(:Choose) %>
+          <%= form.input :mobile_suffix, :label => t(:Suffix) %>
+        </li>
+
+        <li data-role="fieldcontain" class="verification-block">
+          <%= form.label :mobile_phone_confirmation %>
+          <p>&nbsp;</p>
+
+          <%= form.input :mobile_prefix_confirmation, :collection => prefixes, :label => t(:Prefix_confirmation), :prompt => t(:Choose) %>
+          <%= form.input :mobile_suffix_confirmation, :label => t(:Suffix_confirmation) %>
+        </li>
+    <% else %>
+        <% if owner.verify_with_mobile_phone? %>
+            <li data-role="fieldcontain">
+              <%= form.label :mobile_phone %>
+              <p>&nbsp;</p>
+
+              <%= form.input :mobile_prefix, :collection => prefixes, :label => t(:Prefix), :prompt => t(:select_prefix), :disabled => true %>
+              <%= form.input :mobile_suffix, :label => t(:Suffix), :disabled => true %>
+            </li>
+        <% end %>
+    <% end %>
+
+<% end %>

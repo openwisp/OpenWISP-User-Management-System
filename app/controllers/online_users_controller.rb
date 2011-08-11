@@ -8,8 +8,7 @@ class OnlineUsersController < ApplicationController
   end
 
   def index
-    @online_users = OnlineUser.find(:all)
-
+    @online_users = OnlineUser.all
     respond_to do |format|
       format.xml
     end

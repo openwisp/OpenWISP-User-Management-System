@@ -14,8 +14,8 @@
       <tbody>
         <% @configurations.each do |configuration| %>
           <tr class="hover">
-            <td><strong><%=h configuration.key %></strong></td>
-            <td><%= truncate h(configuration.value), 50, '...' %></td>
+            <td><strong><%= configuration.key %></strong></td>
+            <td><%= truncate h(configuration.value), :length => 50 %></td>
             <td><%= link_to t(:Edit), edit_configuration_path(configuration) %></td>
           </tr>
         <% end %>

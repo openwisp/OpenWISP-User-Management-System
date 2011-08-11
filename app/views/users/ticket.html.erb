@@ -23,11 +23,11 @@
     <br />
 
     <div id="print" class="box">
-      <h2><%=h t(:User_credentials) %></h2>
+      <h2><%= t(:User_credentials) %></h2>
 
       <div class="block" style="font-size:150%">
-        <p><%=t :Username %>: <strong><%=h @user.username %></strong></p>
-        <p><%=t :Password %>: <strong><%=h @user.crypted_password %></strong></p>
+        <p><%=t :Username %>: <strong><%= @user.username %></strong></p>
+        <p><%=t :Password %>: <strong><%= @user.crypted_password %></strong></p>
       </div>
     </div>
 

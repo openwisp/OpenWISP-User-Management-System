@@ -20,7 +20,7 @@
         <% if auth?(:users_browser)%>
           <%= link_to h(acct.username), acct.user %>
         <% else %>
-          <%= h(acct.username[0..-4] + "xxx") %>
+          <%= acct.username[0..-4] + "xxx" %>
         <% end %>
       </td>
       <td><%=l acct.acct_start_time %></td>

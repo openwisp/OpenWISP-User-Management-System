@@ -8,7 +8,7 @@
     <%= mobile_link_back_to new_password_reset_path %>
 <% end %>
 
-<% form_tag email_password_resets_path, 'data-ajax' => false do %>
+<%= form_tag email_password_resets_path, 'data-ajax' => false do %>
     <ul data-role="listview" data-inset="true">
       <li data-role="fieldcontain">
         <%=t :Forgot_password_description_email_for_mobile %>

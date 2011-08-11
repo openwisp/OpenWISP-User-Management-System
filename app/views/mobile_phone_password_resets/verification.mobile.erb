@@ -1,18 +1,22 @@
-<%= javascript_tag "owums.hideWhenJsIsAvailable('.no_js');" %>
+<% content_for :after_defaults do %>
+    <%= javascript_tag "$(function(){
+        owums.hideWhenJsIsAvailable('.no_js');
+        owums.periodicallyCheckVerification({
+            frequency: 2,
+            url: '#{ url_for(:action => 'verification', :id => @single_access_token) }',
+            update: '#verification'
+        });
+    }); " %>
+<% end %>
 
 <% content_for :header do %>
     <h1><%=t :Verification %></h1>
 <% end %>
 
 <% content_for :back do %>
-    <%= mobile_link_back_to new_mobile_phone_password_reset_path %>
+    <%= mobile_link_back_to root_path, 'data-ajax' => false %>
 <% end %>
 
-<div id="verification_div">
+<div id="verification">
   <%= render :partial => 'verification' %>
 </div>
-
-<%= periodically_call_remote( :url => { :action => 'verification' , :id => @single_access_token },
-                              :frequency => '2',
-                              :update => 'verification_div')
-%>

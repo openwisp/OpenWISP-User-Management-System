@@ -1,23 +1,28 @@
 #!/usr/bin/env ruby
 
 RAILS_HOME = File.expand_path(File.join(File.dirname(__FILE__),".."))
-BDRB_HOME = File.join(RAILS_HOME,"vendor","plugins","backgroundrb")
+
+require "rubygems"
+require "active_support"
+require "active_record"
+
+require RAILS_HOME + "/config/boot"
+require "backgroundrb"
+
+BDRB_HOME = ::BackgrounDRb::BACKGROUNDRB_ROOT
 WORKER_ROOT = File.join(RAILS_HOME,"lib","workers")
 WORKER_LOAD_ENV = File.join(RAILS_HOME,"script","load_worker_env")
 
 ["server","server/lib","lib","lib/backgroundrb"].each { |x| $LOAD_PATH.unshift(BDRB_HOME + "/#{x}")}
 $LOAD_PATH.unshift(WORKER_ROOT)
 
-require 'rubygems'
-require RAILS_HOME + "/config/boot"
-require "active_support"
-require 'bdrb_config'
+require "bdrb_config"
 
 BDRB_CONFIG = BackgrounDRb::Config.read_config("#{RAILS_HOME}/config/backgroundrb.yml")
 PID_FILE = "#{RAILS_HOME}/tmp/pids/backgroundrb_#{BDRB_CONFIG[:backgroundrb][:port]}.pid"
 SERVER_LOGGER = "#{RAILS_HOME}/log/backgroundrb_debug_#{BDRB_CONFIG[:backgroundrb][:port]}.log"
 
-require 'bdrb_start_stop'
+require "bdrb_start_stop"
 daemon = BackgrounDRb::StartStop.new
 
 case ARGV[0]

@@ -1,64 +1,47 @@
-<div id="_rad_list_">
-  <div align="center">
-    <%=h total_accountings %> <%=t :total_results %>
-    <%= will_paginate accountings, :renderer => 'RemoteLinkRenderer',
-                                   :params => params.merge( { :action => action } ),
-                                   :remote => { :update => '_rad_list_' },
-                                   :next_label => t(:next),
-                                   :previous_label => t(:previous) %>
+<div id="rad_list">
+  <div style="text-align:center">
+    <%= total_accountings %> <%=t :total_results %>
+    <%= paginate accountings, :remote => true %>
   </div>
   <table>
     <thead>
-      <tr>
-        <th scope="col" <%= sort_td_class_helper "acct_start_time" %>>
-          <%= sort_remote_link_helper t(:Start_time), 'acct_start_time', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "acct_stop_time" %>>
-          <%= sort_remote_link_helper t(:Stop_time), 'acct_stop_time', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "acct_input_octets" %>>
-          <%= sort_remote_link_helper t(:Uploaded_bytes), 'acct_input_octets', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-        <th scope="col" <%= sort_td_class_helper "acct_output_octets" %>>
-          <%= sort_remote_link_helper t(:Downloaded_bytes), 'acct_output_octets', { :action => action, :update => '_rad_list_', :before => "jQuery( '#rad_list_spinner' ).show();", :success => "jQuery( '#rad_list_spinner' ).hide();" } %>
-          <%= image_tag("arrow_up.gif", :align => "bottom", :border => 0, :class =>"arrow_up", :size => "14x14") %>
-          <%= image_tag("arrow_down.gif", :align => "bottom", :border => 0, :class =>"arrow_down", :size => "14x14") %>
-        </th>
-      </tr>
+    <tr>
+      <th scope="col" <%= sort_td_class_helper "acct_start_time" %>>
+        <%= sort_remote_link_helper t(:Start_time), 'acct_start_time' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "acct_stop_time" %>>
+        <%= sort_remote_link_helper t(:Stop_time), 'acct_stop_time' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "acct_input_octets" %>>
+        <%= sort_remote_link_helper t(:Uploaded_bytes), 'acct_input_octets' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+      <th scope="col" <%= sort_td_class_helper "acct_output_octets" %>>
+        <%= sort_remote_link_helper t(:Downloaded_bytes), 'acct_output_octets' %>
+        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
+        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
+      </th>
+    </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <td colspan="12">
-          <%= image_tag("spinner.gif",
-                        :align => "absmiddle",
-                        :border => 0,
-                        :id =>"rad_list_spinner",
-                        :style =>"display:none;",
-                        :size => "12x12")
-          %>
-          &nbsp;
-        </td>
-      </tr>
-    </tfoot>
+
     <tbody>
-      <% accountings.each do |accounting| %>
+    <% accountings.each do |accounting| %>
         <tr>
           <td><%=l accounting.acct_start_time %></td>
           <% if accounting.acct_stop_time.blank? %>
-            <td><%=t :online %></td>
+              <td><%=t :online %></td>
           <% else %>
-            <td><%=l accounting.acct_stop_time %></td>
+              <td><%=l accounting.acct_stop_time %></td>
           <% end %>
-          <td><%=h bytes_to_human(accounting.acct_input_octets) %></td>
-          <td><%=h bytes_to_human(accounting.acct_output_octets) %></td>
+          <td><%= bytes_to_human(accounting.acct_input_octets) %></td>
+          <td><%= bytes_to_human(accounting.acct_output_octets) %></td>
         </tr>
-      <% end %>
+    <% end %>
     </tbody>
   </table>
 </div>

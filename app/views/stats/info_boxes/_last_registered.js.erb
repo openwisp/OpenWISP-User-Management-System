@@ -1,4 +1,4 @@
-$('#toggle-last_registered').removeAttr('onclick');
+$('#toggle-last_registered').removeAttr('data-remote');
 
 $('#last_registered').slideToggle(function() {
     $(this).html('<%= escape_javascript render(:partial => 'users/list_brief', :locals => { :users => data }) %>');

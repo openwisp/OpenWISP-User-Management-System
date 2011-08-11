@@ -12,37 +12,37 @@
       <fieldset>
         <p>
           <strong><%=t :Given_name %></strong><br />
-          <%=h @account.given_name %>
+          <%= @account.given_name %>
         </p>
         <p>
           <strong><%=t :Surname %></strong><br />
-          <%=h @account.surname %>
+          <%= @account.surname %>
         </p>
         <p>
           <strong><%=t :Username %></strong><br />
-          <%=h @account.username %>
+          <%= @account.username %>
         </p>
         <% if @account.has_image? %>
             <p>
               <strong><%=t :Document_photo %></strong><br />
-              <%= embedded_image_tag(@account.operate { |img| img.resize 100 }) %>
+              <%= document_of @account %>
             </p>
         <% end %>
         <p>
           <strong><%=t :State %></strong><br />
-          <%=h @account.state %>
+          <%= @account.state %>
         </p>
         <p>
           <strong><%=t :City %></strong><br />
-          <%=h @account.city %>
+          <%= @account.city %>
         </p>
         <p>
           <strong><%=t :Address %></strong><br />
-          <%=h @account.address %>
+          <%= @account.address %>
         </p>
         <p>
           <strong><%=t :Email %></strong><br />
-          <%=h @account.email %>
+          <%= @account.email %>
         </p>
         <p>
           <strong><%=t :Registration_date %></strong><br />
@@ -58,11 +58,11 @@
         </p>
         <p>
           <strong><%=t :Radius_logins %></strong><br />
-          <%=h @account.radius_accountings.count %>
+          <%= @account.radius_accountings.count %>
         </p>
         <p>
           <strong><%=t :Last_login_ip %></strong><br />
-          <%=h @account.last_login_ip %>
+          <%= @account.last_login_ip %>
         </p>
       </fieldset>
     </div>
@@ -70,28 +70,32 @@
 </div>
 
 <div class="grid_9">
-  <p>
-    <%= button_to t(:Refresh_data), "", :method => :get %>
-  </p>
-  <div class="clear"></div>
-
   <div class="box">
-    <h2><%=h t(:Logins) %></h2>
+    <h2><%= t(:Logins) %></h2>
+    <h4 class="no_graphs"><%=t :Graphs_not_supported %></h4>
     <div class="block account_graph" id="account_logins_graph"></div>
   </div>
 
   <div class="box">
-    <h2><%=h t(:Traffic) %></h2>
+    <h2><%= t(:Traffic) %></h2>
+    <h4 class="no_graphs"><%=t :Graphs_not_supported %></h4>
+
     <div class="block account_graph" id="account_traffic_graph"></div>
   </div>
+  <div class="clear"></div>
+
+  <p>
+    <%= button_to t(:Refresh_data), "", :method => :get %>
+  </p>
 </div>
 
 <div class="clear"></div>
 <div class="grid_12">
   <div class="box">
-    <h2><%=h t(:User_sessions) %></h2>
+    <h2><%=t :User_sessions %> <%= image_tag 'spinner_black.gif', :id => 'loading', :class => 'hidden' %></h2>
+
     <div class="block" id="rad_list_block">
-      <%= @controller.ajax_accounting_search %>
+      <%= render 'common/radius_accounting_list', :accountings => @radius_accountings, :total_accountings => @total_accountings %>
     </div>
   </div>
 </div>

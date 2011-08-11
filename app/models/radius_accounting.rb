@@ -30,7 +30,7 @@ class RadiusAccounting < ActiveRecord::Base
   # Class methods
 
   def self.last_logins(num = 5)
-    find(:all, :order => "AcctStartTime DESC", :limit => num)
+    order("AcctStartTime DESC").limit(num)
   end
 
   def self.logins_on(date)
@@ -99,7 +99,7 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.still_open
-    find(:first, :conditions => "AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL", :order => "AcctStartTime DESC")
+    where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL").order("AcctStartTime DESC")
   end
 
   # Accessors

@@ -16,4 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Country < ActiveRecord::Base
+  default_scope where("disabled = 'f'").order(:printable_name)
+
+  def to_s
+    printable_name
+  end
 end

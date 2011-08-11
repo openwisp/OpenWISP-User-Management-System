@@ -1,5 +1,6 @@
 class OperatorsController < ApplicationController
   before_filter :require_operator
+  skip_before_filter :set_mobile_format
 
   access_control do
     default :deny
