@@ -11,6 +11,8 @@ set :rails_env, "production"
 set :scm, :subversion
 set :repository, "https://spider.caspur.it/svn/owums/trunk"
 
+set :rvm_ruby_string, 'ree'
+
 # =============================================================================
 # CAP RECIPES
 # =============================================================================
@@ -27,6 +29,10 @@ require 'rubygems'
 # Utility methods from cap_recipes
 require 'cap_recipes/tasks/utilities'
 extend Utilities
+
+# RVM
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require 'rvm/capistrano'
 
 # RUBYGEMS
 require 'cap_recipes/tasks/rubygems'
