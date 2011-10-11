@@ -5,6 +5,7 @@
 set :stages, %w(test-puppet1)
 
 set :application,  "owums"
+set :deploy_to,  "/var/rails/#{application}"
 set :rails_env, "production"
 
 set :scm, :subversion
@@ -43,3 +44,4 @@ require 'cap_recipes/tasks/passenger'
 
 # CUSTOM RECIPES
 load 'lib/recipes/rails'
+load 'lib/recipes/deploy'
