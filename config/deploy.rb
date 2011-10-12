@@ -5,7 +5,7 @@
 set :stages, %w(test-puppet1)
 
 set :application,  "owums"
-set :deploy_to,  "/var/rails/#{application}"
+set :deploy_to,  "/var/www/#{application}"
 set :rails_env, "production"
 
 set :scm, :subversion
