@@ -2,16 +2,17 @@
 # GENERAL SETTINGS
 # =============================================================================
 
-set :stages, %w(test-puppet1)
-
 set :application,  "owums"
-set :deploy_to,  "/var/www/#{application}"
+set :deploy_to,  "/var/rails/#{application}"
 set :rails_env, "production"
 
 set :scm, :subversion
 set :repository, "https://spider.caspur.it/svn/owums/trunk"
 
 set :rvm_ruby_string, 'ree'
+
+# Source hosts from config/deploy directory (exclude example host)
+set :stages, Dir.glob('config/deploy/*').map{|s| File.basename(s)}.reject{|s| s == 'example.host.it'}
 
 # =============================================================================
 # CAP RECIPES
