@@ -49,10 +49,13 @@ namespace :daemons do
   task :status => :environment do
     print 'BackgrounDRb: '
     %x[bundle exec #{Rails.root}/script/backgroundrb status]
-    puts $? == 0 ? 'running...' : 'not running...'
+    backgroundrb_status = $?
+    puts backgroundrb_status == 0 ? 'running...' : 'not running...'
 
     print 'MobilePhoneSipBusyMachine: '
-    out = %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl status]
-    puts out =~ /running \[pid .\d+\]/ ? 'running...' : 'not running...'
+    sip_status = %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl status]
+    puts sip_status =~ /running \[pid .\d+\]/ ? 'running...' : 'not running...'
+
+    exit(1) if backgroundrb_status != 0 && sip_status =~ /no instances running/
   end
 end
