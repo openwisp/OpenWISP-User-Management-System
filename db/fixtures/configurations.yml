@@ -39,11 +39,6 @@
   value: "300"
 
 9:
-  system_key: t
-  key: "default_user_search_results_per_page"
-  value: "20"
-
-10:
   system_key: f
   key: "default_radius_group"
   value: "Users"
