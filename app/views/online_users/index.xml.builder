@@ -22,7 +22,7 @@ xml.online_users :type => :array do
       xml.username online_user.username
 
       xml.radius_accounting do
-        xml.calling_station_id online_user.radius_accountings.still_open.first.calling_station_id
+        xml.calling_station_id online_user.radius_accountings.last_logins(1).first.calling_station_id
       end
     end
   end
