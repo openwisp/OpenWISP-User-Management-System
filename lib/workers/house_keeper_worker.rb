@@ -1,6 +1,5 @@
 # This file is part of the OpenWISP User Management System
 #
-# Copyright (C) 2010 CASPUR (wifi@caspur.it)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
