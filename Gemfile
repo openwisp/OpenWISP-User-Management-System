@@ -3,6 +3,9 @@ source :gemcutter
 gem 'rails', '3.0.7'
 gem 'mysql', '2.8.1'
 
+# For RADIUS check/reply models (otherwise they would define 'attribute' attribute setters/getters)
+gem 'safe_attributes', '~> 1.0.8'
+
 gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'authlogic', '~> 3.0.3'
