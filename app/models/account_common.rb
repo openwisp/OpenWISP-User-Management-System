@@ -91,11 +91,11 @@ class AccountCommon <  ActiveRecord::Base
 
   validates :given_name,
       :presence => true,
-      :format => { :with => /\A(\w|[\s'])+\Z/i, :message => :name_format, :allow_blank => true }
+      :format => { :with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true }
 
   validates :surname,
       :presence => true,
-      :format => { :with => /\A(\w|[\s'])+\Z/i, :message => :name_format, :allow_blank => true }
+      :format => { :with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true }
 
   validates :state,
       :presence => true,
@@ -103,11 +103,11 @@ class AccountCommon <  ActiveRecord::Base
 
   validates :city,
       :presence => true,
-      :format => { :with => /\A(\w|[\s'\.,\-])+\Z/i, :message => :address_format, :allow_blank => true }
+      :format => { :with => /\A(\w|[\s'\.,\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true }
 
   validates :address,
       :presence => true,
-      :format => { :with => /\A(\w|[\s'\.,\/\-])+\Z/i, :message => :address_format, :allow_blank => true }
+      :format => { :with => /\A(\w|[\s'\.,\/\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true }
 
   validates :zip,
       :presence => true,
