@@ -1,6 +1,7 @@
 <%#
 # This file is part of the OpenWISP User Management System
 #
+# Copyright (C) 2012 OpenWISP.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +31,7 @@
   <%= javascript_include_tag 'fluid16' %>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="<%= image_path 'caspur.ico' %>" />
+  <link rel="shortcut icon" href="<%= image_path 'openwisp.ico' %>" />
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -39,7 +40,7 @@
 
   <div data-role="header" data-position="inline" data-backbtn="false">
     <% if on_root? %>
-        <h1><%= image_tag "logo_caspur.png", :size => "64x50", :alt => 'Open WISP User Management System' %><br/>OpenWISP</h1>
+        <h1>OpenWISP.org</h1><br />
     <% else %>
         <%= content_for :header %> <%= content_for :back %>
     <% end %>
@@ -84,7 +85,7 @@
   <p>&nbsp;</p>
 
   <div id="footer" data-role="footer">
-    <p><%=t :Created_by %> <a href="http://www.caspur.it/" target="_blank">CASPUR</a></p>
+    <p>Copyright (C) 2012 <a href="http://openwisp.org/" target="_blank">OpenWISP.org</a></p>
     <p><%= link_to_toggle_mobile 'data-ajax' => false %></p>
   </div>
 </div>
