@@ -18,6 +18,18 @@
 class RadiusAccounting < ActiveRecord::Base
   # Legacy !
   set_primary_key "RadAcctId"
+  alias_attribute :username, :UserName
+  alias_attribute :realm, :Realm
+  alias_attribute :acct_session_id, :AcctSessionId
+  alias_attribute :acct_unique_id, :AcctUniqueId
+  alias_attribute :acct_input_octets, :AcctInputOctets
+  alias_attribute :acct_output_octets, :AcctOutputOctets
+  alias_attribute :acct_terminate_cause, :AcctTerminateCause
+  alias_attribute :nas_ip_address, :NASIPAddress
+  alias_attribute :calling_station_id, :CallingStationId
+  alias_attribute :called_station_id, :CalledStationId
+  alias_attribute :framed_ip_address, :FramedIPAddress
+  alias_attribute :acct_session_time, :AcctSessionTime
 
   def self.table_name() "radacct" end
 
@@ -105,13 +117,6 @@ class RadiusAccounting < ActiveRecord::Base
   # Accessors
 
   ## Read
-  def username
-    read_attribute :UserName
-  end
-
-  def realm
-    read_attribute :Realm
-  end
 
   def acct_start_time
     if Configuration.get('local_time_radius_accounting') == 'true'
@@ -128,43 +133,6 @@ class RadiusAccounting < ActiveRecord::Base
       self.AcctStopTime
     end
   end
-
-  def acct_session_id
-    read_attribute :AcctSessionId
-  end
-
-  def acct_unique_id
-    read_attribute :AcctUniqueId
-  end
-
-  def acct_input_octets
-    read_attribute :AcctInputOctets
-  end
-
-  def acct_output_octets
-    read_attribute :AcctOutputOctets
-  end
-
-  def acct_terminate_cause
-    read_attribute :AcctTerminateCause
-  end
-
-  def nas_ip_address
-    read_attribute :NASIPAddress
-  end
-
-  def calling_station_id
-    read_attribute :CallingStationId
-  end
-
-  def called_station_id
-    read_attribute :CalledStationId
-  end
-
-  def framed_ip_address
-    read_attribute :FramedIPAddress
-  end
-
 
   # Utilities
 
