@@ -1,13 +1,4 @@
 --- 
-radius_checks_002: 
-  radius_entity_type: RadiusGroup
-  op: ":="
-  radius_entity_id: "3"
-  created_at: 2009-12-28 13:36:50
-  updated_at: 2009-12-28 13:36:50
-  id: "2"
-  value: Local
-  check_attribute: Auth-Type
 radius_checks_003: 
   radius_entity_type: RadiusGroup
   op: ":="
