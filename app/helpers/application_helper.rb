@@ -98,7 +98,7 @@ module ApplicationHelper
     link   = opts[:link]
 
     if inline
-      embedded_image_tag(owner.operate {|img| img.resize 100 })
+      embedded_image_tag(owner.operate {|img| img.resize 100 }).html_safe
     else
       big = {:action => 'show', :format => :jpg}
       big.merge!(:id => owner.id) if owner.is_a?(User)
