@@ -1,0 +1,299 @@
+= OpenWISP User Management System
+
+== What is it?
+
+OpenWISP User Management System (OWUMS) is a Ruby on Rails application, capable of managing a wISP's user base. 
+
+OWUMS supports the following functionalities:
+* user registration via mobile phone, ID card, credit card -Paypal IPN- fully compliant with the Italian Laws.
+* user interface supports common browsers as well as mobile phone web browsers
+* password recovery via mobile phone or email
+* per user traffic monitoring
+* user monitoring and administration via dedicated admin interface
+* admin interface supports role based administration (operator, admin, superadmin)
+* via the admin interface an operator can add new users, modify users' information, enable/disable users, monitor traffic/user nationality/logins/registrations
+* english/italian translation
+
+Even though the application can be used as standalone, such use will result in a pretty useless application. OpenWISP User Management System is in fact made to be integrated with RADIUS authentication, authorization and accounting features. 
+
+When working together a RADIUS implementation, OWUMS becomes a natural back-end to a WISP's user-related functionalities. Users who successfully register  and verify themselves via OWUMS are also considered valid RADIUS users (support for RADIUS user groups is on its way).
+OWUMS is being developed to use FreeRADIUS 2.1 (http://freeradius.org/), so other RADIUS implementations are currently not supported.
+
+== How to install
+
+=== Prerequisites
+
+The OpenWISP User Management System is currently being developed with Ruby on Rails 2.3.5. Being a RoR application, it can be 
+deployed using any of the methods Rails supports. 
+Even so, what we are currently using (and find quite stable) is the following environment:
+
+* Ruby Enterprise Edition 1.8 (http://www.rubyenterpriseedition.com/index.html)
+* Apache 2.2 (http://www.apache.org/)
+* Phusion Passenger 2.2 or 3.0 (http://www.modrails.com/index.html)
+* MySQL 5.1 (http://dev.mysql.com/downloads/mysql/)
+* FreeRADIUS 2.1 (http://freeradius.org/download.html)
+* festival (http://www.cstr.ed.ac.uk/projects/festival/) and festival italian 'localization' packages (http://www.pd.istc.cnr.it/TTS/ItalianFESTIVAL) (for captcha accessibility) 
+* A SIP capable media-gateway like Asterisk (http://www.asterisk.org/) or the Patton Smart Node with or without a sip proxy/router (like OpenSIPs)
+
+=== Installation
+
+Once deployed using your favourite environment, you need to configure two deamons OpenWISP User Management System needs to perform its usual activities (mainly managing incoming phone calls and deleting users when the registration procedure times out). 
+
+To do this, you can use the following init.d script (customization may be needed, this script was coded for Ubuntu 10.04). 
+
+==== Startup script
+
+The following script (Ubuntu/Debian style) should be named owums-daemons. It assumes OpenWISP User Management Systemis running on ruby enterprise and that the application was deployed to /var/rails/owums.
+Of course you can change any of that to whatever fits your needs.
+
+
+    #!/bin/sh
+    ### BEGIN INIT INFO
+    # Provides:          owums-daemons
+    # Required-Start:    $local_fs $network  
+    # Required-Stop:     $local_fs $network 
+    # Default-Start:     2 3 4 5
+    # Default-Stop:      0 1 6
+    # Short-Description: Starting owums-daemons
+    # Description:       Starting owums-daemons
+    ### END INIT INFO#
+
+    ########## Variables for openwisp-daemons ##########
+
+    # The directory in which all the various OpenWisp
+    # applications are deployed. Generally it's /var/www
+    # or /var/rails
+    OPENWISP_BASE_PATH="/var/rails"
+
+    # The daemon you wish to start with this script
+    # (it must have already been deployed of course).
+    OPENWISP_APP="owums" 
+
+    # The Rails environment in which the script must be run.
+    # It will almost always be set to production.
+    RAILS_ENV="production" 
+
+    ####################################################
+
+    export PATH RAILS_ENV
+
+    # Define LSB log_* functions.
+    # Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
+    . /lib/lsb/init-functions
+
+    bundle_exec() {
+      cd $1 && bundle exec $2
+      return $?
+    }
+
+    openwisp_daemons_start() {
+      bundle_exec $OPENWISP_BASE_PATH/$OPENWISP_APP 'rake daemons:start'
+    }
+
+    openwisp_daemons_stop() {
+      bundle_exec $OPENWISP_BASE_PATH/$OPENWISP_APP 'rake daemons:stop'
+    }
+
+    openwisp_daemons_restart() {
+      bundle_exec $OPENWISP_BASE_PATH/$OPENWISP_APP 'rake daemons:restart'
+    }
+
+    openwisp_daemons_status() {
+      bundle_exec $OPENWISP_BASE_PATH/$OPENWISP_APP 'rake daemons:status'
+    }
+
+    case "$1" in
+      start)
+        log_daemon_msg "Starting OpenWISP daemon" "$NAME" 
+        openwisp_daemons_start
+        RET="$?" 
+        log_end_msg $RET
+        return $RET
+        ;;
+      stop)
+        log_daemon_msg "Stopping OpenWISP daemon" "$NAME" 
+        openwisp_daemons_stop
+        RET="$?" 
+        log_end_msg $RET
+        return $RET
+        ;;
+      restart)
+        log_daemon_msg "Restarting OpenWISP daemon" "$NAME" 
+        openwisp_daemons_restart
+        RET="$?" 
+        log_end_msg $RET
+        return $RET
+        ;;
+      status)
+        openwisp_daemons_status
+        RET="$?" 
+        return $RET
+        ;;
+      *)
+        echo "Usage: /etc/init.d/$NAME {start|stop|restart|status}" >&2
+        exit 1
+        ;;
+    esac
+
+    exit 0
+
+As usual, you need to
+
+    chmod +x owums-daemons
+    /etc/init.d/owums-daemons start
+
+and enable the script to be run at boot (_e.g._: with the @update-rc.d@ command).
+
+==== Logs rotation
+
+To enable the rotation of logs it is possible to use following @logrotate@ script (it could be saved as /etc/logrotate.d/rails).
+
+    /var/rails/*/log/*.log {
+        weekly
+        missingok
+        rotate 52
+        compress
+        delaycompress
+        notifempty
+        copytruncate
+    ## It's possible to use the following macros instead of the "copytruncate" option
+    #   create 660 root www-data
+    #   sharedscripts
+    #  postrotate
+    #    if [ -f "`. /etc/apache2/envvars ; echo ${APACHE_PID_FILE:-/var/run/apache2.pid}`" ]; then
+    #      /etc/init.d/apache2 reload > /dev/null
+    #    fi
+    #    /etc/init.d/owums-daemons restart
+    #  endscript
+    }
+
+==== Media gateway OR SIP proxy/router configuration
+
+The final step is to configure the telephone number your users will use to register themselves.
+You'll have to create a "static routing" between a PSTN number and OpenWISP User Management Systemvoip client (which is called "sip busy machine").
+
+There are many ways for doing this (see below). in every case you'll need to configure the OpenWISP User Management Systemas follow (I'm assuming you're running OpenWISP User Management Systemin production environment):
+
+    ~# <owums root>/script/console production
+    Loading production environment (Rails 2.3.5)
+    >> Configuration.set("verification_numbers", "<TELEPHONE NUMBER>")
+    >> Configuration.set("sip_listen_address","0.0.0.0")
+    >> Configuration.set("sip_servers", "<SIP MEDIAGATWAY/PROXY/SERVER IP ADDRESS>")
+
+With OWUMS' current version, instead of using the console, you can also change OWUMS' configuration keys from the admin Operator panel (with url operator/login).
+
+Then restart OpenWISP User Management Systemsip busy machine (for instance with the supplied init.d script)
+
+Now a media gateway or a SIP proxy/router should be properly configured.
+There are many different softwares or appliances that will do the job. Here follows some examples:
+
+===== Configuring a Patton Smart Node
+
+A configuration example for the Patton Smart Node is the following:
+
+    context cs switch
+
+    [...]
+
+     routing-table called-e164 from_pstn_rtable
+       route [...]
+       route <TELEPHONE NUMBER> dest-interface OWUMS
+
+    [...]
+
+     interface sip OWUMS
+       bind gateway sip_gw
+       route call dest-table drop_rtable
+       remote <OWUMS server IP address>
+
+    [...]
+
+    gateway sip sip_gw
+     bind interface LAN router
+
+    [...]
+
+===== Configuring OpenSIPs
+
+If you have a working sip proxy/router like Opensips, it's sufficient to add a permanent _user location_ like so:
+
+    opensipsctl ul add <TELEPHONE NUMBER OR SUFFIX> <OWUMS SIP URI>
+
+For instance, assuming owums is running on the host with IP address 192.168.100.100
+
+    opensipctl ul add 123 sip:123@192.168.100.100
+
+===== Configuring SipX
+
+Another sip proxy/router could be SipX. In this case you have to configure something more. We'll use an ITSP phone number, so (i'm assuming you're running a working installation of Sipx) in Devices -> Gateway add a new Sip Trunk and fill:
+
+Name, choose a template or insert the ITSP Address then apply
+In ITSP Account -> Username and Password
+
+Now Send Profile and restart the related Services, check the registration status in Diagnostic -> Internal SBC Statistics. Create a New User with the ITSP phone number as User ID (to enable DID) and add a new rule in Call Forwarding to forward after 1 second all incoming calls to "ITSPnum@owumsIP". Uncheck the Voice Mail box in Permissions.
+
+===== Configuring Audiocodes Mediant 1000
+
+Using the GUI:
+* Go to "Configuration" -> "Protocol Configuration" -> "Routing Table"  and select "Tel to IP routing"
+* Insert a new route with appropriate values (destination phone prefix, destination IP address, etc.)
+
+=== Configure FreeRADIUS to work with OWUMS
+
+Create the freeradius DBMS users and set the appropriate privileges. For instance, if you're using MySQL:
+
+    GRANT USAGE ON *.* TO 'radius'@'localhost' IDENTIFIED BY '<MyPasswordIsBetterThanYours>';
+    GRANT SELECT ON `<OWUMS DB name>`.`radreply` TO 'radius'@'localhost'
+    GRANT SELECT ON `<OWUMS DB name>`.`radgroupcheck` TO 'radius'@'localhost'
+    GRANT SELECT ON `<OWUMS DB name>`.`radcheck` TO 'radius'@'localhost'
+    GRANT SELECT ON `<OWUMS DB name>`.`radgroupreply` TO 'radius'@'localhost'
+    GRANT SELECT, INSERT, UPDATE ON `<OWUMS DB name>`.`radacct` TO 'radius'@'localhost'
+    GRANT SELECT ON `<OWUMS DB name>`.`radusergroup` TO 'radius'@'localhost'
+    GRANT SELECT ON `<OWUMS DB name>`.`dictionary` TO 'radius'@'localhost'
+    GRANT SELECT ON `<OWUMS DB name>`.`nas` TO 'radius'@'localhost'
+
+where:
+* <MyPasswordIsBetterThanYours> is the radius user password. Should be different from the one used for the RoR application 
+* <OWUMS DB name> is the DB name used for the RoR application
+
+Configure freeradius to use the OpenWISP User Management System DB, editing the sql.conf file as described here: http://wiki.freeradius.org/SQL_HOWTO
+
+For instance, if you're using MySQL:
+
+    sql {
+        database = "mysql"
+        driver = "rlm_sql_${database}"
+
+        server = "localhost"
+        port = 3306
+        login = "radius"
+        password = "<MyPasswordIsBetterThanYours>"
+        radius_db = "<DBMS name>"
+    [...]
+
+== Notice
+
+The OWUMS uses the Highcharts library. 
+This library is released under a Creative Commons Attribution-NonCommercial 3.0 License (http://creativecommons.org/licenses/by-nc/3.0/)
+
+For further informations, please refer to the Highsoft Solutions AS website (http://www.highcharts.com/license)
+
+Public Administrations or other no-profit organizations that use this software to give a free WiFi Network service to their users should refer to the "Non-commercial - Free" section.
+Other entities must refer to the "Commercial" section.
+
+== Copyright
+
+Copyright (C) 2012 OpenWISP.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
