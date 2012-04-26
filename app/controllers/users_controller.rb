@@ -121,7 +121,7 @@ class UsersController < ApplicationController
 
       if found_users.count == 1
         @user = found_users.first
-        redirect_to @user
+        redirect_to user_url(@user)
       elsif found_users.count > 1
         flash[:error] = I18n.t(:Too_many_search_results)
         render :action => :search
