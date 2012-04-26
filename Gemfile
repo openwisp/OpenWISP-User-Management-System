@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.12'
 gem 'mysql', '2.8.1'
 
 gem 'exception_notification', :require => 'exception_notifier'
