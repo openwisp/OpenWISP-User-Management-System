@@ -34,14 +34,17 @@ class Operator < ActiveRecord::Base
   acts_as_authorization_subject
   acts_as_authorization_object :subject_class_name => 'Operator'
 
+  # Validations
+  # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
+  validates_format_of :password, :with => /\A.*([a-z][0-9])|([0-9][a-z]).*\Z/i, :message => :password_format,
+                      :allow_nil => true
+
   attr_readonly :login
+
+  attr_accessible :login, :password, :password_confirmation, :notes
 
   # Access current_operator from models
   cattr_accessor :current_operator
-
-  # Validations
-  # # Allowing nil to avoid duplicate error notification (password field is already validated by Authlogic)
-  validates_format_of :password, :with => /([a-z][0-9])|([0-9][a-z])/i, :message => :password_format, :allow_nil => true
 
   def initialize(params = nil)
     super(params)

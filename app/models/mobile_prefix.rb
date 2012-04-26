@@ -18,6 +18,8 @@
 class MobilePrefix < ActiveRecord::Base
   default_scope where("disabled = 'f'").order(:prefix)
 
+  attr_accessible :prefix, :international_prefix, :disabled
+
   def to_s
     prefix.to_s
   end

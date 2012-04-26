@@ -31,6 +31,9 @@ class RadiusAccounting < ActiveRecord::Base
   alias_attribute :framed_ip_address, :FramedIPAddress
   alias_attribute :acct_session_time, :AcctSessionTime
 
+  # RadiusAccountings shouldn't be created/modified by Rails
+  attr_accessible
+
   def self.table_name() "radacct" end
 
   with_options :foreign_key => :UserName, :primary_key => :username do |assoc|

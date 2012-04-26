@@ -18,6 +18,8 @@
 class Country < ActiveRecord::Base
   default_scope where("disabled = 'f'").order(:printable_name)
 
+  attr_accessible :iso, :iso3, :name, :printable_name, :numcode, :disabled
+
   def to_s
     printable_name
   end

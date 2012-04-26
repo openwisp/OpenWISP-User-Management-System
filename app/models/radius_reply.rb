@@ -17,4 +17,7 @@
 
 class RadiusReply < ActiveRecord::Base
   belongs_to :radius_entity, :polymorphic => true
+
+  attr_accessible :attribute, :op, :value, :radius_entity
+
 end

@@ -22,6 +22,8 @@ class RadiusGroup < ActiveRecord::Base
   has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
 
+  attr_accessible :name, :priority
+
   def radius_name
     name
   end

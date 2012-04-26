@@ -44,6 +44,11 @@ class User < AccountCommon
   has_many :radius_checks,  :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
 
+  attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
+                  :email, :email_confirmation, :password, :password_confirmation,
+                  :mobile_prefix, :mobile_suffix, :verified, :verification_method,
+                  :eula_acceptance, :privacy_acceptance,
+                  :username, :image_file_temp, :image_file, :radius_group_ids
 
   # Class methods
 
