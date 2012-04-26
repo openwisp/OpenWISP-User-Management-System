@@ -85,7 +85,7 @@ class User < AccountCommon
   end
 
   def self.registered_on(date)
-    count :conditions => "Date(verified_at) <= '#{date.to_s}'"
+    count :conditions => [ "DATE(verified_at) <= ?", date.to_s]
   end
 
   def self.registered_yesterday

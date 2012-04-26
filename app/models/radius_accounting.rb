@@ -46,11 +46,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.logins_on(date)
-    count(:conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    count(:conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.unique_logins_on(date)
-    count('UserName', :distinct => true, :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    count('UserName', :distinct => true, :conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.logins_from(from, to)
