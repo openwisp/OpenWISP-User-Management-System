@@ -299,7 +299,7 @@ it:
     hints:
       mobile_phone: "Dovrai effettuare una chiamata da questo numero. Puoi utilizzare solo numeri di operatori italiani"
       account:
-        captcha: "Scrivi qui il testo contenuto nell'immagine sopra"
+        captcha: "Scrivi qui il testo contenuto nell'immagine qui sotto"
         email: "L'indirizzo e-mail potrà essere usato per poter reimpostare la tua password in caso la dimenticassi"
         password: "Dovrà contenere almeno una lettera ed un numero e dovrà essere di almeno 8 caratteri"
         username: "Dovrai utilizzare questo username e la tua password per accedere al servizio"
