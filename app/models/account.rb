@@ -36,8 +36,9 @@ class Account < AccountCommon
   # # :username and :verified should never be set with mass-assignment!
   attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
                   :email, :email_confirmation, :password, :password_confirmation,
-                  :mobile_prefix, :mobile_suffix, :verification_method,
-                  :eula_acceptance, :privacy_acceptance
+                  :mobile_prefix, :mobile_prefix_confirmation, :mobile_suffix, 
+                  :mobile_suffix_confirmation, :verification_method,
+                  :eula_acceptance, :privacy_acceptance, :captcha
 
   # Class methods
 
