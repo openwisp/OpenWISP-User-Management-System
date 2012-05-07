@@ -157,6 +157,7 @@ class UsersController < ApplicationController
              when 'acct_output_octets_rev'   then "AcctOutputOctets DESC"
              when 'calling_station_id_rev'   then "CallingStationId DESC"
              when 'framed_ip_address_rev'    then "FramedIPAddress DESC"
+             else nil
            end
     if sort.nil?
       params[:sort] = "acct_start_time_rev"
@@ -191,6 +192,7 @@ class UsersController < ApplicationController
              when 'address_rev'        then "address DESC"
              when 'verified_rev'       then "verified DESC"
              when 'active_rev'         then "active DESC"
+             else nil
            end
     if sort.nil?
       params[:sort] = "registered_at_rev"
