@@ -83,7 +83,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.18)
-    mysql (2.8.1)
+    mysql2 (0.2.18)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -143,7 +143,7 @@ DEPENDENCIES
   exception_notification
   jquery-rails (~> 1.0.9)
   kaminari (~> 0.12.4)
-  mysql (= 2.8.1)
+  mysql2 (~> 0.2.7)
   packet (= 0.1.15)!
   rails (= 3.0.12)
   rmagick (~> 2.12.2)
