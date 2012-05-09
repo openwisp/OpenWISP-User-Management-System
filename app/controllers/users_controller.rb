@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new( :eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT )
     @user.verified = true
-    @user.radius_group_ids = [ RadiusGroup::users_group ]
+    @user.radius_groups = [ RadiusGroup.find_by_name(Configuration.get(:default_radius_group)) ]
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
     # Parameter anti-tampering
     unless current_operator.has_role? 'users_manager'
-      @user.radius_group_ids = [ RadiusGroup::users_group ]
+      @user.radius_groups = [ RadiusGroup.find_by_name(Configuration.get(:default_radius_group))]
       @user.verified = @user.active = true
     end
 
@@ -202,11 +202,11 @@ class UsersController < ApplicationController
     search = params[:search]
     page = params[:page].nil? ? 1 : params[:page]
 
-    unless search.nil?
+    if search.nil?
+      conditions = []
+    else
       search.gsub(/\\/, '\&\&').gsub(/'/, "''")
       conditions = [ "given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%" ]
-    else
-      conditions = []
     end
 
     @total_users = User.count :conditions => conditions

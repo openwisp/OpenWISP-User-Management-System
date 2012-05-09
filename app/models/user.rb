@@ -189,7 +189,7 @@ class User < AccountCommon
       # (i.e. verified == false and recovered == false)
       # we have to recover her password.
       # Default value for recovered is nil (!= false)
-      if self.recovered == false
+      unless self.recovered
         self.mobile_phone_password_recover!
       end
       return true
@@ -198,11 +198,11 @@ class User < AccountCommon
   end
 
   def registration_expire_timeout
-    if !self.disabled?
+    if self.disabled?
+      Configuration.get('disabled_account_expire_days').to_i.days
+    else
       Rails.logger.error("Account not disabled")
       raise "Account not disabled"
-    else
-      Configuration.get('disabled_account_expire_days').to_i.days
     end
   end
 
@@ -214,7 +214,7 @@ class User < AccountCommon
   # Accessors
 
   def recovered=(value)
-    write_attribute(:recovered, value == true)
+    write_attribute(:recovered, value)
     self.recovered_at = Time.now()
   end
 
