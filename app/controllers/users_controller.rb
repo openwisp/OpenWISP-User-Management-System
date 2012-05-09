@@ -138,7 +138,7 @@ class UsersController < ApplicationController
   private
 
   def load_user
-    @user = User.find(params[:id])
+    @user = User.find_by_id_or_username(params[:id])
   end
 
   def sort_and_paginate_accountings
@@ -206,7 +206,7 @@ class UsersController < ApplicationController
       conditions = []
     else
       search.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      conditions = [ "given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%" ]
+      conditions = ["given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"]
     end
 
     @total_users = User.count :conditions => conditions
