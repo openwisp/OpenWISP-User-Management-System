@@ -16,24 +16,57 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace :daemons do
-  desc "Start deamons required to run OWUMS"
-  task :start => :environment do
+
+  def backgroundrb_status
+    print 'BackgrounDRb: '
+    %x[bundle exec #{Rails.root}/script/backgroundrb status]
+    puts $? == 0 ? 'running...' : 'not running...'
+    $?
+  end
+
+  def backgroundrb_start
     puts 'Starting BackgrounDRb...'
     %x[bundle exec #{Rails.root}/script/backgroundrb start]
+    $?
+  end
 
+  def backgroundrb_stop
+    puts 'Stopping BackgrounDRb...'
+    %x[bundle exec #{Rails.root}/script/backgroundrb stop]
+    $?
+  end
+
+  def sip_busy_machine_status
+    print 'MobilePhoneSipBusyMachine: '
+    sip_status = %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl status]
+    puts sip_status =~ /running \[pid .\d+\]/ ? 'running...' : 'not running...'
+    sip_status =~ /no instances running/
+  end
+
+  def sip_busy_machine_start
     puts 'Starting MobilePhoneSipBusyMachine...'
     %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl start]
+    $?
+  end
+
+  def sip_busy_machine_stop
+    puts 'Stopping MobilePhoneSipBusyMachine...'
+    %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl stop]
+    $?
+  end
+
+  desc "Start deamons required to run OWUMS"
+  task :start => :environment do
+    backgroundrb_start
+    sip_busy_machine_start
 
     Rake::Task['daemons:status'].execute
   end
 
   desc "Stop deamons required to run OWUMS"
   task :stop => :environment do
-    puts 'Stopping BackgrounDRb...'
-    %x[bundle exec #{Rails.root}/script/backgroundrb stop]
-
-    puts 'Stopping MobilePhoneSipBusyMachine...'
-    %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl stop]
+    backgroundrb_stop
+    sip_busy_machine_stop
 
     Rake::Task['daemons:status'].execute
   end
@@ -41,21 +74,25 @@ namespace :daemons do
   desc "Restart deamons required to run OWUMS"
   task :restart => :environment do
     puts 'Restarting OWUMS daemons...'
-    Rake::Task['daemons:stop'].execute
-    Rake::Task['daemons:start'].execute
+
+    begin
+      backgroundrb_stop
+      sleep 1
+    end while backgroundrb_status == 0
+
+    begin
+      sip_busy_machine_stop
+      sleep 1
+    end while sip_busy_machine_status == 0
+
+    backgroundrb_start
+    sip_busy_machine_start
+
+    Rake::Task['daemons:status'].execute
   end
 
   desc "Status of daemons required to run OWUMS"
   task :status => :environment do
-    print 'BackgrounDRb: '
-    %x[bundle exec #{Rails.root}/script/backgroundrb status]
-    backgroundrb_status = $?
-    puts backgroundrb_status == 0 ? 'running...' : 'not running...'
-
-    print 'MobilePhoneSipBusyMachine: '
-    sip_status = %x[bundle exec #{Rails.root}/lib/daemons/mobile_phone_sip_busy_machine_ctl status]
-    puts sip_status =~ /running \[pid .\d+\]/ ? 'running...' : 'not running...'
-
-    exit(1) if backgroundrb_status != 0 && sip_status =~ /no instances running/
+    exit(1) if backgroundrb_status != 0 && sip_busy_machine_status
   end
 end

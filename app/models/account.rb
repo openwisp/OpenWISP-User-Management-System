@@ -24,17 +24,21 @@ class Account < AccountCommon
     c.maintain_sessions = true
   end
 
-  # Security and cleanup
-  attr_readonly  :given_name, :surname, :birth_date
-  attr_protected :verified # SEC: shouldn't be set with mass-assignment!
-
   # In case a WISP uses the user's mobile phone as the username
   before_validation :set_username_from_mobile_phone_if_required, :on => :create
 
   # Validations
   validates_inclusion_of :verification_method, :in => SELFVERIFICATION_METHODS, :if => Proc.new{|account| account.new_record? }
-  validate :valid_captcha?, :message => 'cippalippa', :on => :create
+  validate :valid_captcha?, :message => 'dummy', :on => :create
 
+  # Security and cleanup
+  attr_readonly  :given_name, :surname, :birth_date
+  # # :username and :verified should never be set with mass-assignment!
+  attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
+                  :email, :email_confirmation, :password, :password_confirmation,
+                  :mobile_prefix, :mobile_prefix_confirmation, :mobile_suffix, 
+                  :mobile_suffix_confirmation, :verification_method,
+                  :eula_acceptance, :privacy_acceptance, :captcha
 
   # Class methods
 

@@ -44,11 +44,22 @@ class User < AccountCommon
   has_many :radius_checks,  :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
 
+  attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
+                  :email, :email_confirmation, :password, :password_confirmation,
+                  :mobile_prefix, :mobile_suffix, :verified, :verification_method,
+                  :eula_acceptance, :privacy_acceptance,
+                  :username, :image_file_temp, :image_file, :radius_group_ids
 
   # Class methods
 
   def self.last_registered(num = 5)
     User.order("created_at DESC").limit(num)
+  end
+
+  def self.find_by_id_or_username(id)
+    User.find id
+  rescue ActiveRecord::RecordNotFound
+    User.find_by_username id
   end
 
   # Class Method:
@@ -85,7 +96,7 @@ class User < AccountCommon
   end
 
   def self.registered_on(date)
-    count :conditions => "Date(verified_at) <= '#{date.to_s}'"
+    count :conditions => [ "DATE(verified_at) <= ?", date.to_s]
   end
 
   def self.registered_yesterday
@@ -184,7 +195,7 @@ class User < AccountCommon
       # (i.e. verified == false and recovered == false)
       # we have to recover her password.
       # Default value for recovered is nil (!= false)
-      if self.recovered == false
+      unless self.recovered
         self.mobile_phone_password_recover!
       end
       return true
@@ -193,11 +204,11 @@ class User < AccountCommon
   end
 
   def registration_expire_timeout
-    if !self.disabled?
+    if self.disabled?
+      Configuration.get('disabled_account_expire_days').to_i.days
+    else
       Rails.logger.error("Account not disabled")
       raise "Account not disabled"
-    else
-      Configuration.get('disabled_account_expire_days').to_i.days
     end
   end
 
@@ -209,7 +220,7 @@ class User < AccountCommon
   # Accessors
 
   def recovered=(value)
-    write_attribute(:recovered, value == true)
+    write_attribute(:recovered, value)
     self.recovered_at = Time.now()
   end
 

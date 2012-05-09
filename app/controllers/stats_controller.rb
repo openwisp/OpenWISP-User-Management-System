@@ -15,9 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'shellwords'
+
 class StatsController < ApplicationController
   before_filter :require_operator_or_account
   skip_before_filter :set_mobile_format
+
+  AVAILABLE_STATS_GRAPH = %w{account_logins account_traffic user_logins user_traffic registered_users traffic logins top_traffic_users last_logins last_registered}
 
   access_control do
     default :deny
@@ -35,7 +39,7 @@ class StatsController < ApplicationController
   end
 
   def show
-    @stat = params[:id]
+    @stat = (AVAILABLE_STATS_GRAPH & [ params[:id] ]).first
 
     @from = Date.strptime(params[:from], I18n.t('date.formats.default')) rescue 14.days.ago.to_date
     @to = Date.strptime(params[:to], I18n.t('date.formats.default')) rescue Date.today
@@ -48,7 +52,7 @@ class StatsController < ApplicationController
   end
 
   def export
-    supported = ['svg', 'png', 'pdf']
+    supported = %w(svg png pdf)
     svg, mime_type, filename, width = params[:svg], params[:type], params[:filename], params[:width].to_i
     extension = mime_type.split('/').last
 
@@ -61,7 +65,7 @@ class StatsController < ApplicationController
     temp << svg
     temp.close
 
-    exported = %x{ rsvg-convert #{temp.path} --width #{width} --format #{extension} }
+    exported = %x{ rsvg-convert #{Shellwords.escape(temp.path)} --width #{Shellwords.escape(width)} --format #{Shellwords.escape(extension)} }
 
     send_data exported, :filename => "#{filename}.#{extension}", :type => mime_type
   end

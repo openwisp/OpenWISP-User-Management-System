@@ -17,5 +17,8 @@
 
 class Role < ActiveRecord::Base
   acts_as_authorization_role :subject_class_name => 'Operator'
+
+  attr_accessible :name, :authorizable_attributes
+
 end
 

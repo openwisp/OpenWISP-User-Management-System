@@ -17,13 +17,13 @@
 
 class UsersController < ApplicationController
   before_filter :require_operator
-  before_filter :load_user, :except => [ :index, :new, :create, :ajax_search, :browse, :search, :find ]
+  before_filter :load_user, :except => [ :index, :new, :create, :search, :find ]
   skip_before_filter :set_mobile_format
 
   access_control do
     default :deny
 
-    allow :users_browser,    :to => [ :index, :show, :ajax_search ]
+    allow :users_browser,    :to => [ :index, :show ]
     allow :users_registrant, :to => [ :new, :create ]
     allow :users_manager,    :to => [ :new, :create, :edit, :update ]
     allow :users_destroyer,  :to => [ :destroy ]
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new( :eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT )
     @user.verified = true
-    @user.radius_group_ids = [ RadiusGroup::users_group ]
+    @user.radius_groups = [ RadiusGroup.find_by_name(Configuration.get(:default_radius_group)) ]
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
     # Parameter anti-tampering
     unless current_operator.has_role? 'users_manager'
-      @user.radius_group_ids = [ RadiusGroup::users_group ]
+      @user.radius_groups = [ RadiusGroup.find_by_name(Configuration.get(:default_radius_group))]
       @user.verified = @user.active = true
     end
 
@@ -121,7 +121,7 @@ class UsersController < ApplicationController
 
       if found_users.count == 1
         @user = found_users.first
-        redirect_to @user
+        redirect_to user_url(@user)
       elsif found_users.count > 1
         flash[:error] = I18n.t(:Too_many_search_results)
         render :action => :search
@@ -138,7 +138,7 @@ class UsersController < ApplicationController
   private
 
   def load_user
-    @user = User.find(params[:id])
+    @user = User.find_by_id_or_username(params[:id])
   end
 
   def sort_and_paginate_accountings
@@ -157,6 +157,7 @@ class UsersController < ApplicationController
              when 'acct_output_octets_rev'   then "AcctOutputOctets DESC"
              when 'calling_station_id_rev'   then "CallingStationId DESC"
              when 'framed_ip_address_rev'    then "FramedIPAddress DESC"
+             else nil
            end
     if sort.nil?
       params[:sort] = "acct_start_time_rev"
@@ -191,6 +192,7 @@ class UsersController < ApplicationController
              when 'address_rev'        then "address DESC"
              when 'verified_rev'       then "verified DESC"
              when 'active_rev'         then "active DESC"
+             else nil
            end
     if sort.nil?
       params[:sort] = "registered_at_rev"
@@ -200,11 +202,11 @@ class UsersController < ApplicationController
     search = params[:search]
     page = params[:page].nil? ? 1 : params[:page]
 
-    unless search.nil?
-      search.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      conditions = [ "given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%" ]
-    else
+    if search.nil?
       conditions = []
+    else
+      search.gsub(/\\/, '\&\&').gsub(/'/, "''")
+      conditions = ["given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"]
     end
 
     @total_users = User.count :conditions => conditions

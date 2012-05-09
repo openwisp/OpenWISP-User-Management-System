@@ -128,6 +128,8 @@ class AccountCommon <  ActiveRecord::Base
   has_and_belongs_to_many :radius_groups, :join_table => 'radius_groups_users', :foreign_key => 'user_id'
   has_many :radius_accountings, :foreign_key => :UserName, :primary_key => :username
 
+  # This is a virtual class. See User and Account classes
+  attr_accessible
 
   # Methods
 

@@ -46,6 +46,9 @@
 
 
   <% if account.new_record? %>
+      <li data-role="fieldcontain">
+        <%= f.input :captcha %>
+      </li>
       <li data-role="content">
         <div class="ui-grid-c">
           <div class="ui-block-a"></div>
@@ -54,13 +57,8 @@
           <div class="ui-block-d"></div>
         </div>
       </li>
-
       <li id="listen_captcha" data-role="fieldcontain">
-        <%= link_to t(:listen).capitalize, spoken_captcha_url, 'data-ajax' => false %>
-      </li>
-
-      <li data-role="fieldcontain">
-        <%= f.input :captcha %>
+        <%= link_to t(:listen_captcha).capitalize, spoken_captcha_url, 'data-ajax' => false %>
       </li>
 
       <li data-role="fieldcontain">

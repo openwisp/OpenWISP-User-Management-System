@@ -16,4 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RadiusNas < ActiveRecord::Base
+
+  attr_accessible :nasname, :shortname, :type, :ports, :secret, :community, :description
+
 end

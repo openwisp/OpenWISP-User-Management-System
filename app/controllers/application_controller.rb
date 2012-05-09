@@ -146,4 +146,10 @@ class ApplicationController < ActionController::Base
     request.env['authlogic_operator'] = current_operator rescue nil
     request.env['authlogic_user'] = current_user rescue nil
   end
+
+  # URL helpers for controllers
+  def subject_url(subject)
+    subject.is_a?(User) ? user_url(subject) : radius_group_url(subject)
+  end
+
 end

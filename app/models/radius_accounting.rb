@@ -31,6 +31,9 @@ class RadiusAccounting < ActiveRecord::Base
   alias_attribute :framed_ip_address, :FramedIPAddress
   alias_attribute :acct_session_time, :AcctSessionTime
 
+  # RadiusAccountings shouldn't be created/modified by Rails
+  attr_accessible
+
   def self.table_name() "radacct" end
 
   with_options :foreign_key => :UserName, :primary_key => :username do |assoc|
@@ -46,11 +49,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.logins_on(date)
-    count(:conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    count(:conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.unique_logins_on(date)
-    count('UserName', :distinct => true, :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    count('UserName', :distinct => true, :conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.logins_from(from, to)
