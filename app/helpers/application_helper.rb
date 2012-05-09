@@ -111,4 +111,29 @@ module ApplicationHelper
       end
     end
   end
+
+  def subject_radius_check_url(subject, check)
+    subject.is_a?(User) ? user_radius_check_url(subject, check) : radius_group_radius_check_url(subject, check)
+  end
+
+  def edit_subject_radius_check_url(subject, check)
+    subject.is_a?(User) ? edit_user_radius_check_url(subject, check) : edit_radius_group_radius_check_url(subject, check)
+  end
+
+  def new_subject_radius_check_url(subject)
+    subject.is_a?(User) ? new_user_radius_check_url(subject) : new_radius_group_radius_check_url(subject)
+  end
+
+  def subject_radius_reply_url(subject, reply)
+    subject.is_a?(User) ? user_radius_reply_url(subject, reply) : radius_group_radius_reply_url(subject, reply)
+  end
+
+  def edit_subject_radius_reply_url(subject, reply)
+    subject.is_a?(User) ? edit_user_radius_reply_url(subject, reply) : edit_radius_group_radius_reply_url(subject, reply)
+  end
+
+  def new_subject_radius_reply_url(subject)
+    subject.is_a?(User) ? new_user_radius_reply_url(subject) : new_radius_group_radius_reply_url(subject)
+  end
+
 end

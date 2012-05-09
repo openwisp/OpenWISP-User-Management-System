@@ -16,32 +16,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RadiusGroup < ActiveRecord::Base
+  validates_presence_of :name
   validates_uniqueness_of :name
+  validates_numericality_of :priority
 
-  has_and_belongs_to_many :account_commons, :join_table => 'radius_groups_users' 
+  has_and_belongs_to_many :account_commons, :join_table => 'radius_groups_users', :association_foreign_key => :user_id
   has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
 
-  attr_accessible :name, :priority
+  attr_accessible :name, :priority, :notes
 
   def radius_name
     name
   end
 
-  def self.users_group
-    find_by_name("Users").id
-  end
-
-  def self.disabled_users_group
-    find_by_name("Disabled").id
-  end
-
-  def self.power_users_group
-    find_by_name("PowerUsers").id
-  end
-
-  def self.machines_group
-    find_by_name("Machines").id
-  end
-  
 end

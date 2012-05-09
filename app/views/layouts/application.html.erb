@@ -22,7 +22,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title><%=t :Users_management %></title>
+  <title><%= t :Users_management %></title>
 
   <%= stylesheet_link_tag 'fluid960/reset' %>
   <%= stylesheet_link_tag 'fluid960/text' %>
@@ -52,7 +52,7 @@
 
   <%= javascript_include_tag 'fluid16' %>
 
-  <link rel="shortcut icon" href="<%= image_path 'openwisp.ico' %>" />
+  <link rel="shortcut icon" href="<%= image_path 'openwisp.ico' %>"/>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -79,42 +79,76 @@
       <% if current_operator %>
           <% if current_operator.has_role? 'stats_viewer' %>
               <li>
-                <%= menu_link_to t(:Show_stats), stats_path %>
+                <%= menu_link_to t(:Show_stats), stats_url %>
                 <ul>
-                  <li><%= menu_link_to t(:Registered_users), stat_path('registered_users') %></li>
-                  <li><%= menu_link_to t(:Logins), stat_path('logins') %></li>
-                  <li><%= menu_link_to t(:Traffic), stat_path('traffic') %></li>
+                  <li><%= menu_link_to t(:Registered_users), stat_url('registered_users') %></li>
+                  <li><%= menu_link_to t(:Logins), stat_url('logins') %></li>
+                  <li><%= menu_link_to t(:Traffic), stat_url('traffic') %></li>
                 </ul>
               </li>
           <% end %>
-          <% if current_operator.has_role? 'users_browser' %>
-              <li><%= menu_link_to t(:Browse_users), users_browse_path %></li>
+          <% if current_operator.has_role? 'users_browser' or
+                  current_operator.has_role? 'users_finder' or
+                  current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant'
+          %>
+              <li>
+                <%= menu_link_to t(:Users), '#' %>
+                <ul>
+                  <% if current_operator.has_role? 'users_browser' %>
+                      <li><%= menu_link_to t(:Browse_users), users_browse_url %></li>
+                  <% end %>
+                  <% if current_operator.has_role? 'users_finder' %>
+                      <li><%= menu_link_to t(:Search_users), users_search_url %></li>
+                  <% end %>
+                  <% if current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant' %>
+                      <li><%= menu_link_to t(:Add_new_user), new_user_url %></li>
+                  <% end %>
+                </ul>
+              </li>
           <% end %>
-          <% if current_operator.has_role? 'users_finder' %>
-              <li><%= menu_link_to t(:Search_users), users_search_path %></li>
-          <% end %>
-          <% if current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant' %>
-              <li><%= menu_link_to t(:Add_new_user), new_user_path %></li>
-          <% end %>
-          <% if current_operator.has_role? 'configurations_manager' %>
-              <li><%= menu_link_to t(:Configuration_keys), configurations_path %></li>
+          <% if current_operator.has_role? 'radius_groups_viewer' or
+                  current_operator.has_role? 'radius_groups_creator' %>
+              <li>
+                <%= menu_link_to t(:Radius_groups), '#' %>
+                <ul>
+                  <% if current_operator.has_role? 'radius_groups_viewer' %>
+                      <li><%= menu_link_to t(:Browse_radius_groups), radius_groups_url %></li>
+                  <% end %>
+                  <% if current_operator.has_role? 'radius_groups_creator' %>
+                      <li><%= menu_link_to t(:Add_new_radius_group), new_radius_group_url %></li>
+                  <% end %>
+                </ul>
+              </li>
           <% end %>
           <% if current_operator.has_role? 'operators_manager' %>
-              <li><%= menu_link_to t(:Operators), operators_path %></li>
+              <li>
+                <%= menu_link_to t(:Operators), '#' %>
+                <ul>
+                  <li><%= menu_link_to t(:Browse_operators), operators_url %></li>
+                  <li><%= menu_link_to t(:Add_new_operator), new_operator_url %></li>
+                </ul>
+              </li>
           <% end %>
-
-          <li class="secondary"><%= link_to t(:Logout), operator_logout_url, :method => :delete %></li>
-          <li class="secondary"><%= menu_link_to t(:Home), operator_path(current_operator) %></li>
+          <li>
+            <%= menu_link_to t(:System_settings), '#' %>
+            <ul>
+              <% if current_operator.has_role? 'configurations_manager' %>
+                  <li><%= menu_link_to t(:Configuration_keys), configurations_url %></li>
+              <% end %>
+            </ul>
+          </li>
+          <li class="secondary"><%= menu_link_to t(:Logout), operator_logout_url, :method => :delete %></li>
+          <li class="secondary"><%= menu_link_to t(:Home), operator_url(current_operator) %></li>
       <% else %>
           <li><%= menu_link_to t(:How_to_use_service), account_instructions_url, :disable_if => on_root? %></li>
-          <% if !current_account %>
+          <% if current_account %>
+              <li><%= menu_link_to t(:Show_account_info), account_url %></li>
+              <li><%= menu_link_to t(:Edit_account), edit_account_url %></li>
+              <li class="secondary"><%= link_to t(:Logout), account_logout_url, :method => :delete %></li>
+          <% else %>
               <li><%= menu_link_to t(:Manage_your_account), account_login_url %></li>
               <li><%= menu_link_to t(:Register), account_registration_url %></li>
               <li><%= menu_link_to t(:Forgot_password), password_reset_url %></li>
-          <% else %>
-              <li><%= menu_link_to t(:Show_account_info), account_path %></li>
-              <li><%= menu_link_to t(:Edit_account), edit_account_path %></li>
-              <li class="secondary"><%= link_to t(:Logout), account_logout_url, :method => :delete %></li>
           <% end %>
       <% end %>
     </ul>
@@ -122,14 +156,14 @@
   <div class="clear"></div>
   <div class="grid_12">
     <div id="notice" class="box">
-      <% if flash[:notice]%>
+      <% if flash[:notice] %>
           <p><%= flash[:notice] %>&nbsp;</p>
       <% end %>
     </div>
   </div>
   <div class="clear"></div>
 
-  <%= yield  %>
+  <%= yield %>
 
   <div class="grid_12" id="site_info">
     <div class="box" style="text-align:center">

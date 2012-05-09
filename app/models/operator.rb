@@ -18,9 +18,12 @@
 class Operator < ActiveRecord::Base
   
   ROLES = %w(
-    users_destroyer users_manager users_registrant 
+    users_destroyer users_manager users_registrant
     stats_viewer users_finder users_browser configurations_manager
     operators_manager
+    radius_groups_creator radius_groups_viewer radius_groups_manager radius_groups_destroyer
+    radius_checks_creator radius_checks_viewer radius_checks_manager radius_checks_destroyer
+    radius_replies_creator radius_replies_viewer radius_replies_manager radius_replies_destroyer
   )
 
   acts_as_authentic do |c|
@@ -41,7 +44,7 @@ class Operator < ActiveRecord::Base
 
   attr_readonly :login
 
-  attr_accessible :login, :password, :password_confirmation, :notes
+  attr_accessible :login, :password, :password_confirmation, :notes, :roles
 
   # Access current_operator from models
   cattr_accessor :current_operator

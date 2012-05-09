@@ -145,7 +145,7 @@ it:
         too_long: "è troppo lungo (il massimo è %{count} lettere)"
         too_short: "è troppo corto (il minimo è %{count} lettere)"
         wrong_length: "è della lunghezza sbagliata (deve essere di %{count} lettere)"
-        taken: "è già stato utilizzato per un'altro account"
+        taken: "è già stato utilizzato"
         not_a_number: "non è un numero"
         greater_than: "deve essere superiore a %{count}"
         greater_than_or_equal_to: "deve essere superiore o uguale a %{count}"

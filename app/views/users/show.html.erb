@@ -25,113 +25,225 @@
     %>
 <% end %>
 
-<div class="grid_3">
+<div class="grid_12">
   <div class="box">
     <ul class="nav main">
+      <li><%= link_to t(:Refresh_data), "" %></li>
       <% if current_operator.has_role? 'users_manager' %>
           <li><%= link_to t(:Edit), edit_user_path(@user) %></li>
       <% end %>
       <li><%= link_to t(:Back), :back %></li>
     </ul>
-    <div class="block" id="general_info">
-      <fieldset>
-        <p>
-          <strong><%=t :Given_name %></strong><br />
-          <%= @user.given_name %>
-        </p>
-        <p>
-          <strong><%=t :Surname %></strong><br />
-          <%= @user.surname %>
-        </p>
-        <% if @user.verify_with_mobile_phone? %>
-            <p>
-              <strong><%=t :Mobile_phone_number %></strong><br />
-              <%= @user.mobile_phone %>
-            </p>
-        <% end %>
-        <p>
-          <strong><%=t :Username %></strong><br />
-          <%= @user.username %>
-        </p>
-        <% if @user.has_image? %>
-            <p>
-              <strong><%=t :Document_photo %></strong><br />
-              <%= document_of @user, :link => true %>
-            </p>
-        <% end %>
-        <p>
-          <strong><%=t :State %></strong><br />
-          <%= @user.state %>
-        </p>
-        <p>
-          <strong><%=t :City %></strong><br />
-          <%= @user.city %>
-        </p>
-        <p>
-          <strong><%=t :Address %></strong><br />
-          <%= @user.address %>
-        </p>
-        <p>
-          <strong><%=t :Email %></strong><br />
-          <%= @user.email %>
-        </p>
-        <p>
-          <strong><%=t :Registration_date %></strong><br />
-          <%=l @user.created_at %>
-        </p>
-        <p>
-          <b><%=t :Verification_date %></b><br />
-          <% if @user.verified %>
-              <%=l @user.verified_at %>
-          <% else %>
-              <span style="color: red; "><%=t :Not_verified %></span>
-          <% end %>
-        </p>
-        <p>
-          <strong><%=t :User_management_logins %></strong><br />
-          <%= @user.login_count %>
-        </p>
-        <p>
-          <strong><%=t :Radius_logins %></strong><br />
-          <%= @user.radius_accountings.count %>
-        </p>
 
-        <% if current_operator.has_role? 'users_manager' %>
-            <p>
-              <strong><%=t :Radius_groups %></strong><br />
-              <% @user.radius_groups.each do |g| %>
-                  <%= g.name %><br />
-              <% end %>
-            </p>
-        <% end %>
-      </fieldset>
+    <div class="block" id="personal_info">
+      <table>
+        <thead>
+        <tr>
+          <th><%= t :Given_name %></th>
+          <th><%= t :Surname %></th>
+          <% if @user.verify_with_mobile_phone? %>
+              <th><%= t :Mobile_phone_number %></th>
+          <% end %>
+          <th><%= t :Username %></th>
+          <% if @user.has_image? %>
+              <th><%= t :Document_photo %></th>
+          <% end %>
+          <th><%= t :State %></th>
+          <th><%= t :City %></th>
+          <th><%= t :Address %></th>
+          <th><%= t :Email %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><%= @user.given_name %></td>
+          <td><%= @user.surname %></td>
+          <% if @user.verify_with_mobile_phone? %>
+              <td><%= @user.mobile_phone %></td>
+          <% end %>
+          <td><%= @user.username %></td>
+          <% if @user.has_image? %>
+              <td><%= document_of @user, :link => true %></td>
+          <% end %>
+          <td><%= @user.state %></td>
+          <td><%= @user.city %></td>
+          <td><%= @user.address %></td>
+          <td><%= @user.email %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="block" id="general_info">
+      <table>
+        <thead>
+        <tr>
+          <th><%= t :Registration_date %></th>
+          <th><%= t :Verification_date %></th>
+          <th><%= t :User_management_logins %></th>
+          <th><%= t :Radius_logins %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><%= l(@user.created_at, :format => :short) %></td>
+          <td>
+            <% if @user.verified %>
+                <%= l(@user.verified_at, :format => :short) %>
+            <% else %>
+                <span style="color: red; "><%= t :Not_verified %></span>
+            <% end %>
+          </td>
+          <td><%= @user.login_count %></td>
+          <td><%= @user.radius_accountings.count %></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 
+<div class="grid_12">
+  <% if current_operator.has_role? 'users_manager' %>
+      <div id="radius_groups" class="box">
+        <h2><%= t :Radius_groups %></h2>
+        <br/>
+        <table>
+          <thead>
+          <tr>
+            <th scope="col"><%= t :Priority %></th>
+            <th scope="col"><%= t :Name %></th>
+            <th scope="col"><%= t :Notes %></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @user.radius_groups.all(:order => :priority).each do |group| %>
+              <tr>
+                <td><%= group.priority %></td>
+                <td><%= link_to group.name, radius_group_url(group) %></td>
+                <td><%= group.notes %></td>
+              </tr>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <% if current_operator.has_role? 'users_manager' %>
+              <tr>
+                <td colspan="3"><%= link_to t(:Edit), edit_user_path(@user) %></td>
+              </tr>
+          <% end %>
+          </tfoot>
+        </table>
+      </div>
+  <% end %>
 
-<div class="grid_9">
-  <div class="box">
-    <h2><%= t(:Logins) %></h2>
-    <div class="block user_graph" id="user_logins_graph"></div>
-  </div>
+  <% if auth? :radius_checks_viewer %>
+      <div id="user_radius_checks" class="box">
+        <h2><%= t :Radius_checks %></h2>
+        <br/>
+        <table>
+          <thead>
+          <tr>
+            <th scope="col"><%= t :Check_attribute %></th>
+            <th scope="col"><%= t :Operator %></th>
+            <th scope="col"><%= t :Value %></th>
+            <th scope="col"><%= t :Operations %></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @user.radius_checks.each do |check| %>
+              <tr>
+                <td><%= check.check_attribute %></td>
+                <td><%= check.op %></td>
+                <td><%= check.value %></td>
+                <td>
+                  <% if current_operator.has_role? 'radius_checks_manager' %>
+                      <%= link_to t(:Edit), edit_user_radius_check_url(@user, check) %>
+                  <% end %>
+                  &nbsp;
+                  <% if current_operator.has_role? 'radius_checks_destroyer' %>
+                      <%= link_to t(:Destroy), user_radius_check_url(@user, check),
+                                  :method => :delete, :confirm => t(:Are_you_sure) %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <% if auth? :radius_checks_creator %>
+              <tr>
+                <td colspan="4">
+                  <p><%= link_to t(:Add_radius_check), new_user_radius_check_url(@user) %></p>
+                </td>
+              </tr>
+          <% end %>
+          </tfoot>
+        </table>
+      </div>
+  <% end %>
 
-  <div class="box">
-    <h2><%= t(:Traffic) %></h2>
-    <div class="block user_graph" id="user_traffic_graph"></div>
-  </div>
-  <div class="clear"></div>
-  
-  <p>
-    <%= button_to t(:Refresh_data), "", :method => :get %>
-  </p>
-  <div class="clear"></div>
+  <% if auth? :radius_replies_viewer %>
+      <div id="user_radius_replies" class="box">
+        <h2><%= t :Radius_replies %></h2>
+        <br/>
+        <table>
+          <thead>
+          <tr>
+            <th scope="col"><%= t :Reply_attribute %></th>
+            <th scope="col"><%= t :Operator %></th>
+            <th scope="col"><%= t :Value %></th>
+            <th scope="col"><%= t :Operations %></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @user.radius_replies.each do |reply| %>
+              <tr>
+                <td><%= reply.reply_attribute %></td>
+                <td><%= reply.op %></td>
+                <td><%= reply.value %></td>
+                <td>
+                  <% if current_operator.has_role? 'radius_replies_manager' %>
+                      <%= link_to t(:Edit), edit_user_radius_reply_url(@user, reply) %>
+                  <% end %>
+                  &nbsp;
+                  <% if current_operator.has_role? 'radius_replies_destroyer' %>
+                      <%= link_to t(:Destroy), user_radius_reply_url(@user, reply),
+                                  :method => :delete, :confirm => t(:Are_you_sure) %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <% if auth? :radius_replies_creator %>
+              <tr>
+                <td colspan="4">
+                  <p><%= link_to t(:Add_radius_reply), new_user_radius_reply_url(@user) %></p>
+                </td>
+              </tr>
+          <% end %>
+          </tfoot>
+        </table>
+      </div>
+  <% end %>
 </div>
-
 <div class="clear"></div>
+
 <div class="grid_12">
   <div class="box">
-    <h2><%=t :User_sessions %> <%= image_tag 'spinner_black.gif', :id => 'loading', :class => 'hidden' %></h2>
+    <h2><%= t(:Logins) %></h2>
+
+    <div class="block user_graph" id="user_logins_graph"></div>
+  </div>
+  <div class="box">
+    <h2><%= t(:Traffic) %></h2>
+
+    <div class="block user_graph" id="user_traffic_graph"></div>
+  </div>
+</div>
+<div class="clear"></div>
+
+<div class="grid_12">
+  <div class="box">
+    <h2><%= t :User_sessions %> <%= image_tag 'spinner_black.gif', :id => 'loading', :class => 'hidden' %></h2>
 
     <div class="block" id="rad_list_block">
       <%= render 'common/radius_accounting_list', :accountings => @radius_accountings, :total_accountings => @total_accountings %>

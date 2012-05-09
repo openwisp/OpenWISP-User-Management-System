@@ -16,8 +16,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RadiusCheck < ActiveRecord::Base
+  validates_presence_of :check_attribute
+  validates_uniqueness_of :check_attribute, :scope => [ :radius_entity_id, :radius_entity_type ]
+  validates_presence_of :op
+  validates_inclusion_of :op, :in => %w(:= == += != > >= < <= =~ !~ =* !*)
+  validates_presence_of :value
+
   belongs_to :radius_entity, :polymorphic => true
 
-  attr_accessible :attribute, :op, :value, :radius_entity
+  attr_accessible :check_attribute, :op, :value, :radius_entity
 
 end
