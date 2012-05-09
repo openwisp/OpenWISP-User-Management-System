@@ -17,13 +17,13 @@
 
 class UsersController < ApplicationController
   before_filter :require_operator
-  before_filter :load_user, :except => [ :index, :new, :create, :ajax_search, :browse, :search, :find ]
+  before_filter :load_user, :except => [ :index, :new, :create, :search, :find ]
   skip_before_filter :set_mobile_format
 
   access_control do
     default :deny
 
-    allow :users_browser,    :to => [ :index, :show, :ajax_search ]
+    allow :users_browser,    :to => [ :index, :show ]
     allow :users_registrant, :to => [ :new, :create ]
     allow :users_manager,    :to => [ :new, :create, :edit, :update ]
     allow :users_destroyer,  :to => [ :destroy ]
