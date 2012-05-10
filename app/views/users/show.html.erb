@@ -41,13 +41,6 @@
         <tr>
           <th><%= t :Given_name %></th>
           <th><%= t :Surname %></th>
-          <% if @user.verify_with_mobile_phone? %>
-              <th><%= t :Mobile_phone_number %></th>
-          <% end %>
-          <th><%= t :Username %></th>
-          <% if @user.has_image? %>
-              <th><%= t :Document_photo %></th>
-          <% end %>
           <th><%= t :State %></th>
           <th><%= t :City %></th>
           <th><%= t :Address %></th>
@@ -58,13 +51,6 @@
         <tr>
           <td><%= @user.given_name %></td>
           <td><%= @user.surname %></td>
-          <% if @user.verify_with_mobile_phone? %>
-              <td><%= @user.mobile_phone %></td>
-          <% end %>
-          <td><%= @user.username %></td>
-          <% if @user.has_image? %>
-              <td><%= document_of @user, :link => true %></td>
-          <% end %>
           <td><%= @user.state %></td>
           <td><%= @user.city %></td>
           <td><%= @user.address %></td>
@@ -77,6 +63,13 @@
       <table>
         <thead>
         <tr>
+          <th><%= t :Username %></th>
+          <% if @user.verify_with_mobile_phone? %>
+              <th><%= t :Mobile_phone_number %></th>
+          <% end %>
+          <% if @user.has_image? %>
+              <th><%= t :Document_photo %></th>
+          <% end %>
           <th><%= t :Registration_date %></th>
           <th><%= t :Verification_date %></th>
           <th><%= t :User_management_logins %></th>
@@ -85,6 +78,13 @@
         </thead>
         <tbody>
         <tr>
+          <td><%= @user.username %></td>
+          <% if @user.verify_with_mobile_phone? %>
+              <td><%= @user.mobile_phone %></td>
+          <% end %>
+          <% if @user.has_image? %>
+              <td><%= document_of @user, :link => true %></td>
+          <% end %>
           <td><%= l(@user.created_at, :format => :short) %></td>
           <td>
             <% if @user.verified %>
