@@ -26,6 +26,10 @@ class Operator < ActiveRecord::Base
     radius_replies_creator radius_replies_viewer radius_replies_manager radius_replies_destroyer
   )
 
+  SINGLE_OBJECT_ROLES = %w(
+    user_manager
+  )
+
   acts_as_authentic do |c|
     c.merge_validates_length_of_password_field_options( { :minimum => 8 } )
     c.validates_length_of_login_field_options = { :in => 4..16 }

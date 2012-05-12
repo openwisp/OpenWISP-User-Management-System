@@ -67,6 +67,10 @@ class UsersController < ApplicationController
     if @user.save
       current_account_session.destroy unless current_account_session.nil?
       render :ticket
+
+      # Associate user with the operator the current operator
+      current_operator.has_role!('user_manager', @user)
+
     else
       render :action => :new
     end
