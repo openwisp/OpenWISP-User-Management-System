@@ -27,6 +27,7 @@
 
 <div class="grid_12">
   <div class="box">
+    <h2><%= t :User_information %></h2>
     <ul class="nav main">
       <li><%= link_to t(:Refresh_data), "" %></li>
       <% if current_operator.has_role? 'users_manager' %>
@@ -57,10 +58,6 @@
           <td><%= @user.email %></td>
         </tr>
         </tbody>
-      </table>
-    </div>
-    <div class="block" id="general_info">
-      <table>
         <thead>
         <tr>
           <th><%= t :Username %></th>
@@ -95,6 +92,16 @@
           </td>
           <td><%= @user.login_count %></td>
           <td><%= @user.radius_accountings.count %></td>
+        </tr>
+        </tbody>
+        <thead>
+        <tr>
+          <th colspan="6"><%= t :Notes %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td colspan="6"><%= @user.notes %>&nbsp;</td>
         </tr>
         </tbody>
       </table>
