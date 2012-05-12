@@ -131,13 +131,6 @@
               </tr>
           <% end %>
           </tbody>
-          <tfoot>
-          <% if current_operator.has_role? 'users_manager' %>
-              <tr>
-                <td colspan="3"><%= link_to t(:Edit), edit_user_path(@user) %></td>
-              </tr>
-          <% end %>
-          </tfoot>
         </table>
       </div>
   <% end %>
