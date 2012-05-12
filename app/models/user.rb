@@ -41,7 +41,7 @@ class User < AccountCommon
                          :if => Proc.new { |user| !user.new_record? }
 
 
-  has_many :radius_checks,  :as => :radius_entity, :dependent => :destroy
+  has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
 
   attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
@@ -77,30 +77,30 @@ class User < AccountCommon
                                :limit => num)
     ret = []
     top.each do |t|
-        user = User.find_by_username(t.UserName) # See the above select
-        ret.push(user) unless user.nil?
+      user = User.find_by_username(t.UserName) # See the above select
+      ret.push(user) unless user.nil?
     end
 
     ret
   end
 
   def self.find_all_by_user_phone_or_mail(query)
-    where([ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
+    where(["username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?"] + [query]*3)
   end
 
   def self.registered_each_day(from, to)
-    (from..to).map{ |that_day|
+    (from..to).map { |that_day|
       on_that_day = User.registered_on(that_day)
       [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
     }.compact
   end
 
   def self.registered_on(date)
-    count :conditions => [ "DATE(verified_at) <= ?", date.to_s]
+    count :conditions => ["DATE(verified_at) <= ?", date.to_s]
   end
 
   def self.registered_yesterday
-    where({ :created_at => 1.day.ago..DateTime.now })
+    where({:created_at => 1.day.ago..DateTime.now})
   end
 
   def self.unverified
@@ -129,7 +129,7 @@ class User < AccountCommon
   end
 
   def radius_groups_ids
-    self.radius_groups.map{|group| group.id}
+    self.radius_groups.map { |group| group.id }
   end
 
   def radius_groups_ids=(ids)
@@ -148,7 +148,7 @@ class User < AccountCommon
   def mobile_phone=(value)
     if self.verify_with_mobile_phone?
       self.mobile_prefix = value[0..2]
-      self.mobile_suffix = value[3,-1]
+      self.mobile_suffix = value[3, -1]
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end

@@ -59,6 +59,7 @@
   <%= f.input :privacy_acceptance, :error => false %>
 </div>
 
+<%= f.input :notes, :input_html => { :rows => 4 } %>
 
 <% if current_operator.has_role? 'users_manager' %>
     <%= f.label :radius_groups %>

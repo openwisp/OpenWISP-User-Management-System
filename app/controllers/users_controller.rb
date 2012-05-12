@@ -17,24 +17,24 @@
 
 class UsersController < ApplicationController
   before_filter :require_operator
-  before_filter :load_user, :except => [ :index, :new, :create, :search, :find ]
+  before_filter :load_user, :except => [:index, :new, :create, :search, :find]
   skip_before_filter :set_mobile_format
 
   access_control do
     default :deny
 
-    allow :users_browser,    :to => [ :index, :show ]
-    allow :users_registrant, :to => [ :new, :create ]
-    allow :users_manager,    :to => [ :new, :create, :edit, :update ]
-    allow :users_destroyer,  :to => [ :destroy ]
-    allow :users_finder,     :to => [ :find, :search, :show ]
+    allow :users_browser, :to => [:index, :show]
+    allow :users_registrant, :to => [:new, :create]
+    allow :users_manager, :to => [:new, :create, :edit, :update]
+    allow :users_destroyer, :to => [:destroy]
+    allow :users_finder, :to => [:find, :search, :show]
   end
 
   STATS_PERIOD = 14
 
   def index
     sort_and_paginate_users
-    
+
     respond_to do |format|
       format.html
       format.js
@@ -42,9 +42,9 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new( :eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT )
+    @user = User.new(:eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT)
     @user.verified = true
-    @user.radius_groups = [ RadiusGroup.find_by_name(Configuration.get(:default_radius_group)) ]
+    @user.radius_groups = [RadiusGroup.find_by_name(Configuration.get(:default_radius_group))]
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
     # Parameter anti-tampering
     unless current_operator.has_role? 'users_manager'
-      @user.radius_groups = [ RadiusGroup.find_by_name(Configuration.get(:default_radius_group))]
+      @user.radius_groups = [RadiusGroup.find_by_name(Configuration.get(:default_radius_group))]
       @user.verified = @user.active = true
     end
 
@@ -145,19 +145,32 @@ class UsersController < ApplicationController
     items_per_page = Configuration.get('default_radacct_results_per_page')
 
     sort = case params[:sort]
-             when 'acct_start_time'          then "AcctStartTime"
-             when 'acct_stop_time'           then "AcctStopTime"
-             when 'acct_input_octets'        then "AcctInputOctets"
-             when 'acct_output_octets'       then "AcctOutputOctets"
-             when 'calling_station_id'       then "CallingStationId"
-             when 'framed_ip_address'        then "FramedIPAddress"
-             when 'acct_start_time_rev'      then "AcctStartTime DESC"
-             when 'acct_stop_time_rev'       then "AcctStopTime DESC"
-             when 'acct_input_octets_rev'    then "AcctInputOctets DESC"
-             when 'acct_output_octets_rev'   then "AcctOutputOctets DESC"
-             when 'calling_station_id_rev'   then "CallingStationId DESC"
-             when 'framed_ip_address_rev'    then "FramedIPAddress DESC"
-             else nil
+             when 'acct_start_time' then
+               "AcctStartTime"
+             when 'acct_stop_time' then
+               "AcctStopTime"
+             when 'acct_input_octets' then
+               "AcctInputOctets"
+             when 'acct_output_octets' then
+               "AcctOutputOctets"
+             when 'calling_station_id' then
+               "CallingStationId"
+             when 'framed_ip_address' then
+               "FramedIPAddress"
+             when 'acct_start_time_rev' then
+               "AcctStartTime DESC"
+             when 'acct_stop_time_rev' then
+               "AcctStopTime DESC"
+             when 'acct_input_octets_rev' then
+               "AcctInputOctets DESC"
+             when 'acct_output_octets_rev' then
+               "AcctOutputOctets DESC"
+             when 'calling_station_id_rev' then
+               "CallingStationId DESC"
+             when 'framed_ip_address_rev' then
+               "FramedIPAddress DESC"
+             else
+               nil
            end
     if sort.nil?
       params[:sort] = "acct_start_time_rev"
@@ -166,7 +179,7 @@ class UsersController < ApplicationController
 
     page = params[:page].nil? ? 1 : params[:page]
 
-    @total_accountings =  @user.radius_accountings.count
+    @total_accountings = @user.radius_accountings.count
     @radius_accountings = @user.radius_accountings.order(sort).page(page).per(items_per_page)
   end
 
@@ -174,25 +187,44 @@ class UsersController < ApplicationController
     items_per_page = Configuration.get('default_user_search_results_per_page')
 
     sort = case params[:sort]
-             when 'registered_at'      then "created_at"
-             when 'username'           then "username"
-             when 'given_name'         then "given_name"
-             when 'surname'            then "surname"
-             when 'state'              then "state"
-             when 'city'               then "city"
-             when 'address'            then "address"
-             when 'verified'           then "verified"
-             when 'active'             then "active"
-             when 'registered_at_rev'  then "created_at DESC"
-             when 'username_rev'       then "username DESC"
-             when 'given_name_rev'     then "given_name DESC"
-             when 'surname_rev'        then "surname DESC"
-             when 'state_rev'          then "state DESC"
-             when 'city_rev'           then "city DESC"
-             when 'address_rev'        then "address DESC"
-             when 'verified_rev'       then "verified DESC"
-             when 'active_rev'         then "active DESC"
-             else nil
+             when 'registered_at' then
+               "created_at"
+             when 'username' then
+               "username"
+             when 'given_name' then
+               "given_name"
+             when 'surname' then
+               "surname"
+             when 'state' then
+               "state"
+             when 'city' then
+               "city"
+             when 'address' then
+               "address"
+             when 'verified' then
+               "verified"
+             when 'active' then
+               "active"
+             when 'registered_at_rev' then
+               "created_at DESC"
+             when 'username_rev' then
+               "username DESC"
+             when 'given_name_rev' then
+               "given_name DESC"
+             when 'surname_rev' then
+               "surname DESC"
+             when 'state_rev' then
+               "state DESC"
+             when 'city_rev' then
+               "city DESC"
+             when 'address_rev' then
+               "address DESC"
+             when 'verified_rev' then
+               "verified DESC"
+             when 'active_rev' then
+               "active DESC"
+             else
+               nil
            end
     if sort.nil?
       params[:sort] = "registered_at_rev"
