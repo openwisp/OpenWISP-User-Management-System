@@ -18,7 +18,7 @@
 class Operator < ActiveRecord::Base
   
   ROLES = %w(
-    users_destroyer users_manager users_registrant
+    users_destroyer users_manager users_registrant registrant_by_nothing registrant_by_id_card
     stats_viewer users_finder users_browser configurations_manager
     operators_manager
     radius_groups_creator radius_groups_viewer radius_groups_manager radius_groups_destroyer

@@ -35,10 +35,10 @@ class User < AccountCommon
 
 
   # Validations
-  validates_inclusion_of :verification_method, :in => VERIFICATION_METHODS,
-    :if => Proc.new{|user| user.new_record? }
-  validates_inclusion_of :verification_method, :in => [VERIFICATION_METHODS, SELFVERIFICATION_METHODS].flatten,
-    :if => Proc.new{|user| !user.new_record? }
+  validates_inclusion_of :verification_method, :in => User.verification_methods,
+                         :if => Proc.new { |user| user.new_record? }
+  validates_inclusion_of :verification_method, :in => User.verification_methods + User.self_verification_methods,
+                         :if => Proc.new { |user| !user.new_record? }
 
 
   has_many :radius_checks,  :as => :radius_entity, :dependent => :destroy
@@ -117,7 +117,7 @@ class User < AccountCommon
   # Utilities
 
   def can_signup_via?(verification_method)
-    VERIFICATION_METHODS.include? verification_method
+    User.verification_methods.include? verification_method
   end
 
   def total_traffic

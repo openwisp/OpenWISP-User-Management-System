@@ -63,7 +63,7 @@ class AccountsController < ApplicationController
   end
 
   def show
-    if not Account::SELFVERIFICATION_METHODS.include?(@account.verification_method) and !@account.verified?
+    if not User.self_verification_methods.include?(@account.verification_method) and !@account.verified?
       respond_to do |format|
         format.html   { render :action => :no_verification }
         format.mobile { render :action => :no_verification }
@@ -86,7 +86,7 @@ class AccountsController < ApplicationController
   end
 
   def edit
-    if not Account::SELFVERIFICATION_METHODS.include?(@account.verification_method) and !@account.verified?
+    if not User.self_verification_methods.include?(@account.verification_method) and !@account.verified?
       respond_to do |format|
         format.html   { render :action => :no_verification }
         format.mobile { render :action => :no_verification }

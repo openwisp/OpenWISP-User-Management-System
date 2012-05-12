@@ -25,9 +25,7 @@ class AccountCommon <  ActiveRecord::Base
   VERIFY_BY_MOBILE = "mobile_phone"
   VERIFY_BY_DOCUMENT = "identity_document"
   VERIFY_BY_CREDIT_CARD = "credit_card"
-
-  VERIFICATION_METHODS = [ VERIFY_BY_DOCUMENT ]
-  SELFVERIFICATION_METHODS = Configuration.get("credit_card_enabled") == "true" ? [ VERIFY_BY_MOBILE, VERIFY_BY_CREDIT_CARD ] : [ VERIFY_BY_MOBILE ]
+  VERIFY_BY_NOTHING = "no_identity_verification"
 
   # Authlogic
   acts_as_authentic do |c|
@@ -131,10 +129,37 @@ class AccountCommon <  ActiveRecord::Base
   # This is a virtual class. See User and Account classes
   attr_accessible
 
-  # Methods
+  # Class Methods
 
   def self.find_by_mobile_phone(mobile_phone)
     where([ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ]).first
+
+  def self.verification_methods
+    methods = []
+
+    if defined? OperatorSession.find.operator
+      methods.push VERIFY_BY_NOTHING  if OperatorSession.find.operator.has_role?('registrant_by_nothing')
+      methods.push VERIFY_BY_DOCUMENT if OperatorSession.find.operator.has_role?('registrant_by_id_card')
+      # Add your methods here ...
+    end
+
+    methods
+  end
+
+  def self.self_verification_methods
+    Configuration.get("credit_card_enabled") == "true" ? [VERIFY_BY_MOBILE, VERIFY_BY_CREDIT_CARD] : [VERIFY_BY_MOBILE]
+  end
+
+  # Instance Methods
+
+  def to_xml(options={})
+    options.merge!(:except => [:single_access_token,
+                               :image_file_data,
+                               :crypted_password,
+                               :password_salt,
+                               :persistence_token,
+                               :perishable_token])
+    super(options)
   end
 
   # Accessors

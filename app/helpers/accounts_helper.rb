@@ -42,7 +42,7 @@ module AccountsHelper
   end
 
   def account_verification_methods
-    Account::SELFVERIFICATION_METHODS
+    User.self_verification_methods
   end
 
   def account_verification_select

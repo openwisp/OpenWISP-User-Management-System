@@ -28,7 +28,7 @@ class Account < AccountCommon
   before_validation :set_username_from_mobile_phone_if_required, :on => :create
 
   # Validations
-  validates_inclusion_of :verification_method, :in => SELFVERIFICATION_METHODS, :if => Proc.new{|account| account.new_record? }
+  validates_inclusion_of :verification_method, :in => User.self_verification_methods, :if => Proc.new{|account| account.new_record? }
   validate :valid_captcha?, :message => 'dummy', :on => :create
 
   # Security and cleanup
@@ -80,7 +80,7 @@ class Account < AccountCommon
   # Utilities
 
   def can_signup_via?(verification_method)
-    SELFVERIFICATION_METHODS.include? verification_method
+    User.self_verification_methods.include? verification_method
   end
 
   def expire_time
