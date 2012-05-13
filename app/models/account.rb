@@ -118,15 +118,6 @@ class Account < AccountCommon
     username
   end
 
-  def radius_groups_ids
-    self.radius_groups.map{|group| group.id}
-  end
-
-  def radius_groups_ids=(ids)
-    self.radius_groups.clear
-    self.radius_groups = RadiusGroup.find([ids].flatten)
-  end
-
   def mobile_phone
     if self.verify_with_mobile_phone?
       "#{self.mobile_prefix}#{self.mobile_suffix}"

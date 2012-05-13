@@ -17,7 +17,7 @@
 
 class AccountsController < ApplicationController
   before_filter :require_account, :only => [
-      :show, :edit, :update, :ajax_accounting_search
+      :show, :edit, :update
   ]
 
   before_filter :require_no_account, :only => [
@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
 
   before_filter :require_no_operator
 
-  before_filter :load_account, :except => [ :new, :create, :verify ]
+  before_filter :load_account, :except => [ :new, :create, :verification ]
 
   protect_from_forgery :except => [ :verify_credit_card, :secure_verify_credit_card ]
 
@@ -137,7 +137,6 @@ class AccountsController < ApplicationController
   end
 
   def verification
-    @account = self.current_account
     if @account.nil? # Account expired (and removed by the housekeeping backgroundrb job)
       respond_to do |format|
         if request.xhr? # Ajax request
