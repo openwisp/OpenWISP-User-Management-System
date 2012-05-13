@@ -155,11 +155,11 @@ class AccountCommon < ActiveRecord::Base
 
   def to_xml(options={})
     options.merge!(:except => [:single_access_token,
-                               :image_file_data,
                                :crypted_password,
                                :password_salt,
                                :persistence_token,
-                               :perishable_token])
+                               :perishable_token]
+    )
     super(options)
   end
 
