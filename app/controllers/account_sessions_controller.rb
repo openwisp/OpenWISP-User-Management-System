@@ -26,6 +26,7 @@ class AccountSessionsController < ApplicationController
     respond_to do |format|
       format.html
       format.mobile
+      format.xml
     end
   end
 
@@ -37,12 +38,17 @@ class AccountSessionsController < ApplicationController
       keep_session_data :locale do
         reset_session
       end
-      
-      redirect_to account_url
+
+      respond_to do |format|
+        format.html { redirect_to account_url }
+        format.mobile { redirect_to account_url }
+        format.xml { render :nothing => true, :status => :created }
+      end
     else
       respond_to do |format|
         format.html   { render :action => :new }
         format.mobile { render :action => :new }
+        format.xml    { render :xml => @account_session.errors, :status => :unauthorized }
       end
     end
   end

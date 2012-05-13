@@ -38,6 +38,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.js
+      format.xml { render :xml => @users }
     end
   end
 
@@ -52,6 +53,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    params[:user][:radius_group_ids].uniq!
     @user = User.new(params[:user])
 
     # Parameter anti-tampering
@@ -66,13 +68,19 @@ class UsersController < ApplicationController
 
     if @user.save
       current_account_session.destroy unless current_account_session.nil?
-      render :ticket
 
       # Associate user with the operator the current operator
       current_operator.has_role!('user_manager', @user)
 
+      respond_to do |format|
+        format.html { render :ticket }
+        format.xml { render :xml => @user, :status => :created }
+      end
     else
-      render :action => :new
+      respond_to do |format|
+        format.html { render :action => :new }
+        format.xml { render :xml => @user.errors, :status => :bad_request }
+      end
     end
   end
 
@@ -85,8 +93,9 @@ class UsersController < ApplicationController
       format.html
       format.js
       format.jpg
-      format.xml { render :xml => @user.to_xml }
+      format.xml { render :xml => @user }
     end
+
   end
 
   def edit
@@ -98,6 +107,7 @@ class UsersController < ApplicationController
   def update
     # Parameter anti-tampering
     params[:user][:radius_group_ids] = nil unless current_operator.has_role? 'users_manager'
+    params[:user][:radius_group_ids].uniq!
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -105,17 +115,27 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       current_account_session.destroy unless current_account_session.nil?
-
       flash[:notice] = I18n.t(:Account_updated)
-      redirect_to user_url
+
+      respond_to do |format|
+        format.html { redirect_to user_url }
+        format.xml { render :xml => @user }
+      end
     else
-      render :action => :edit
+      respond_to do |format|
+        format.html { render :action => :edit }
+        format.xml { render :xml => @user.errors, :status => :bad_request }
+      end
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to users_url
+
+    respond_to do |format|
+      format.html { redirect_to users_url }
+      format.xml { render :nothing => true, :status => :ok }
+    end
   end
 
   def find
@@ -125,17 +145,29 @@ class UsersController < ApplicationController
 
       if found_users.count == 1
         @user = found_users.first
-        redirect_to user_url(@user)
+        respond_to do |format|
+          format.html { redirect_to user_url(@user) }
+          format.xml { render :xml => @user }
+          end
       elsif found_users.count > 1
         flash[:error] = I18n.t(:Too_many_search_results)
-        render :action => :search
+        respond_to do |format|
+          format.html { render :action => :search }
+          format.xml { render :nothing => true, :status => :bad_request }
+        end
       else
         flash[:error] = I18n.t(:User_not_found)
-        render :action => :search
+        respond_to do |format|
+          format.html { render :action => :search }
+          format.xml { render :nothing => true, :status => :not_found }
+        end
       end
     else
       flash[:error] = I18n.t(:User_not_found)
-      render :action => :search
+      respond_to do |format|
+        format.html { render :action => :search }
+        format.xml { render :nothing => true, :status => :bad_request }
+      end
     end
   end
 

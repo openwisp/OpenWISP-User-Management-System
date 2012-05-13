@@ -114,6 +114,13 @@ class User < AccountCommon
     where("verified_at is NOT NULL AND NOT verified")
   end
 
+  # Instance Methods
+
+  def to_xml(options={})
+    options.merge!(:include => :radius_groups)
+    super(options)
+  end
+
   # Utilities
 
   def can_signup_via?(verification_method)
