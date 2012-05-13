@@ -79,10 +79,14 @@ class RadiusChecksController < ApplicationController
   def load_subject
     @subject = params[:user_id].present? ? User.find(params[:user_id]) :
                                            RadiusGroup.find(params[:radius_group_id])
+  rescue ActiveRecord::RecordNotFound
+    render :nothing => true, :status => :not_found
   end
 
   def load_radius_check
     @radius_check = @subject.radius_checks.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render :nothing => true, :status => :not_found
   end
 
 end

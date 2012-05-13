@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new(:eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT)
     @user.verified = true
-    @user.radius_groups = [RadiusGroup.find_by_name(Configuration.get(:default_radius_group))]
+    @user.radius_groups = [RadiusGroup.find_by_name!(Configuration.get(:default_radius_group))]
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
     # Parameter anti-tampering
     unless current_operator.has_role? 'users_manager'
-      @user.radius_groups = [RadiusGroup.find_by_name(Configuration.get(:default_radius_group))]
+      @user.radius_groups = [RadiusGroup.find_by_name!(Configuration.get(:default_radius_group))]
       @user.verified = @user.active = true
     end
 
@@ -142,7 +142,9 @@ class UsersController < ApplicationController
   private
 
   def load_user
-    @user = User.find_by_id_or_username(params[:id])
+    @user = User.find_by_id_or_username!(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render :nothing => true, :status => :not_found
   end
 
   def sort_and_paginate_accountings

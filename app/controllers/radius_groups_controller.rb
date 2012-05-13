@@ -76,6 +76,8 @@ class RadiusGroupsController < ApplicationController
 
   def load_radius_group
     @radius_group = RadiusGroup.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render :nothing => true, :status => :not_found
   end
 
 end

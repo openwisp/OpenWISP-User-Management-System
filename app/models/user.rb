@@ -56,10 +56,10 @@ class User < AccountCommon
     User.order("created_at DESC").limit(num)
   end
 
-  def self.find_by_id_or_username(id)
+  def self.find_by_id_or_username!(id)
     User.find id
   rescue ActiveRecord::RecordNotFound
-    User.find_by_username id
+    User.find_by_username! id
   end
 
   # Class Method:
