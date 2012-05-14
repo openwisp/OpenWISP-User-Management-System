@@ -69,7 +69,11 @@ class RadiusGroupsController < ApplicationController
   # DELETE /radius_groups/:id
   def destroy
     @radius_group.destroy
-    redirect_to radius_groups_url
+
+    respond_to do |format|
+      format.html { redirect_to radius_groups_url }
+      format.any { render :nothing => true, :status => :ok }
+    end
   end
 
   private

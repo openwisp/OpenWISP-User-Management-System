@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    params[:user][:radius_group_ids].uniq!
+    params[:user][:radius_group_ids].uniq! if params[:user] && params[:user][:radius_group_ids]
     @user = User.new(params[:user])
 
     # Parameter anti-tampering
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     else
       respond_to do |format|
         format.html { render :action => :new }
-        format.xml { render :xml => @user.errors, :status => :bad_request }
+        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -107,7 +107,7 @@ class UsersController < ApplicationController
   def update
     # Parameter anti-tampering
     params[:user][:radius_group_ids] = nil unless current_operator.has_role? 'users_manager'
-    params[:user][:radius_group_ids].uniq!
+    params[:user][:radius_group_ids].uniq! if params[:user] && params[:user][:radius_group_ids]
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -119,12 +119,12 @@ class UsersController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to user_url }
-        format.xml { render :xml => @user }
+        format.xml { render :nothing => true, :status => :ok }
       end
     else
       respond_to do |format|
         format.html { render :action => :edit }
-        format.xml { render :xml => @user.errors, :status => :bad_request }
+        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -153,7 +153,7 @@ class UsersController < ApplicationController
         flash[:error] = I18n.t(:Too_many_search_results)
         respond_to do |format|
           format.html { render :action => :search }
-          format.xml { render :nothing => true, :status => :bad_request }
+          format.xml { render :nothing => true, :status => :unprocessable_entity }
         end
       else
         flash[:error] = I18n.t(:User_not_found)
