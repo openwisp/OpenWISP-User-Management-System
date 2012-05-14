@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new(:eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT)
+    @user = User.new(:eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User.verification_methods.first)
     @user.verified = true
     @user.radius_groups = [RadiusGroup.find_by_name!(Configuration.get(:default_radius_group))]
 
