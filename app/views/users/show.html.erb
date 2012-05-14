@@ -64,7 +64,7 @@
           <th>
             <% if @user.verify_with_mobile_phone? %>
                 <%= t :Mobile_phone_number %>
-            <% elsif @user.has_image? %>
+            <% elsif @user.verify_with_document? %>
                 <%= t :Document_photo %>
             <% end %>
             &nbsp;
@@ -81,7 +81,7 @@
           <td>
             <% if @user.verify_with_mobile_phone? %>
                 <%= @user.mobile_phone %>
-            <% elsif @user.has_image? %>
+            <% elsif @user.verify_with_document? %>
                 <%= document_of @user, :link => true %>
             <% end %>
             &nbsp;
