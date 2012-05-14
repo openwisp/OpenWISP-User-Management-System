@@ -71,7 +71,11 @@ class RadiusRepliesController < ApplicationController
   # DELETE /<subject>/:<subject>_id/radius_replies/:id
   def destroy
     @radius_reply.destroy
-    redirect_to subject_url(@subject)
+
+    respond_to do |format|
+      format.html { redirect_to subject_url(@subject) }
+      format.any { render :nothing => true, :status => :ok }
+    end
   end
 
   private
