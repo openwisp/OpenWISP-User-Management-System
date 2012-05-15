@@ -43,12 +43,20 @@ class StatsController < ApplicationController
 
     @from = Date.strptime(params[:from], I18n.t('date.formats.default')) rescue 14.days.ago.to_date
     @to = Date.strptime(params[:to], I18n.t('date.formats.default')) rescue Date.today
+    @number = params[:number].to_i rescue 5
+
+    data = load_stat_data
 
     respond_to do |format|
       format.html
-      format.js { load_stat_data }
-      format.json { load_stat_data }
+      format.js { data }
+      format.json { data }
+      format.xml { render :xml => data }
     end
+  rescue ActiveRecord::RecordNotFound
+    render :nothing => true, :status => :not_found
+  rescue NoMethodError
+    render :nothing => true, :status => :bad_request
   end
 
   def export
@@ -84,7 +92,7 @@ class StatsController < ApplicationController
     case id
       when 'account_logins' then current_account.session_times_from(@from)
       when 'account_traffic' then current_account.traffic_sessions_from(@from)
-      else raise "Stat #{id} not found!"
+      else raise NoMethodError.new("Stat #{id} not found!")
     end
   end
 
@@ -97,11 +105,11 @@ class StatsController < ApplicationController
       when 'traffic' then RadiusAccounting.traffic_each_day(@from, @to)
       when 'logins' then RadiusAccounting.logins_each_day(@from, @to)
 
-      when 'top_traffic_users' then User.top_traffic(5)
-      when 'last_logins' then RadiusAccounting.last_logins(5)
-      when 'last_registered' then User.last_registered(5)
+      when 'top_traffic_users' then User.top_traffic(@number)
+      when 'last_logins' then RadiusAccounting.last_logins(@number)
+      when 'last_registered' then User.last_registered(@number)
 
-      else raise "Stat #{id} not found!"
+      else raise NoMethodError.new("Stat #{id} not found!")
     end
   end
 end
