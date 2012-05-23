@@ -35,11 +35,7 @@ class User < AccountCommon
 
 
   # Validations
-  validates_inclusion_of :verification_method, :in => User.verification_methods,
-                         :if => Proc.new { |user| user.new_record? }
-  validates_inclusion_of :verification_method, :in => User.verification_methods + User.self_verification_methods,
-                         :if => Proc.new { |user| !user.new_record? }
-
+  validate :verification_method_inclusion
 
   has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
@@ -49,6 +45,14 @@ class User < AccountCommon
                   :mobile_prefix, :mobile_suffix, :verified, :verification_method,
                   :notes, :eula_acceptance, :privacy_acceptance,
                   :username, :image_file_temp, :image_file, :image_file_data, :radius_group_ids
+
+  # Custom validations
+
+  def verification_method_inclusion
+    valid_verification_methods = User.verification_methods + (self.new_record? ? [] : User.self_verification_methods)
+
+    errors.add(:verification_method, I18n.t(:inclusion, :scope => [:activerecord, :errors, :messages])) unless valid_verification_methods.include?(verification_method)
+  end
 
   # Class methods
 
