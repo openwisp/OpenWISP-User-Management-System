@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
 
   before_filter :require_no_operator
 
-  before_filter :load_account, :except => [ :new, :create, :verification ]
+  before_filter :load_account, :except => [ :new, :create ]
 
   protect_from_forgery :except => [ :verify_credit_card, :secure_verify_credit_card ]
 
