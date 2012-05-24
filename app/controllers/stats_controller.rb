@@ -53,8 +53,6 @@ class StatsController < ApplicationController
       format.json { data }
       format.xml { render :xml => data }
     end
-  rescue ActiveRecord::RecordNotFound
-    render :nothing => true, :status => :not_found
   rescue NoMethodError
     render :nothing => true, :status => :bad_request
   end

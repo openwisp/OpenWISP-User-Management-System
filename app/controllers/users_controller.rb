@@ -175,8 +175,6 @@ class UsersController < ApplicationController
 
   def load_user
     @user = User.find_by_id_or_username!(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render :nothing => true, :status => :not_found
   end
 
   def sort_and_paginate_accountings

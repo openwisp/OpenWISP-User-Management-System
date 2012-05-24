@@ -83,14 +83,10 @@ class RadiusRepliesController < ApplicationController
   def load_subject
     @subject = params[:user_id].present? ? User.find_by_id_or_username!(params[:user_id]) :
                                            RadiusGroup.find(params[:radius_group_id])
-  rescue ActiveRecord::RecordNotFound
-    render :nothing => true, :status => :not_found
   end
 
   def load_radius_reply
     @radius_reply = @subject.radius_replies.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render :nothing => true, :status => :not_found
   end
 
 end

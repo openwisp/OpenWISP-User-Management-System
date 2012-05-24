@@ -20,6 +20,8 @@
 
 class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, :with => :invalid_token
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+  rescue_from Acl9::AccessDenied, :with => :render_403
 
   helper :all
   helper_method :current_account_session, :current_account
@@ -45,6 +47,13 @@ class ApplicationController < ActionController::Base
     render "common/invalid_token"
   end
 
+  def render_403
+    render :nothing => true, :status => :forbidden
+  end
+
+  def render_404
+    render :nothing => true, :status => :not_found
+  end
 
   protected
 
