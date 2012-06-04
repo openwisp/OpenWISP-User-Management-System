@@ -35,7 +35,7 @@ module UsersHelper
 
 
   def user_verification_methods
-    User::VERIFICATION_METHODS
+    User.verification_methods
   end
 
   def user_verification_select

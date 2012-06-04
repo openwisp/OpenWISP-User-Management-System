@@ -20,6 +20,8 @@ class Configuration < ActiveRecord::Base
   validates_presence_of :key
   validates_format_of :key, :with => /\A[a-z_\.,]+\Z/
 
+  attr_accessible :key, :value, :system_key
+
   def self.get(key)
     unless res = Configuration.find_by_key(key)
       raise("BUG: value for key " + key + " not found!")

@@ -25,13 +25,8 @@
 <% end %>
 
 <%# Reload the graphs every time, skipping jQuery Mobile cache %>
-<%= javascript_tag "
-        $(document).bind('pageshow', function(){
-            $.getScript('#{javascript_path('owums.account_logins_graph')}');
-            $.getScript('#{javascript_path('owums.account_traffic_graph')}');
-        });
-"%>
-
+<%= javascript_include_tag 'owums.account_logins_graph', :cache => false %>
+<%= javascript_include_tag 'owums.account_traffic_graph', :cache => false %>
 
 <div data-role="collapsible">
   <h2><%= t(:Personal_details) %></h2>

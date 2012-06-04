@@ -24,17 +24,21 @@ class Account < AccountCommon
     c.maintain_sessions = true
   end
 
-  # Security and cleanup
-  attr_readonly  :given_name, :surname, :birth_date
-  attr_protected :verified # SEC: shouldn't be set with mass-assignment!
-
   # In case a WISP uses the user's mobile phone as the username
   before_validation :set_username_from_mobile_phone_if_required, :on => :create
 
   # Validations
-  validates_inclusion_of :verification_method, :in => SELFVERIFICATION_METHODS, :if => Proc.new{|account| account.new_record? }
-  validate :valid_captcha?, :message => 'cippalippa', :on => :create
+  validates_inclusion_of :verification_method, :in => User.self_verification_methods, :if => Proc.new{|account| account.new_record? }
+  validate :valid_captcha?, :message => 'dummy', :on => :create
 
+  # Security and cleanup
+  attr_readonly  :given_name, :surname, :birth_date
+  # # :username and :verified should never be set with mass-assignment!
+  attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
+                  :email, :email_confirmation, :password, :password_confirmation,
+                  :mobile_prefix, :mobile_prefix_confirmation, :mobile_suffix, 
+                  :mobile_suffix_confirmation, :verification_method,
+                  :eula_acceptance, :privacy_acceptance, :captcha
 
   # Class methods
 
@@ -76,7 +80,7 @@ class Account < AccountCommon
   # Utilities
 
   def can_signup_via?(verification_method)
-    SELFVERIFICATION_METHODS.include? verification_method
+    User.self_verification_methods.include? verification_method
   end
 
   def expire_time
@@ -112,15 +116,6 @@ class Account < AccountCommon
 
   def radius_name
     username
-  end
-
-  def radius_groups_ids
-    self.radius_groups.map{|group| group.id}
-  end
-
-  def radius_groups_ids=(ids)
-    self.radius_groups.clear
-    self.radius_groups = RadiusGroup.find([ids].flatten)
   end
 
   def mobile_phone

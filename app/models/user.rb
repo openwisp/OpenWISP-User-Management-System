@@ -35,20 +35,35 @@ class User < AccountCommon
 
 
   # Validations
-  validates_inclusion_of :verification_method, :in => VERIFICATION_METHODS,
-    :if => Proc.new{|user| user.new_record? }
-  validates_inclusion_of :verification_method, :in => [VERIFICATION_METHODS, SELFVERIFICATION_METHODS].flatten,
-    :if => Proc.new{|user| !user.new_record? }
+  validate :verification_method_inclusion
 
-
-  has_many :radius_checks,  :as => :radius_entity, :dependent => :destroy
+  has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
 
+  attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
+                  :email, :email_confirmation, :password, :password_confirmation,
+                  :mobile_prefix, :mobile_suffix, :verified, :verification_method,
+                  :notes, :eula_acceptance, :privacy_acceptance,
+                  :username, :image_file_temp, :image_file, :image_file_data, :radius_group_ids
+
+  # Custom validations
+
+  def verification_method_inclusion
+    valid_verification_methods = User.verification_methods + (self.new_record? ? [] : User.self_verification_methods)
+
+    errors.add(:verification_method, I18n.t(:inclusion, :scope => [:activerecord, :errors, :messages])) unless valid_verification_methods.include?(verification_method)
+  end
 
   # Class methods
 
   def self.last_registered(num = 5)
     User.order("created_at DESC").limit(num)
+  end
+
+  def self.find_by_id_or_username!(id)
+    User.find id
+  rescue ActiveRecord::RecordNotFound
+    User.find_by_username! id
   end
 
   # Class Method:
@@ -66,30 +81,30 @@ class User < AccountCommon
                                :limit => num)
     ret = []
     top.each do |t|
-        user = User.find_by_username(t.UserName) # See the above select
-        ret.push(user) unless user.nil?
+      user = User.find_by_username(t.UserName) # See the above select
+      ret.push(user) unless user.nil?
     end
 
     ret
   end
 
   def self.find_all_by_user_phone_or_mail(query)
-    where([ "username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?" ] + [query]*3)
+    where(["username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?"] + [query]*3)
   end
 
   def self.registered_each_day(from, to)
-    (from..to).map{ |that_day|
+    (from..to).map { |that_day|
       on_that_day = User.registered_on(that_day)
       [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
     }.compact
   end
 
   def self.registered_on(date)
-    count :conditions => "Date(verified_at) <= '#{date.to_s}'"
+    count :conditions => ["DATE(verified_at) <= ?", date.to_s]
   end
 
   def self.registered_yesterday
-    where({ :created_at => 1.day.ago..DateTime.now })
+    where({:created_at => 1.day.ago..DateTime.now})
   end
 
   def self.unverified
@@ -103,10 +118,17 @@ class User < AccountCommon
     where("verified_at is NOT NULL AND NOT verified")
   end
 
+  # Instance Methods
+
+  def to_xml(options={})
+    options.merge!(:include => :radius_groups)
+    super(options)
+  end
+
   # Utilities
 
   def can_signup_via?(verification_method)
-    VERIFICATION_METHODS.include? verification_method
+    User.verification_methods.include? verification_method
   end
 
   def total_traffic
@@ -115,15 +137,6 @@ class User < AccountCommon
 
   def radius_name
     username
-  end
-
-  def radius_groups_ids
-    self.radius_groups.map{|group| group.id}
-  end
-
-  def radius_groups_ids=(ids)
-    self.radius_groups.clear
-    self.radius_groups = RadiusGroup.find([ids].flatten)
   end
 
   def mobile_phone
@@ -137,7 +150,7 @@ class User < AccountCommon
   def mobile_phone=(value)
     if self.verify_with_mobile_phone?
       self.mobile_prefix = value[0..2]
-      self.mobile_suffix = value[3,-1]
+      self.mobile_suffix = value[3, -1]
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end
@@ -184,7 +197,7 @@ class User < AccountCommon
       # (i.e. verified == false and recovered == false)
       # we have to recover her password.
       # Default value for recovered is nil (!= false)
-      if self.recovered == false
+      unless self.recovered
         self.mobile_phone_password_recover!
       end
       return true
@@ -193,11 +206,11 @@ class User < AccountCommon
   end
 
   def registration_expire_timeout
-    if !self.disabled?
+    if self.disabled?
+      Configuration.get('disabled_account_expire_days').to_i.days
+    else
       Rails.logger.error("Account not disabled")
       raise "Account not disabled"
-    else
-      Configuration.get('disabled_account_expire_days').to_i.days
     end
   end
 
@@ -209,7 +222,7 @@ class User < AccountCommon
   # Accessors
 
   def recovered=(value)
-    write_attribute(:recovered, value == true)
+    write_attribute(:recovered, value)
     self.recovered_at = Time.now()
   end
 
