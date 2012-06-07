@@ -15,14 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'shellwords'
+
 class SpokenCaptchaController < ApplicationController
   def show
     begin
       captcha = session[:captcha]
       if I18n.locale == 'it' || I18n.locale == :it
-        output = %x[echo "#{captcha}" | text2wave -eval "(language_italian)" -eval "(Parameter.set 'Duration_Stretch 1.2)" -eval "(set! hts_duration_stretch 0.1)" -scale 0.5 | lame - - 2>/dev/null]
+        output = %x{ echo "#{Shellwords.escape(captcha)}" | text2wave -eval "(language_italian)" -eval "(Parameter.set 'Duration_Stretch 1.2)" -eval "(set! hts_duration_stretch 0.1)" -scale 0.5 | lame - - 2>/dev/null }
       else
-        output = %x[echo "#{captcha}" | text2wave -eval "(Parameter.set 'Duration_Stretch 1.2)" -eval "(set! hts_duration_stretch 0.1)" -scale 0.5 | lame - - 2>/dev/null]
+        output = %x{ echo "#{Shellwords.escape(captcha)}" | text2wave -eval "(Parameter.set 'Duration_Stretch 1.2)" -eval "(set! hts_duration_stretch 0.1)" -scale 0.5 | lame - - 2>/dev/null }
       end
       send_data output, :type => 'audio/mp3'
     rescue Exception => e

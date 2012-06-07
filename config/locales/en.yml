@@ -81,7 +81,7 @@ en:
     hints:
       mobile_phone: "You will need this number to make a call. You can only use italian mobile phone carriers"
       account:
-        captcha: "Write here the text you see in the picture"
+        captcha: "Write here the text you see in the picture below"
         email: "The e-mail address can be used to reset your password in case you forget it"
         password: "It must contain at least one alphabetic character and one digit and be at least 8 character long"
         username: "You must use this username and your password to log in"

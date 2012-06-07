@@ -50,8 +50,13 @@ Owums::Application.routes.draw do
   resources :configurations
   resources :users do
     resources :stats, :only => :show
+    resources :radius_checks
+    resources :radius_replies
   end
-
+  resources :radius_groups do
+    resources :radius_checks
+    resources :radius_replies
+  end
   resources :online_users, :only => :index
   resources :operators
   resources :password_resets

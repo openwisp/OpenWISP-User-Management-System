@@ -25,7 +25,7 @@ xml.online_users :type => :array do
         xml.calling_station_id online_user.radius_accountings.last_logins(1).first.calling_station_id
         xml.acct_input_octets online_user.radius_accountings.last_logins(1).first.acct_input_octets
         xml.acct_output_octets online_user.radius_accountings.last_logins(1).first.acct_output_octets
-        xml.acct_output_octets online_user.radius_accountings.last_logins(1).first.acct_session_time
+        xml.acct_session_time online_user.radius_accountings.last_logins(1).first.acct_session_time
       end
     end
   end

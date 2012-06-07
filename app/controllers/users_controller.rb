@@ -17,34 +17,35 @@
 
 class UsersController < ApplicationController
   before_filter :require_operator
-  before_filter :load_user, :except => [ :index, :new, :create, :ajax_search, :browse, :search, :find ]
+  before_filter :load_user, :except => [:index, :new, :create, :search, :find]
   skip_before_filter :set_mobile_format
 
   access_control do
     default :deny
 
-    allow :users_browser,    :to => [ :index, :show, :ajax_search ]
-    allow :users_registrant, :to => [ :new, :create ]
-    allow :users_manager,    :to => [ :new, :create, :edit, :update ]
-    allow :users_destroyer,  :to => [ :destroy ]
-    allow :users_finder,     :to => [ :find, :search, :show ]
+    allow :users_browser, :to => [:index, :show]
+    allow :users_registrant, :to => [:new, :create]
+    allow :users_manager, :to => [:new, :create, :edit, :update]
+    allow :users_destroyer, :to => [:destroy]
+    allow :users_finder, :to => [:find, :search, :show]
   end
 
   STATS_PERIOD = 14
 
   def index
     sort_and_paginate_users
-    
+
     respond_to do |format|
       format.html
       format.js
+      format.xml { render :xml => @users }
     end
   end
 
   def new
-    @user = User.new( :eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User::VERIFY_BY_DOCUMENT )
+    @user = User.new(:eula_acceptance => true, :privacy_acceptance => true, :state => 'Italy', :verification_method => User.verification_methods.first)
     @user.verified = true
-    @user.radius_group_ids = [ RadiusGroup::users_group ]
+    @user.radius_groups = [RadiusGroup.find_by_name!(Configuration.get(:default_radius_group))]
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -52,11 +53,12 @@ class UsersController < ApplicationController
   end
 
   def create
+    params[:user][:radius_group_ids].uniq! if params[:user] && params[:user][:radius_group_ids]
     @user = User.new(params[:user])
 
     # Parameter anti-tampering
     unless current_operator.has_role? 'users_manager'
-      @user.radius_group_ids = [ RadiusGroup::users_group ]
+      @user.radius_groups = [RadiusGroup.find_by_name!(Configuration.get(:default_radius_group))]
       @user.verified = @user.active = true
     end
 
@@ -66,9 +68,19 @@ class UsersController < ApplicationController
 
     if @user.save
       current_account_session.destroy unless current_account_session.nil?
-      render :ticket
+
+      # Associate user with the operator the current operator
+      current_operator.has_role!('user_manager', @user)
+
+      respond_to do |format|
+        format.html { render :ticket }
+        format.xml { render :xml => @user, :status => :created }
+      end
     else
-      render :action => :new
+      respond_to do |format|
+        format.html { render :action => :new }
+        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
@@ -81,8 +93,9 @@ class UsersController < ApplicationController
       format.html
       format.js
       format.jpg
-      format.xml { render :xml => @user.to_xml }
+      format.xml { render :xml => @user }
     end
+
   end
 
   def edit
@@ -94,6 +107,7 @@ class UsersController < ApplicationController
   def update
     # Parameter anti-tampering
     params[:user][:radius_group_ids] = nil unless current_operator.has_role? 'users_manager'
+    params[:user][:radius_group_ids].uniq! if params[:user] && params[:user][:radius_group_ids]
 
     @countries = Country.all
     @mobile_prefixes = MobilePrefix.all
@@ -101,17 +115,27 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       current_account_session.destroy unless current_account_session.nil?
-
       flash[:notice] = I18n.t(:Account_updated)
-      redirect_to user_url
+
+      respond_to do |format|
+        format.html { redirect_to user_url }
+        format.xml { render :nothing => true, :status => :ok }
+      end
     else
-      render :action => :edit
+      respond_to do |format|
+        format.html { render :action => :edit }
+        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to users_url
+
+    respond_to do |format|
+      format.html { redirect_to users_url }
+      format.xml { render :nothing => true, :status => :ok }
+    end
   end
 
   def find
@@ -121,42 +145,68 @@ class UsersController < ApplicationController
 
       if found_users.count == 1
         @user = found_users.first
-        redirect_to @user
+        respond_to do |format|
+          format.html { redirect_to user_url(@user) }
+          format.xml { render :xml => @user }
+          end
       elsif found_users.count > 1
         flash[:error] = I18n.t(:Too_many_search_results)
-        render :action => :search
+        respond_to do |format|
+          format.html { render :action => :search }
+          format.xml { render :nothing => true, :status => :unprocessable_entity }
+        end
       else
         flash[:error] = I18n.t(:User_not_found)
-        render :action => :search
+        respond_to do |format|
+          format.html { render :action => :search }
+          format.xml { render :nothing => true, :status => :not_found }
+        end
       end
     else
       flash[:error] = I18n.t(:User_not_found)
-      render :action => :search
+      respond_to do |format|
+        format.html { render :action => :search }
+        format.xml { render :nothing => true, :status => :bad_request }
+      end
     end
   end
 
   private
 
   def load_user
-    @user = User.find(params[:id])
+    @user = User.find_by_id_or_username!(params[:id])
   end
 
   def sort_and_paginate_accountings
     items_per_page = Configuration.get('default_radacct_results_per_page')
 
     sort = case params[:sort]
-             when 'acct_start_time'          then "AcctStartTime"
-             when 'acct_stop_time'           then "AcctStopTime"
-             when 'acct_input_octets'        then "AcctInputOctets"
-             when 'acct_output_octets'       then "AcctOutputOctets"
-             when 'calling_station_id'       then "CallingStationId"
-             when 'framed_ip_address'        then "FramedIPAddress"
-             when 'acct_start_time_rev'      then "AcctStartTime DESC"
-             when 'acct_stop_time_rev'       then "AcctStopTime DESC"
-             when 'acct_input_octets_rev'    then "AcctInputOctets DESC"
-             when 'acct_output_octets_rev'   then "AcctOutputOctets DESC"
-             when 'calling_station_id_rev'   then "CallingStationId DESC"
-             when 'framed_ip_address_rev'    then "FramedIPAddress DESC"
+             when 'acct_start_time' then
+               "AcctStartTime"
+             when 'acct_stop_time' then
+               "AcctStopTime"
+             when 'acct_input_octets' then
+               "AcctInputOctets"
+             when 'acct_output_octets' then
+               "AcctOutputOctets"
+             when 'calling_station_id' then
+               "CallingStationId"
+             when 'framed_ip_address' then
+               "FramedIPAddress"
+             when 'acct_start_time_rev' then
+               "AcctStartTime DESC"
+             when 'acct_stop_time_rev' then
+               "AcctStopTime DESC"
+             when 'acct_input_octets_rev' then
+               "AcctInputOctets DESC"
+             when 'acct_output_octets_rev' then
+               "AcctOutputOctets DESC"
+             when 'calling_station_id_rev' then
+               "CallingStationId DESC"
+             when 'framed_ip_address_rev' then
+               "FramedIPAddress DESC"
+             else
+               nil
            end
     if sort.nil?
       params[:sort] = "acct_start_time_rev"
@@ -165,7 +215,7 @@ class UsersController < ApplicationController
 
     page = params[:page].nil? ? 1 : params[:page]
 
-    @total_accountings =  @user.radius_accountings.count
+    @total_accountings = @user.radius_accountings.count
     @radius_accountings = @user.radius_accountings.order(sort).page(page).per(items_per_page)
   end
 
@@ -173,24 +223,44 @@ class UsersController < ApplicationController
     items_per_page = Configuration.get('default_user_search_results_per_page')
 
     sort = case params[:sort]
-             when 'registered_at'      then "created_at"
-             when 'username'           then "username"
-             when 'given_name'         then "given_name"
-             when 'surname'            then "surname"
-             when 'state'              then "state"
-             when 'city'               then "city"
-             when 'address'            then "address"
-             when 'verified'           then "verified"
-             when 'active'             then "active"
-             when 'registered_at_rev'  then "created_at DESC"
-             when 'username_rev'       then "username DESC"
-             when 'given_name_rev'     then "given_name DESC"
-             when 'surname_rev'        then "surname DESC"
-             when 'state_rev'          then "state DESC"
-             when 'city_rev'           then "city DESC"
-             when 'address_rev'        then "address DESC"
-             when 'verified_rev'       then "verified DESC"
-             when 'active_rev'         then "active DESC"
+             when 'registered_at' then
+               "created_at"
+             when 'username' then
+               "username"
+             when 'given_name' then
+               "given_name"
+             when 'surname' then
+               "surname"
+             when 'state' then
+               "state"
+             when 'city' then
+               "city"
+             when 'address' then
+               "address"
+             when 'verified' then
+               "verified"
+             when 'active' then
+               "active"
+             when 'registered_at_rev' then
+               "created_at DESC"
+             when 'username_rev' then
+               "username DESC"
+             when 'given_name_rev' then
+               "given_name DESC"
+             when 'surname_rev' then
+               "surname DESC"
+             when 'state_rev' then
+               "state DESC"
+             when 'city_rev' then
+               "city DESC"
+             when 'address_rev' then
+               "address DESC"
+             when 'verified_rev' then
+               "verified DESC"
+             when 'active_rev' then
+               "active DESC"
+             else
+               nil
            end
     if sort.nil?
       params[:sort] = "registered_at_rev"
@@ -200,11 +270,11 @@ class UsersController < ApplicationController
     search = params[:search]
     page = params[:page].nil? ? 1 : params[:page]
 
-    unless search.nil?
-      search.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      conditions = [ "given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%","%#{search}%" ]
-    else
+    if search.nil?
       conditions = []
+    else
+      search.gsub(/\\/, '\&\&').gsub(/'/, "''")
+      conditions = ["given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"]
     end
 
     @total_users = User.count :conditions => conditions

@@ -20,6 +20,8 @@
 
 class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, :with => :invalid_token
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+  rescue_from Acl9::AccessDenied, :with => :render_403
 
   helper :all
   helper_method :current_account_session, :current_account
@@ -45,6 +47,13 @@ class ApplicationController < ActionController::Base
     render "common/invalid_token"
   end
 
+  def render_403
+    render :nothing => true, :status => :forbidden
+  end
+
+  def render_404
+    render :nothing => true, :status => :not_found
+  end
 
   protected
 
@@ -146,4 +155,10 @@ class ApplicationController < ActionController::Base
     request.env['authlogic_operator'] = current_operator rescue nil
     request.env['authlogic_user'] = current_user rescue nil
   end
+
+  # URL helpers for controllers
+  def subject_url(subject)
+    subject.is_a?(User) ? user_url(subject) : radius_group_url(subject)
+  end
+
 end

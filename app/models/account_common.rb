@@ -15,19 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class AccountCommon <  ActiveRecord::Base
+class AccountCommon < ActiveRecord::Base
   set_table_name 'users'
 
-  attr_readonly  :username, :verification_method
+  attr_readonly :username, :verification_method
 
   # Macros
 
   VERIFY_BY_MOBILE = "mobile_phone"
   VERIFY_BY_DOCUMENT = "identity_document"
   VERIFY_BY_CREDIT_CARD = "credit_card"
-
-  VERIFICATION_METHODS = [ VERIFY_BY_DOCUMENT ]
-  SELFVERIFICATION_METHODS = Configuration.get("credit_card_enabled") == "true" ? [ VERIFY_BY_MOBILE, VERIFY_BY_CREDIT_CARD ] : [ VERIFY_BY_MOBILE ]
+  VERIFY_BY_NOTHING = "no_identity_verification"
 
   # Authlogic
   acts_as_authentic do |c|
@@ -54,65 +52,65 @@ class AccountCommon <  ActiveRecord::Base
 
   # Validations
   validates :username,
-      :presence => true,
-      :uniqueness => { :allow_blank => true },
-      :length => { :in => 4..16, :allow_blank => true },
-      :format => { :with => /\A[a-z0-9_\-\.]+\Z/i, :allow_blank => true }
+            :presence => true,
+            :uniqueness => {:allow_blank => true},
+            :length => {:in => 4..16, :allow_blank => true},
+            :format => {:with => /\A[a-z0-9_\-\.]+\Z/i, :allow_blank => true}
 
   validates :email,
-      :presence => true,
-      :uniqueness => { :allow_blank => true },
-      :confirmation => { :allow_blank => true },
-      :format => {
-          :with => /^[A-Z0-9_\.%\+\-']+@(?:[A-Z0-9\-]+\.)+(?:[A-Z]{2,4}|museum|travel)$/i,
-          :message => :email_invalid,
-          :allow_blank => true
-      }
+            :presence => true,
+            :uniqueness => {:allow_blank => true},
+            :confirmation => {:allow_blank => true},
+            :format => {
+                :with => /^[A-Z0-9_\.%\+\-']+@(?:[A-Z0-9\-]+\.)+(?:[A-Z]{2,4}|museum|travel)$/i,
+                :message => :email_invalid,
+                :allow_blank => true
+            }
 
   validates :password, :if => :new_or_password_not_blank?,
-      :presence => true,
-      :confirmation => { :allow_blank => true },
-      :length => { :minimum => 8, :allow_blank => true },
-      :format => {
-          :with => /\A((\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*)|((\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*)\Z/i,
-          :message => :password_format,
-          :allow_blank => true
-      }
+            :presence => true,
+            :confirmation => {:allow_blank => true},
+            :length => {:minimum => 8, :allow_blank => true},
+            :format => {
+                :with => /\A((\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*)|((\d|[a-z_]|\s)*[a-z](\d|[a-z_]|\s)*\d(\d|[a-z_]|\s)*)\Z/i,
+                :message => :password_format,
+                :allow_blank => true
+            }
 
   validates :mobile_prefix, :if => :verify_with_mobile_phone?,
-      :presence => true,
-      :confirmation => true,
-      :format => { :with => /\A[0-9]+\Z/, :message => :mobile_prefix_format, :allow_blank => true }
+            :presence => true,
+            :confirmation => true,
+            :format => {:with => /\A[0-9]+\Z/, :message => :mobile_prefix_format, :allow_blank => true}
 
   validates :mobile_suffix, :if => :verify_with_mobile_phone?,
-      :presence => true,
-      :confirmation => true,
-      :uniqueness => { :scope => :mobile_prefix, :allow_blank => true },
-      :format => { :with => /\A[0-9]+\Z/, :message => :mobile_suffix_format, :allow_blank => true }
+            :presence => true,
+            :confirmation => true,
+            :uniqueness => {:scope => :mobile_prefix, :allow_blank => true},
+            :format => {:with => /\A[0-9]+\Z/, :message => :mobile_suffix_format, :allow_blank => true}
 
   validates :given_name,
-      :presence => true,
-      :format => { :with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true }
+            :presence => true,
+            :format => {:with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true}
 
   validates :surname,
-      :presence => true,
-      :format => { :with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true }
+            :presence => true,
+            :format => {:with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true}
 
   validates :state,
-      :presence => true,
-      :format => { :with => /\A[a-z\s'\.,]+\Z/i, :message => :address_format }
+            :presence => true,
+            :format => {:with => /\A[a-z\s'\.,]+\Z/i, :message => :address_format}
 
   validates :city,
-      :presence => true,
-      :format => { :with => /\A(\w|[\s'\.,\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true }
+            :presence => true,
+            :format => {:with => /\A(\w|[\s'\.,\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
 
   validates :address,
-      :presence => true,
-      :format => { :with => /\A(\w|[\s'\.,\/\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true }
+            :presence => true,
+            :format => {:with => /\A(\w|[\s'\.,\/\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
 
   validates :zip,
-      :presence => true,
-      :format => { :with => /[a-z0-9]/, :message => :zip_format, :allow_blank => true }
+            :presence => true,
+            :format => {:with => /[a-z0-9]/, :message => :zip_format, :allow_blank => true}
 
   validates_presence_of :birth_date
   validates_presence_of :eula_acceptance, :message => :eula_must_be_accepted
@@ -128,11 +126,41 @@ class AccountCommon <  ActiveRecord::Base
   has_and_belongs_to_many :radius_groups, :join_table => 'radius_groups_users', :foreign_key => 'user_id'
   has_many :radius_accountings, :foreign_key => :UserName, :primary_key => :username
 
+  # This is a virtual class. See User and Account classes
+  attr_accessible
 
-  # Methods
+  # Class Methods
 
   def self.find_by_mobile_phone(mobile_phone)
-    where([ "CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone ]).first
+    where(["CONCAT(mobile_prefix,mobile_suffix) = ?", mobile_phone]).first
+  end
+
+  def self.verification_methods
+    methods = []
+
+    if defined? OperatorSession.find.operator
+      methods.push VERIFY_BY_NOTHING  if OperatorSession.find.operator.has_role?('registrant_by_nothing')
+      methods.push VERIFY_BY_DOCUMENT if OperatorSession.find.operator.has_role?('registrant_by_id_card')
+      # Add your methods here ...
+    end
+
+    methods
+  end
+
+  def self.self_verification_methods
+    Configuration.get("credit_card_enabled") == "true" ? [VERIFY_BY_MOBILE, VERIFY_BY_CREDIT_CARD] : [VERIFY_BY_MOBILE]
+  end
+
+  # Instance Methods
+
+  def to_xml(options={})
+    options.merge!(:except => [:single_access_token,
+                               :crypted_password,
+                               :password_salt,
+                               :persistence_token,
+                               :perishable_token]
+    )
+    super(options)
   end
 
   # Accessors
@@ -283,7 +311,7 @@ class AccountCommon <  ActiveRecord::Base
   end
 
   def birth_date_present_and_valid
-    errors.add(:birth_date, :invalid) unless self.birth_date.nil? || self.birth_date > Date.civil(1920,1,1)
+    errors.add(:birth_date, :invalid) unless self.birth_date.nil? || self.birth_date > Date.civil(1920, 1, 1)
   end
 
   def no_parameter_tampering
@@ -294,7 +322,7 @@ class AccountCommon <  ActiveRecord::Base
     end
 
     if verify_with_mobile_phone?
-      @prefixes  = MobilePrefix.all
+      @prefixes = MobilePrefix.all
       unless @prefixes.map { |p| p.prefix }.include?(self.mobile_prefix.to_i) or self.mobile_prefix.blank? or self.mobile_prefix.nil?
         errors.add(:base, "Parameters tampering, uh? Nice try but it's going to be reported...")
         Rails.logger.error("'mobile_prefix' attribute tampering")

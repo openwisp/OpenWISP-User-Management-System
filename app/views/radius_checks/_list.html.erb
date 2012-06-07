@@ -1,0 +1,57 @@
+<%#
+# This file is part of the OpenWISP User Management System
+#
+# Copyright (C) 2012 OpenWISP.org
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#%>
+
+<table>
+  <thead>
+  <tr>
+    <th scope="col"><%= t :Check_attribute %></th>
+    <th scope="col"><%= t :Operator %></th>
+    <th scope="col"><%= t :Value %></th>
+    <th scope="col"><%= t :Operations %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% subject.radius_checks.each do |check| %>
+      <tr>
+        <td><%= check.check_attribute %></td>
+        <td><%= check.op %></td>
+        <td><%= check.value %></td>
+        <td>
+          <% if current_operator.has_role? 'radius_checks_manager' %>
+              <%= link_to t(:Edit), edit_subject_radius_check_url(subject, check) %>
+          <% end %>
+          &nbsp;
+          <% if current_operator.has_role? 'radius_checks_destroyer' %>
+              <%= link_to t(:Destroy), subject_radius_check_url(subject, check),
+                          :method => :delete, :confirm => t(:Are_you_sure) %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+  <% if auth? :radius_checks_creator %>
+      <tr>
+        <td colspan="4">
+          <p><%= link_to t(:Add_radius_check), new_subject_radius_check_url(subject) %></p>
+        </td>
+      </tr>
+  <% end %>
+  </tfoot>
+</table>
