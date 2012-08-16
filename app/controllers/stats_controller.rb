@@ -21,7 +21,7 @@ class StatsController < ApplicationController
   before_filter :require_operator_or_account
   skip_before_filter :set_mobile_format
 
-  AVAILABLE_STATS_GRAPH = %w{account_logins account_traffic user_logins user_traffic registered_users traffic logins top_traffic_users last_logins last_registered}
+  AVAILABLE_STATS_GRAPH = %w{account_logins account_traffic user_logins user_traffic registered_users registered_users_daily traffic logins top_traffic_users last_logins last_registered}
 
   access_control do
     default :deny
@@ -100,6 +100,7 @@ class StatsController < ApplicationController
       when 'user_traffic' then User.find(params[:user_id]).traffic_sessions_from(@from)
 
       when 'registered_users' then User.registered_each_day(@from, @to)
+      when 'registered_users_daily' then User.registered_daily(@from, @to)
       when 'traffic' then RadiusAccounting.traffic_each_day(@from, @to)
       when 'logins' then RadiusAccounting.logins_each_day(@from, @to)
 
