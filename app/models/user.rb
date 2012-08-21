@@ -98,6 +98,13 @@ class User < AccountCommon
       [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
     }.compact
   end
+  
+  def self.registered_daily(from, to)
+    (from..to).map { |that_day|
+      on_that_day = User.count :conditions => ["DATE(verified_at) = ?", that_day.to_s] 
+      [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
+    }.compact
+  end
 
   def self.registered_on(date)
     count :conditions => ["DATE(verified_at) <= ?", date.to_s]
