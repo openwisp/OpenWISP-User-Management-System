@@ -27,7 +27,7 @@
     <% if owner.can_signup_via?(AccountCommon::VERIFY_BY_DOCUMENT) %>
         <% if owner.new_record? %>
             <%# We have a new User %>
-            <div class="verification-block">
+            <div class="verification-block" style="display:none;">
               <% if owner.has_image? %>
                   <strong><%=t :Document_photo_preview %></strong><br/>
 
