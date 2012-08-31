@@ -110,7 +110,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_operator
-    unless current_operator
+    if current_operator
+      # Check if the request IP address match the one used on login
+      if current_operator.current_login_ip != request.remote_ip
+        current_operator_session.destroy
+        flash[:notice] = I18n.t(:Your_ip_address_changed_since_logon)
+        redirect_to new_operator_session_url
+        return false
+      end
+    else
       store_location
       flash[:notice] = I18n.t(:Must_be_logged_in)
       redirect_to new_operator_session_url
