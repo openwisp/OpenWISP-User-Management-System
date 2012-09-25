@@ -71,7 +71,11 @@ class StatsController < ApplicationController
     temp << svg
     temp.close
 
-    exported = %x{ rsvg-convert #{Shellwords.escape(temp.path)} --width #{Shellwords.escape(width)} --format #{Shellwords.escape(extension)} }
+    begin
+      exported = %x{ rsvg-convert #{Shellwords.escape(temp.path)} --width #{Shellwords.escape(width)} --format #{Shellwords.escape(extension)} }
+    rescue
+      exported = %x{ rsvg-convert #{Shellwords.escape(temp.path)} --width #{width} --format #{Shellwords.escape(extension)} }
+    end
 
     send_data exported, :filename => "#{filename}.#{extension}", :type => mime_type
   end
