@@ -55,6 +55,15 @@ class ApplicationController < ActionController::Base
     render :nothing => true, :status => :not_found
   end
 
+  def render_if_xml_restful_enabled(params={})
+    if Configuration.get("enable_account_xml_restful_api") == "yes"
+      render params
+    else
+      render :xml => { :error => 'disabled' }, :status => :unauthorized
+    end
+
+  end
+
   protected
 
   def set_locale
