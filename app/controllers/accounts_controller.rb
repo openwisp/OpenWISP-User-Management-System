@@ -53,7 +53,9 @@ class AccountsController < ApplicationController
 
     @account.captcha_verification = session[:captcha]
 
-    if @account.save
+    save_account = request.format.xml? ? @account.save : @account.save_with_captcha
+
+    if save_account
       respond_to do |format|
         format.html { redirect_to account_path }
         format.mobile { redirect_to account_path }
