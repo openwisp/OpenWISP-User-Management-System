@@ -52,6 +52,7 @@ Owums::Application.routes.draw do
     resources :stats, :only => :show
     resources :radius_checks
     resources :radius_replies
+    resources :radius_accountings, :only => :index
   end
   resources :radius_groups do
     resources :radius_checks
