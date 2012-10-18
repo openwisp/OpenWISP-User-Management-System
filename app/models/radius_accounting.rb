@@ -41,6 +41,9 @@ class RadiusAccounting < ActiveRecord::Base
     assoc.belongs_to :user
   end
 
+  RADIUS_DATE_FORMAT="%Y-%m-%d"
+  RADIUS_DATETIME_FORMAT="%Y-%m-%d %H:%M:%S"
+
   # Class methods
 
   def self.last_logins(num = 5)
@@ -114,6 +117,14 @@ class RadiusAccounting < ActiveRecord::Base
 
   def self.still_open
     where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL").order("AcctStartTime DESC")
+  end
+
+  def self.on_day(day)
+    where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL OR DATE(AcctStopTime) >= ?", day.strftime(RADIUS_DATE_FORMAT)).where("DATE(AcctStartTime) <= ?", day.strftime(RADIUS_DATE_FORMAT))
+  end
+
+  def self.find_by_username(username)
+    find_by_UserName(username)
   end
 
   # Accessors
