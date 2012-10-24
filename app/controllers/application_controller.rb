@@ -121,8 +121,11 @@ class ApplicationController < ActionController::Base
   def require_operator
     if current_operator
       # Check if the request IP address match the one used on login
-      if current_operator.current_login_ip != request.remote_ip
+      if current_operator.current_login_ip and current_operator.current_login_ip != request.remote_ip
+        # Force current operator logout
         current_operator_session.destroy
+        current_operator.current_login_ip = nil
+        current_operator.save!
         flash[:notice] = I18n.t(:Your_ip_address_changed_since_logon)
         redirect_to new_operator_session_url
         return false
