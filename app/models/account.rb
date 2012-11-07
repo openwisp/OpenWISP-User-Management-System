@@ -205,10 +205,11 @@ class Account < AccountCommon
   end
 
   # Validations
-
   def valid_captcha?
-    # Redefines method from easy_captcha to
-    # use custom error message
-    errors.add(:captcha, :invalid_captcha) if @captcha.blank? or @captcha_verification.blank? or @captcha.to_s.upcase != @captcha_verification.to_s.upcase
+    if(Rails.application.config.captcha_enabled)
+      # Redefines method from easy_captcha to
+      # use custom error message
+      errors.add(:captcha, :invalid_captcha) if @captcha.blank? or @captcha_verification.blank? or @captcha.to_s.upcase != @captcha_verification.to_s.upcase
+    end
   end
 end
