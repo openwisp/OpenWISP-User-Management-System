@@ -41,6 +41,7 @@
 
 
 <% if account.new_record? %>
+    <% if(Rails.application.config.captcha_enabled) %>
     <div id="captcha">
       <p class="center">
         <%= captcha_tag %><br />
@@ -48,6 +49,7 @@
       </p>
       <%= f.input :captcha %>
     </div>
+    <% end %>
 
     <div id="eula_priv">
       <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
