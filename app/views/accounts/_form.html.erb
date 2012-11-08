@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<% if Configuration.get('use_mobile_phone_as_username') == "false" || !account.new_record? %>
+<% if Configuration.get('use_automatic_username') == "false" or Configuration.get('use_mobile_phone_as_username') == "false" or !account.new_record? %>
     <%= f.input :username, :disabled => !account.new_record? %>
 <% end %>
 
