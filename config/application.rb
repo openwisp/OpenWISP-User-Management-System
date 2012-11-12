@@ -42,5 +42,9 @@ module Owums
     # Force all environments to use the same logger level
     # (by default production uses :info, the others :debug)
     # config.log_level = :debug
+    
+    # captcha is enabled by default, you could disable it in the development environment
+    config.captcha_enabled = true
+    
   end
 end

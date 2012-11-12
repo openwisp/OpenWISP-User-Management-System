@@ -20,6 +20,12 @@ class EmailPasswordResetsController < ApplicationController
   before_filter :require_no_account
 
   def new
+
+    respond_to do |format|
+      format.html
+      format.mobile
+      format.xml { render_if_xml_restful_enabled }
+    end
   end
 
   def create
@@ -27,14 +33,29 @@ class EmailPasswordResetsController < ApplicationController
     if @account
       @account.password_reset_instructions!
       flash[:notice] = I18n.t(:Instruction_reset_has_been_mailed)
-      redirect_to root_url
+
+      respond_to do |format|
+        format.html { redirect_to root_url }
+        format.mobile { redirect_to root_url }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :created }
+      end
     else
       flash[:notice] = I18n.t(:No_user_found_with_that_email)
-      render :action => :new
+
+      respond_to do |format|
+        format.html { render :action => :new }
+        format.mobile { render :action => :new }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :unprocessable_entity }
+      end
     end
   end
 
   def edit
+    respond_to do |format|
+      format.html
+      format.mobile
+      format.xml { render_if_xml_restful_enabled }
+    end
   end
 
   def update
@@ -44,9 +65,18 @@ class EmailPasswordResetsController < ApplicationController
 
     if @account.save_without_session_maintenance
       flash[:notice] = I18n.t(password_changed ? :Password_successfully_updated : :Password_not_successfully_updated)
-      redirect_to root_url
+
+      respond_to do |format|
+        format.html { redirect_to account_url }
+        format.mobile { redirect_to account_url }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :accepted }
+      end
     else
-      render :action => :edit
+      respond_to do |format|
+        format.html   { render :action => :edit }
+        format.mobile { render :action => :edit }
+        format.xml { render_if_xml_restful_enabled :xml => @account.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
@@ -55,7 +85,12 @@ class EmailPasswordResetsController < ApplicationController
     @account = Account.find_using_perishable_token(params[:id])
     unless @account
       flash[:notice] = I18n.t(:Perishable_token_error)
-      redirect_to root_url
+
+      respond_to do |format|
+        format.html { redirect_to root_url }
+        format.html { redirect_to root_url }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
+      end
     end
   end
 end

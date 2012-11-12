@@ -26,7 +26,7 @@ class AccountSessionsController < ApplicationController
     respond_to do |format|
       format.html
       format.mobile
-      format.xml
+      format.xml { render_if_xml_restful_enabled }
     end
   end
 
@@ -42,13 +42,13 @@ class AccountSessionsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to account_url }
         format.mobile { redirect_to account_url }
-        format.xml { render :nothing => true, :status => :created }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :created }
       end
     else
       respond_to do |format|
         format.html   { render :action => :new }
         format.mobile { render :action => :new }
-        format.xml    { render :xml => @account_session.errors, :status => :unauthorized }
+        format.xml    { render_if_xml_restful_enabled :xml => @account_session.errors, :status => :unauthorized }
       end
     end
   end
@@ -56,6 +56,11 @@ class AccountSessionsController < ApplicationController
   def destroy
     current_account_session.destroy
     flash[:notice] = I18n.t(:Logout_successful)
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.mobile { redirect_to root_path }
+      format.xml { render_if_xml_restful_enabled :nothing => true }
+    end
+
   end
 end
