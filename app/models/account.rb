@@ -24,21 +24,30 @@ class Account < AccountCommon
     c.maintain_sessions = true
   end
 
-  # In case a WISP uses the user's mobile phone as the username
-  before_validation :set_username_from_mobile_phone_if_required, :on => :create
+  # If the configuration key use_automatic_username is set to true, the username is automatically set
+  before_validation :set_username_if_required, :on => :create
 
   # Validations
   validates_inclusion_of :verification_method, :in => User.self_verification_methods, :if => Proc.new{|account| account.new_record? }
-  validate :valid_captcha?, :message => 'dummy', :on => :create
+  validate :valid_captcha?, :message => 'dummy', :on => :create, :if => Proc.new{|account| account.validate_captcha? }
 
   # Security and cleanup
   attr_readonly  :given_name, :surname, :birth_date
-  # # :username and :verified should never be set with mass-assignment!
-  attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
+  # :verified should never be set with mass-assignment!
+  attr_accessible :username, :given_name, :surname, :birth_date, :state, :city, :address, :zip,
                   :email, :email_confirmation, :password, :password_confirmation,
                   :mobile_prefix, :mobile_prefix_confirmation, :mobile_suffix, 
                   :mobile_suffix_confirmation, :verification_method,
                   :eula_acceptance, :privacy_acceptance, :captcha
+
+  def validate_captcha?
+    @validate_captcha == true
+  end
+
+  def save_with_captcha
+    @validate_captcha = true
+    save
+  end
 
   # Class methods
 
@@ -171,8 +180,20 @@ class Account < AccountCommon
 
   private
 
-  def set_username_from_mobile_phone_if_required
-    self.username = self.mobile_phone if Configuration.get('use_mobile_phone_as_username') == "true"
+  def set_username_if_required
+    if Configuration.get('use_mobile_phone_as_username')
+      Rails.logger.warn "Deprecation warning: 'use_mobile_phone_as_username' configuration key will be soon removed. Please use 'use_automatic_username' instead"
+    end
+
+    # Retro-compatibility...  "use_mobile_phone_as_username" is deprecated
+    if Configuration.get('use_automatic_username') == "true" or Configuration.get('use_mobile_phone_as_username') == "true"
+      if verify_with_mobile_phone?
+        self.username = mobile_phone
+      else
+        self.username = email
+      end
+    end
+
   end
 
   def prepare_paypal_payment(return_url, notify_url)
@@ -205,10 +226,11 @@ class Account < AccountCommon
   end
 
   # Validations
-
   def valid_captcha?
-    # Redefines method from easy_captcha to
-    # use custom error message
-    errors.add(:captcha, :invalid_captcha) if @captcha.blank? or @captcha_verification.blank? or @captcha.to_s.upcase != @captcha_verification.to_s.upcase
+    if(Rails.application.config.captcha_enabled)
+      # Redefines method from easy_captcha to
+      # use custom error message
+      errors.add(:captcha, :invalid_captcha) if @captcha.blank? or @captcha_verification.blank? or @captcha.to_s.upcase != @captcha_verification.to_s.upcase
+    end
   end
 end
