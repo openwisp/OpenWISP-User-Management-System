@@ -208,7 +208,6 @@ class Account < AccountCommon
         :lc => I18n.locale.to_s.upcase
     }
 
-
     values.merge!({
                       "amount_1" => Configuration.get("credit_card_verification_cost"),
                       "item_name_1" => I18n.t(:credit_card_item_name),
@@ -227,7 +226,7 @@ class Account < AccountCommon
 
   # Validations
   def valid_captcha?
-    if(Rails.application.config.captcha_enabled)
+    if(Configuration.get('captcha_enabled', 'true') == 'true')
       # Redefines method from easy_captcha to
       # use custom error message
       errors.add(:captcha, :invalid_captcha) if @captcha.blank? or @captcha_verification.blank? or @captcha.to_s.upcase != @captcha_verification.to_s.upcase
