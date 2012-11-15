@@ -41,7 +41,7 @@
 
 
 <% if account.new_record? %>
-    <% if(Rails.application.config.captcha_enabled) %>
+    <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
     <div id="captcha">
       <p class="center">
         <%= captcha_tag %><br />
