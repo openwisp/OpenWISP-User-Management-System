@@ -46,6 +46,7 @@
 
 
   <% if account.new_record? %>
+      <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
       <li data-role="fieldcontain">
         <%= f.input :captcha %>
       </li>
@@ -60,6 +61,7 @@
       <li id="listen_captcha" data-role="fieldcontain">
         <%= link_to t(:listen_captcha).capitalize, spoken_captcha_url, 'data-ajax' => false %>
       </li>
+      <% end %>
 
       <li data-role="fieldcontain">
         <fieldset data-role="controlgroup">
