@@ -79,8 +79,8 @@ class MobilePhonePasswordResetsController < ApplicationController
     @account.password_confirmation = params[:account][:password_confirmation]
     password_changed = @account.changed?
 
-    if @account.save_from_mobile_phone_password_recovery
-      flash[:notice] = I18n.t(password_changed ? :Password_successfully_updated : :Password_not_successfully_updated)
+    if password_changed and @account.save_from_mobile_phone_password_recovery
+      flash[:notice] = I18n.t(:Password_successfully_updated)
 
       respond_to do |format|
         format.html { redirect_to root_url }
@@ -88,6 +88,8 @@ class MobilePhonePasswordResetsController < ApplicationController
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :accepted }
       end
     else
+      flash[:notice] = I18n.t(:Password_not_successfully_updated) unless password_changed
+
       respond_to do |format|
         format.html   { render :action => :edit }
         format.mobile { render :action => :edit }
