@@ -187,3 +187,30 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   system_key: f
   key: "captcha_enabled"
   value: "true"
+
+72:
+  system_key: f
+  key: "gestpay_enabled"
+  value: "false"
+
+73:
+  system_key: f
+  key: "gestpay_shoplogin"
+  value: "90000001"
+
+74:
+  system_key: f
+  key: "gestpay_currency"
+  value: "242"
+
+75:
+  system_key: f
+  key: "gestpay_webservice_url"
+  value: "https://testecomm.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL"
+
+76:
+  system_key: f
+  key: "gestpay_payment_url"
+  value: "https://testecomm.sella.it/gestpay/pagam.asp"
+  
+  

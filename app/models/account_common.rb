@@ -24,7 +24,8 @@ class AccountCommon < ActiveRecord::Base
 
   VERIFY_BY_MOBILE = "mobile_phone"
   VERIFY_BY_DOCUMENT = "identity_document"
-  VERIFY_BY_CREDIT_CARD = "credit_card"
+  VERIFY_BY_CREDIT_CARD = "paypal_credit_card"
+  VERIFY_BY_GESTPAY = "gestpay_credit_card"
   VERIFY_BY_NOTHING = "no_identity_verification"
 
   # Authlogic
@@ -148,7 +149,17 @@ class AccountCommon < ActiveRecord::Base
   end
 
   def self.self_verification_methods
-    Configuration.get("credit_card_enabled") == "true" ? [VERIFY_BY_MOBILE, VERIFY_BY_CREDIT_CARD] : [VERIFY_BY_MOBILE]
+    methods = [VERIFY_BY_MOBILE]
+    
+    if Configuration.get("credit_card_enabled", "false") == "true"
+      methods.push(VERIFY_BY_CREDIT_CARD)
+    end
+    
+    if Configuration.get("gestpay_enabled", "false") == "true"
+      methods.push(VERIFY_BY_GESTPAY)
+    end
+    
+    methods
   end
 
   # Instance Methods
@@ -167,6 +178,12 @@ class AccountCommon < ActiveRecord::Base
 
   def verify_with_credit_card?
     self.verification_method == VERIFY_BY_CREDIT_CARD
+  end
+  
+  alias verify_with_paypal? verify_with_credit_card?
+  
+  def verify_with_gestpay?
+    self.verification_method == VERIFY_BY_GESTPAY
   end
 
   def verify_with_mobile_phone?
@@ -199,7 +216,7 @@ class AccountCommon < ActiveRecord::Base
     else
       if self.verify_with_mobile_phone?
         Configuration.get('mobile_phone_registration_expire').to_i
-      elsif self.verify_with_credit_card?
+      elsif self.verify_with_paypal? or self.verify_with_gestpay?
         Configuration.get('credit_card_registration_expire').to_i
       else
         Rails.logger.error("Invalid verification method")

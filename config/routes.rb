@@ -25,6 +25,9 @@ Owums::Application.routes.draw do
   match '/account/verification' => 'accounts#verification', :as => :verification
   match '/account/verify_credit_card' => 'accounts#verify_credit_card', :as => :verify_credit_card, :via => 'post'
   match '/account/secure_verify_credit_card' => 'accounts#secure_verify_credit_card', :as => :secure_verify_credit_card, :via => 'post'
+  match '/account/verify_gestpay' => 'accounts#verify_gestpay', :as => :verify_gestpay, :via => 'get'
+  match '/account/gestpay_success' => 'accounts#gestpay_success', :as => :gestpay_success, :via => 'get'
+  match '/account/gestpay_error' => 'accounts#gestpay_error', :as => :gestpay_error, :via => 'get'
 
   match '/users/browse' => 'users#index', :as => :users_browse
   match '/users/search' => 'users#search', :as => :users_search

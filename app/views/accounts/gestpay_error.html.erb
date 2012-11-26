@@ -1,0 +1,36 @@
+<%#
+# This file is part of the OpenWISP User Management System
+#
+# Copyright (C) 2012 OpenWISP.org
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#%>
+
+<div class="grid_12">
+  <div class="box articles">
+    <div class="block" id="articles">
+      <div class="first article">
+        <h3><%=t_safe :Credit_Card_Verification_Error_Heading %></h3>
+        <p class="meta"><%=t :Credit_Card_Verification_Error_Paragraph %></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+  setTimeout(function(){
+    location.href = '<%= url_for :controller => 'account_sessions', :action => 'new' %>';
+  }, 3000)
+</script>
+

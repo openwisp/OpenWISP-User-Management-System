@@ -224,6 +224,37 @@ class AccountsController < ApplicationController
     end
     render :nothing => true
   end
+  
+  def verify_gestpay
+    # retrieve shop login
+    shop_login = Configuration.get('gestpay_shoplogin')
+    # check querystring contains param a and b, plus check that param a is the same as our shop_login var
+    if params.has_key? :a and params.has_key? :b and params[:a] == shop_login
+      # webservice request
+      response = Account.validate_gestpay_payment(params[:a], params[:b])
+      
+      # debug only
+      # delete once ready
+      r = response[:decrypt_response][:decrypt_result][:gest_pay_crypt_decrypt][:error_description]
+      render :inline => "verify_gestpay: #{r}"
+    else
+      render :nothing => true
+    end
+  end
+  
+  def gestpay_success
+    respond_to do |format|
+      format.html   { render :action => 'gestpay_success' }
+      format.mobile { render :action => 'gestpay_success' }
+    end
+  end
+  
+  def gestpay_error
+    respond_to do |format|
+      format.html   { render :action => 'gestpay_error' }
+      format.mobile { render :action => 'gestpay_error' }
+    end
+  end
 
   def instructions
     @custom_instructions = Configuration.get('custom_account_instructions')

@@ -144,9 +144,13 @@ class Account < AccountCommon
     end
   end
 
-  def verify_with_credit_card(return_url, notify_url)
-    prepared = prepare_paypal_payment(return_url, notify_url)
-    prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
+  def verify_with_credit_card(return_url=nil, notify_url=nil)
+    if self.verify_with_paypal?
+      prepared = prepare_paypal_payment(return_url, notify_url)
+      prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
+    elsif self.verify_with_gestpay?
+      prepared = prepare_gestpay_payment()
+    end
   end
 
   def encrypted_verify_with_credit_card(return_url, notify_url)
@@ -177,7 +181,6 @@ class Account < AccountCommon
     ]
   end
 
-
   private
 
   def set_username_if_required
@@ -198,22 +201,22 @@ class Account < AccountCommon
 
   def prepare_paypal_payment(return_url, notify_url)
     values = {
-        :business => Configuration.get("credit_card_business_account"),
-        :cmd => '_cart',
-        :upload => 1,
-        :return => return_url,
-        :invoice => self.id,
-        :notify_url => notify_url,
-        :currency_code => "EUR",
-        :lc => I18n.locale.to_s.upcase
+      :business => Configuration.get("credit_card_business_account"),
+      :cmd => '_cart',
+      :upload => 1,
+      :return => return_url,
+      :invoice => self.id,
+      :notify_url => notify_url,
+      :currency_code => "EUR",
+      :lc => I18n.locale.to_s.upcase
     }
 
     values.merge!({
-                      "amount_1" => Configuration.get("credit_card_verification_cost"),
-                      "item_name_1" => I18n.t(:credit_card_item_name),
-                      "item_number_1" => self.id,
-                      "quantity_1" => 1
-                  })
+      "amount_1" => Configuration.get("credit_card_verification_cost"),
+      "item_name_1" => I18n.t(:credit_card_item_name),
+      "item_number_1" => self.id,
+      "quantity_1" => 1
+    })
 
     if Rails.env.production?
       paypal_base_url = Configuration.get("ipn_url")
@@ -222,6 +225,78 @@ class Account < AccountCommon
     end
 
     {:paypal_base_url => paypal_base_url, :values => values}
+  end
+  
+  def prepare_gestpay_payment()
+    # Gestpay payment preparation
+    
+    # import ruby soap library
+    require 'savon'
+    
+    # config
+    webservice_url = Configuration.get("gestpay_webservice_url")
+    shop_login = Configuration.get("gestpay_shoplogin")
+    payment_url = Configuration.get("gestpay_payment_url")
+    
+    # init SOAP client
+    client = Savon.client(webservice_url)
+
+    # execute a SOAP request to call the "encrypt" action
+    response = client.request(:encrypt) do
+      soap.body = {
+        :shopLogin => shop_login,
+        :uicCode => Configuration.get("gestpay_currency"),
+        :amount => Configuration.get("credit_card_verification_cost"),
+        :shopTransactionId => self.id
+      }
+    end
+    
+    encrypted_string = response.body[:encrypt_response][:encrypt_result][:gest_pay_crypt_decrypt][:crypt_decrypt_string]
+    
+    # return URL in the form of "https://<PAYMENT_URL>?a=<SHOP_LOGIN>&b=<ENCRYPTED_STRING>"
+    url = "#{payment_url}?a=#{shop_login}&b=#{encrypted_string}"
+  end
+  
+  # static method
+  def self.validate_gestpay_payment(shop_login, encrypted_string)
+    # validates a payment done through the Gestpay banking system
+    
+    # config
+    webservice_url = Configuration.get("gestpay_webservice_url")
+    
+    # import ruby soap library
+    require 'savon'
+    
+    # init SOAP client
+    client = Savon.client(webservice_url)
+    
+    # execute a SOAP request to call the "encrypt" action
+    response = client.request(:decrypt) do
+      soap.body = {
+        :shopLogin => shop_login,
+        :CryptedString => encrypted_string
+      }
+    end
+    
+    decrypted = response[:decrypt_response][:decrypt_result][:gest_pay_crypt_decrypt]
+    
+    # DEBUG
+    if Rails.env.development?
+      Rails.logger.debug(decrypted.to_json)
+    end
+    
+    #success
+    if decrypted[:transaction_result] == 'OK'
+      user_id = decrypted[:ShopTransactionID]
+      account = User.find(user_id)
+      account.credit_card_identity_verify!
+    # error
+    else
+      # log error
+      Rails.logger.error("Gestpay payment validation unsuccessful: #{encrypted_string}")
+    end
+    
+    response
   end
 
   # Validations

@@ -164,11 +164,11 @@ class User < AccountCommon
   end
 
   def credit_card_identity_verify!
-    if self.verify_with_credit_card?
+    if self.verify_with_credit_card? or verify_with_gestpay?
       self.verified = true
       self.save!
     else
-      Rails.logger.error("Verification method is not 'credit_card'!")
+      Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
     end
   end
 
