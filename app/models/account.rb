@@ -227,7 +227,7 @@ class Account < AccountCommon
     {:paypal_base_url => paypal_base_url, :values => values}
   end
   
-  def prepare_gestpay_payment()
+  def encrypt_gestpay()
     # Gestpay payment preparation
     
     # import ruby soap library
@@ -248,6 +248,11 @@ class Account < AccountCommon
         :uicCode => Configuration.get("gestpay_currency"),
         :amount => Configuration.get("credit_card_verification_cost"),
         :shopTransactionId => self.id
+        # id+datetime hashed, positive numbers only
+        #:shopTransactionId => ('%s+%s' % [self.id, DateTime.now]).hash.abs,
+        #:buyerName => '%s %s' % [self.given_name, self.surname],
+        #:buyerEmail => self.email,
+        #:customInfo => 'user_id=%s' % [self.id]
       }
     end
     
@@ -255,6 +260,21 @@ class Account < AccountCommon
     
     # return URL in the form of "https://<PAYMENT_URL>?a=<SHOP_LOGIN>&b=<ENCRYPTED_STRING>"
     url = "#{payment_url}?a=#{shop_login}&b=#{encrypted_string}"
+    
+    # append url in notes and save
+    self.notes = self.notes.to_s.concat('<gestpay>%s</gestpay>' % url)
+    self.save!
+    return url
+  end
+  
+  def prepare_gestpay_payment()
+    # retrieves url saved before
+    matches = /<gestpay>(.*)<\/gestpay>/i.match(self.notes)
+    if(matches == nil)
+      encrypt_gestpay()
+    else
+      matches[1]
+    end
   end
   
   # static method
@@ -281,8 +301,9 @@ class Account < AccountCommon
     decrypted = response[:decrypt_response][:decrypt_result][:gest_pay_crypt_decrypt]
     
     # DEBUG
+    # maybe it shouldn't be DEBUG only
     if Rails.env.development?
-      Rails.logger.debug(decrypted.to_json)
+      Rails.logger.warn(response[:decrypt_response][:decrypt_result].to_json)
     end
     
     #success
