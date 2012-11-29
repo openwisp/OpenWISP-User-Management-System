@@ -36,8 +36,8 @@
 
     <ul data-role="listview" data-inset="true">
       <li data-role="fieldcontain">
-        <% if Configuration.get('use_mobile_phone_as_username') == "true"  %>
-            <%= f.input :username, :label => t(:Username_or_mobile) %>
+        <% if Configuration.get('use_automatic_username') == "true" or Configuration.get('use_mobile_phone_as_username') == "true"  %>
+            <%= f.input :username, :label => t(:Username_or_mobile_or_email) %>
         <% else %>
             <%= f.input :username %>
         <% end %>

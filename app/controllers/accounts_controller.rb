@@ -40,6 +40,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       format.html
       format.mobile
+      format.xml { render_if_xml_restful_enabled }
     end
   end
 
@@ -52,12 +53,19 @@ class AccountsController < ApplicationController
 
     @account.captcha_verification = session[:captcha]
 
-    if @account.save
-      redirect_to account_path
+    save_account = request.format.xml? ? @account.save : @account.save_with_captcha
+
+    if save_account
+      respond_to do |format|
+        format.html { redirect_to account_path }
+        format.mobile { redirect_to account_path }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :created }
+      end
     else
       respond_to do |format|
         format.html   { render :action => :new }
         format.mobile { render :action => :new }
+        format.xml { render_if_xml_restful_enabled :xml => @account.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -67,11 +75,13 @@ class AccountsController < ApplicationController
       respond_to do |format|
         format.html   { render :action => :no_verification }
         format.mobile { render :action => :no_verification }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     elsif @current_operator.nil? and !@account.verified?
       respond_to do |format|
         format.html   { render :action => :verification }
         format.mobile { render :action => :verification }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
       sort_and_paginate_accountings unless request.format.jpg?
@@ -79,6 +89,7 @@ class AccountsController < ApplicationController
       respond_to do |format|
         format.html
         format.mobile
+        format.xml { render_if_xml_restful_enabled }
         format.jpg
         format.js
       end
@@ -90,11 +101,13 @@ class AccountsController < ApplicationController
       respond_to do |format|
         format.html   { render :action => :no_verification }
         format.mobile { render :action => :no_verification }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     elsif @current_operator.nil? and !@account.verified?
       respond_to do |format|
         format.html   { render :action => :verification }
         format.mobile { render :action => :verification }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
       @countries = Country.all
@@ -102,13 +115,18 @@ class AccountsController < ApplicationController
       respond_to do |format|
         format.html
         format.mobile
+        format.xml { render_if_xml_restful_enabled }
       end
     end
   end
 
   def update
     if !@current_operator.nil? or !@account.verified?
-      render :action => :verification
+      respond_to do |format|
+        format.html   { render :action => :verification }
+        format.mobile { render :action => :verification }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
+      end
     else
       @countries = Country.all
       @mobile_prefixes = MobilePrefix.all
@@ -125,13 +143,27 @@ class AccountsController < ApplicationController
         if to_disable
           flash[:notice] = I18n.t(:Account_disabled)
           current_account_session.destroy
-          redirect_to :root
+
+          respond_to do |format|
+            format.html { redirect_to :root }
+            format.mobile { redirect_to :root }
+            format.xml { render_if_xml_restful_enabled :nothing => true, :status => :accepted }
+          end
         else
           flash[:notice] = I18n.t(:Account_updated)
-          redirect_to account_url
+
+          respond_to do |format|
+            format.html { redirect_to account_url }
+            format.mobile { redirect_to account_url }
+            format.xml { render_if_xml_restful_enabled :nothing => true, :status => :accepted }
+          end
         end
       else
-        render :action => :edit
+        respond_to do |format|
+          format.html   { render :action => :edit }
+          format.mobile { render :action => :edit }
+          format.xml { render_if_xml_restful_enabled :xml => @account.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -145,6 +177,7 @@ class AccountsController < ApplicationController
         else
           format.html   { render :action => 'expired' }
           format.mobile { render :action => 'expired' }
+          format.xml { render_if_xml_restful_enabled :nothing => true, :status => :request_timeout }
         end
       end
     else
@@ -155,6 +188,7 @@ class AccountsController < ApplicationController
         else
           format.html   { render :action => 'verification' }
           format.mobile { render :action => 'verification' }
+          format.xml { render_if_xml_restful_enabled }
         end
       end
     end

@@ -22,7 +22,12 @@ class MobilePhonePasswordResetsController < ApplicationController
   
   def new
     @mobile_prefixes = MobilePrefix.all
-    render
+
+    respond_to do |format|
+      format.html
+      format.mobile
+      format.xml { render_if_xml_restful_enabled }
+    end
   end
   
   def create
@@ -35,19 +40,37 @@ class MobilePhonePasswordResetsController < ApplicationController
     if @account
       @account.ask_for_mobile_phone_password_recovery!
       @single_access_token = @account.single_access_token
-      render :action => :verification
+
+      respond_to do |format|
+        format.html { render :action => :verification }
+        format.mobile { render :action => :verification }
+        format.xml { render_if_xml_restful_enabled :action => :verification, :status => :created }
+      end
     else
       @mobile_prefixes = MobilePrefix.all
       flash[:notice] = I18n.t(:No_user_found_with_that_mobile_phone)
-      render :action => :new
+
+      respond_to do |format|
+        format.html { render :action => :new }
+        format.mobile { render :action => :new }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :unprocessable_entity }
+      end
     end
   end
   
   def edit
     if @account.recovered?
-      render 
+      respond_to do |format|
+        format.html
+        format.mobile
+        format.xml
+      end
     else
-      render "common/abuse", :layout => false
+      respond_to do |format|
+        format.html { render "common/abuse", :layout => false }
+        format.mobile { render "common/abuse", :layout => false }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
+      end
     end
   end
  
@@ -56,11 +79,22 @@ class MobilePhonePasswordResetsController < ApplicationController
     @account.password_confirmation = params[:account][:password_confirmation]
     password_changed = @account.changed?
 
-    if @account.save_from_mobile_phone_password_recovery
-      flash[:notice] = I18n.t(password_changed ? :Password_successfully_updated : :Password_not_successfully_updated)
-      redirect_to root_url
+    if password_changed and @account.save_from_mobile_phone_password_recovery
+      flash[:notice] = I18n.t(:Password_successfully_updated)
+
+      respond_to do |format|
+        format.html { redirect_to root_url }
+        format.mobile { redirect_to root_url }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :accepted }
+      end
     else
-      render :action => :edit
+      flash[:notice] = I18n.t(:Password_not_successfully_updated) unless password_changed
+
+      respond_to do |format|
+        format.html   { render :action => :edit }
+        format.mobile { render :action => :edit }
+        format.xml { render_if_xml_restful_enabled :xml => @account.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
@@ -69,7 +103,11 @@ class MobilePhonePasswordResetsController < ApplicationController
       render
     else
       @single_access_token = @account.single_access_token
-      render :action => :verification
+      respond_to do |format|
+        format.html { render :action => :verification }
+        format.mobile { render :action => :verification }
+        format.xml { render_if_xml_restful_enabled }
+      end
     end
   end
 
@@ -91,7 +129,11 @@ class MobilePhonePasswordResetsController < ApplicationController
       @account = Account.find_using_perishable_token(params[:id])
       unless @account
         #flash[:notice] = I18n.t(:Perishable_token_error)
-        redirect_to root_url
+        respond_to do |format|
+          format.html { redirect_to root_url }
+          format.mobile { redirect_to root_url }
+          format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
+        end
       end
     end
 
@@ -99,7 +141,11 @@ class MobilePhonePasswordResetsController < ApplicationController
       @account = Account.find_by_single_access_token(params[:id])
       unless @account
         #flash[:notice] = I18n.t(:Perishable_token_error)
-        redirect_to root_url
+        respond_to do |format|
+          format.html { redirect_to root_url }
+          format.mobile { redirect_to root_url }
+          format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
+        end
       end
     end
 

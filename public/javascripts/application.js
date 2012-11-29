@@ -94,9 +94,14 @@ var owums = {
 
     //Change verification methods on signup
     toggleVerificationMethod: function() {
-        $('[id$=verification_method]').change(function(){
+        var verification_method = $('#account_verification_method');
+        verification_method.change(function(){
             $('.verification-block').toggle();
         });
+        // the following is necessary for the case in which there's a validation error
+        if(verification_method.val() == 'credit_card'){
+            verification_method.trigger('change');
+        }
     },
 
     ajaxQuickSearch: function() {
