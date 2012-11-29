@@ -88,7 +88,7 @@ class EmailPasswordResetsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to root_url }
-        format.html { redirect_to root_url }
+        format.mobile { redirect_to root_url }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     end
