@@ -237,6 +237,14 @@ class Account < AccountCommon
     webservice_url = Configuration.get("gestpay_webservice_url")
     shop_login = Configuration.get("gestpay_shoplogin")
     payment_url = Configuration.get("gestpay_payment_url")
+    # base url
+    server = Configuration.get("notifier_base_url")
+    # transaction id
+    # id+datetime hashed, positive numbers only
+    transaction_id = (('%s+%s' % [self.id, DateTime.now]).hash.abs).to_s
+    # user id
+    # I had to convert self.id to string because something was converting it to another number!
+    user_id = self.id.to_s
     
     # init SOAP client
     client = Savon.client(webservice_url)
@@ -247,12 +255,10 @@ class Account < AccountCommon
         :shopLogin => shop_login,
         :uicCode => Configuration.get("gestpay_currency"),
         :amount => Configuration.get("credit_card_verification_cost"),
-        :shopTransactionId => self.id
-        # id+datetime hashed, positive numbers only
-        #:shopTransactionId => ('%s+%s' % [self.id, DateTime.now]).hash.abs,
-        #:buyerName => '%s %s' % [self.given_name, self.surname],
-        #:buyerEmail => self.email,
-        #:customInfo => 'user_id=%s' % [self.id]
+        :shopTransactionId => transaction_id,
+        :buyerName => '%s %s' % [self.given_name, self.surname],
+        :buyerEmail => self.email,
+        :customInfo => 'USERID=%s*P1*SERVER=%s' % [user_id, server]
       }
     end
     
@@ -280,7 +286,7 @@ class Account < AccountCommon
   # static method
   def self.validate_gestpay_payment(shop_login, encrypted_string)
     # validates a payment done through the Gestpay banking system
-    
+
     # config
     webservice_url = Configuration.get("gestpay_webservice_url")
     
@@ -290,15 +296,24 @@ class Account < AccountCommon
     # init SOAP client
     client = Savon.client(webservice_url)
     
-    # execute a SOAP request to call the "encrypt" action
-    response = client.request(:decrypt) do
-      soap.body = {
-        :shopLogin => shop_login,
-        :CryptedString => encrypted_string
-      }
+    # xml
+    xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ecom="https://ecomm.sella.it/">
+    <soapenv:Header/>
+      <soapenv:Body>
+        <ecom:Decrypt>
+           <ecom:shopLogin>%s</ecom:shopLogin>
+           <ecom:CryptedString>%s</ecom:CryptedString>
+        </ecom:Decrypt>
+      </soapenv:Body>
+    </soapenv:Envelope>' % [shop_login, encrypted_string]
+    
+    xml = xml.gsub!("\n", '')
+    
+    response = client.request :decrypt do
+      soap.xml = xml
     end
     
-    decrypted = response[:decrypt_response][:decrypt_result][:gest_pay_crypt_decrypt]
+    decrypted = response[:decrypt_response][:decrypt_result][:gest_pay_s2_s]
     
     # DEBUG
     # maybe it shouldn't be DEBUG only
@@ -308,9 +323,30 @@ class Account < AccountCommon
     
     #success
     if decrypted[:transaction_result] == 'OK'
-      user_id = decrypted[:ShopTransactionID]
-      account = User.find(user_id)
-      account.credit_card_identity_verify!
+      # retrieve params
+      params = decrypted[:custom_info].split("*P1*")
+      # init vars
+      server = ''
+      user_id = ''
+      # extract params from custom_info
+      params.each do |param|
+        if param.include?('SERVER=')
+          server = param.sub('SERVER=','')
+        elsif param.include?('USERID=')
+          user_id = param.sub('USERID=','')
+        end
+      end
+      
+      # if the server param is correct
+      if server == Configuration.get('notifier_base_url')
+        # retrieve account
+        account = User.find(user_id)
+        # enable it
+        account.credit_card_identity_verify!
+        # once validated clear notes field
+        account.notes.gsub!(/<gestpay>(.*)<\/gestpay>/i, '')
+        account.save!
+      end
     # error
     else
       # log error
