@@ -21,7 +21,7 @@ class AccountsController < ApplicationController
   ]
 
   before_filter :require_no_account, :only => [
-      :new, :create, :verify_credit_card, :secure_verify_credit_card
+      :new, :create, :verify_credit_card, :secure_verify_credit_card, :verify_gestpay
   ]
 
   before_filter :require_no_operator
@@ -232,14 +232,8 @@ class AccountsController < ApplicationController
     if params.has_key? :a and params.has_key? :b and params[:a] == shop_login
       # webservice request
       response = Account.validate_gestpay_payment(params[:a], params[:b])
-      
-      # debug only
-      # delete once ready
-      r = response[:decrypt_response][:decrypt_result][:gest_pay_crypt_decrypt][:error_description]
-      render :inline => "verify_gestpay: #{r}"
-    else
-      render :nothing => true
     end
+    render :nothing => true
   end
   
   def gestpay_success
