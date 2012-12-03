@@ -39,7 +39,7 @@
           <br /><br /><br />
       <% elsif @account.verify_with_gestpay? %>
           <%=t :Please_verify_credit_card %><br />
-          <%= link_to_gestpay 'Gestpay Banca Sella', :bill_to => @account, :target => '_blank' %>
+          <a href="javascript:toggleOverlay()">Gestpay Banca Sella</a>
           <br /><br /><br />
       <% end %>
 

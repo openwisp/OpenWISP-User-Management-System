@@ -96,12 +96,17 @@ var owums = {
     toggleVerificationMethod: function() {
         var verification_method = $('#account_verification_method');
         verification_method.change(function(){
-            $('.verification-block').toggle();
+            if(verification_method.val() != 'mobile_phone'){
+                $('#verify-mobile-phone').hide();
+                $('#verify-credit-card').show();
+            }
+            else{
+                $('#verify-mobile-phone').show();
+                $('#verify-credit-card').hide();
+            }
         });
         // the following is necessary for the case in which there's a validation error
-        if(verification_method.val() == 'credit_card'){
-            verification_method.trigger('change');
-        }
+        verification_method.trigger('change');
     },
 
     ajaxQuickSearch: function() {

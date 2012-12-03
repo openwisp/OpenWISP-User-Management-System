@@ -20,7 +20,7 @@
 <% if Configuration.get('credit_card_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_CREDIT_CARD) %>
 
     <% if owner.new_record? %>
-        <div class="verification-block" style="display:none">
+        <div class="verification-block" style="display:none" id="verify-credit-card">
           <table>
             <tr>
               <td>

@@ -34,3 +34,63 @@
 </div>
 <div class="clear"></div>
 
+<% if(@account.verify_with_gestpay?) %>
+<div class="overlay">
+  <a class="close">x</a>
+  <iframe id="bank-gateway" src="<%= @account.verify_with_credit_card() %>"></iframe>
+</div>
+
+<div id="mask"></div>
+<div id="loading-overlay"></div>
+
+<script type="text/javascript">
+  (function(){
+    $.fn.resizeElement = function(padding){
+      padding = padding || 60;
+      var el = $(this);  
+      el.height($(window).height()-padding)
+      .width($(window).width()-padding);
+      return el;
+    }
+    $.fn.centerElement = function(){
+      var el = $(this);
+      el.css('top', ($(window).height() - el.height()) / 2)
+      .css('left', ($(window).width() - el.width()) / 2);
+      return el;
+    }
+    $.fn.togglePop = function(speed){
+      speed = speed || 150;
+      el = $(this);
+      el.centerElement();
+      (el.is(':visible')) ? el.fadeOut(speed) : el.fadeIn(speed);
+      return el;
+    }
+    
+    var overlay = $('.overlay');
+    
+    window.toggleOverlay = function(){
+      var mask = $('#mask'),
+          close = $('.close');
+      mask.css('opacity','0').show().fadeTo(250, 0.7);
+      overlay.resizeElement().centerElement().fadeIn(250);
+      if($.data(close.get(0), 'events') === undefined){
+        close.click(function(e){
+        $(this).parent().fadeOut();
+            mask.fadeOut();
+        });
+      }
+    }
+    
+    $('#loading-overlay').togglePop();    
+    
+    $(window).resize(function(e){
+      overlay.resizeElement().centerElement();
+    }).load(function(e){
+      toggleOverlay();
+    });
+    $('iframe').one('load', function(){
+      $('#loading-overlay').togglePop();
+    });
+  })();
+</script>
+<% end %>
