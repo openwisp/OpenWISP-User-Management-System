@@ -124,13 +124,14 @@ class AccountCommon < ActiveRecord::Base
 
   if CONFIG['birth_date']:
     validates_presence_of :birth_date
+    validate :birth_date_present_and_valid
   end
+  
   validates_presence_of :eula_acceptance, :message => :eula_must_be_accepted
   validates_presence_of :privacy_acceptance, :message => :privacy_must_be_accepted
 
   # Custom validations
   validate :identity_document_is_present, :if => :verify_with_document?
-  validate :birth_date_present_and_valid
   validate :no_parameter_tampering # For added security
 
 
