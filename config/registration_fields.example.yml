@@ -1,0 +1,15 @@
+defaults: &defaults
+  birth_date: true
+  address: true
+  zip: true
+  city: true
+  state: true
+
+production:
+  <<: *defaults
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults

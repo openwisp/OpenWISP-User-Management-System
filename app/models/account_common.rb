@@ -97,23 +97,34 @@ class AccountCommon < ActiveRecord::Base
             :presence => true,
             :format => {:with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true}
 
-  validates :state,
-            :presence => true,
-            :format => {:with => /\A[a-z\s'\.,]+\Z/i, :message => :address_format}
+  if CONFIG['state']:
+    validates :state,
+              :presence => true,
+              :format => {:with => /\A[a-z\s'\.,]+\Z/i, :message => :address_format}
+  end
 
-  validates :city,
-            :presence => true,
-            :format => {:with => /\A(\w|[\s'\.,\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
+  if CONFIG['city']:
+    validates :city,
+              :presence => true,
+              :format => {:with => /\A(\w|[\s'\.,\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
+  end
 
-  validates :address,
-            :presence => true,
-            :format => {:with => /\A(\w|[\s'\.,\/\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
+  if CONFIG['address']:
+    validates :address,
+              :presence => true,
+              :format => {:with => /\A(\w|[\s'\.,\/\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
+  end
 
-  validates :zip,
-            :presence => true,
-            :format => {:with => /[a-z0-9]/, :message => :zip_format, :allow_blank => true}
+  if CONFIG['zip']:
+    validates :zip,
+              :presence => true,
+              :format => {:with => /[a-z0-9]/, :message => :zip_format, :allow_blank => true}
+  end
 
-  validates_presence_of :birth_date
+
+  if CONFIG['birth_date']:
+    validates_presence_of :birth_date
+  end
   validates_presence_of :eula_acceptance, :message => :eula_must_be_accepted
   validates_presence_of :privacy_acceptance, :message => :privacy_must_be_accepted
 

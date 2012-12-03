@@ -24,8 +24,29 @@ $(document).ready(function(){
     owums.loadCheckboxWarnings();
     owums.hideWhenJsIsAvailable('.no_js');
     owums.hideWhenGraphsAreAvailable('.no_graphs');
+    owums.initCreditCardOverlay();
 });
 
+$.fn.resizeElement = function(padding){
+    padding = padding || 60;
+    var el = $(this);  
+    el.height($(window).height()-padding)
+    .width($(window).width()-padding);
+    return el;
+}
+$.fn.centerElement = function(){
+    var el = $(this);
+    el.css('top', ($(window).height() - el.height()) / 2)
+    .css('left', ($(window).width() - el.width()) / 2);
+    return el;
+}
+$.fn.togglePop = function(speed){
+    speed = speed || 150;
+    el = $(this);
+    el.centerElement();
+    (el.is(':visible')) ? el.fadeOut(speed) : el.fadeIn(speed);
+    return el;
+}
 
 var owums = {
     subUri: 'owums',
@@ -107,6 +128,38 @@ var owums = {
         });
         // the following is necessary for the case in which there's a validation error
         verification_method.trigger('change');
+    },
+    
+    toggleOverlay: function(){
+        var mask = $('#mask'),
+            close = $('.close'),
+            overlay = $('.overlay');
+        mask.css('opacity','0').show().fadeTo(250, 0.7);
+        overlay.resizeElement().centerElement().fadeIn(250);
+        if($.data(close.get(0), 'events') === undefined){
+          close.click(function(e){
+          $(this).parent().fadeOut();
+              mask.fadeOut();
+          });
+        }
+    },
+    
+    initCreditCardOverlay: function(){
+        if($('#bank-gateway').length){
+            var overlay = $('.overlay'),
+            loading = $('#loading-overlay');
+            
+            loading.togglePop();    
+            
+            $(window).resize(function(e){
+              overlay.resizeElement().centerElement();
+            }).load(function(e){
+              owums.toggleOverlay();
+            });
+            $('iframe').one('load', function(){
+              loading.togglePop();
+            });    
+        }
     },
 
     ajaxQuickSearch: function() {
