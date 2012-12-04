@@ -17,20 +17,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<div class="grid_12">
-  <div class="box articles">
-    <div class="block" id="articles">
-      <div class="first article">
-        <h3><%=t_safe :Credit_Card_Verification_Error_Heading %></h3>
-        <p class="meta"><%=t :Credit_Card_Verification_Error_Paragraph %></p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="clear"></div>
-<script type="text/javascript">
-  setTimeout(function(){
-    location.href = '<%= url_for :controller => 'account_sessions', :action => 'new' %>';
-  }, 3000)
-</script>
+<%= stylesheet_link_tag 'custom' %>
 
+<div class="nolayout">
+  <h3><%=t_safe :Credit_Card_Verification_Error_Heading %></h3>
+  <p class="meta"><%=t :Credit_Card_Verification_Error_Paragraph %></p>
+  <p><a href="#" onclick="parent.window.$('.close').trigger('click');return false;"><%=t :Close %></a></p>
+</div>
+<script type="text/javascript">
+    $ = parent.window.$
+    $('.close').removeAttr('data-confirm-message')
+    .unbind('click')
+    .click(function(){
+      parent.window.owums.toggleOverlay();
+      parent.location.href = '<%= url_for(:action => :show) %>';
+    });
+</script>

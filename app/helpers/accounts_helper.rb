@@ -22,13 +22,6 @@ module AccountsHelper
 
     link_to(link, account.verify_with_credit_card(account_url, verify_credit_card_url), args) if account
   end
-  
-  def link_to_gestpay(link, args)
-    account = args[:bill_to]
-    args.delete :bill_to
-
-    link_to(link, account.verify_with_credit_card(), args) if account
-  end
 
   def encrypted_submit_to_paypal(submit, args)
     account = args[:bill_to]

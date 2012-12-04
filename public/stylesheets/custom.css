@@ -255,6 +255,7 @@ li > .off {
 }
 
 
+
 #loading-overlay{
     display: none;
     position:fixed;
@@ -295,10 +296,18 @@ li > .off {
     border-radius: 4px;
 }
 
+.nolayout{
+    width: 90%;
+    height: 96%;
+    padding: 2% 5%;
+    background: #EEEEEE; font: 14px/1.5 Helvetica,Arial,'Liberation Sans',FreeSans,sans-serif
+}
+
 .overlay iframe{
     width: 100%;
     height: 100%;
     border-radius: 4px;
+    background: #EEE;
 }
  
 .overlay .close {

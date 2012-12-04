@@ -17,6 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
+<%#
+# if verification method is not gestpay do a periodic check and if necessary redirect the specified page
+# otherwise the check will be done one time only after clicking on the close icon of the payment overlay
+#%>
+<% if not @account.verify_with_gestpay? %>
 <% content_for :after_defaults do %>
     <%= javascript_tag "$(function(){
         owums.periodicallyCheckVerification({
@@ -25,6 +30,7 @@
             update: '#verification'
         });
     }); " %>
+<% end %>
 <% end %>
 
 <div class="grid_12">
@@ -36,8 +42,8 @@
 
 <% if(@account.verify_with_gestpay?) %>
     <div class="overlay">
-      <a class="close">x</a>
-      <iframe id="bank-gateway" src="<%= @account.verify_with_credit_card() %>"></iframe>
+      <a class="close" data-confirm-message="<%= t :Confirm_Close_Payment_Overlay %>" data-callback-url="<%= url_for(:action => 'verification', :id => @single_access_token) %>"><%= t :Close %></a>
+      <iframe id="bank-gateway" src="<%= @account.retrieve_gestpay_url %>"></iframe>
     </div>
     
     <div id="mask"></div>

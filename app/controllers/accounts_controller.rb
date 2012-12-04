@@ -238,14 +238,18 @@ class AccountsController < ApplicationController
   
   def gestpay_success
     respond_to do |format|
-      format.html   { render :action => 'gestpay_success' }
+      format.html   { render :action => 'gestpay_success', :layout => false }
       format.mobile { render :action => 'gestpay_success' }
     end
   end
   
   def gestpay_error
+    # generate a new gestpay url for a new payment
+    @account.clear_gestpay_url
+    @account.save!
+    
     respond_to do |format|
-      format.html   { render :action => 'gestpay_error' }
+      format.html   { render :action => 'gestpay_error', :layout => false }
       format.mobile { render :action => 'gestpay_error' }
     end
   end

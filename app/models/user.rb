@@ -163,6 +163,7 @@ class User < AccountCommon
     end
   end
 
+  # TODO GESTPAY: is this ok?
   def credit_card_identity_verify!
     if self.verify_with_credit_card? or verify_with_gestpay?
       self.verified = true

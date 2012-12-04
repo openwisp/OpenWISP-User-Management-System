@@ -23,6 +23,9 @@ class Account < AccountCommon
   acts_as_authentic do |c|
     c.maintain_sessions = true
   end
+  
+  # After save
+  after_save :prepare_gestpay_payment
 
   # If the configuration key use_automatic_username is set to true, the username is automatically set
   before_validation :set_username_if_required, :on => :create
@@ -144,15 +147,15 @@ class Account < AccountCommon
     end
   end
 
-  def verify_with_credit_card(return_url=nil, notify_url=nil)
-    if self.verify_with_paypal?
-      prepared = prepare_paypal_payment(return_url, notify_url)
-      prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
-    elsif self.verify_with_gestpay?
-      prepared = prepare_gestpay_payment()
-    end
+  # TODO GESTPAY EDIT:
+  # pheraphs this should be renamed to verify_with_paypal
+  def verify_with_credit_card(return_url, notify_url)
+    prepared = prepare_paypal_payment(return_url, notify_url)
+    prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
   end
 
+  # TODO GESTPAY EDIT:
+  # pheraphs this should be renamed to encrypted_verify_with_paypal
   def encrypted_verify_with_credit_card(return_url, notify_url)
     prepared = prepare_paypal_payment(return_url, notify_url)
 
@@ -180,6 +183,19 @@ class Account < AccountCommon
       ).to_s.gsub("\n", "")
     ]
   end
+  
+  def retrieve_gestpay_url
+    # retrieves url saved before
+    matches = /<gestpay>(.*)<\/gestpay>/i.match(self.notes)
+    # return match or nil
+    unless matches.nil?
+      matches[1]
+    end
+  end
+  
+  def clear_gestpay_url
+    self.notes = self.notes.gsub(/<gestpay>(.*)<\/gestpay>/i, '')
+  end
 
   private
 
@@ -201,6 +217,8 @@ class Account < AccountCommon
 
   def prepare_paypal_payment(return_url, notify_url)
     values = {
+      # TODO GESTPAY EDIT:
+      # pheraphs credit_card should be renamed to paypal_business_account
       :business => Configuration.get("credit_card_business_account"),
       :cmd => '_cart',
       :upload => 1,
@@ -212,6 +230,8 @@ class Account < AccountCommon
     }
 
     values.merge!({
+      # TODO GESTPAY EDIT:
+      # decide if credit_card_verification_cost should be shared between paypal and gestpay
       "amount_1" => Configuration.get("credit_card_verification_cost"),
       "item_name_1" => I18n.t(:credit_card_item_name),
       "item_number_1" => self.id,
@@ -227,9 +247,17 @@ class Account < AccountCommon
     {:paypal_base_url => paypal_base_url, :values => values}
   end
   
-  def encrypt_gestpay()
-    # Gestpay payment preparation
-    
+  def prepare_gestpay_payment()
+    if self.verify_with_gestpay?
+      url = self.retrieve_gestpay_url
+      if url.nil?
+        # generate and return url (saves to notes)
+        encrypt_gestpay()
+      end
+    end
+  end
+  
+  def encrypt_gestpay()  
     # import ruby soap library
     require 'savon'
     
@@ -239,11 +267,10 @@ class Account < AccountCommon
     payment_url = Configuration.get("gestpay_payment_url")
     # base url
     server = Configuration.get("notifier_base_url")
-    # transaction id
-    # id+datetime hashed, positive numbers only
+    # transaction id: id+datetime hashed, positive numbers only
     transaction_id = (('%s+%s' % [self.id, DateTime.now]).hash.abs).to_s
     # user id
-    # I had to convert self.id to string because something was converting it to another number!
+    # I had to convert self.id to string because something was converting it to a different!
     user_id = self.id.to_s
     
     # init SOAP client
@@ -254,6 +281,8 @@ class Account < AccountCommon
       soap.body = {
         :shopLogin => shop_login,
         :uicCode => Configuration.get("gestpay_currency"),
+        # TODO GESTPAY EDIT:
+        # decide if credit_card_verification_cost should be shared between paypal and gestpay
         :amount => Configuration.get("credit_card_verification_cost"),
         :shopTransactionId => transaction_id,
         :buyerName => '%s %s' % [self.given_name, self.surname],
@@ -273,16 +302,6 @@ class Account < AccountCommon
     return url
   end
   
-  def prepare_gestpay_payment()
-    # retrieves url saved before
-    matches = /<gestpay>(.*)<\/gestpay>/i.match(self.notes)
-    if(matches == nil)
-      encrypt_gestpay()
-    else
-      matches[1]
-    end
-  end
-  
   # static method
   def self.validate_gestpay_payment(shop_login, encrypted_string)
     # validates a payment done through the Gestpay banking system
@@ -296,7 +315,8 @@ class Account < AccountCommon
     # init SOAP client
     client = Savon.client(webservice_url)
     
-    # xml
+    # TODO GESTPAY: try savon order! 
+    # xml - why? Because by using plain savon code it didn't work
     xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ecom="https://ecomm.sella.it/">
     <soapenv:Header/>
       <soapenv:Body>
@@ -306,7 +326,7 @@ class Account < AccountCommon
         </ecom:Decrypt>
       </soapenv:Body>
     </soapenv:Envelope>' % [shop_login, encrypted_string]
-    
+    # strip new lines
     xml = xml.gsub!("\n", '')
     
     response = client.request :decrypt do
@@ -341,10 +361,10 @@ class Account < AccountCommon
       if server == Configuration.get('notifier_base_url')
         # retrieve account
         account = User.find(user_id)
-        # enable it
+        # activate user account
         account.credit_card_identity_verify!
         # once validated clear notes field
-        account.notes.gsub!(/<gestpay>(.*)<\/gestpay>/i, '')
+        account.clear_gestpay_url
         account.save!
       end
     # error

@@ -163,6 +163,8 @@ class AccountCommon < ActiveRecord::Base
   def self.self_verification_methods
     methods = [VERIFY_BY_MOBILE]
     
+    # TODO GESTPAY EDIT:
+    # pheraphs VERIFY_BY_CREDIT_CARD should become VERIFY_BY_PAYPAL and credit_card_enabled should become paypal_enabled
     if Configuration.get("credit_card_enabled", "false") == "true"
       methods.push(VERIFY_BY_CREDIT_CARD)
     end

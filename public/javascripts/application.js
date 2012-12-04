@@ -130,17 +130,34 @@ var owums = {
         verification_method.trigger('change');
     },
     
-    toggleOverlay: function(){
+    toggleOverlay: function(closeCallback){
         var mask = $('#mask'),
             close = $('.close'),
             overlay = $('.overlay');
-        mask.css('opacity','0').show().fadeTo(250, 0.7);
-        overlay.resizeElement().centerElement().fadeIn(250);
+            
+        var closeOverlay = function(){
+            if(close.attr('data-confirm-message') !== undefined && !window.confirm(close.attr('data-confirm-message'))){
+               return false;
+            }
+            overlay.fadeOut();
+            mask.fadeOut();
+            if(closeCallback && typeof(closeCallback) === "function" ){
+                closeCallback();
+            }
+            return true;
+        }
+        
+        if(!overlay.is(':visible')){
+            mask.css('opacity','0').show().fadeTo(250, 0.7);
+            overlay.resizeElement().centerElement().fadeIn(250);
+        }
+        else{
+            closeOverlay();
+        }
         if($.data(close.get(0), 'events') === undefined){
-          close.click(function(e){
-          $(this).parent().fadeOut();
-              mask.fadeOut();
-          });
+            close.click(function(e){
+                closeOverlay();
+            });
         }
     },
     
@@ -154,7 +171,11 @@ var owums = {
             $(window).resize(function(e){
               overlay.resizeElement().centerElement();
             }).load(function(e){
-              owums.toggleOverlay();
+                var closeCallback = function(){
+                    var url = $('.close').attr('data-callback-url');
+                    $('#verification').load(url);
+                }
+                owums.toggleOverlay(closeCallback);
             });
             $('iframe').one('load', function(){
               loading.togglePop();
