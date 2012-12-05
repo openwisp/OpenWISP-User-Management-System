@@ -39,7 +39,7 @@
           <br /><br /><br />
       <% elsif @account.verify_with_gestpay? %>
           <%=t :Please_verify_credit_card %><br />
-          <a href="javascript:owums.toggleOverlay()">Gestpay Banca Sella</a>
+          <a href="javascript:owums.toggleOverlay()">Gestpay Banca Sella<br /><%= image_tag('gestpay.gif') %></a>
           <br /><br /><br />
       <% end %>
 

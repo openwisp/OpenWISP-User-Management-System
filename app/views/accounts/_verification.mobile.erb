@@ -32,13 +32,16 @@
           <% end %>
           <%=t :Free_call_description %><br />
           <br />
-      <% elsif @account.verify_with_credit_card? %>
+      <% elsif @account.verify_with_paypal? %>
           <%=t :Please_verify_credit_card %><br />
           <%= link_to_paypal image_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
           <%# encrypted_submit_to_paypal image_submit_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
           <br /><br /><br />
-      <% end %>
-
+      <% elsif @account.verify_with_gestpay? %>
+          <%=t :Please_verify_credit_card %><br />
+          <a href="<%= @account.retrieve_gestpay_url %>">Gestpay Banca Sella</a><br /><%= image_tag('gestpay.gif') %>
+          <br /><br /><br />
+      <% end %>      
       <% unless @account.already_verified_once? %>
           <% if @account.expire_time > 0 %>
               <p style="font-size:100%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
