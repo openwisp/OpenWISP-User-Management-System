@@ -245,7 +245,7 @@ class AccountsController < ApplicationController
   
   def gestpay_error
     # generate a new gestpay url for a new payment
-    @account.clear_gestpay_url
+    @account.clear_gestpay_notes
     @account.save!
     
     respond_to do |format|

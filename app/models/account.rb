@@ -192,10 +192,6 @@ class Account < AccountCommon
       matches[1]
     end
   end
-  
-  def clear_gestpay_url
-    self.notes = self.notes.gsub(/<gestpay>(.*)<\/gestpay>/i, '')
-  end
 
   private
 
@@ -360,12 +356,12 @@ class Account < AccountCommon
       # if the server param is correct
       if server == Configuration.get('notifier_base_url')
         # retrieve account
-        account = User.find(user_id)
+        user = User.find(user_id)
         # activate user account
-        account.credit_card_identity_verify!
+        user.credit_card_identity_verify!
         # once validated clear notes field
-        account.clear_gestpay_url
-        account.save!
+        user.clear_gestpay_notes
+        user.save!
       end
     # error
     else
