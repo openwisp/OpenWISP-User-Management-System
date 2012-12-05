@@ -50,7 +50,7 @@
 
 22:
   system_key: f
-  key: credit_card_enabled
+  key: paypal_enabled
   value: false
     
 23:
@@ -75,7 +75,7 @@
 
 27:
   system_key: f
-  key: credit_card_business_account
+  key: paypal_business_account
   value: mtylty_1277212890_biz@gmail.com
 
 28:

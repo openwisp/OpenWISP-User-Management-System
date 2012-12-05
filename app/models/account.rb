@@ -236,7 +236,7 @@ class Account < AccountCommon
   end
   
   def prepare_gestpay_payment()
-    if self.verify_with_gestpay?
+    if self.verify_with_gestpay? and !self.verified
       url = self.retrieve_gestpay_url
       if url.nil?
         # generate and return url (saves to notes)
