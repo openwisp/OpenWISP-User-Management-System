@@ -221,7 +221,7 @@ class Account < AccountCommon
       :return => return_url,
       :invoice => self.id,
       :notify_url => notify_url,
-      :currency_code => "EUR",
+      :currency_code => Configuration.get("paypal_currency", "EUR"),
       :lc => I18n.locale.to_s.upcase
     }
 
