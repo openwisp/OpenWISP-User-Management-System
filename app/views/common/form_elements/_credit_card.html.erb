@@ -18,8 +18,7 @@
 #%>
 
 <%
-    # TODO GESTPAY: verify this
-    if (Configuration.get('credit_card_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_CREDIT_CARD)) ||
+    if (Configuration.get('paypal_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_PAYPAL)) ||
       (Configuration.get('gestpay_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_GESTPAY))
 %>
 

@@ -45,7 +45,7 @@
 
 20:
   system_key: f
-  key: "credit_card_enabled"
+  key: "paypal_enabled"
   value: "false"
     
 21:
@@ -66,11 +66,11 @@
 24:
   system_key: t
   key: "credit_card_registration_expire"
-  value: "300"
+  value: "600"
 
 25:
   system_key: f
-  key: "credit_card_business_account"
+  key: "paypal_business_account"
   value: "mtylty_1277212890_biz@gmail.com"
 
 26:

@@ -147,16 +147,12 @@ class Account < AccountCommon
     end
   end
 
-  # TODO GESTPAY EDIT:
-  # pheraphs this should be renamed to verify_with_paypal
-  def verify_with_credit_card(return_url, notify_url)
+  def verify_with_paypal(return_url, notify_url)
     prepared = prepare_paypal_payment(return_url, notify_url)
     prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
   end
 
-  # TODO GESTPAY EDIT:
-  # pheraphs this should be renamed to encrypted_verify_with_paypal
-  def encrypted_verify_with_credit_card(return_url, notify_url)
+  def encrypted_verify_with_paypal(return_url, notify_url)
     prepared = prepare_paypal_payment(return_url, notify_url)
 
     prepared[:values].merge!({:cert_id => Configuration.get("ipn_cert_id")})
@@ -213,9 +209,7 @@ class Account < AccountCommon
 
   def prepare_paypal_payment(return_url, notify_url)
     values = {
-      # TODO GESTPAY EDIT:
-      # pheraphs credit_card should be renamed to paypal_business_account
-      :business => Configuration.get("credit_card_business_account"),
+      :business => Configuration.get("paypal_business_account_account"),
       :cmd => '_cart',
       :upload => 1,
       :return => return_url,
@@ -226,8 +220,6 @@ class Account < AccountCommon
     }
 
     values.merge!({
-      # TODO GESTPAY EDIT:
-      # decide if credit_card_verification_cost should be shared between paypal and gestpay
       "amount_1" => Configuration.get("credit_card_verification_cost"),
       "item_name_1" => I18n.t(:credit_card_item_name),
       "item_number_1" => self.id,
@@ -276,10 +268,8 @@ class Account < AccountCommon
     response = client.request(:encrypt) do
       soap.body = {
         :shopLogin => shop_login,
-        :uicCode => Configuration.get("gestpay_currency"),
-        # TODO GESTPAY EDIT:
-        # decide if credit_card_verification_cost should be shared between paypal and gestpay
-        :amount => Configuration.get("credit_card_verification_cost"),
+        :uicCode => Configuration.get("gestpay_currency", "242"),
+        :amount => Configuration.get("credit_card_verification_cost", "1"),
         :shopTransactionId => transaction_id,
         :buyerName => '%s %s' % [self.given_name, self.surname],
         :buyerEmail => self.email,
@@ -311,7 +301,6 @@ class Account < AccountCommon
     # init SOAP client
     client = Savon.client(webservice_url)
     
-    # TODO GESTPAY: try savon order! 
     # xml - why? Because by using plain savon code it didn't work
     xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ecom="https://ecomm.sella.it/">
     <soapenv:Header/>

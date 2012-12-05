@@ -24,7 +24,7 @@ class AccountCommon < ActiveRecord::Base
 
   VERIFY_BY_MOBILE = "mobile_phone"
   VERIFY_BY_DOCUMENT = "identity_document"
-  VERIFY_BY_CREDIT_CARD = "paypal_credit_card"
+  VERIFY_BY_PAYPAL = "paypal_credit_card"
   VERIFY_BY_GESTPAY = "gestpay_credit_card"
   VERIFY_BY_NOTHING = "no_identity_verification"
 
@@ -163,10 +163,8 @@ class AccountCommon < ActiveRecord::Base
   def self.self_verification_methods
     methods = [VERIFY_BY_MOBILE]
     
-    # TODO GESTPAY EDIT:
-    # pheraphs VERIFY_BY_CREDIT_CARD should become VERIFY_BY_PAYPAL and credit_card_enabled should become paypal_enabled
-    if Configuration.get("credit_card_enabled", "false") == "true"
-      methods.push(VERIFY_BY_CREDIT_CARD)
+    if Configuration.get("paypal_enabled", "false") == "true"
+      methods.push(VERIFY_BY_PAYPAL)
     end
     
     if Configuration.get("gestpay_enabled", "false") == "true"
@@ -190,11 +188,9 @@ class AccountCommon < ActiveRecord::Base
 
   # Accessors
 
-  def verify_with_credit_card?
-    self.verification_method == VERIFY_BY_CREDIT_CARD
+  def verify_with_paypal?
+    self.verification_method == VERIFY_BY_PAYPAL
   end
-  
-  alias verify_with_paypal? verify_with_credit_card?
   
   def verify_with_gestpay?
     self.verification_method == VERIFY_BY_GESTPAY

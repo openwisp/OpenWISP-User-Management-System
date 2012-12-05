@@ -17,7 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<% if Configuration.get('credit_card_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_CREDIT_CARD) %>
+<%
+    if (Configuration.get('paypal_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_PAYPAL)) ||
+      (Configuration.get('gestpay_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_GESTPAY))
+%>
 
     <% if owner.new_record? %>
         <li data-role="fieldcontain" class="verification-block" style="display:none">

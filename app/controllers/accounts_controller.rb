@@ -21,14 +21,14 @@ class AccountsController < ApplicationController
   ]
 
   before_filter :require_no_account, :only => [
-      :new, :create, :verify_credit_card, :secure_verify_credit_card, :verify_gestpay
+      :new, :create, :verify_paypal, :secure_verify_paypal, :verify_gestpay
   ]
 
   before_filter :require_no_operator
 
   before_filter :load_account, :except => [ :new, :create ]
 
-  protect_from_forgery :except => [ :verify_credit_card, :secure_verify_credit_card ]
+  protect_from_forgery :except => [ :verify_paypal, :secure_verify_paypal ]
 
   STATS_PERIOD = 14
 
@@ -194,7 +194,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  def verify_credit_card
+  def verify_paypal
     # Method to be called by paypal (IPN) to
     # verify user. Invoice is the account's id.
     # I know this method is verbose but, since 
@@ -209,7 +209,7 @@ class AccountsController < ApplicationController
     render :nothing => true
   end
 
-  def secure_verify_credit_card
+  def secure_paypal
     # Method to be called by paypal (IPN) to
     # verify user. Invoice is the account's id.
     # I know this method is verbose but, since 
