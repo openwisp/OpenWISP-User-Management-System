@@ -35,6 +35,7 @@
             counter.text(value-1);
         }
         else{
+            $(parent.document.getElementById('loading-overlay')).togglePop();
             clearTimeout(timer);
             parent.window.owums.toggleOverlay();
             parent.location.href = '<%= url_for(:action => :show) %>'
