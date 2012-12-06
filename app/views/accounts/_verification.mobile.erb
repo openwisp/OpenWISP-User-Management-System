@@ -34,7 +34,7 @@
           <br />
       <% elsif @account.verify_with_paypal? %>
           <%=t :Please_verify_credit_card %><br />
-          <%= link_to_paypal image_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
+          <%= link_to_paypal image_tag("paypal.png"), :bill_to => @account %>
           <%# encrypted_submit_to_paypal image_submit_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
           <br /><br /><br />
       <% elsif @account.verify_with_gestpay? %>
