@@ -209,7 +209,7 @@ class Account < AccountCommon
 
   def prepare_paypal_payment(return_url, notify_url)
     values = {
-      :business => Configuration.get("paypal_business_account_account"),
+      :business => Configuration.get("paypal_business_account"),
       :cmd => '_cart',
       :upload => 1,
       :return => return_url,
