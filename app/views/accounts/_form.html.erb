@@ -17,9 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<% if Configuration.get('use_automatic_username') == "false" or Configuration.get('use_mobile_phone_as_username') == "false" or !account.new_record? %>
-    <%= f.input :username, :disabled => !account.new_record? %>
-<% end %>
+<%# if Configuration.get('use_automatic_username') == "false" or Configuration.get('use_mobile_phone_as_username') == "false" or !account.new_record? %>
+    <%#= f.input :username, :disabled => !account.new_record? %>
+<%# end %>
 
 
 <% if account.new_record? %>
@@ -39,6 +39,10 @@
 
 <%= render 'common/form_elements/personal_data', :form => f, :owner => account, :countries => countries %>
 
+<script type="text/javascript">
+    owums.use_mobile_phone_as_username = <%= Configuration.get('use_mobile_phone_as_username', 'true') %>
+    owums.use_mobile_phone_as_username_hidden = <%= Configuration.get('use_mobile_phone_as_username_hidden', 'false') %>
+</script>
 
 <% if account.new_record? %>
     <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>

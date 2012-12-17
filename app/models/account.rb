@@ -27,7 +27,7 @@ class Account < AccountCommon
   # After save
   after_save :prepare_gestpay_payment
 
-  # If the configuration key use_automatic_username is set to true, the username is automatically set
+  # If the configuration key use_mobile_phone_as_username is set to true, the username is automatically set
   before_validation :set_username_if_required, :on => :create
 
   # Validations
@@ -192,16 +192,13 @@ class Account < AccountCommon
   private
 
   def set_username_if_required
-    if Configuration.get('use_mobile_phone_as_username')
-      Rails.logger.warn "Deprecation warning: 'use_mobile_phone_as_username' configuration key will be soon removed. Please use 'use_automatic_username' instead"
-    end
+    #if Configuration.get('use_mobile_phone_as_username')
+    #  Rails.logger.warn "Deprecation warning: 'use_mobile_phone_as_username' configuration key will be soon removed. Please use 'use_automatic_username' instead"
+    #end
 
-    # Retro-compatibility...  "use_mobile_phone_as_username" is deprecated
-    if Configuration.get('use_automatic_username') == "true" or Configuration.get('use_mobile_phone_as_username') == "true"
+    if Configuration.get('use_mobile_phone_as_username') == "true"
       if verify_with_mobile_phone?
         self.username = mobile_phone
-      else
-        self.username = email
       end
     end
 

@@ -120,7 +120,12 @@
 
 43:
   system_key: f
-  key: "use_automatic_username"
+  key: "use_mobile_phone_as_username"
+  value: "true"
+
+44:
+  system_key: f
+  key: "use_mobile_phone_as_username_hidden"
   value: "false"
 
 50:

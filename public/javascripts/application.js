@@ -18,13 +18,12 @@
 */
 
 $(document).ready(function(){
-    owums.toggleVerificationMethod();
     owums.ajaxQuickSearch();
     owums.ajaxLoading();
     owums.loadCheckboxWarnings();
     owums.hideWhenJsIsAvailable('.no_js');
     owums.hideWhenGraphsAreAvailable('.no_graphs');
-    owums.initCreditCardOverlay();
+    owums.initRegistration();
 });
 
 $.fn.resizeElement = function(padding){
@@ -125,9 +124,53 @@ var owums = {
                 $('#verify-mobile-phone').show();
                 $('#verify-credit-card').hide();
             }
+            owums.toggleReadonlyUsername();
         });
-        // the following is necessary for the case in which there's a validation error
+        // trigger once on page load
         verification_method.trigger('change');
+    },
+    
+    initRegistration: function(){
+        if($('#registration').length){
+            this.toggleVerificationMethod();
+            this.initCreditCardOverlay();
+            this.initMobile2Username();
+        }
+    },
+    
+    initMobile2Username: function(){
+        if(owums.use_mobile_phone_as_username){
+            var username = $('#account_username'),
+                prefix = $('#account_mobile_prefix'),
+                suffix = $('#account_mobile_suffix');
+            var updateUsername = function(){
+                username.val(prefix.val()+suffix.val());
+            }
+            suffix.bind('keyup', function(e){
+                updateUsername();
+            });
+            prefix.change(function(e){
+                updateUsername();
+            });
+        }
+    },
+    
+    toggleReadonlyUsername: function(){
+        if(owums.use_mobile_phone_as_username){
+            var username = $('#account_username');
+            if($('#account_verification_method').val() == 'mobile_phone'){
+                username.attr('readonly', 'readonly').addClass('readonly');
+                if(owums.use_mobile_phone_as_username_hidden){
+                    username.parent().hide();
+                }
+            }
+            else{
+                username.removeAttr('readonly').removeClass('readonly');
+                if(owums.use_mobile_phone_as_username_hidden){
+                    username.parent().show();
+                }
+            }
+        }
     },
     
     toggleOverlay: function(closeCallback){

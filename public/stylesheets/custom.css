@@ -322,3 +322,5 @@ li > .off {
     overflow: hidden;
     text-indent: -1000px;
 }
+
+.readonly{ background: #EEE }
