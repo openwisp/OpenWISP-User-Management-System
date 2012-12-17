@@ -35,16 +35,18 @@
                 </div>
               </div>
 
-              <%= form.label :mobile_phone_confirmation %>
-              <div class="block">
-                <div class="grid_4">
-                  <%= form.input :mobile_prefix_confirmation, :collection => prefixes, :prompt => t(:select_prefix) %>
+                <div id="confirm_mobile_phone_number">
+                  <%= form.label :mobile_phone_confirmation %>
+                  <div class="block">
+                    <div class="grid_4">
+                      <%= form.input :mobile_prefix_confirmation, :collection => prefixes, :prompt => t(:select_prefix) %>
+                    </div>
+    
+                    <div class="grid_5">
+                      <%= form.input :mobile_suffix_confirmation %>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="grid_5">
-                  <%= form.input :mobile_suffix_confirmation %>
-                </div>
-              </div>
             </div>
         <% else %>
             <% if owner.verify_with_mobile_phone? %>

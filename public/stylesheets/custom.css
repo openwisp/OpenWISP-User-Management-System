@@ -324,3 +324,6 @@ li > .off {
 }
 
 .readonly{ background: #EEE }
+#confirm_mobile_phone_number{ clear: both }
+#confirm_mobile_phone_number .block, #confirm_mobile_phone_number{ overflow: hidden }
+#registration, #registration .button{ font-size: 12px }

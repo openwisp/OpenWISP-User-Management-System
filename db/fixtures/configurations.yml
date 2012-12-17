@@ -128,6 +128,11 @@
   key: "use_mobile_phone_as_username_hidden"
   value: "false"
 
+45:
+  system_key: f
+  key: "enhance_registration_form"
+  value: "true"
+
 50:
   system_key: f
   key: "password_reset_from"

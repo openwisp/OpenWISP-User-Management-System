@@ -135,7 +135,38 @@ var owums = {
             this.toggleVerificationMethod();
             this.initCreditCardOverlay();
             this.initMobile2Username();
+            this.enhanceRegistration();
         }
+    },
+    
+    enhanceRegistration: function(){
+        if(!owums.enhance_registration_form){
+            return;
+        }
+        var mobile_confirmation = $('#confirm_mobile_phone_number'),
+            email_confirmation = $('#account_email_confirmation'),
+            password_confirmation = $('#account_password_confirmation');
+        mobile_confirmation.hide();
+        email_confirmation.parent().hide();
+        password_confirmation.parent().hide();
+        
+        $('#account_mobile_suffix').focusin(function(e){
+            if(!mobile_confirmation.is(':visible')){
+                mobile_confirmation.slideToggle(250);
+            }
+        });
+        
+        $('#account_email').focusin(function(e){
+            if(!email_confirmation.is(':visible')){
+                email_confirmation.parent().slideToggle(250);
+            }
+        });
+        
+        $('#account_password').focusin(function(e){
+            if(!password_confirmation.parent().is(':visible')){
+                password_confirmation.parent().slideToggle(250);
+            }
+        });
     },
     
     initMobile2Username: function(){
