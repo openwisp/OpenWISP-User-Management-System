@@ -2,6 +2,7 @@ source :gemcutter
 
 gem 'rails', '3.0.12'
 gem 'mysql2', '~> 0.2.7'
+gem 'sqlite3'
 
 gem 'exception_notification', :require => 'exception_notifier'
 
