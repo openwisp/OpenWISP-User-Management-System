@@ -117,3 +117,29 @@
   system_key: f
   key: password_reset_instructions_custom
   value: ""
+
+72:
+  system_key: f
+  key: "gestpay_enabled"
+  value: "true"
+
+73:
+  system_key: f
+  key: "gestpay_shoplogin"
+  value: "GESPAY55880"
+
+74:
+  system_key: f
+  key: "gestpay_currency"
+  value: "242"
+
+75:
+  system_key: f
+  key: "gestpay_webservice_url"
+  value: "https://testecomm.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL"
+
+76:
+  system_key: f
+  key: "gestpay_payment_url"
+  value: "https://testecomm.sella.it/gestpay/pagam.asp"
+  
