@@ -24,6 +24,7 @@ $(document).ready(function(){
     owums.hideWhenJsIsAvailable('.no_js');
     owums.hideWhenGraphsAreAvailable('.no_graphs');
     owums.initRegistration();
+    owums.initCreditCardOverlay();
 });
 
 $.fn.resizeElement = function(padding){
@@ -133,7 +134,6 @@ var owums = {
     initRegistration: function(){
         if($('#registration').length){
             this.toggleVerificationMethod();
-            this.initCreditCardOverlay();
             this.initMobile2Username();
             this.enhanceRegistration();
         }
