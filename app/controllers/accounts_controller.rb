@@ -17,7 +17,7 @@
 
 class AccountsController < ApplicationController
   before_filter :require_account, :only => [
-      :show, :edit, :update
+      :show, :edit, :update, :gestpay_success, :gestpay_error
   ]
 
   before_filter :require_no_account, :only => [
