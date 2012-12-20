@@ -6,12 +6,12 @@ class AccountsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "should open gestpay_success without login" do
+  test "gestpay_success should redirect to login" do
     get :gestpay_success
     assert_response :redirect
   end
   
-  test "should open gestpay_error without login" do
+  test "gestpay_error should redirect to login" do
     get :gestpay_error
     assert_response :redirect
   end
