@@ -143,30 +143,44 @@ var owums = {
         if(!owums.enhance_registration_form){
             return;
         }
+        
         var mobile_confirmation = $('#confirm_mobile_phone_number'),
             email_confirmation = $('#account_email_confirmation'),
-            password_confirmation = $('#account_password_confirmation');
+            password_confirmation = $('#account_password_confirmation'),
+            mobile_suffix = $('#account_mobile_suffix'),
+            email = $('#account_email'),
+            password = $('#account_password');
+        
         mobile_confirmation.hide();
         email_confirmation.parent().hide();
         password_confirmation.parent().hide();
         
-        $('#account_mobile_suffix').focusin(function(e){
+        mobile_suffix.focusin(function(e){
             if(!mobile_confirmation.is(':visible')){
                 mobile_confirmation.slideToggle(250);
             }
         });
+        if(mobile_suffix.val()!=''){
+            mobile_confirmation.show();
+        }
         
-        $('#account_email').focusin(function(e){
+        email.focusin(function(e){
             if(!email_confirmation.is(':visible')){
                 email_confirmation.parent().slideToggle(250);
             }
         });
+        if(email.val()!=''){
+            email_confirmation.parent().show();
+        }
         
-        $('#account_password').focusin(function(e){
+        password.focusin(function(e){
             if(!password_confirmation.parent().is(':visible')){
                 password_confirmation.parent().slideToggle(250);
             }
         });
+        if(password.val()!=''){
+            password_confirmation.parent().show();
+        }
     },
     
     initMobile2Username: function(){
