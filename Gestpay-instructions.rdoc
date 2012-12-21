@@ -1,0 +1,31 @@
+= Gestpay Credit Card verification 
+
+== Gestpay Backoffice configuration
+
+Login into the backoffice:
+
+Demo: https://testecomm.sella.it/gestpay/backoffice/LoginGestPay.asp
+Production: https://ecomm.sella.it/gestpay/backoffice/LoginGestPay.asp
+
+=== Configurazione > Ambiente > Indirizzi ip
+
+Insert the ip address from which your applications will communicate with gestpay
+
+== Configurazione > Ambiente > Risposte
+
+URL per risposta positiva: <YOUR_BASE_URL>/account/gestpay_success
+URL per risposta negativa: <YOUR_BASE_URL>/account/gestpay_error
+URL Server to Server: <YOUR_BASE_URL>/account/verify_gestpay
+
+All the other fields are related to email notifications and can be set according to personal needs and preferences.
+
+=== Configurazione Cliente > Campi & Parametri > Pagina 1
+
+Click on BuyerEmail, then check "Obbligatorio" and "Parametro", then click Ok
+Click on BuyerName, then check "Obbligatorio" and "Parametro", then click Ok
+Click on CustomInfo, then check "Risposta"
+
+Add new parameter (click on "Nuovo"), then check "Inserisci", write "Server", save by clicking on "Ok", then uncheck "Visibile" and save again
+Repeat the same procedure for the new parameter "UserID".
+
+After saving, click on the button "Pubblica" on the bottom right position of the page (under the list with all the available parameters).   
