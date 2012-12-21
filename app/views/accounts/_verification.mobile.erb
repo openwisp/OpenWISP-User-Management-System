@@ -39,7 +39,7 @@
           <br /><br /><br />
       <% elsif @account.verify_with_gestpay? %>
           <%=t :Please_verify_credit_card %><br />
-          <a href="<%= @account.retrieve_gestpay_url %>">Gestpay Banca Sella</a><br /><%= image_tag('gestpay.gif') %>
+          <a href="<%= @account.retrieve_gestpay_url %>">Gestpay Banca Sella<br /><%= image_tag('gestpay.png') %></a>
           <br /><br /><br />
       <% end %>      
       <% unless @account.already_verified_once? %>

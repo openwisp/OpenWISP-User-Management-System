@@ -118,11 +118,11 @@ var owums = {
         var verification_method = $('#account_verification_method');
         verification_method.change(function(){
             if(verification_method.val() != 'mobile_phone'){
-                $('#verify-mobile-phone').hide();
+                $('#verify-mobile-phone, li.verification-block.mobile-phone').hide();
                 $('#verify-credit-card').show();
             }
             else{
-                $('#verify-mobile-phone').show();
+                $('#verify-mobile-phone, li.verification-block.mobile-phone').show();
                 $('#verify-credit-card').hide();
             }
             owums.toggleReadonlyUsername();
@@ -132,10 +132,10 @@ var owums = {
     },
     
     initRegistration: function(){
-        if($('#registration').length){
-            this.toggleVerificationMethod();
-            this.initMobile2Username();
-            this.enhanceRegistration();
+        if($('#new_account').length){
+            owums.toggleVerificationMethod();
+            owums.initMobile2Username();
+            owums.enhanceRegistration();
         }
     },
     
@@ -149,11 +149,21 @@ var owums = {
             password_confirmation = $('#account_password_confirmation'),
             mobile_suffix = $('#account_mobile_suffix'),
             email = $('#account_email'),
-            password = $('#account_password');
+            password = $('#account_password'),
+            is_mobile = $('#mobile-registration').length || false;
+        
+        if(is_mobile){
+            email_confirmation = email_confirmation.parent().parent();
+            password_confirmation = password_confirmation.parent().parent();
+        }
+        else{
+            email_confirmation = email_confirmation.parent();
+            password_confirmation = password_confirmation.parent();
+        }
         
         mobile_confirmation.hide();
-        email_confirmation.parent().hide();
-        password_confirmation.parent().hide();
+        email_confirmation.hide();
+        password_confirmation.hide();
         
         mobile_suffix.focusin(function(e){
             if(!mobile_confirmation.is(':visible')){
@@ -166,20 +176,20 @@ var owums = {
         
         email.focusin(function(e){
             if(!email_confirmation.is(':visible')){
-                email_confirmation.parent().slideToggle(250);
+                email_confirmation.slideToggle(250);
             }
         });
         if(email.val()!=''){
-            email_confirmation.parent().show();
+            email_confirmation.show();
         }
         
         password.focusin(function(e){
-            if(!password_confirmation.parent().is(':visible')){
-                password_confirmation.parent().slideToggle(250);
+            if(!password_confirmation.is(':visible')){
+                password_confirmation.slideToggle(250);
             }
         });
         if(password.val()!=''){
-            password_confirmation.parent().show();
+            password_confirmation.show();
         }
     },
     
