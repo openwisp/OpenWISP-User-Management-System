@@ -38,8 +38,8 @@
           <%# encrypted_submit_to_paypal image_submit_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
           <br /><br /><br />
       <% elsif @account.verify_with_gestpay? %>
-          <%=t :Please_verify_credit_card %><br />
-          <a href="<%= @account.retrieve_gestpay_url %>">Gestpay Banca Sella<br /><%= image_tag('gestpay.png') %></a>
+          <%=t :Please_verify_credit_card %><br /><br />
+          <a href="<%= @account.retrieve_gestpay_url %>"><%= image_tag('gestpay_new_mobile.png') %></a>
           <br /><br /><br />
       <% end %>      
       <% unless @account.already_verified_once? %>

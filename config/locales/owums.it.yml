@@ -173,7 +173,7 @@ it:
   Perishable_token_error: "Non è stato possibile trovare il tuo account. Invece di cliccare sull'indirizzo che ti è stato inviato per email, prova a copiarlo e incollarlo nel tuo browser.
 Se continui ad avere problemi, ripeti la procedura di recupero password"
   Personal_details: "Dettagli personali"
-  Please_verify_credit_card: "Per procedere con l'operazione è necessario verificare la tua carta di credito. Vai su"
+  Please_verify_credit_card: "Per procedere con l'operazione è necessario verificare la tua carta di credito"
   Please_verify_mobile_number: "Per procedere con l'operazione è necessario verificare il tuo numero di cellulare"
   Prefix: "Prefisso"
   Prefix_confirmation: "Conferma prefisso"
