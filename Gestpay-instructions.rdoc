@@ -1,29 +1,46 @@
 = Gestpay Credit Card verification 
 
+== Configuration Keys
+
+Ensure the following configuration keys are available in **/configurations**
+
+* gestpay_enabled
+* ...
+
+If the configuration keys are not available you are probably upgrading from an older version,
+you will have to manually insert the configuration keys with the rails console unless you want
+to reset all your configuration keys to the default ones (in that case just run **rake db:seed** from the command line).
+
+To manually set the configuration keys with the console follow this procedure:
+
+    =>:$ bundle exec rails console
+    1.8.7 :001 > Configuration.set('key_name', 'value')
+    # substitute key_name and value with the missing configuration keys
+
 == Gestpay Backoffice configuration
 
 Login into the backoffice:
 
-Demo: https://testecomm.sella.it/gestpay/backoffice/LoginGestPay.asp
-Production: https://ecomm.sella.it/gestpay/backoffice/LoginGestPay.asp
+Demo: https://testecomm.sella.it/gestpay/backoffice/LoginGestPay.asp  
+Production: https://ecomm.sella.it/gestpay/backoffice/LoginGestPay.asp  
 
 === Configurazione > Ambiente > Indirizzi ip
 
-Insert the ip address from which your applications will communicate with gestpay
+Insert the ip addresses from which your owums instance will communicate with gestpay.
 
-== Configurazione > Ambiente > Risposte
+=== Configurazione > Ambiente > Risposte
 
-URL per risposta positiva: <YOUR_BASE_URL>/account/gestpay_success
-URL per risposta negativa: <YOUR_BASE_URL>/account/gestpay_error
-URL Server to Server: <YOUR_BASE_URL>/account/verify_gestpay
+URL per risposta positiva: **/account/gestpay_success**  
+URL per risposta negativa: **/account/gestpay_error**  
+URL Server to Server: **/account/verify_gestpay**  
 
 All the other fields are related to email notifications and can be set according to personal needs and preferences.
 
 === Configurazione Cliente > Campi & Parametri > Pagina 1
 
-Click on BuyerEmail, then check "Obbligatorio" and "Parametro", then click Ok
-Click on BuyerName, then check "Obbligatorio" and "Parametro", then click Ok
-Click on CustomInfo, then check "Risposta"
+1. Click on BuyerEmail, then check "Obbligatorio" and "Parametro", then click Ok  
+2. Click on BuyerName, then check "Obbligatorio" and "Parametro", then click Ok  
+3. Click on CustomInfo, then check "Risposta"  
 
 Add new parameter (click on "Nuovo"), then check "Inserisci", write "Server", save by clicking on "Ok", then uncheck "Visibile" and save again
 Repeat the same procedure for the new parameter "UserID".
