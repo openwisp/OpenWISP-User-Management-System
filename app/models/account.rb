@@ -298,7 +298,7 @@ class Account < AccountCommon
     # init SOAP client
     client = Savon.client(webservice_url)
     
-    # xml - why? Because by using plain savon code it didn't work
+    # xml - why? Because by using plain savon code didn't work
     xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ecom="https://ecomm.sella.it/">
     <soapenv:Header/>
       <soapenv:Body>
@@ -315,7 +315,10 @@ class Account < AccountCommon
       soap.xml = xml
     end
     
-    decrypted = response[:decrypt_response][:decrypt_result][:gest_pay_s2_s]
+    # convert useful bits of the response to hash
+    response_hash = response[:decrypt_response][:decrypt_result].to_hash
+    # get only the part we need, but because there might be some differences between the demo and the real env we need to do a quick check
+    decrypted = response_hash.has_key?(:gest_pay_s2_s) ? response_hash[:gest_pay_s2_s] : response_hash[:gest_pay_crypt_decrypt]
     
     # DEBUG
     # maybe it shouldn't be DEBUG only
