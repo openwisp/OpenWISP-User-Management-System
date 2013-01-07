@@ -8,11 +8,11 @@ class AccountsControllerTest < ActionController::TestCase
   
   test "gestpay_success should redirect to login" do
     get :gestpay_success
-    assert_response :redirect
+    assert_redirected_to '/account_session/new'
   end
   
   test "gestpay_error should redirect to login" do
     get :gestpay_error
-    assert_response :redirect
+    assert_redirected_to '/account_session/new'
   end
 end
