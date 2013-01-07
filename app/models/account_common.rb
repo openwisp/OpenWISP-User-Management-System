@@ -347,7 +347,7 @@ class AccountCommon < ActiveRecord::Base
 
   def no_parameter_tampering
     @countries = Country.all
-    unless @countries.map { |p| p.printable_name }.include?(self.state)
+    unless CONFIG['state'] == false || @countries.map { |p| p.printable_name }.include?(self.state)
       errors.add(:base, "Parameters tampering, uh? Nice try but it's going to be reported...")
       Rails.logger.error("'state' attribute tampering")
     end
