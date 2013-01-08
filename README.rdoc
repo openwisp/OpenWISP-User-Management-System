@@ -41,6 +41,25 @@ Once deployed using your favourite environment, you need to configure two deamon
 
 To do this, you can use the following init.d script (customization may be needed, this script was coded for Ubuntu 10.04). 
 
+==== Simplify the Registration Form
+
+By default, all the fields of the user profile are mandatory, however, in order to simplify and speed up the user registration procedure it is possible to change this behaviour and hide the following fields:
+
+* birth date
+* address
+* city
+* postal code
+* state
+
+To do that proceed by copying the file *config/registration_fields.example.yml* and renaming it to *config/registration_fields.yml*, then set to *false* the fields you want to disable and hide.
+This change requires OWUMS to be restarted, either by reloading the webserver or, if you use passenger, by reloading rails with the *tmp/restart.txt* trick: http://www.modrails.com/documentation/Users%20guide%20Nginx.html#_redeploying_restarting_the_rack_application (for more info follow the link).
+
+If the file *config/registration_fields.yml* does not exist, OWUMS will read the default values from *config/registration_fields.example.yml* (so don't delete it).
+
+==== Disable Captcha in the Registration Form
+
+If you need to disable the Captcha field in the registration form you can do it by going into OWUMS's admin web interface to *configurations/*, look for *captcha_enabled* and set it to *false* .
+
 ==== Startup script
 
 The following script (Ubuntu/Debian style) should be named owums-daemons. It assumes OpenWISP User Management Systemis running on ruby enterprise and that the application was deployed to /var/rails/owums.

@@ -1,15 +1,24 @@
 = Gestpay Credit Card verification 
 
+Instructions to enable the "Gestpay Credit Card" verification method for the user registration procedure.
+
 == Configuration Keys
 
-Ensure the following configuration keys are available in **/configurations**
+Ensure the following configuration keys are available in */configurations* and configured correctly.
 
-* gestpay_enabled
-* ...
+* *gestpay_enabled*: indicate if gestpay credit card verification method is enabled
+* *credit_card_verification_cost*: cost of the transaction
+* *credit_card_registration_expire*: user registered with this method are automatically deleted after this time
+* *gestpay_currency*: currency used, defaults to 242 which means EURO, for other codes see the Gestpay documentation
+* *gestpay_payment_url*: URL to which the user will be redirected to perform the payment; should be https://testecomm.sella.it/gestpay/pagam.asp for the DEMO or https://ecomm.sella.it/gestpay/pagam.asp for the real environment
+* *gestpay_webservice_url*: Web Service URL, should be https://testecomm.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL for the DEMO or https://ecomms2s.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL for the real environment
+* *gestpay_shoplogin*: Gestpay CODE provided by Banca Sella after signing their contract. Also known as "Codice esercente"
+* *notifier_base_url*: base url of the OWUMS application without the protocol, eg: *mywifiservice.com/owums*
+* *notifier_protocol*: https or http
 
 If the configuration keys are not available you are probably upgrading from an older version,
 you will have to manually insert the configuration keys with the rails console unless you want
-to reset all your configuration keys to the default ones (in that case just run **rake db:seed** from the command line).
+to reset all your configuration keys to the default ones (in that case just run *rake db:seed* from the command line).
 
 To manually set the configuration keys with the console follow this procedure:
 
@@ -21,7 +30,8 @@ To manually set the configuration keys with the console follow this procedure:
 
 Login into the backoffice:
 
-Demo: https://testecomm.sella.it/gestpay/backoffice/LoginGestPay.asp  
+Demo: https://testecomm.sella.it/gestpay/backoffice/LoginGestPay.asp
+
 Production: https://ecomm.sella.it/gestpay/backoffice/LoginGestPay.asp  
 
 === Configurazione > Ambiente > Indirizzi ip
@@ -30,9 +40,11 @@ Insert the ip addresses from which your owums instance will communicate with ges
 
 === Configurazione > Ambiente > Risposte
 
-URL per risposta positiva: **/account/gestpay_success**  
-URL per risposta negativa: **/account/gestpay_error**  
-URL Server to Server: **/account/verify_gestpay**  
+URL per risposta positiva: */account/gestpay_success*
+
+URL per risposta negativa: */account/gestpay_error*
+
+URL Server to Server: */account/verify_gestpay*  
 
 All the other fields are related to email notifications and can be set according to personal needs and preferences.
 
