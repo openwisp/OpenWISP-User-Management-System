@@ -25,6 +25,7 @@ $(document).ready(function(){
     owums.hideWhenGraphsAreAvailable('.no_graphs');
     owums.initRegistration();
     owums.initCreditCardOverlay();
+    owums.initUserForm();
 });
 
 $.fn.resizeElement = function(padding){
@@ -136,6 +137,23 @@ var owums = {
             owums.toggleVerificationMethod();
             owums.initMobile2Username();
             owums.enhanceRegistration();
+        }
+    },
+    
+    initUserForm: function(){
+        var id_document = $('#identity-document');
+        if(id_document.length){
+            var verification_method = $('#user_verification_method');
+            verification_method.change(function(){
+                if(verification_method.val() != 'identity_document'){
+                    id_document.hide();
+                }
+                else{
+                    id_document.show();
+                }
+            });
+            // trigger once on page load
+            verification_method.trigger('change');
         }
     },
     
