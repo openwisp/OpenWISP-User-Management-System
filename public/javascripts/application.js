@@ -94,12 +94,12 @@ var owums = {
 
     //Change verification methods on signup
     toggleVerificationMethod: function() {
-        var verification_method = $('#account_verification_method');
+        var verification_method = $('#account_verification_method').length ? $('#account_verification_method') : $('#user_verification_method');
         verification_method.change(function(){
             $('.verification-block').toggle();
         });
         // the following is necessary for the case in which there's a validation error
-        if(verification_method.val() == 'credit_card'){
+        if(verification_method.val() == 'credit_card' || verification_method.val() == 'identity_document'){
             verification_method.trigger('change');
         }
     },
