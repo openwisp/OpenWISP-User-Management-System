@@ -1,9 +1,12 @@
 defaults: &defaults
+  # registration form
   birth_date: true
   address: true
   zip: true
   city: true
   state: true
+  # other stuff
+  send_email_notification_to_users: true
 
 production:
   <<: *defaults
