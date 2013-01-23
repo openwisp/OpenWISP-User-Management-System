@@ -51,10 +51,10 @@ By default, all the fields of the user profile are mandatory, however, in order 
 * postal code
 * state
 
-To do that proceed by copying the file *config/registration_fields.example.yml* and renaming it to *config/registration_fields.yml*, then set to *false* the fields you want to disable and hide.
+To do that proceed by copying the file *config/registration_fields.default.yml* and rename it to *config/registration_fields.yml*, then set to *false* the fields you want to disable and hide.
 This change requires OWUMS to be restarted, either by reloading the webserver or, if you use passenger, by reloading rails with the *tmp/restart.txt* trick: http://www.modrails.com/documentation/Users%20guide%20Nginx.html#_redeploying_restarting_the_rack_application (for more info follow the link).
 
-If the file *config/registration_fields.yml* does not exist, OWUMS will read the default values from *config/registration_fields.example.yml* (so don't delete it).
+If the file *config/registration_fields.yml* does not exist, OWUMS will read the default values from *config/registration_fields.default.yml* (so do not delete it).
 
 ==== Disable Captcha in the Registration Form
 

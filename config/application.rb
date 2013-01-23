@@ -10,7 +10,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 begin
   CONFIG = YAML.load_file("config/registration_fields.yml")[Rails.env]
 rescue Errno::ENOENT
-  CONFIG = YAML.load_file("config/registration_fields.example.yml")[Rails.env]
+  CONFIG = YAML.load_file("config/registration_fields.default.yml")[Rails.env]
 end
 
 module Owums
