@@ -2,7 +2,6 @@ source :gemcutter
 
 gem 'rails', '3.0.12'
 gem 'mysql2', '~> 0.2.7'
-gem 'sqlite3'
 
 gem 'exception_notification', :require => 'exception_notifier'
 
@@ -29,3 +28,11 @@ gem 'cap-recipes', '~> 0.3.36', :require => false
 gem 'capistrano_colors', '~> 0.5.4', :require => false
 
 gem 'savon', '~> 1.2.0', :require => false
+
+group :test do
+  gem "sqlite3"
+end
+
+group :development do
+  gem "rack-mini-profiler"
+end
