@@ -197,6 +197,8 @@ li > .off {
     display:block;
 }
 
+#eula_priv a{ text-decoration: underline }
+
 #disable_account input, #eula_priv input, #user_status input {
     width: 20px;
 }
