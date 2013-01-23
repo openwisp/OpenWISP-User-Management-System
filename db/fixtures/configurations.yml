@@ -120,8 +120,18 @@
 
 43:
   system_key: f
-  key: "use_automatic_username"
+  key: "use_mobile_phone_as_username"
+  value: "true"
+
+44:
+  system_key: f
+  key: "use_mobile_phone_as_username_hidden"
   value: "false"
+
+45:
+  system_key: f
+  key: "enhance_registration_form"
+  value: "true"
 
 50:
   system_key: f
@@ -217,5 +227,35 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   system_key: f
   key: "gestpay_payment_url"
   value: "https://testecomm.sella.it/gestpay/pagam.asp"
-  
-  
+
+80:
+  system_key: f
+  key: "account_notification_message_en"
+  value: "Hi {first_name} {last_name},
+You just created and verified successfully your account for wifi access.
+
+You can now login and use the wifi service with username \"{username}\" and the password you chose during the registration phase.
+
+Staff"
+
+81:
+  system_key: f
+  key: "account_notification_message_it"
+  value: "Ciao {first_name} {last_name},
+
+Hai appena creato e verificato con successo il tuo account per l'accesso al wifi.
+
+Ora puoi effettuare il login e usare il servizio wifi, il tuo username è \"{username}\" e la password è quella che hai scelto in fase di registrazione.
+
+Cordiali Saluti
+Staff"
+
+82:
+  system_key: f
+  key: "account_notification_subject_en"
+  value: "New account created on [OpenWISP User Management System]"
+
+83:
+  system_key: f
+  key: "account_notification_subject_it"
+  value: "Nuovo account creato su [OpenWISP User Management System]"

@@ -197,6 +197,8 @@ li > .off {
     display:block;
 }
 
+#eula_priv a{ text-decoration: underline }
+
 #disable_account input, #eula_priv input, #user_status input {
     width: 20px;
 }
@@ -322,3 +324,8 @@ li > .off {
     overflow: hidden;
     text-indent: -1000px;
 }
+
+.readonly{ background: #EEE }
+#confirm_mobile_phone_number{ clear: both }
+#confirm_mobile_phone_number .block, #confirm_mobile_phone_number{ overflow: hidden }
+#registration, #registration .button{ font-size: 12px }

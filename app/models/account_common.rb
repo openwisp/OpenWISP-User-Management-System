@@ -56,7 +56,7 @@ class AccountCommon < ActiveRecord::Base
             :presence => true,
             :uniqueness => {:allow_blank => true},
             :length => {:in => 4..64, :allow_blank => true},
-            :format => {:with => /\A[a-z0-9_\-\.@]+\Z/i, :allow_blank => true}
+            :format => {:with => /\A[a-z0-9_\-\.]+\Z/i, :allow_blank => true}
 
   validates :email,
             :presence => true,
@@ -257,6 +257,12 @@ class AccountCommon < ActiveRecord::Base
     reset_perishable_token!
     Notifier.password_reset_instructions(self).deliver
   end
+  
+  def new_account_notification!
+    if CONFIG['send_email_notification_to_users']
+      Notifier.new_account_notification(self).deliver
+    end
+  end
 
   def mobile_prefix_confirmation=(value)
     write_attribute(:mobile_prefix_confirmation, value)
@@ -347,7 +353,7 @@ class AccountCommon < ActiveRecord::Base
 
   def no_parameter_tampering
     @countries = Country.all
-    unless @countries.map { |p| p.printable_name }.include?(self.state)
+    unless CONFIG['state'] == false || @countries.map { |p| p.printable_name }.include?(self.state)
       errors.add(:base, "Parameters tampering, uh? Nice try but it's going to be reported...")
       Rails.logger.error("'state' attribute tampering")
     end

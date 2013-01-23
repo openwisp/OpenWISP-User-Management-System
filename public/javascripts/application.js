@@ -18,13 +18,14 @@
 */
 
 $(document).ready(function(){
-    owums.toggleVerificationMethod();
     owums.ajaxQuickSearch();
     owums.ajaxLoading();
     owums.loadCheckboxWarnings();
     owums.hideWhenJsIsAvailable('.no_js');
     owums.hideWhenGraphsAreAvailable('.no_graphs');
+    owums.initRegistration();
     owums.initCreditCardOverlay();
+    owums.initUserForm();
 });
 
 $.fn.resizeElement = function(padding){
@@ -118,16 +119,131 @@ var owums = {
         var verification_method = $('#account_verification_method');
         verification_method.change(function(){
             if(verification_method.val() != 'mobile_phone'){
-                $('#verify-mobile-phone').hide();
+                $('#verify-mobile-phone, li.verification-block.mobile-phone').hide();
                 $('#verify-credit-card').show();
             }
             else{
-                $('#verify-mobile-phone').show();
+                $('#verify-mobile-phone, li.verification-block.mobile-phone').show();
                 $('#verify-credit-card').hide();
             }
+            owums.toggleReadonlyUsername();
         });
-        // the following is necessary for the case in which there's a validation error
+        // trigger once on page load
         verification_method.trigger('change');
+    },
+    
+    initRegistration: function(){
+        if($('#new_account').length){
+            owums.toggleVerificationMethod();
+            owums.initMobile2Username();
+            owums.enhanceRegistration();
+        }
+    },
+    
+    initUserForm: function(){
+        var id_document = $('#identity-document');
+        if(id_document.length){
+            var verification_method = $('#user_verification_method');
+            verification_method.change(function(){
+                if(verification_method.val() != 'identity_document'){
+                    id_document.hide();
+                }
+                else{
+                    id_document.show();
+                }
+            });
+            // trigger once on page load
+            verification_method.trigger('change');
+        }
+    },
+    
+    enhanceRegistration: function(){
+        if(!owums.enhance_registration_form){
+            return;
+        }
+        
+        var mobile_confirmation = $('#confirm_mobile_phone_number'),
+            email_confirmation = $('#account_email_confirmation'),
+            password_confirmation = $('#account_password_confirmation'),
+            mobile_suffix = $('#account_mobile_suffix'),
+            email = $('#account_email'),
+            password = $('#account_password'),
+            is_mobile = $('#mobile-registration').length || false;
+        
+        if(is_mobile){
+            email_confirmation = email_confirmation.parent().parent();
+            password_confirmation = password_confirmation.parent().parent();
+        }
+        else{
+            email_confirmation = email_confirmation.parent();
+            password_confirmation = password_confirmation.parent();
+        }
+        
+        mobile_confirmation.hide();
+        email_confirmation.hide();
+        password_confirmation.hide();
+        
+        mobile_suffix.focusin(function(e){
+            if(!mobile_confirmation.is(':visible')){
+                mobile_confirmation.slideToggle(250);
+            }
+        });
+        if(mobile_suffix.val()!=''){
+            mobile_confirmation.show();
+        }
+        
+        email.focusin(function(e){
+            if(!email_confirmation.is(':visible')){
+                email_confirmation.slideToggle(250);
+            }
+        });
+        if(email.val()!=''){
+            email_confirmation.show();
+        }
+        
+        password.focusin(function(e){
+            if(!password_confirmation.is(':visible')){
+                password_confirmation.slideToggle(250);
+            }
+        });
+        if(password.val()!=''){
+            password_confirmation.show();
+        }
+    },
+    
+    initMobile2Username: function(){
+        if(owums.use_mobile_phone_as_username){
+            var username = $('#account_username'),
+                prefix = $('#account_mobile_prefix'),
+                suffix = $('#account_mobile_suffix');
+            var updateUsername = function(){
+                username.val(prefix.val()+suffix.val());
+            }
+            suffix.bind('keyup', function(e){
+                updateUsername();
+            });
+            prefix.change(function(e){
+                updateUsername();
+            });
+        }
+    },
+    
+    toggleReadonlyUsername: function(){
+        if(owums.use_mobile_phone_as_username){
+            var username = $('#account_username');
+            if($('#account_verification_method').val() == 'mobile_phone'){
+                username.attr('readonly', 'readonly').addClass('readonly');
+                if(owums.use_mobile_phone_as_username_hidden){
+                    username.parent().hide();
+                }
+            }
+            else{
+                username.removeAttr('readonly').removeClass('readonly');
+                if(owums.use_mobile_phone_as_username_hidden){
+                    username.parent().show();
+                }
+            }
+        }
     },
     
     toggleOverlay: function(closeCallback){

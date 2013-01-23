@@ -69,3 +69,6 @@ tbody tr:hover td {
 .input {
     margin: 5px 0 20px 0;
 }
+
+.hidden{ display: none !important }
+.readonly{ background: #DDD }
