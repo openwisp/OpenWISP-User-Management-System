@@ -28,13 +28,25 @@ $(document).ready(function(){
     owums.initUserForm();
 });
 
-$.fn.resizeElement = function(padding){
-    padding = padding || 60;
-    var el = $(this);  
-    el.height($(window).height()-padding)
-    .width($(window).width()-padding);
-    return el;
-}
+//$.fn.resizeElement = function(padding){
+//    padding = padding || 150;
+    //var el = $(this),
+    //    window_width = $(window).width(),
+    //    window_height = $(window).width(),
+    //    max_height = parseInt($('.overlay').css('max-height')),
+    //    max_width = parseInt($('.overlay').css('max-width')),
+    //    min_height = parseInt($('.overlay').css('min-height')),
+    //    min_width = parseInt($('.overlay').css('min-width'));
+    //// resize width if value is between min and max width
+    //if(window_width <= max_width && window_width >= min_width){
+    //    el.width(window_width-padding);
+    //}
+    //// resize height if value is between min and max height
+    //if(window_height <= max_height && window_height >= min_height){
+    //    el.height(window_height-padding)
+    //}
+    //return el;
+//}
 $.fn.centerElement = function(){
     var el = $(this);
     el.css('top', ($(window).height() - el.height()) / 2)
@@ -265,7 +277,7 @@ var owums = {
         
         if(!overlay.is(':visible')){
             mask.css('opacity','0').show().fadeTo(250, 0.7);
-            overlay.resizeElement().centerElement().fadeIn(250);
+            overlay.centerElement().fadeIn(250);
         }
         else{
             closeOverlay();
@@ -280,12 +292,11 @@ var owums = {
     initCreditCardOverlay: function(){
         if($('#bank-gateway').length){
             var overlay = $('.overlay'),
-            loading = $('#loading-overlay');
-            
+                loading = $('#loading-overlay');
             loading.togglePop();    
-            
+            owums.enhanceCreditCardForm();
             $(window).resize(function(e){
-              overlay.resizeElement().centerElement();
+              overlay.centerElement();
             }).load(function(e){
                 var closeCallback = function(){
                     var url = $('.close').attr('data-callback-url');
@@ -293,11 +304,42 @@ var owums = {
                 }
                 owums.toggleOverlay(closeCallback);
             });
-            $('iframe').one('load', function(){
-              loading.togglePop();
-            });    
+            
+            loading.togglePop();
         }
     },
+    
+    enhanceCreditCardForm: function(){
+        $('#credit_card_number input').bind('keyup', function(e){
+            $this = $(this);
+            if($this.val().length == 4 && $this.attr('id').substr(-1) < 4){
+                $(this).next().focus()
+            }
+        });
+        $('#bank-gateway input[type=number]').keydown(function(e) {
+            // Allow: backspace, delete, tab, escape, and enter
+            if ( e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
+                 // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) || 
+                 // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                     // let it happen, don't do anything
+                     return;
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105 )) {
+                    e.preventDefault(); 
+                }   
+            }
+        });
+        
+        
+        $('#bank-gateway form').submit(function(e){
+            $('#loading-overlay').togglePop();
+        });
+    },
+    
 
     ajaxQuickSearch: function() {
         var inputField = $(this.quickSearchDiv).find('input[type=text]');

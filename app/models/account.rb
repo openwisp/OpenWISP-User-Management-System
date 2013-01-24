@@ -188,6 +188,19 @@ class Account < AccountCommon
       matches[1]
     end
   end
+  
+  def gestpay_s2s_verify_credit_card(cc)
+    number = cc['credit_card_number']
+    expiration = cc['credit_card_expiration']
+    cvv = cc['credit_card_cvv']
+    
+    # server side check
+    
+    # gestpay check
+    
+    # if ok return true else false
+    return false
+  end
 
   private
 

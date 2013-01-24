@@ -236,6 +236,16 @@ class AccountsController < ApplicationController
     render :nothing => true
   end
   
+  def gestpay_verify_credit_card
+    unless @account.gestpay_s2s_verify_credit_card(params)
+      flash[:notice] = "Carta di credito non valida"
+    end
+    respond_to do |format|
+      format.html{ redirect_to verification_path }
+      format.js{  }
+    end
+  end
+  
   def gestpay_success
     respond_to do |format|
       format.html   { render :action => 'gestpay_success', :layout => false }

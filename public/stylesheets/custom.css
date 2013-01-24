@@ -4,7 +4,7 @@ select {
     width:99%;
 }
 
-div.field_with_errors .lbl, div.field_with_errors .error {
+div.field_with_errors .lbl, div.field_with_errors .error, .error {
     padding: 2px;
     background-color: #ff6666;
 }
@@ -280,12 +280,10 @@ li > .off {
     position: absolute;
     left: 10%;
     top: 10%;
-    max-width:900px;
-    min-width:400px;
-    min-height:500px;
+    width: 650px;
+    height: 450px;
     z-index:99;
     background-color:#333;
-    min-height:200px;
     border:1px solid #666;
     -moz-box-shadow:0 0 90px 5px #000;
     -webkit-box-shadow: 0 0 90px #000;
@@ -294,18 +292,11 @@ li > .off {
 
 .nolayout{
     width: 90%;
-    height: 96%;
-    padding: 2% 5%;
+    height: 93%;
+    padding: 3.5% 5%;
     background: #EEEEEE; font: 14px/1.5 Helvetica,Arial,'Liberation Sans',FreeSans,sans-serif
 }
 
-.overlay iframe{
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    background: #EEE;
-}
- 
 .overlay .close {
     background-image:url(../images/close.png);
     position:absolute;
@@ -360,3 +351,33 @@ li > .off {
 #registration .cancel{ text-align: center }
 #eula_priv input{ float: left; margin-top: 7px }
 #eula_priv label{ float: right; width: 96%; margin-top: 5px }
+
+/* gestpay S2S */
+#bank-gateway .button{
+    display: inline;
+    width: auto !important;
+    font-weight: bold;
+    margin-bottom: 0;
+    padding: 5px 10px
+}
+
+#bank-gateway select{ width: 60px }
+#bank-gateway .button{ width: 100px  }
+#bank-gateway input, #bank-gateway select{ font-size: 13px }
+#id_credit_card_cvv{ width: 70px }
+#bank-gateway p.error{
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 5px 0 3px 20px;
+}
+#credit_card_number label{ display: block }
+#credit_card_number input{
+    width: 95px;
+    padding-left: 10px;
+    padding-right: 10px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+#gestpaylogo{ text-align: center; margin-top: 20px }

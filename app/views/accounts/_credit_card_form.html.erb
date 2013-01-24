@@ -1,0 +1,54 @@
+<%#
+# This file is part of the OpenWISP User Management System
+#
+# Copyright (C) 2012 OpenWISP.org
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#%>
+
+<div class="nolayout" id="bank-gateway">
+  <h3>Verifica la tua Carta di Credito</h3>
+  <p>La verifica non comporta l'addebito di alcun costo aggiuntivo.</p>
+  <div class="box">
+    <form action="<%= gestpay_verify_credit_card_path %>" method="post">
+      <fieldset>
+        <% if flash[:notice] %>
+          <p class="error"><%= flash[:notice] %></p>
+        <% end %>
+        <p id="credit_card_number">
+          <label for="id_number1">Numero carta di credito</label>
+          <input type="number" id="id_number1" name="number1" maxlength="4" />
+          <input type="number" id="id_number2" name="number2" maxlength="4" />
+          <input type="number" id="id_number3" name="number3" maxlength="4" />
+          <input type="number" id="id_number4" name="number4" maxlength="4" />
+        </p>
+        <p>
+          <label for="credit_card_expiration_month">Scadenza</label>
+          <select id="credit_card_expiration_month" name="credit_card_expiration_month">
+            <% (1..12).each do |i| %><option value="<%= i %>"><%= i %></option><% end %>
+          </select>
+          <select id="credit_card_expiration_year" name="credit_card_expiration_year">
+            <% ((Date.today.strftime "%y").to_i..(Date.today.strftime "%y").to_i+8).each do |i| %><option value="<%= i %>"><%= i %></option><% end %>
+          </select>
+        </p>
+        <p>
+          <label for="credit_card_cvv">CVV</label>
+          <input type="number" id="id_credit_card_cvv" name="credit_card_cvv" maxlength="5" />
+        </p>
+        <p><input class="button" name="commit" type="submit" value="Verifica carta" /></p>
+      </fieldset>
+    </form>
+  </div>
+  <p id="gestpaylogo"><%= image_tag('gestpay_new.png') %></p>
+</div>
