@@ -59,7 +59,7 @@
     <div id="eula_priv">
       <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
       <%= f.input :eula_acceptance, :error => false %>
-
+    <br />
       <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
       <%= f.input :privacy_acceptance, :error => false %>
     </div>
@@ -72,4 +72,4 @@
 
 
 <%= f.button :submit %>
-<%= link_to t(:Undo), :back %>
+<p class="cancel"><%= link_to t(:Undo), :back %></p>

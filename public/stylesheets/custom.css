@@ -153,9 +153,7 @@ li > .off {
     background-color: #4A4344 !important;
 }
 
-#eula_priv {
-    margin:30px 5px 0 5px;
-}
+#eula_priv { margin:30px 5px 0 5px; overflow: hidden }
 
 #notice {
     color:green;
@@ -196,8 +194,6 @@ li > .off {
 #eula_priv label, #user_status label {
     display:block;
 }
-
-#eula_priv a{ text-decoration: underline }
 
 #disable_account input, #eula_priv input, #user_status input {
     width: 20px;
@@ -255,8 +251,6 @@ li > .off {
 .right {
     float: right;
 }
-
-
 
 #loading-overlay{
     display: none;
@@ -328,4 +322,41 @@ li > .off {
 .readonly{ background: #EEE }
 #confirm_mobile_phone_number{ clear: both }
 #confirm_mobile_phone_number .block, #confirm_mobile_phone_number{ overflow: hidden }
-#registration, #registration .button{ font-size: 12px }
+#registration{ font-size: 12px }
+#verify-mobile-phone .block{ overflow: hidden }
+#verify-mobile-phone .grid_4,
+#verify-mobile-phone .grid_5{ margin: 0; display: block }
+#verify-mobile-phone .grid_4{ width: 260px; margin-right: 25px }
+#verify-mobile-phone .grid_5{ width: 390px; }
+
+#registration{ margin: 0 15px 15px }
+#registration fieldset{ padding: 10px 25px }
+#registration input{ margin-left: 0 }
+#registration input[type=text],
+#registration input[type=password]{ margin-top: 3px; width: 97%; padding: 5px 1%; font-size: 14px }
+#registration select{
+    margin: 3px 0 0 0; background: #fff; border-color: gray; height: 32px; line-height: 1; padding: 6px 0; vertical-align: middle; font-size: 12px;
+}
+
+#registration #account_submit{
+    display: block; width: 40%; margin: 30px auto;
+    font: normal 15px Helvetica, Arial, Freesans, sans-serif;
+	color: #545454;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(top,#ffffff 0%,#cccccc);
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff),to(#cccccc));
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #fafafa;
+	-moz-box-shadow: 0px 1px 2px rgba(000,000,000,0.4),inset 0px 0px 1px rgba(255,255,255,1);
+	-webkit-box-shadow:0px 1px 2px rgba(000,000,000,0.4),inset 0px 0px 1px rgba(255,255,255,1);
+	box-shadow:0px 1px 2px rgba(000,000,000,0.4),inset 0px 0px 1px rgba(255,255,255,1);
+	text-shadow:0px -1px 0px rgba(000,000,000,0.7),0px 1px 0px rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+#registration a{ text-decoration: underline }
+#registration .cancel{ text-align: center }
+#eula_priv input{ float: left; margin-top: 7px }
+#eula_priv label{ float: right; width: 96%; margin-top: 5px }
