@@ -28,25 +28,6 @@ $(document).ready(function(){
     owums.initUserForm();
 });
 
-//$.fn.resizeElement = function(padding){
-//    padding = padding || 150;
-    //var el = $(this),
-    //    window_width = $(window).width(),
-    //    window_height = $(window).width(),
-    //    max_height = parseInt($('.overlay').css('max-height')),
-    //    max_width = parseInt($('.overlay').css('max-width')),
-    //    min_height = parseInt($('.overlay').css('min-height')),
-    //    min_width = parseInt($('.overlay').css('min-width'));
-    //// resize width if value is between min and max width
-    //if(window_width <= max_width && window_width >= min_width){
-    //    el.width(window_width-padding);
-    //}
-    //// resize height if value is between min and max height
-    //if(window_height <= max_height && window_height >= min_height){
-    //    el.height(window_height-padding)
-    //}
-    //return el;
-//}
 $.fn.centerElement = function(){
     var el = $(this);
     el.css('top', ($(window).height() - el.height()) / 2)
@@ -304,42 +285,102 @@ var owums = {
                 }
                 owums.toggleOverlay(closeCallback);
             });
-            
             loading.togglePop();
         }
     },
     
     enhanceCreditCardForm: function(){
         $('#credit_card_number input').bind('keyup', function(e){
-            $this = $(this);
-            if($this.val().length == 4 && $this.attr('id').substr(-1) < 4){
-                $(this).next().focus()
+            var $this = $(this);
+            // when max length of input form is reached and a number key is pressed
+            if($this.val().length == $this.attr('maxlength') &&
+               ( (e.keyCode >= 48 && e.keyCode < 57) || (e.keyCode >= 96 && e.keyCode < 105) )
+            ){
+                var next = $this.next();
+                // focus next input
+                if(next.length){
+                    next.focus()
+                }
+                // focus on select month of expiry date
+                else{
+                    $('#bank-gateway select').eq(0).focus()
+                }
             }
         });
-        $('#bank-gateway input[type=number]').keydown(function(e) {
+        // allow only numbers on credit card number and cvv fields
+        $('#bank-gateway input[type=text]').keydown(function(e) {
+            var $this = $(this);
             // Allow: backspace, delete, tab, escape, and enter
-            if ( e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
+            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
                  // Allow: Ctrl+A
                 (e.keyCode == 65 && e.ctrlKey === true) || 
                  // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                     // let it happen, don't do anything
-                     return;
+                (e.keyCode >= 35 && e.keyCode <= 39)) {                    
+                    // let it happen, don't do anything
+                    return
             }
             else {
                 // Ensure that it is a number and stop the keypress
                 if (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105 )) {
-                    e.preventDefault(); 
-                }   
+                    e.preventDefault()
+                }
+                else{
+                    // remove any error class if present
+                    if($this.hasClass('error')){
+                        $this.removeClass('error');
+                    }
+                }
             }
         });
-        
-        
+        // on selection of expiry date
+        $('#bank-gateway select').change(function(e){
+            var next = $(this).next();
+            // focus on the next select
+            if(next.length){
+                next.focus()
+            }
+            // or cvv field
+            else{
+                $('#id_credit_card_cvv').focus()
+            }
+        });
+        // on submit
         $('#bank-gateway form').submit(function(e){
-            $('#loading-overlay').togglePop();
+            var error = false;
+            $(this).find('input[type=text]').each(function(i, e){
+                var input = $(e)
+                if(
+                   ( input.attr('name').indexOf('number') >= 0 && input.val().length < 4 ) ||
+                   ( input.attr('name').indexOf('cvv') >= 0 && input.val().length < 3 )
+                ){
+                    input.addClass('error');
+                    error = true;
+                }
+            });
+            if(error){
+                return false
+            }
+            else{
+                owums.toggleLockOverlay();
+                $('#loading-overlay').togglePop();
+                return true
+            }
         });
     },
     
+    toggleLockOverlay: function(){
+        var mask = $('#mask'),
+            z = 10,
+            o = 0.7;
+        if(mask.css('z-index') < 20){
+            z = 99;
+            o = 0.5;
+        }
+        mask.css({
+            zIndex: z,
+            opacity: o
+        });
+    },
 
     ajaxQuickSearch: function() {
         var inputField = $(this.quickSearchDiv).find('input[type=text]');

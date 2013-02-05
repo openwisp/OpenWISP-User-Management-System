@@ -25,7 +25,7 @@ class Account < AccountCommon
   end
   
   # After save
-  after_save :prepare_gestpay_payment
+  #after_save :prepare_gestpay_payment
 
   # If the configuration key use_mobile_phone_as_username is set to true, the username is automatically set
   before_validation :set_username_if_required, :on => :create
@@ -189,17 +189,91 @@ class Account < AccountCommon
     end
   end
   
-  def gestpay_s2s_verify_credit_card(cc)
-    number = cc['credit_card_number']
-    expiration = cc['credit_card_expiration']
-    cvv = cc['credit_card_cvv']
+  def gestpay_s2s_verify_credit_card(cc, amount, currency)
+    number = cc['number1'] + cc['number2'] + cc['number3'] + cc['number4']
+    # if credit card looks valid proceed with gestpay validation
+    if CreditCardValidator::Validator.valid?(number)
+      webservice_url = Configuration.get('gestpay_webservice_s2s')
+      time = DateTime.now
+      shop_transaction_id = Digest::MD5.hexdigest("#{number}#{time}")
+      # prepare locals that will be passed to render_to_string
+      params = {
+        :shopLogin => Configuration.get('gestpay_shoplogin'),
+        :uicCode => currency,
+        :amount => amount,
+        :shopTransactionId => shop_transaction_id,
+        :cardNumber => number,
+        :expiryMonth => cc['expiration_month'].length > 1 ? cc['expiration_month'] : '0' + cc['expiration_month'],
+        :expiryYear => cc['expiration_year'],
+        :cvv => cc['cvv'],
+        :buyerName => '%s %s' % [self.given_name, self.surname],
+        :buyerEmail => self.email,
+        :languageId => I18n.locale == :it ? '1' : '2',
+        :customInfo => "USERID=%s*P1*SERVER=%s" % [self.id.to_s, Configuration.get("notifier_base_url")]
+      }
+      # init SOAP client
+      client = Savon.client(webservice_url)
+      # execute a SOAP request to call the "callPagamS2S" action
+      response = client.request(:call_pagam_s2_s) do
+        #soap.xml = xml
+        soap.body = params
+      end
+      # convert response to hash
+      response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
+      response[:datetime] = time
+      
+      if response[:transaction_result] == 'OK':
+        self.set_credit_card_info(response)
+        self.credit_card_identity_verify!
+      end
+      
+      if response[:error_code] == '8006'
+        response[:shop_transaction_id] = shop_transaction_id
+        self.set_credit_card_info(response)
+        # prolong account validity so it won't expire while the user is verifying
+        self.created_at = time
+        self.save!
+        response[:a] = params[:shopLogin]
+        response[:b] = response[:vb_v][:vb_v_risp]
+        response[:url] = 'https://testecomm.sella.it/gestpay/pagamvisa3d.asp'
+      end
+      
+      return response
+    end
+    return { :transaction_result => 'KO', :error_description => I18n.t(:Credit_card_invalid), :error_code => false }
+  end
+  
+  def gestpay_s2s_verified_by_visa(pares)
+    webservice_url = Configuration.get('gestpay_webservice_s2s')
+    amount = Configuration.get('credit_card_verification_cost', '1')
+    currency = Configuration.get('gestpay_currency')
+    # retrieve data from DB
+    credit_card_info = JSON::load(self.credit_card_info)
+    # prepare locals that will be passed to render_to_string
+    params = {
+      :shopLogin => Configuration.get('gestpay_shoplogin'),
+      :uicCode => currency,
+      :amount => amount,
+      :shopTransactionId => credit_card_info['shop_transaction'],
+      :transKey => credit_card_info['transaction_key'],
+      :pares => pares
+    }
+    # init SOAP client
+    client = Savon.client(webservice_url)
+    # execute a SOAP request to call the "callPagamS2S" action
+    response = client.request(:call_pagam_s2_s) do
+      #soap.xml = xml
+      soap.body = params
+    end
+    # convert response to hash
+    response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
     
-    # server side check
-    
-    # gestpay check
-    
-    # if ok return true else false
-    return false
+    if response[:transaction_result] == 'OK':
+      response[:datetime] = credit_card_info['datetime']
+      self.set_credit_card_info(response)
+      self.credit_card_identity_verify!
+    end
+    return response
   end
 
   private

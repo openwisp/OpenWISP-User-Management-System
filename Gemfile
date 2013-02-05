@@ -27,7 +27,8 @@ gem 'capistrano-ext', '~> 1.2.1', :require => false
 gem 'cap-recipes', '~> 0.3.36', :require => false
 gem 'capistrano_colors', '~> 0.5.4', :require => false
 
-gem 'savon', '~> 1.2.0', :require => false
+gem 'savon', '~> 1.2.0'
+gem 'credit_card_validator'
 
 group :test do
   gem "sqlite3"

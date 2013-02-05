@@ -252,6 +252,47 @@ class AccountCommon < ActiveRecord::Base
   def email_confirmation
     read_attribute(:email_confirmation) ? read_attribute(:email_confirmation) : self.email
   end
+  
+  def set_credit_card_info(data)
+    values = {}
+    if data.has_key?(:shop_transaction_id) && !data[:shop_transaction_id].nil?
+      values[:shop_transaction] = data[:shop_transaction_id]
+    end
+    if data.has_key?(:datetime) && !data[:datetime].nil?
+      values[:datetime] = data[:datetime]
+    end
+    if data.has_key?(:bank_transaction_id) && !data[:bank_transaction_id].nil?
+      values[:bank_transaction] = data[:bank_transaction_id]
+    end
+    if data.has_key?(:authorization_code) && !data[:authorization_code].nil?
+      values[:authorization_code] = data[:authorization_code]
+    end
+    if data.has_key?(:vb_v) && !data[:vb_v].nil?
+      values[:transaction_key] = data[:transaction_key]
+      values[:VbVRisp] = data[:vb_v][:vb_v_risp]
+    end
+    self.credit_card_info = values.to_json
+  end
+  
+  def credit_card_identity_verify!
+    if self.verify_with_paypal? or verify_with_gestpay?
+      self.verified = true
+      self.save!
+      self.new_account_notification!
+    else
+      Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
+    end
+  end
+
+  def mobile_phone_identity_verify!
+    if self.verify_with_mobile_phone?
+      self.verified = true
+      self.save!
+      self.new_account_notification!
+    else
+      Rails.logger.error("Verification method is not 'mobile_phone'!")
+    end
+  end
 
   def password_reset_instructions!
     reset_perishable_token!

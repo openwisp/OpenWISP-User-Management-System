@@ -4,7 +4,7 @@ select {
     width:99%;
 }
 
-div.field_with_errors .lbl, div.field_with_errors .error, .error {
+div.field_with_errors .lbl, div.field_with_errors .error, p.error {
     padding: 2px;
     background-color: #ff6666;
 }
@@ -281,7 +281,7 @@ li > .off {
     left: 10%;
     top: 10%;
     width: 650px;
-    height: 450px;
+    /*height: 450px;*/
     z-index:99;
     background-color:#333;
     border:1px solid #666;
@@ -329,7 +329,7 @@ li > .off {
     margin: 3px 0 0 0; background: #fff; border-color: gray; height: 32px; line-height: 1; padding: 6px 0; vertical-align: middle; font-size: 12px;
 }
 
-#registration #account_submit{
+#registration #account_submit, #bank-gateway .button{
     display: block; width: 40%; margin: 30px auto;
     font: normal 15px Helvetica, Arial, Freesans, sans-serif;
 	color: #545454;
@@ -347,29 +347,31 @@ li > .off {
     letter-spacing: 1px;
     cursor: pointer;
 }
+
 #registration a{ text-decoration: underline }
 #registration .cancel{ text-align: center }
 #eula_priv input{ float: left; margin-top: 7px }
 #eula_priv label{ float: right; width: 96%; margin-top: 5px }
 
 /* gestpay S2S */
+#bank-gateway fieldset{ padding: 20px 20px 10px }
 #bank-gateway .button{
-    display: inline;
-    width: auto !important;
-    font-weight: bold;
-    margin-bottom: 0;
-    padding: 5px 10px
+    width: 160px;
+    margin: 20px 0 0;
+    padding: 6px 7px 5px;
+    cursor: pointer;
 }
+#bank-gateway .button.proceed{ margin: 0 0 5px; }
 
 #bank-gateway select{ width: 60px }
-#bank-gateway .button{ width: 100px  }
 #bank-gateway input, #bank-gateway select{ font-size: 13px }
 #id_credit_card_cvv{ width: 70px }
-#bank-gateway p.error{
+#bank-gateway p.error, #bank-gateway p.notice{
     color: #FFFFFF;
     font-weight: bold;
     padding: 5px 0 3px 20px;
 }
+#bank-gateway p.notice{ background-color: #4B8F30 }
 #credit_card_number label{ display: block }
 #credit_card_number input{
     width: 95px;
@@ -380,4 +382,5 @@ li > .off {
     font-size: 15px;
     text-align: center;
 }
-#gestpaylogo{ text-align: center; margin-top: 20px }
+#gestpaylogo{ text-align: center; margin: 20px 0 2px }
+input.error{ border: 2px solid red }

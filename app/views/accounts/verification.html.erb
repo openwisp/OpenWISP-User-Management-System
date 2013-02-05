@@ -43,7 +43,9 @@
 <% if(@account.verify_with_gestpay?) %>
     <div class="overlay">
       <a class="close" data-confirm-message="<%= t :Confirm_Close_Payment_Overlay %>" data-callback-url="<%= url_for(:action => 'verification', :id => @single_access_token) %>"><%= t :Close %></a>
-      <%= render :partial => 'credit_card_form' %>
+      <div class="nolayout" id="bank-gateway">
+        <%= render :partial => 'credit_card_form' %>
+      </div>
     </div>
     
     <div id="mask"></div>

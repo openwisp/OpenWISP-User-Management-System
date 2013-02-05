@@ -136,4 +136,18 @@ module ApplicationHelper
     subject.is_a?(User) ? new_user_radius_reply_url(subject) : new_radius_group_radius_reply_url(subject)
   end
 
+  def number_to_currency_custom(number, currency_code, options = {})
+    dictionary = {
+      '242' => '&euro;',
+      '1' => '$',
+      '2' => '&pound;',
+      '71' => '&yen;'
+    }
+    unless dictionary[currency_code].nil?
+      options[:unit] = dictionary[currency_code]
+    else
+      raise(Exception, 'Unkown currency code')
+    end
+    number_to_currency(number, options)
+  end
 end

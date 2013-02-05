@@ -21,7 +21,7 @@ class AccountsController < ApplicationController
   ]
 
   before_filter :require_no_account, :only => [
-      :new, :create, :verify_paypal, :secure_verify_paypal, :verify_gestpay
+      :new, :create, :verify_paypal, :secure_verify_paypal, :verify_gestpay, :verified_by_visa
   ]
 
   before_filter :require_no_operator
@@ -79,8 +79,8 @@ class AccountsController < ApplicationController
       end
     elsif @current_operator.nil? and !@account.verified?
       respond_to do |format|
-        format.html   { render :action => :verification }
-        format.mobile { render :action => :verification }
+        format.html   { redirect_to :action => :verification }
+        format.mobile { redirect_to :action => :verification }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
@@ -181,6 +181,12 @@ class AccountsController < ApplicationController
         end
       end
     else
+      # TODO: this has sense only if gestpay is enabled
+      if not flash[:error].nil?
+        flash.delete(:error)
+      end
+      @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
+      @currency_code = Configuration.get('gestpay_currency')
       respond_to do |format|
         if request.xhr? # Ajax request
           format.html   { render :partial => 'verification' }
@@ -237,12 +243,60 @@ class AccountsController < ApplicationController
   end
   
   def gestpay_verify_credit_card
-    unless @account.gestpay_s2s_verify_credit_card(params)
-      flash[:notice] = "Carta di credito non valida"
+    gestpay_enabled = Configuration.get('gestpay_enabled') == 'true' ? true : false;
+    @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
+    @currency_code = Configuration.get('gestpay_currency')
+    @verified_by_visa = false
+    
+    unless gestpay_enabled
+      render :nothing => true, :status => '403'
+      return false
     end
+    
+    validation = @account.gestpay_s2s_verify_credit_card(params, @credit_card_verification_cost, @currency_code)
+    
+    if validation[:transaction_result] == 'OK'
+      if not flash[:error].nil?
+        flash.delete(:error)
+      end
+      flash[:notice] = 'Account verificato con successo'
+    elsif validation[:error_code] == '8006'
+      @verified_by_visa = {
+        :a => validation[:a],
+        :b => validation[:b],
+        :c => url_for(:action => :gestpay_verified_by_visa, :only_path => false),
+        :url => validation[:url]
+      }
+    else
+      flash[:error] = validation[:error_description]
+    end
+    
+    #unless 
+    #  flash[:error] = I18n.t(:Credit_card_invalid)      
+    #else
+    #  if not flash[:error].nil?
+    #    flash.delete(:error)
+    #  end
+    #end
+    
     respond_to do |format|
       format.html{ redirect_to verification_path }
-      format.js{  }
+      format.js{ }
+    end
+  end
+  
+  def gestpay_verified_by_visa
+    if not Configuration.get('gestpay_enabled') == 'true'
+      head 404
+    elsif not params[:PaRes]
+      head 400
+    else
+      # perform gestpay webservice verification again
+      validation = @account.gestpay_s2s_verified_by_visa(params[:PaRes])
+      
+      if validation[:transaction_result] == 'OK'
+        redirect_to account_path
+      end
     end
   end
   

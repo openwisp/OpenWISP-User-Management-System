@@ -11,7 +11,7 @@ Ensure the following configuration keys are available in */configurations* and c
 * *credit_card_registration_expire*: user registered with this method are automatically deleted after this time
 * *gestpay_currency*: currency used, defaults to 242 which means EURO, for other codes see the Gestpay documentation
 * *gestpay_payment_url*: URL to which the user will be redirected to perform the payment; should be https://testecomm.sella.it/gestpay/pagam.asp for the DEMO or https://ecomm.sella.it/gestpay/pagam.asp for the real environment
-* *gestpay_webservice_url*: Web Service URL, should be https://testecomm.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL for the DEMO or https://ecomms2s.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL for the real environment
+* *gestpay_webservice_s2s*: Web Service URL, should be https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the DEMO or https://ecomms2s.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the real environment
 * *gestpay_shoplogin*: Gestpay CODE provided by Banca Sella after signing their contract. Also known as "Codice esercente"
 * *notifier_base_url*: base url of the OWUMS application without the protocol, eg: *mywifiservice.com/owums*
 * *notifier_protocol*: https or http
@@ -48,11 +48,13 @@ URL Server to Server: */account/verify_gestpay*
 
 All the other fields are related to email notifications and can be set according to personal needs and preferences.
 
-=== Configurazione Cliente > Campi & Parametri > Pagina 1
+=== Configurazione Cliente > Campi & Parametri > NO DISPLAY
 
-1. Click on BuyerEmail, then check "Obbligatorio" and "Parametro", then click Ok  
-2. Click on BuyerName, then check "Obbligatorio" and "Parametro", then click Ok  
-3. Click on CustomInfo, then check "Risposta"  
+1. Click on BuyerEmail, then check "Input", then "Obbligatorio" and "Parametro", then click Ok  
+2. Click on BuyerName, then check "Input", then "Obbligatorio" and "Parametro", then click Ok
+4. Click on CVV, then check "Input", then "Parametro", then click OK
+5. Click on Language, then check "Parametro", then click OK
+5. Click on CustomInfo, then check "Risposta", then click OK  
 
 Add new parameter (click on "Nuovo"), then check "Inserisci", write "Server", save by clicking on "Ok", then uncheck "Visibile" and save again
 Repeat the same procedure for the new parameter "UserID".

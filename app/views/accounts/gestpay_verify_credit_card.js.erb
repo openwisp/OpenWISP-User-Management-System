@@ -1,0 +1,12 @@
+$('#bank-gateway').html(
+    '<%= escape_javascript(render :partial => 'credit_card_form') %>'
+);
+$('#loading-overlay').togglePop();
+owums.toggleLockOverlay();
+owums.enhanceCreditCardForm();
+<% if @account.verified? %>
+setTimeout(function(){
+  location.href = "<%= account_path %>"
+}, 2000);
+<% end %>
+$('.overlay').centerElement();

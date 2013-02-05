@@ -220,8 +220,8 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
 
 75:
   system_key: f
-  key: "gestpay_webservice_url"
-  value: "https://testecomm.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL"
+  key: "gestpay_webservice_s2s"
+  value: "https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL"
 
 76:
   system_key: f
