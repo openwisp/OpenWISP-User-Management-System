@@ -232,7 +232,29 @@ class Account < AccountCommon
         self.set_credit_card_info(response)
         # prolong account validity so it won't expire while the user is verifying
         self.created_at = time
+        self.verified = true
         self.save!
+        
+        # temporarily login user
+        uri = URI::parse "%/api/v1/account/temporary_login" % Configuration.get('captive_portal_baseurl')
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        request = Net::HTTP::Post.new(uri.request_uri)
+        request.set_form_data({
+          :username => self.username,
+          :password => self.password,
+          :ip => request.ip,
+          :timeout => 530 # this will need to be put in DB config
+        })
+        response = http.request(request)
+        
+        if response.code == "200"
+          # flag user as unverified
+        else
+          # manage error case
+        end
+        
         response[:a] = params[:shopLogin]
         response[:b] = response[:vb_v][:vb_v_risp]
         response[:url] = 'https://testecomm.sella.it/gestpay/pagamvisa3d.asp'
@@ -256,7 +278,7 @@ class Account < AccountCommon
       :amount => amount,
       :shopTransactionId => credit_card_info['shop_transaction'],
       :transKey => credit_card_info['transaction_key'],
-      :pares => pares
+      "PARes" => pares
     }
     # init SOAP client
     client = Savon.client(webservice_url)

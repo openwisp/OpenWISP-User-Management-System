@@ -228,6 +228,11 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   key: "gestpay_payment_url"
   value: "https://testecomm.sella.it/gestpay/pagam.asp"
 
+77:
+  system_key: f
+  key: "captive_portal_baseurl"
+  value: "https://captiveportal.org/your_owcpm_here"
+
 80:
   system_key: f
   key: "account_notification_message_en"
