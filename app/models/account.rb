@@ -236,14 +236,15 @@ class Account < AccountCommon
         self.save!
         
         # temporarily login user
-        uri = URI::parse "%/api/v1/account/temporary_login" % Configuration.get('captive_portal_baseurl')
+        cp_base_url = Configuration.get('captive_portal_baseurl')
+        uri = URI::parse "#{cp_base_url}/api/v1/account/temporary_login"
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         request = Net::HTTP::Post.new(uri.request_uri)
         request.set_form_data({
           :username => self.username,
-          :password => self.password,
+          :password => self.crypted_password,
           :ip => request.ip,
           :timeout => 530 # this will need to be put in DB config
         })
