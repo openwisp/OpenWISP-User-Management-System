@@ -193,7 +193,7 @@ class Account < AccountCommon
     number = cc['number1'] + cc['number2'] + cc['number3'] + cc['number4']
     # if credit card looks valid proceed with gestpay validation
     if CreditCardValidator::Validator.valid?(number)
-      webservice_url = Configuration.get('gestpay_webservice_s2s')
+      webservice_url = Configuration.get('gestpay_webservice_url')
       time = DateTime.now
       shop_transaction_id = Digest::MD5.hexdigest("#{number}#{time}")
       # prepare locals that will be passed to render_to_string
@@ -249,10 +249,14 @@ class Account < AccountCommon
         })
         response = http.request(request)
         
+        # if user has been logged in in the captive portal
         if response.code == "200"
-          # flag user as unverified
+          # unverify user
+          self.verified = false
+          self.save!
         else
           # manage error case
+          raise 'Captive Portal Login Error'
         end
         
         response[:a] = params[:shopLogin]
@@ -266,7 +270,7 @@ class Account < AccountCommon
   end
   
   def gestpay_s2s_verified_by_visa(pares)
-    webservice_url = Configuration.get('gestpay_webservice_s2s')
+    webservice_url = Configuration.get('gestpay_webservice_url')
     amount = Configuration.get('credit_card_verification_cost', '1')
     currency = Configuration.get('gestpay_currency')
     # retrieve data from DB

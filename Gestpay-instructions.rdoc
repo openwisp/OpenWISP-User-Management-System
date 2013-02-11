@@ -11,7 +11,7 @@ Ensure the following configuration keys are available in */configurations* and c
 * *credit_card_registration_expire*: user registered with this method are automatically deleted after this time
 * *gestpay_currency*: currency used, defaults to 242 which means EURO, for other codes see the Gestpay documentation
 * *gestpay_payment_url*: URL to which the user will be redirected to perform the payment; should be https://testecomm.sella.it/gestpay/pagam.asp for the DEMO or https://ecomm.sella.it/gestpay/pagam.asp for the real environment
-* *gestpay_webservice_s2s*: Web Service URL, should be https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the DEMO or https://ecomms2s.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the real environment
+* *gestpay_webservice_url*: Web Service URL, should be https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the DEMO or https://ecomms2s.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the real environment
 * *gestpay_shoplogin*: Gestpay CODE provided by Banca Sella after signing their contract. Also known as "Codice esercente"
 * *notifier_base_url*: base url of the OWUMS application without the protocol, eg: *mywifiservice.com/owums*
 * *notifier_protocol*: https or http
