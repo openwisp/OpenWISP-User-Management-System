@@ -304,8 +304,8 @@ If you still have problems resetting the password, try repeating the procedure"
   paypal_credit_card: "Paypal or credit card"
   gestpay_credit_card: "Credit Card"
   credit_card_instructions:
-    one: "After signing up, you will be asked to pay %{count} euro to verify your identity"
-    other: "After signing up, you will be asked to pay %{count} euros to verify your identity"
+    one: "After signing up, you will be asked to verify your credit card. The operation has a cost of %{count} euro and will be performed through a secure connection."
+    other: "After signing up, you will be asked to verify your credit card. The operation has a cost of %{count} euro and will be performed through a secure connection."
   credit_card_item_name: "Registration via credit card"
   disable_account: "disable account"
   document_photo: "ID card scan"
@@ -358,9 +358,10 @@ If you still have problems resetting the password, try repeating the procedure"
   will_be_your_username: "will be your username"
   zip: "zip"
   Verified_by_visa_heading: Complete the procedure on the website of your bank
-  Verified_by_visa_text: "<p>Go to the website of your bank to insert the security code of your <strong>Verified By Visa</strong> credit card and complete the procedure of identity verification.</p>
-  <p>You have %{minutes} minutes to complete the procedure before your session will expire.</p>"
+  Verified_by_visa_text: "<p>Go to the website of your bank to insert the <strong>security code</strong> of your <strong>Verified By Visa</strong> credit card and complete the procedure of identity verification.</p>
+  <p>You have <strong>%{minutes} minutes</strong> to complete the procedure before your session will expire.</p>"
   Proceed: "Proceed"
   Gestpay_verified_by_visa_error_heading: "Error of Verified by Visa"
   Gestpay_verified_by_visa_error_text: "There was an error while verifying the transaction of your \"Verified By Visa\" card."
   Repeat_procedure: "Repeat credit card validation procedure"
+  Account_verified_successfully: "Account verified successfully"

@@ -43,7 +43,7 @@
 <p id="gestpaylogo"><%= image_tag('gestpay_new.png') %></p>
 <% else %>
   <h3><%= t :Verified_by_visa_heading %></h3>
-  <%= t(:Verified_by_visa_text, :minutes => 'X').html_safe  %>
+  <%= t(:Verified_by_visa_text, :minutes => Configuration.get('gestpay_vbv_session', '300').to_i/60).html_safe  %>
   <form action="<%= @verified_by_visa[:url] %>" id="vbv" method="post">
     <input type="hidden" name="a" value="<%= @verified_by_visa[:a] %>" />
     <input type="hidden" name="b" value="<%= @verified_by_visa[:b] %>" />

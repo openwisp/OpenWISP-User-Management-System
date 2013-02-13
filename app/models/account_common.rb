@@ -278,7 +278,7 @@ class AccountCommon < ActiveRecord::Base
     if self.verify_with_paypal? or verify_with_gestpay?
       self.verified = true
       self.save!
-      self.new_account_notification!
+      self.new_account_notification!      
     else
       Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
     end
@@ -304,6 +304,40 @@ class AccountCommon < ActiveRecord::Base
       Notifier.new_account_notification(self).deliver
     end
   end
+  
+  def captive_portal_login(ip_address, timeout=false, config_check=true)
+    # to use indipendently from configuration supply :config_check => false
+    if not CONFIG['automatic_captive_portal_login'] and config_check
+      return false
+    end
+    # automatically log in an user in the captive portal to allow the user to surf
+    cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    if cp_base_url
+      params = {
+        :username => self.username,
+        :password => self.crypted_password,
+        :ip => ip_address
+      }
+      # specify session timeout if necessary to achieve a temporary login
+      if timeout
+        params[:timeout] = Configuration.get('gestpay_vbv_session', '300').to_i
+      end
+      uri = URI::parse "#{cp_base_url}/api/v1/account/login"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request.set_form_data(params)
+      response = http.request(request)
+      unless response.code == "200"
+        raise 'captive portal login failed'
+      end
+    else
+      raise 'key captive_portal_baseurl not present in the database'
+    end
+  end
+  
+  alias captive_portal_login! captive_portal_login
 
   def mobile_prefix_confirmation=(value)
     write_attribute(:mobile_prefix_confirmation, value)

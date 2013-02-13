@@ -17,11 +17,11 @@
 
 class AccountsController < ApplicationController
   before_filter :require_account, :only => [
-      :show, :edit, :update, :gestpay_success, :gestpay_error
+      :show, :edit, :update
   ]
 
   before_filter :require_no_account, :only => [
-      :new, :create, :verify_paypal, :secure_verify_paypal, :verify_gestpay, :verified_by_visa
+      :new, :create, :verify_paypal, :secure_verify_paypal, :verified_by_visa
   ]
 
   before_filter :require_no_operator
@@ -211,6 +211,7 @@ class AccountsController < ApplicationController
       user = User.find params[:invoice]
 
       user.credit_card_identity_verify!
+      user.captive_portal_login(request.remote_ip)
     end
     render :nothing => true
   end
@@ -226,21 +227,22 @@ class AccountsController < ApplicationController
         user = User.find params[:invoice]
 
         user.credit_card_identity_verify!
+        user.captive_portal_login(request.remote_ip)
       end
     end
     render :nothing => true
   end
   
-  def verify_gestpay
-    # retrieve shop login
-    shop_login = Configuration.get('gestpay_shoplogin')
-    # check querystring contains param a and b, plus check that param a is the same as our shop_login var
-    if params.has_key? :a and params.has_key? :b and params[:a] == shop_login
-      # webservice request
-      response = Account.validate_gestpay_payment(params[:a], params[:b])
-    end
-    render :nothing => true
-  end
+  #def verify_gestpay
+  #  # retrieve shop login
+  #  shop_login = Configuration.get('gestpay_shoplogin')
+  #  # check querystring contains param a and b, plus check that param a is the same as our shop_login var
+  #  if params.has_key? :a and params.has_key? :b and params[:a] == shop_login
+  #    # webservice request
+  #    response = Account.validate_gestpay_payment(params[:a], params[:b])
+  #  end
+  #  render :nothing => true
+  #end
   
   def gestpay_verify_credit_card
     gestpay_enabled = Configuration.get('gestpay_enabled') == 'true' ? true : false;
@@ -253,13 +255,13 @@ class AccountsController < ApplicationController
       return false
     end
     
-    validation = @account.gestpay_s2s_verify_credit_card(params, @credit_card_verification_cost, @currency_code)
+    validation = @account.gestpay_s2s_verify_credit_card(request, params, @credit_card_verification_cost, @currency_code)
     
     if validation[:transaction_result] == 'OK'
       if not flash[:error].nil?
         flash.delete(:error)
       end
-      flash[:notice] = 'Account verificato con successo'
+      flash[:notice] = I18n.t(:Account_verified_successfully)
     elsif validation[:error_code] == '8006'
       @verified_by_visa = {
         :a => validation[:a],
@@ -288,35 +290,40 @@ class AccountsController < ApplicationController
   def gestpay_verified_by_visa
     if not Configuration.get('gestpay_enabled') == 'true'
       head 404
+    # if PaRes param is missing from POST request return 400 Bad Request
     elsif not params[:PaRes]
       head 400
     else
       # perform gestpay webservice verification again
       validation = @account.gestpay_s2s_verified_by_visa(params[:PaRes])
-      
+      # if success redirect to account page
       if validation[:transaction_result] == 'OK'
+        flash[:notice] = I18n.t(:Account_verified_successfully)
         redirect_to account_path
+      # else render error template
+      else
+        render :template => 'accounts/gestpay_verified_by_visa_error'
       end
     end
   end
   
-  def gestpay_success
-    respond_to do |format|
-      format.html   { render :action => 'gestpay_success', :layout => false }
-      format.mobile { render :action => 'gestpay_success' }
-    end
-  end
-  
-  def gestpay_error
-    # generate a new gestpay url for a new payment
-    @account.clear_gestpay_notes
-    @account.save!
-    
-    respond_to do |format|
-      format.html   { render :action => 'gestpay_error', :layout => false }
-      format.mobile { render :action => 'gestpay_error' }
-    end
-  end
+  #def gestpay_success
+  #  respond_to do |format|
+  #    format.html   { render :action => 'gestpay_success', :layout => false }
+  #    format.mobile { render :action => 'gestpay_success' }
+  #  end
+  #end
+  #
+  #def gestpay_error
+  #  # generate a new gestpay url for a new payment
+  #  @account.clear_gestpay_notes
+  #  @account.save!
+  #  
+  #  respond_to do |format|
+  #    format.html   { render :action => 'gestpay_error', :layout => false }
+  #    format.mobile { render :action => 'gestpay_error' }
+  #  end
+  #end
 
   def instructions
     @custom_instructions = Configuration.get('custom_account_instructions')

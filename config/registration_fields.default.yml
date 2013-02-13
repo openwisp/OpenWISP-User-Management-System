@@ -7,6 +7,7 @@ defaults: &defaults
   state: true
   # other stuff
   send_email_notification_to_users: true
+  automatic_captive_portal_login: true
 
 production:
   <<: *defaults

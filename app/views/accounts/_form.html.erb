@@ -57,11 +57,12 @@
     <% end %>
 
     <div id="eula_priv">
-      <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
       <%= f.input :eula_acceptance, :error => false %>
+      <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
+      
     <br />
-      <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
       <%= f.input :privacy_acceptance, :error => false %>
+      <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
     </div>
 <% else %>
     <div id="disable_account">
