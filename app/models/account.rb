@@ -290,6 +290,8 @@ class Account < AccountCommon
     
     if response[:transaction_result] == 'OK':
       response[:datetime] = credit_card_info['datetime']
+      response[:transaction_key] = credit_card_info['transaction_key']
+      response[:VbVRisp] = credit_card_info['VbVRisp']
       self.set_credit_card_info(response)
       self.credit_card_identity_verify!
       self.captive_portal_login(request.remote_ip)
