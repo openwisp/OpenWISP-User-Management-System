@@ -1,5 +1,5 @@
 config/database.yml
-config/registration_fields.yml
+config/config.yml
 
 db/*.sqlite3
 db/*.db
