@@ -54,7 +54,7 @@ class AccountsController < ApplicationController
     @account.captcha_verification = session[:captcha]
     
     # store IP temporarily, necessary to automatically log in the user in the captive portal
-    @account.store_ip()
+    @account.store_ip(request.remote_ip)
 
     save_account = request.format.xml? ? @account.save : @account.save_with_captcha
 

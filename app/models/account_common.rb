@@ -307,9 +307,9 @@ class AccountCommon < ActiveRecord::Base
     end
   end
   
-  def store_ip(request)
+  def store_ip(ip)
     # temporary store IP address, it must be called from the controller
-    self.notes = self.notes + "<ip>#{request.remote_ip}</ip>"
+    self.notes = "<ip>#{ip}</ip>"
   end
   
   def retrieve_ip()
