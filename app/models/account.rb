@@ -235,7 +235,7 @@ class Account < AccountCommon
         # save bank response (shop_transaction, authorization_code) and verify user
         self.set_credit_card_info(response)
         self.credit_card_identity_verify!
-        self.captive_portal_login(request.remote_ip)
+        #self.captive_portal_login(request.remote_ip)
       end
       # verified by visa case
       if response[:error_code] == '8006'
@@ -248,7 +248,11 @@ class Account < AccountCommon
         self.verified = true
         self.save!
         # temporarily login user
-        captive_portal_login(request.remote_ip, timeout=true)
+        response = self.captive_portal_login(request.remote_ip, timeout=true, config_check=false)
+        if response.code != "200"
+          Rails.logger.error(params.to_json)
+          raise 'captive portal login failed for verified_by_visa credit card user with error %s: %s' % [response.code, response.body]
+        end
         # unverify user
         self.verified = false
         self.save!
@@ -294,7 +298,7 @@ class Account < AccountCommon
       response[:VbVRisp] = credit_card_info['VbVRisp']
       self.set_credit_card_info(response)
       self.credit_card_identity_verify!
-      self.captive_portal_login(request.remote_ip)
+      #self.captive_portal_login(request.remote_ip)
     end
     return response
   end

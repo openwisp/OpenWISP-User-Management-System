@@ -52,6 +52,9 @@ class AccountsController < ApplicationController
     @account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
 
     @account.captcha_verification = session[:captcha]
+    
+    # store IP temporarily, necessary to automatically log in the user in the captive portal
+    @account.store_ip()
 
     save_account = request.format.xml? ? @account.save : @account.save_with_captcha
 
@@ -211,7 +214,7 @@ class AccountsController < ApplicationController
       user = User.find params[:invoice]
 
       user.credit_card_identity_verify!
-      user.captive_portal_login(request.remote_ip)
+      #user.captive_portal_login(request.remote_ip)
     end
     render :nothing => true
   end
@@ -227,7 +230,7 @@ class AccountsController < ApplicationController
         user = User.find params[:invoice]
 
         user.credit_card_identity_verify!
-        user.captive_portal_login(request.remote_ip)
+        #user.captive_portal_login(request.remote_ip)
       end
     end
     render :nothing => true

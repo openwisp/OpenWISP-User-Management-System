@@ -278,6 +278,7 @@ class AccountCommon < ActiveRecord::Base
     if self.verify_with_paypal? or verify_with_gestpay?
       self.verified = true
       self.save!
+      self.captive_portal_login!
       self.new_account_notification!      
     else
       Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
@@ -288,6 +289,7 @@ class AccountCommon < ActiveRecord::Base
     if self.verify_with_mobile_phone?
       self.verified = true
       self.save!
+      self.captive_portal_login!
       self.new_account_notification!
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
@@ -305,11 +307,33 @@ class AccountCommon < ActiveRecord::Base
     end
   end
   
-  def captive_portal_login(ip_address, timeout=false, config_check=true)
+  def store_ip(request)
+    # temporary store IP address, it must be called from the controller
+    self.notes = self.notes + "<ip>#{request.remote_ip}</ip>"
+  end
+  
+  def retrieve_ip()
+    # retrieves ip from notes
+    matches = /<ip>(.*)<\/ip>/i.match(self.notes)
+    # return match or nil
+    unless matches.nil?
+      matches[1]
+    end
+  end
+  
+  def clean_ip()
+    # clean ip address from notes when finished
+    self.notes = self.notes.gsub(/<ip>(.*)<\/ip>/i, '')
+    self.save!
+  end
+  
+  def captive_portal_login(ip_address=false, timeout=false, config_check=true)
     # to use indipendently from configuration supply :config_check => false
     if not CONFIG['automatic_captive_portal_login'] and config_check
       return false
     end
+    # determine ip address
+    ip_address = ip_address ? ip_address : self.retrieve_ip()
     # automatically log in an user in the captive portal to allow the user to surf
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
     if cp_base_url
@@ -329,9 +353,6 @@ class AccountCommon < ActiveRecord::Base
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data(params)
       response = http.request(request)
-      unless response.code == "200"
-        raise 'captive portal login failed'
-      end
     else
       raise 'key captive_portal_baseurl not present in the database'
     end
@@ -405,9 +426,9 @@ class AccountCommon < ActiveRecord::Base
     [traffic_out_sessions_from(date), traffic_in_sessions_from(date)]
   end
   
-  def clear_gestpay_notes
-    self.notes = self.notes.gsub(/<gestpay>(.*)<\/gestpay>/i, '')
-  end
+  #def clear_gestpay_notes
+  #  self.notes = self.notes.gsub(/<gestpay>(.*)<\/gestpay>/i, '')
+  #end
 
   private
 
