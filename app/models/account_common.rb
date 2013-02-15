@@ -426,10 +426,6 @@ class AccountCommon < ActiveRecord::Base
     [traffic_out_sessions_from(date), traffic_in_sessions_from(date)]
   end
   
-  #def clear_gestpay_notes
-  #  self.notes = self.notes.gsub(/<gestpay>(.*)<\/gestpay>/i, '')
-  #end
-
   private
 
   def new_or_password_not_blank?

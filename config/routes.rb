@@ -27,9 +27,6 @@ Owums::Application.routes.draw do
   match '/account/secure_verify_paypal' => 'accounts#secure_verify_paypal', :as => :secure_verify_paypal, :via => 'post'
   match '/account/gestpay_verify_credit_card' => 'accounts#gestpay_verify_credit_card', :as => :gestpay_verify_credit_card, :via => 'post'
   match '/account/gestpay_verified_by_visa' => 'accounts#gestpay_verified_by_visa', :as => :gestpay_verified_by_visa, :via => 'post'
-  #match '/account/verify_gestpay' => 'accounts#verify_gestpay', :as => :verify_gestpay, :via => 'get'
-  #match '/account/gestpay_success' => 'accounts#gestpay_success', :as => :gestpay_success, :via => 'get'
-  #match '/account/gestpay_error' => 'accounts#gestpay_error', :as => :gestpay_error, :via => 'get'
 
   match '/users/browse' => 'users#index', :as => :users_browse
   match '/users/search' => 'users#search', :as => :users_search
