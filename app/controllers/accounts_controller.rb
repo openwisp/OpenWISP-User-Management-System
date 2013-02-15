@@ -108,8 +108,8 @@ class AccountsController < ApplicationController
       end
     elsif @current_operator.nil? and !@account.verified?
       respond_to do |format|
-        format.html   { render :action => :verification }
-        format.mobile { render :action => :verification }
+        format.html   { redirect_to :action => :verification }
+        format.mobile { redirect_to :action => :verification }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
@@ -126,8 +126,8 @@ class AccountsController < ApplicationController
   def update
     if !@current_operator.nil? or !@account.verified?
       respond_to do |format|
-        format.html   { render :action => :verification }
-        format.mobile { render :action => :verification }
+        format.html   { redirect_to :action => :verification }
+        format.mobile { redirect_to :action => :verification }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
