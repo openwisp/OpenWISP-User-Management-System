@@ -10,7 +10,7 @@
   <form action="<%= gestpay_verify_credit_card_path %>" method="post" data-remote="true">
     <fieldset>
       <% if flash[:error] %>
-        <p class="error"><%= flash[:error] %></p>
+        <p class="error"><%= flash[:error].html_safe %></p>
       <% end %>
       
       <p id="credit_card_number">

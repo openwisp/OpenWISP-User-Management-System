@@ -239,24 +239,35 @@ class Account < AccountCommon
         self.verified = true
         self.save!
         # temporarily login user
-        response = self.captive_portal_login(request.remote_ip, timeout=true, config_check=false)
-        if response.code != "200"
-          Rails.logger.error(params.to_json)
-          raise 'captive portal login failed for verified_by_visa credit card user with error %s: %s' % [response.code, response.body]
-        end
+        login_response = self.captive_portal_login(request.remote_ip, timeout=true, config_check=false)
         # unverify user
         self.verified = false
         self.save!
-        # add some keys to response hash
-        response[:a] = params[:shopLogin]
-        response[:b] = response[:vb_v][:vb_v_risp]
-        response[:url] = Configuration.get('gestpay_vbv_url')
+        # ensure user is logged in otherwise log error and return failure
+        if login_response.code == "200"
+          # add some keys to response hash
+          response[:a] = params[:shopLogin]
+          response[:b] = response[:vb_v][:vb_v_risp]
+          response[:url] = Configuration.get('gestpay_vbv_url')
+        else
+          Rails.logger.error('captive portal login failed for verified_by_visa credit card user with error %s: %s' % [login_response.code, login_response.body])
+          response[:error_description] = I18n.t(:VBV_system_error)
+          response[:error_code] = false
+        end        
       end
       # explicit return just for clarity
       return response
     end
+    # translate active merchant errors and display them nicely
+    error_description = ''
+    i = 0
+    credit_card.errors.each do |key, value|
+      br = i > 0 ? '<br />' : ''
+      error_description = error_description + br + I18n.t("active_merchant_#{key}")
+      i += 1
+    end
     # emulate gestpay response
-    return { :transaction_result => 'KO', :error_description => I18n.t(:Credit_card_invalid), :error_code => false }
+    return { :transaction_result => 'KO', :error_description => error_description, :error_code => false }
   end
   
   def gestpay_s2s_verified_by_visa(pares)

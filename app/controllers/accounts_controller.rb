@@ -184,12 +184,15 @@ class AccountsController < ApplicationController
         end
       end
     else
-      # TODO: this has sense only if gestpay is enabled
-      if not flash[:error].nil?
-        flash.delete(:error)
+      if Configuration.get('gestpay_enabled') == 'true':        
+        # delete any remaining flash message
+        unless flash[:error].nil?
+          flash.delete(:error)
+        end
+        # instance variable needed for credit card verification
+        @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
+        @currency_code = Configuration.get('gestpay_currency')
       end
-      @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
-      @currency_code = Configuration.get('gestpay_currency')
       respond_to do |format|
         if request.xhr? # Ajax request
           format.html   { render :partial => 'verification' }
@@ -214,7 +217,6 @@ class AccountsController < ApplicationController
       user = User.find params[:invoice]
 
       user.credit_card_identity_verify!
-      #user.captive_portal_login(request.remote_ip)
     end
     render :nothing => true
   end
@@ -230,22 +232,10 @@ class AccountsController < ApplicationController
         user = User.find params[:invoice]
 
         user.credit_card_identity_verify!
-        #user.captive_portal_login(request.remote_ip)
       end
     end
     render :nothing => true
   end
-  
-  #def verify_gestpay
-  #  # retrieve shop login
-  #  shop_login = Configuration.get('gestpay_shoplogin')
-  #  # check querystring contains param a and b, plus check that param a is the same as our shop_login var
-  #  if params.has_key? :a and params.has_key? :b and params[:a] == shop_login
-  #    # webservice request
-  #    response = Account.validate_gestpay_payment(params[:a], params[:b])
-  #  end
-  #  render :nothing => true
-  #end
   
   def gestpay_verify_credit_card
     gestpay_enabled = Configuration.get('gestpay_enabled') == 'true' ? true : false;
@@ -261,7 +251,7 @@ class AccountsController < ApplicationController
     validation = @account.gestpay_s2s_verify_credit_card(request, params, @credit_card_verification_cost, @currency_code)
     
     if validation[:transaction_result] == 'OK'
-      if not flash[:error].nil?
+      unless flash[:error].nil?
         flash.delete(:error)
       end
       flash[:notice] = I18n.t(:Account_verified_successfully)
@@ -275,14 +265,6 @@ class AccountsController < ApplicationController
     else
       flash[:error] = validation[:error_description]
     end
-    
-    #unless 
-    #  flash[:error] = I18n.t(:Credit_card_invalid)      
-    #else
-    #  if not flash[:error].nil?
-    #    flash.delete(:error)
-    #  end
-    #end
     
     respond_to do |format|
       format.html{ redirect_to verification_path }
@@ -309,24 +291,6 @@ class AccountsController < ApplicationController
       end
     end
   end
-  
-  #def gestpay_success
-  #  respond_to do |format|
-  #    format.html   { render :action => 'gestpay_success', :layout => false }
-  #    format.mobile { render :action => 'gestpay_success' }
-  #  end
-  #end
-  #
-  #def gestpay_error
-  #  # generate a new gestpay url for a new payment
-  #  @account.clear_gestpay_notes
-  #  @account.save!
-  #  
-  #  respond_to do |format|
-  #    format.html   { render :action => 'gestpay_error', :layout => false }
-  #    format.mobile { render :action => 'gestpay_error' }
-  #  end
-  #end
 
   def instructions
     @custom_instructions = Configuration.get('custom_account_instructions')
