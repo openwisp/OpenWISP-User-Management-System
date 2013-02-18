@@ -270,7 +270,7 @@ class Account < AccountCommon
     return { :transaction_result => 'KO', :error_description => error_description, :error_code => false }
   end
   
-  def gestpay_s2s_verified_by_visa(pares)
+  def gestpay_s2s_verified_by_visa(pares, ip_address)
     webservice_url = Configuration.get('gestpay_webservice_url')
     amount = Configuration.get('credit_card_verification_cost', '1')
     currency = Configuration.get('gestpay_currency')
@@ -299,8 +299,10 @@ class Account < AccountCommon
       response[:transaction_key] = credit_card_info['transaction_key']
       response[:VbVRisp] = credit_card_info['VbVRisp']
       self.set_credit_card_info(response)
+      # log out user from captive portal because he's using a temporary login
+      self.captive_portal_logout(ip_address)
+      # this method will login the user again if the default configuration has not been changed (config.yml)
       self.credit_card_identity_verify!
-      #self.captive_portal_login(request.remote_ip)
     end
     return response
   end

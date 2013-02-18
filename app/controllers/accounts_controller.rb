@@ -280,7 +280,7 @@ class AccountsController < ApplicationController
       head 400
     else
       # perform gestpay webservice verification again
-      validation = @account.gestpay_s2s_verified_by_visa(params[:PaRes])
+      validation = @account.gestpay_s2s_verified_by_visa(params[:PaRes], request.remote_ip)
       # if success redirect to account page
       if validation[:transaction_result] == 'OK'
         flash[:notice] = I18n.t(:Account_verified_successfully)

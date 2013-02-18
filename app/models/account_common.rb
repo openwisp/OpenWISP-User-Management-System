@@ -279,6 +279,7 @@ class AccountCommon < ActiveRecord::Base
       self.verified = true
       self.save!
       self.captive_portal_login!
+      self.clear_ip!
       self.new_account_notification!      
     else
       Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
@@ -290,6 +291,7 @@ class AccountCommon < ActiveRecord::Base
       self.verified = true
       self.save!
       self.captive_portal_login!
+      self.clear_ip!
       self.new_account_notification!
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
@@ -321,8 +323,8 @@ class AccountCommon < ActiveRecord::Base
     end
   end
   
-  def clean_ip()
-    # clean ip address from notes when finished
+  def clear_ip!
+    # clear ip address from notes when finished
     self.notes = self.notes.gsub(/<ip>(.*)<\/ip>/i, '')
     self.save!
   end
@@ -359,6 +361,27 @@ class AccountCommon < ActiveRecord::Base
   end
   
   alias captive_portal_login! captive_portal_login
+  
+  def captive_portal_logout(ip_address=false)
+    # determine ip address
+    ip_address = ip_address ? ip_address : self.retrieve_ip()
+    cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    if cp_base_url
+      params = {
+        :username => self.username,
+        :ip => ip_address
+      }
+      uri = URI::parse "#{cp_base_url}/api/v1/account/logout"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request.set_form_data(params)
+      response = http.request(request)
+    else
+      raise 'key captive_portal_baseurl not present in the database'
+    end
+  end
 
   def mobile_prefix_confirmation=(value)
     write_attribute(:mobile_prefix_confirmation, value)
