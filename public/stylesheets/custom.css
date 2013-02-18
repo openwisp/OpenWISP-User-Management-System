@@ -352,6 +352,8 @@ li > .off {
 #registration .cancel{ text-align: center }
 #eula_priv input{ float: left; margin-top: 7px }
 #eula_priv label{ float: right; width: 96%; margin-top: 5px }
+#eula_priv .signup{ overflow: hidden; margin-bottom: 0 }
+#eula_priv .field_with_errors label{ width: 95% }
 
 /* gestpay S2S */
 #bank-gateway fieldset{ padding: 20px 20px 10px }
