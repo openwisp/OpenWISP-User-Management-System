@@ -26,8 +26,7 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
     User.unverified.each do |user|
       if user.verification_expired?
         if user.verify_with_gestpay? and !user.credit_card_info.nil? and !user.credit_card_info.empty?
-          puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account but it's a verified by visa attempt. I'm going to rename his email him/her..."
-          # TODO!
+          puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account but it's a verified by visa attempt. I cannot delete it..."
         else
           puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account. I'm going to remove him/her..."
           user.destroy
