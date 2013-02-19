@@ -382,6 +382,20 @@ class AccountCommon < ActiveRecord::Base
       raise 'key captive_portal_baseurl not present in the database'
     end
   end
+  
+  # determine if a login attempt is ok for verified by visa users
+  def captive_portal_login_ok_for_vbv?(login_response)
+    # successfully logged in
+    if login_response.code == "200"
+      return true
+    end
+    # not logged in most probably because the user is registering from her own internet connection and not from one of our APs
+    if login_response.code == "403" and (login_response.body.include?('non associato') or login_response.body.include('not associated'))
+      return true
+    end
+    # something is wrong
+    return false
+  end
 
   def mobile_prefix_confirmation=(value)
     write_attribute(:mobile_prefix_confirmation, value)
