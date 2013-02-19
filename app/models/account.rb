@@ -249,7 +249,8 @@ class Account < AccountCommon
           response[:a] = params[:shopLogin]
           response[:b] = response[:vb_v][:vb_v_risp]
           response[:url] = Configuration.get('gestpay_vbv_url')
-        else
+          # one of the 403 cases can happen when a user is not registering from an access point but from another internet connection
+        elsif login_response.code != "403" and not (response.include?('indirizzo ip') or response.include('ip address'))
           Rails.logger.error('captive portal login failed for verified_by_visa credit card user with error %s: %s' % [login_response.code, login_response.body])
           response[:error_description] = I18n.t(:VBV_system_error)
           response[:error_code] = false
