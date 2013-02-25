@@ -263,6 +263,9 @@ class Account < AccountCommon
     error_description = ''
     i = 0
     credit_card.errors.each do |key, value|
+      if value.empty?
+        next
+      end
       br = i > 0 ? '<br />' : ''
       error_description = error_description + br + I18n.t("active_merchant_#{key}")
       i += 1
