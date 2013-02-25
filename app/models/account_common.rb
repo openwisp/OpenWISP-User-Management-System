@@ -390,7 +390,7 @@ class AccountCommon < ActiveRecord::Base
       return true
     end
     # not logged in most probably because the user is registering from her own internet connection and not from one of our APs
-    if login_response.code == "403" and (login_response.body.include?('non associato') or login_response.body.include('not associated'))
+    if login_response.code == "403" and (login_response.body.include?('non associato') or login_response.body.include?('not associated'))
       return true
     end
     # something is wrong
