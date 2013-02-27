@@ -30,16 +30,24 @@ $(document).ready(function(){
 
 $.fn.centerElement = function(){
     var el = $(this);
-    el.css('top', ($(window).height() - el.height()) / 2)
-    .css('left', ($(window).width() - el.width()) / 2);
+    el.css('top', ($(window).height() - (el.height() + parseInt(el.css('padding-top')) + parseInt(el.css('padding-bottom'))) ) / 2)
+    .css('left', ($(window).width() - (el.width() + parseInt(el.css('padding-left')) + parseInt(el.css('padding-right'))) ) / 2);
     return el;
 }
 $.fn.togglePop = function(speed){
     speed = speed || 150;
-    el = $(this);
+    var el = $(this);
     el.centerElement();
     (el.is(':visible')) ? el.fadeOut(speed) : el.fadeIn(speed);
     return el;
+}
+$.fn.toggleMessage = function(message, speed){
+    var el = $(this);
+    if(!el.is(':visible')){
+        el.html(message);
+    }
+    el.togglePop(speed);
+    el.css('top', parseInt(el.css('top')) + 80);
 }
 
 var owums = {
@@ -361,8 +369,7 @@ var owums = {
                 return false
             }
             else{
-                owums.toggleLockOverlay();
-                $('#loading-overlay').togglePop();
+                owums.initCreditCardLoading();
                 return true
             }
         });
@@ -380,6 +387,17 @@ var owums = {
             zIndex: z,
             opacity: o
         });
+    },
+    
+    initCreditCardLoading: function(){
+        owums.toggleLockOverlay();
+        $('#loading-overlay').togglePop();
+        setTimeout(function(){
+            $('#loading-message').toggleMessage(i18n.verification_message_first_step);
+            setTimeout(function(){
+                $('#loading-message').html(i18n.verification_message_second_step);    
+            }, 2500);
+        }, 1500);
     },
 
     ajaxQuickSearch: function() {

@@ -263,7 +263,12 @@ class AccountsController < ApplicationController
         :url => validation[:url]
       }
     else
-      flash[:error] = validation[:error_description]
+      # translate gestpay error message if possible otherwise just return the string
+      begin
+        flash[:error] = I18n.translate!(('gestpay_error_'+validation[:error_code]).parameterize.underscore.to_sym, :raise => true)
+      rescue I18n::MissingTranslationData
+        flash[:error] = validation[:error_description]
+      end      
     end
     
     respond_to do |format|

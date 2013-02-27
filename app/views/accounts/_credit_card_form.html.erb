@@ -5,6 +5,7 @@
 <% elsif not flash[:notice] %>
 <p><%= t :Credit_card_verification_cost0 %></p>
 <% end %>
+<p><strong><%= t :Credit_card_secure_operation %></strong></p>
 <div class="box">
   <% unless flash[:notice] %>
   <form action="<%= gestpay_verify_credit_card_path %>" method="post" data-remote="true">

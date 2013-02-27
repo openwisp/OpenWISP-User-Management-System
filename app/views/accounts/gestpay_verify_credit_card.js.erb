@@ -2,6 +2,7 @@ $('#bank-gateway').html(
     '<%= escape_javascript(render :partial => 'credit_card_form') %>'
 );
 $('#loading-overlay').togglePop();
+$('#loading-message').togglePop();
 owums.toggleLockOverlay();
 owums.enhanceCreditCardForm();
 <% if @account.verified? %>

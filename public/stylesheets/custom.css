@@ -252,7 +252,7 @@ li > .off {
     float: right;
 }
 
-#loading-overlay{
+#loading-overlay, #loading-message{
     display: none;
     position:fixed;
     width:60px;
@@ -262,6 +262,16 @@ li > .off {
     background:#333 url(../images/spinner_black.gif) no-repeat scroll center center;
     z-index:9999;
     border-radius: 4px;
+}
+
+#loading-message{
+    background: #EEE none;
+    width: 350px;
+    padding: 15px 25px;
+    height: auto;
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 9998;
 }
 
 #mask{
