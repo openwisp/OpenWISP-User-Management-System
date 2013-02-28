@@ -248,7 +248,16 @@ class AccountsController < ApplicationController
       return false
     end
     
-    validation = @account.gestpay_s2s_verify_credit_card(request, params, @credit_card_verification_cost, @currency_code)
+    unless @account.nil?
+      validation = @account.gestpay_s2s_verify_credit_card(request, params, @credit_card_verification_cost, @currency_code)
+    else
+      validation = {
+        :transaction_result => 'KO',
+        :error_code => '000',
+        :error_description => I18n.t(:Verification_time_expired)
+      }
+      flash[:expired] = true
+    end
     
     if validation[:transaction_result] == 'OK'
       unless flash[:error].nil?
