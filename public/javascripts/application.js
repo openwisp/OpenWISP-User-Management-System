@@ -210,6 +210,10 @@ var owums = {
         if(password.val()!=''){
             password_confirmation.show();
         }
+        
+        $('#account_email, #account_email_confirmation, #account_password, #account_password_confirmation').bind('contextmenu cut copy paste', function(e){
+            e.preventDefault();
+        });
     },
     
     initMobile2Username: function(){
