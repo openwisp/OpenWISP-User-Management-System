@@ -366,6 +366,20 @@ li > .off {
 #eula_priv .field_with_errors label{ width: 95% }
 #eula_priv div.boolean{ overflow: hidden; margin-bottom: 2px }
 
+#verification-explain{
+    font-size: 14px;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 20px 20px 10px;
+    text-align: justify
+}
+
+#visa_mastercard{
+    position: absolute;
+    right: 33px;
+    bottom: 65px;
+}
+
 /* gestpay S2S */
 #bank-gateway fieldset{ padding: 20px 20px 10px }
 #bank-gateway .button{

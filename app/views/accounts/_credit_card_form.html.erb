@@ -35,6 +35,7 @@
         <input type="text" id="id_credit_card_cvv" name="cvv" maxlength="4" value="<%= params[:cvv] %>" />
       </p>
       <p><input class="button" name="commit" type="submit" value="<%= t :Verify_card %>" /></p>
+      <%= image_tag('visa-mastercard.png', :id => 'visa_mastercard') %>
     </fieldset>
   </form>
   <% else %>
