@@ -148,7 +148,7 @@
               <li class="secondary"><%= link_to t(:Logout), account_logout_url, :method => :delete %></li>
           <% else %>
               <li><%= menu_link_to t(:Manage_your_account), account_login_url %></li>
-              <li><%= menu_link_to t(:Register), account_registration_url %></li>
+              <li><%= menu_link_to t(:Register).html_safe, account_registration_url %></li>
               <li><%= menu_link_to t(:Forgot_password), password_reset_url %></li>
           <% end %>
       <% end %>
