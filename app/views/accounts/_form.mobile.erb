@@ -17,18 +17,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<ul data-role="listview" data-inset="true" id="mobile-registration">
+<div id="verification-explain">
+  <%= t(:verification_explain).html_safe %>
+</div>
 
+<ul data-role="listview" data-inset="true" id="mobile-registration">
   <% if account.new_record? %>
       <% if account_verification_methods.length == 1 %>
           <%= f.input :verification_method, :as => :hidden %>
       <% else %>
-          <li data-role="fieldcontain">
-            <%= f.input :verification_method, :collection => account_verification_select, :prompt => false %>
-          </li>
+        <li data-role="fieldcontain">
+          <%= f.input :verification_method, :collection => account_verification_select, :prompt => false %>
+        </li>
       <% end %>
   <% end %>
-
 
   <%= render 'common/form_elements/mobile_phone', :form => f, :owner => account, :prefixes => mobile_prefixes %>
 

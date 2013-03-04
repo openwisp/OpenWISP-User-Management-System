@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>OpenWISP</title>
@@ -62,7 +62,7 @@
           <% if !current_account %>
               <li><%= link_to t(:How_to_use_service), account_instructions_path %></li>
               <li><%= link_to t(:Manage_your_account), account_login_path %></li>
-              <li><%= link_to t(:Register), account_registration_path %></li>
+              <li><%= link_to t(:Register).html_safe, account_registration_path %></li>
               <li><%= link_to t(:Forgot_password), password_reset_path %></li>
           <% end %>
         </ul>

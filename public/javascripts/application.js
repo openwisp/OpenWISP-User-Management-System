@@ -283,7 +283,8 @@ var owums = {
     },
     
     initCreditCardOverlay: function(){
-        if($('#bank-gateway').length){
+        var bank_gateway = $('#bank-gateway');
+        if(bank_gateway.length && !bank_gateway.hasClass('mobile')){
             var overlay = $('.overlay'),
                 loading = $('#loading-overlay');
             loading.togglePop();    
@@ -298,6 +299,9 @@ var owums = {
                 owums.toggleOverlay(closeCallback);
             });
             loading.togglePop();
+        }
+        else if(bank_gateway.length && bank_gateway.hasClass('mobile')){
+            owums.enhanceCreditCardFormMobile();
         }
     },
     
@@ -373,6 +377,78 @@ var owums = {
                 return false
             }
             else{
+                owums.toggleLockOverlay();
+                owums.initCreditCardLoading();
+                return true
+            }
+        });
+    },
+    
+    enhanceCreditCardFormMobile: function(){
+        $('#credit_card_number input').bind('keyup', function(e){
+            var $this = $(this);
+            // when max length of input form is reached and a number key is pressed
+            if($this.val().length == 4 &&
+               ( (e.keyCode >= 48 && e.keyCode < 57) || (e.keyCode >= 96 && e.keyCode < 105) )
+            ){
+                var next = $this.next();
+                // focus next input
+                if(next.length){
+                    next.focus()
+                }
+                // focus on select month of expiry date
+                else{
+                    $('select').eq(0).focus()
+                }
+                return true
+            }
+            return false;
+        });
+        // allow only numbers on credit card number and cvv fields
+        $('form#cc_form input[type=text]').keydown(function(e) {
+            var $this = $(this);
+            // Allow: backspace, delete, tab, escape, and enter
+            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
+                 // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) || 
+                 // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {                    
+                    // let it happen, don't do anything
+                    return
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105 )) {
+                    e.preventDefault()
+                }
+                else{
+                    // remove any error class if present
+                    if($this.hasClass('error')){
+                        $this.removeClass('error');
+                    }
+                }
+            }
+        });
+        $('form#cc_form').submit(function(e){
+            var error = false;
+            $(this).find('input[type=text]').each(function(i, e){
+                var input = $(e)
+                if(
+                   ( input.attr('name').indexOf('number') >= 0 && input.val().length < 4 ) ||
+                   ( input.attr('name').indexOf('cvv') >= 0 && input.val().length < 3 )
+                ){
+                    input.addClass('error');
+                    error = true;
+                }
+            });
+            if(error){
+                return false
+            }
+            else{
+                if(!$('#mask').length){
+                    $('#verification').after('<div id="mask"></div><div id="loading-overlay"></div><div id="loading-message"></div>');    
+                }
+                $('#mask').css('opacity','0').show().fadeTo(250, 0.5);
                 owums.initCreditCardLoading();
                 return true
             }
@@ -394,14 +470,22 @@ var owums = {
     },
     
     initCreditCardLoading: function(){
-        owums.toggleLockOverlay();
         $('#loading-overlay').togglePop();
-        setTimeout(function(){
+        owums.timeouts = [];
+        owums.timeouts[0] = setTimeout(function(){
             $('#loading-message').toggleMessage(i18n.verification_message_first_step);
-            setTimeout(function(){
-                $('#loading-message').html(i18n.verification_message_second_step);    
-            }, 2500);
         }, 1500);
+        owums.timeouts[1] = setTimeout(function(){
+            $('#loading-message').html(i18n.verification_message_second_step);    
+        }, 4000);
+    },
+    
+    clearTimeouts: function(){
+        if(owums.timeouts){
+            for(i in owums.timeouts){
+                clearTimeout(owums.timeouts[i]);
+            }
+        }
     },
 
     ajaxQuickSearch: function() {

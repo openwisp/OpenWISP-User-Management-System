@@ -1,15 +1,23 @@
 <% unless flash[:expired] %>
   $('#bank-gateway').html(
-      '<%= escape_javascript(render :partial => 'credit_card_form') %>'
-  );
+    '<%= escape_javascript(render :partial => 'credit_card_form.%s' % @template_suffix) %>'
+  ).trigger("create");
   $('#loading-overlay').togglePop();
-  $('#loading-message').togglePop();
+  owums.clearTimeouts();
+  $('#loading-message').hide();
+  <% unless @is_mobile %>  
   owums.toggleLockOverlay();
   owums.enhanceCreditCardForm();
+  <% else %>
+  $('#mask').hide();
+  owums.enhanceCreditCardFormMobile();
+  <% end %>
   <% if @account.verified? %>
     setTimeout(function(){
       location.href = "<%= account_path %>"
     }, 2000);
+  <% else %>
+  $(document).scrollTop($("#credit-card-verification").offset().top);
   <% end %>
   $('.overlay').centerElement();
 <% else %>

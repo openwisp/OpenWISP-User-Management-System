@@ -72,3 +72,61 @@ tbody tr:hover td {
 
 .hidden{ display: none !important }
 .readonly{ background: #DDD }
+
+#verification h3{ margin-top: 0 }
+#credit_card_number{ overflow: hidden; padding-right: 0 }
+#credit_card_number input{ width: 45px !important; float: left; margin-right: 6px; text-align: center }
+#expiration_date{ overflow: hidden; padding-right: 0 }
+#expiration_date div.ui-select{ width: 100px !important; float: left }
+#credit-card-verification label{ display: block; font-size: 14px; font-weight: normal; margin-bottom: 8px }
+#expiration_date label{ margin-bottom: 0 }
+#gestpaylogo{ text-align: center }
+#gestpaylogo img{ width: 100%; max-width: 580px }
+#id_credit_card_cvv{ width: 100px }
+#visa-mastercard-logo{ text-align: center }
+#verification input[type=number]{ -webkit-appearance: none }
+
+#bank-gateway li.error{ font-weight: bold; color: #db0003 }
+#bank-gateway input.error{ background: #F0F0F0; border: 1px solid red }
+
+#loading-overlay, #loading-message{
+    display: none;
+    position:fixed;
+    width:60px;
+    height:60px;
+    left:200px;
+    top:200px;
+    background:#333 url(../images/spinner_black.gif) no-repeat scroll center center;
+    z-index:9999;
+    border-radius: 4px;
+}
+
+#loading-message{
+    background: #EEE none;
+    width: 200px;
+    padding: 15px 25px;
+    height: auto;
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 9998;
+}
+
+#mask{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:#000;
+    z-index:10
+}
+
+#verification-explain{
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 20px 20px 10px;
+    text-align: justify
+}
+#verification-explain p{ margin: 0 0 10px }
+#new_account .error{ background: transparent; font-weight: bold; color: red }

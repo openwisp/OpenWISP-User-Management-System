@@ -275,14 +275,17 @@ class AccountsController < ApplicationController
       # translate gestpay error message if possible otherwise just return the string
       begin
         flash[:error] = I18n.translate!(('gestpay_error_'+validation[:error_code]).parameterize.underscore.to_sym, :raise => true)
-      rescue I18n::MissingTranslationData
+      rescue I18n::MissingTranslationData, TypeError
         flash[:error] = validation[:error_description]
       end      
     end
     
     respond_to do |format|
       format.html{ redirect_to verification_path }
-      format.js{ }
+      format.js{
+        @is_mobile = params[:mobile].nil? ? false : true
+        @template_suffix = @is_mobile ? 'mobile.erb' : 'html.erb'
+      }
     end
   end
   
