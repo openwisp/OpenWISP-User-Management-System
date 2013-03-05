@@ -374,11 +374,23 @@ li > .off {
     text-align: justify
 }
 
-#visa_mastercard{
-    position: absolute;
-    right: 33px;
-    bottom: 65px;
+ul.main.nav{ margin-bottom: 20px; font-size: 12px }
+#notice{
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #3b6d08; color: #fff
 }
+#notice p{ margin: 0; text-align: center }
+#notice .close{
+    background-color: #003500 !important;
+    padding: 5px 10px;
+    color: white;
+    margin-left: 13px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+#notice .close:hover{ background-color: #000 !important }
 
 /* gestpay S2S */
 #bank-gateway fieldset{ padding: 20px 20px 10px }
@@ -412,3 +424,9 @@ li > .off {
 #gestpaylogo{ text-align: center; margin: 20px 0 2px }
 input.error{ border: 2px solid red }
 #verify-credit-card td{ font-size:13px }
+
+#visa_mastercard{
+    position: absolute;
+    right: 33px;
+    bottom: 65px;
+}

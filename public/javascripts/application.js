@@ -23,6 +23,7 @@ $(document).ready(function(){
     owums.loadCheckboxWarnings();
     owums.hideWhenJsIsAvailable('.no_js');
     owums.hideWhenGraphsAreAvailable('.no_graphs');
+    owums.initNotice();
     owums.initRegistration();
     owums.initCreditCardOverlay();
     owums.initUserForm();
@@ -486,6 +487,13 @@ var owums = {
                 clearTimeout(owums.timeouts[i]);
             }
         }
+    },
+    
+    initNotice: function(){
+        $('#notice .close').click(function(e){
+            e.preventDefault();
+            $(this).parent().parent().fadeToggle(400);
+        });
     },
 
     ajaxQuickSearch: function() {
