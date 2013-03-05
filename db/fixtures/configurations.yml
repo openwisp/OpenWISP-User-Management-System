@@ -251,6 +251,12 @@ You just created and verified successfully your account for wifi access.
 
 You can now login and use the wifi service with username \"{username}\" and the password you chose during the registration phase.
 
+You can monitor your use of the available traffic at the account management page:
+{account_url}
+
+If you ever forget your password, you can use the password reset procedure available at the following web address:
+{password_reset_url}
+
 Staff"
 
 81:
@@ -261,6 +267,12 @@ Staff"
 Hai appena creato e verificato con successo il tuo account per l'accesso al wifi.
 
 Ora puoi effettuare il login e usare il servizio wifi, il tuo username è \"{username}\" e la password è quella che hai scelto in fase di registrazione.
+
+Puoi monitorare l'utilizzo del servizio dalla pagina di gestione del tuo account:
+{account_url}
+
+Se dovessi dimenticare la password, potrai utilizzare la procedura di reset disponibile al seguente indirizzo:
+{password_reset_url}
 
 Cordiali Saluti
 Staff"

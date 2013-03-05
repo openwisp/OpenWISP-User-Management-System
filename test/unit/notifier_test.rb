@@ -27,10 +27,16 @@ class NotifierTest < ActionMailer::TestCase
     assert_equal [account.email], email.to, "email to field mismatch"
     assert_equal Configuration.get("account_notification_subject_#{I18n.locale}"), email.subject, "email subject mismatch"
     
+    host = Configuration.get('notifier_base_url')
+    protocol  =  Configuration.get('notifier_protocol')
+    baseurl = '%s:%s' % [protocol, host]
+    
     dictionary = {
       :first_name => account.given_name,
       :last_name => account.surname,
-      :username => account.username
+      :username => account.username,
+      :password_reset_url => "#{baseurl}/account/reset",
+      :account_url => "#{baseurl}/account"
     }
     
     message = Configuration.get("account_notification_message_#{I18n.locale}")

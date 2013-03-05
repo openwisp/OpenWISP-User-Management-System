@@ -136,7 +136,7 @@ en:
   Logout: "Logout"
   Logout_successful: "Logout successful"
   Mac_address: "MAC address"
-  Manage_your_account: "Manage your account"
+  Manage_your_account: "Log in"
   Manage_your_account_howto: "
     After signing up, by going to '<strong>%{login}</strong>' from the main menu and filling up the form with your user name (i.e. your mobile phone number) and your password,
     you'll be granted access to your private section with usage stats and personal data.<br />
@@ -365,7 +365,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Gestpay_verified_by_visa_error_heading: "Error of Verified by Visa"
   Gestpay_verified_by_visa_error_text: "There was an error while verifying the transaction of your \"Verified By Visa\" card."
   Repeat_procedure: "Repeat credit card validation procedure"
-  Account_verified_successfully: "Account verified successfully"
+  Account_verified_successfully: "Account verified successfully, now you can access the internet."
   VBV_system_error: "There was a system error, please report the problem to an administrator"
   active_merchant_year: "Credit card expired"
   active_merchant_number: "Invailid credit card number"

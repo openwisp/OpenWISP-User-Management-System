@@ -136,7 +136,7 @@ it:
   Logout: "Esci"
   Logout_successful: "Logout riuscito"
   Mac_address: "MAC address"
-  Manage_your_account: "Gestisci il tuo account"
+  Manage_your_account: "Log in"
   Manage_your_account_howto: "
     Una volta aver eseguito la procedura di registrazione, seguendo '<strong>%{login}</strong>' dal menù principale ed inserendo il nome utente (ad es. il numero di cellulare)
     e la password scelti, potrai accedere alla sezione privata dove potrai consultare le statistiche di utilizzo ed i tuoi dati personali.<br />
@@ -362,7 +362,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Gestpay_verified_by_visa_error_heading: "Errore verifica Verified by Visa"
   Gestpay_verified_by_visa_error_text: "C'è stato un errore con la procedura di verifica della tua carta verified by visa"
   Repeat_procedure: "Ripeti la procedura di verifica della carta di credito"
-  Account_verified_successfully: "Account verificato con successo"
+  Account_verified_successfully: "Account verificato con successo, ora puoi navigare."
   VBV_system_error: "C'è stato un errore di sistema, perfavore segnala il problema ad un amministratore"
   active_merchant_year: "Carta scaduta"
   active_merchant_number: "Numero di carta di credito non valido"
