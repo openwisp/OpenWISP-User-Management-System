@@ -29,7 +29,7 @@ class NotifierTest < ActionMailer::TestCase
     
     host = Configuration.get('notifier_base_url')
     protocol  =  Configuration.get('notifier_protocol')
-    baseurl = '%s:%s' % [protocol, host]
+    baseurl = '%s://%s' % [protocol, host]
     
     dictionary = {
       :first_name => account.given_name,

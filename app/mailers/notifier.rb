@@ -26,7 +26,7 @@ class Notifier < ActionMailer::Base
     subject = Configuration.get("account_notification_subject_#{I18n.locale}")
     @message = Configuration.get("account_notification_message_#{I18n.locale}")
     
-    baseurl = '%s:%s' % [default_url_options[:protocol], default_url_options[:host]]
+    baseurl = '%s://%s' % [default_url_options[:protocol], default_url_options[:host]]
     
     dictionary = {
       :first_name => @user.given_name,
