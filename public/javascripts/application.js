@@ -349,18 +349,6 @@ var owums = {
                 }
             }
         });
-        // on selection of expiry date
-        $('#bank-gateway select').change(function(e){
-            var next = $(this).next();
-            // focus on the next select
-            if(next.length){
-                next.focus()
-            }
-            // or cvv field
-            else{
-                $('#id_credit_card_cvv').focus()
-            }
-        });
         // on submit
         $('#bank-gateway form').submit(function(e){
             var error = false;

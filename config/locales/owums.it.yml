@@ -136,7 +136,7 @@ it:
   Logout: "Esci"
   Logout_successful: "Logout riuscito"
   Mac_address: "MAC address"
-  Manage_your_account: "Log in"
+  Manage_your_account: "Gestisci il tuo account"
   Manage_your_account_howto: "
     Una volta aver eseguito la procedura di registrazione, seguendo '<strong>%{login}</strong>' dal menù principale ed inserendo il nome utente (ad es. il numero di cellulare)
     e la password scelti, potrai accedere alla sezione privata dove potrai consultare le statistiche di utilizzo ed i tuoi dati personali.<br />

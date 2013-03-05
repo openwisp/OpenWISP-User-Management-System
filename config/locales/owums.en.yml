@@ -136,7 +136,7 @@ en:
   Logout: "Logout"
   Logout_successful: "Logout successful"
   Mac_address: "MAC address"
-  Manage_your_account: "Log in"
+  Manage_your_account: "Manage your account"
   Manage_your_account_howto: "
     After signing up, by going to '<strong>%{login}</strong>' from the main menu and filling up the form with your user name (i.e. your mobile phone number) and your password,
     you'll be granted access to your private section with usage stats and personal data.<br />
