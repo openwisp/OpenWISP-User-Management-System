@@ -1,18 +1,20 @@
 require 'test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
-  test "should open verify_gestpay without login" do
-    get :verify_gestpay
-    assert_response :success
-  end
-  
-  test "gestpay_success should redirect to login" do
-    get :gestpay_success
+  test "gestpay_verify_credit_card should redirect to login" do
+    post :gestpay_verify_credit_card
     assert_redirected_to '/account_session/new'
   end
   
-  test "gestpay_error should redirect to login" do
-    get :gestpay_error
+  test "gestpay_verified_by_visa should redirect to login" do
+    post :gestpay_verified_by_visa
     assert_redirected_to '/account_session/new'
   end
+  
+  #test "captive_portal_api" do
+  #  account = Account.last()
+  #  if CONFIG['automatic_captive_portal_login'] == false
+  #    assert account.captive_portal_login!
+  #  end
+  #end
 end

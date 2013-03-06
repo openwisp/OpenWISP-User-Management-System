@@ -193,6 +193,10 @@ class ApplicationController < ActionController::Base
   private
   
   def preferred_user_language
-    request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    unless request.env['HTTP_ACCEPT_LANGUAGE'].nil?
+      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    else
+      I18n.default_locale
+    end
   end
 end

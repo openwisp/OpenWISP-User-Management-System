@@ -17,11 +17,11 @@
 
 class AccountsController < ApplicationController
   before_filter :require_account, :only => [
-      :show, :edit, :update
+      :show, :edit, :update, :gestpay_verify_credit_card, :gestpay_verified_by_visa
   ]
 
   before_filter :require_no_account, :only => [
-      :new, :create, :verify_paypal, :secure_verify_paypal, :verified_by_visa
+      :new, :create, :verify_paypal, :secure_verify_paypal
   ]
 
   before_filter :require_no_operator
