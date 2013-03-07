@@ -223,11 +223,6 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   key: "gestpay_webservice_url"
   value: "https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL"
 
-76:
-  system_key: f
-  key: "gestpay_verified_url"
-  value: "https://testecomm.sella.it/gestpay/pagam.asp"
-
 77:
   system_key: f
   key: "gestpay_vbv_session"

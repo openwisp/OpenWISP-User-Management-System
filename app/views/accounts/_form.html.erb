@@ -17,11 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<%# if Configuration.get('use_automatic_username') == "false" or Configuration.get('use_mobile_phone_as_username') == "false" or !account.new_record? %>
-    <%#= f.input :username, :disabled => !account.new_record? %>
-<%# end %>
-
-
 <% if account.new_record? %>
     <% if account_verification_methods.length == 1 %>
         <%= f.input :verification_method, :as => :hidden %>
@@ -32,7 +27,6 @@
         <%= f.input :verification_method, :collection => account_verification_select, :prompt => false %>
     <% end %>
 <% end %>
-
 
 <%= render 'common/form_elements/mobile_phone', :form => f, :owner => account, :prefixes => mobile_prefixes %>
 

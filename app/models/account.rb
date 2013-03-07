@@ -314,16 +314,11 @@ class Account < AccountCommon
   private
 
   def set_username_if_required
-    #if Configuration.get('use_mobile_phone_as_username')
-    #  Rails.logger.warn "Deprecation warning: 'use_mobile_phone_as_username' configuration key will be soon removed. Please use 'use_automatic_username' instead"
-    #end
-
     if Configuration.get('use_mobile_phone_as_username') == "true"
       if verify_with_mobile_phone?
         self.username = mobile_phone
       end
     end
-
   end
 
   def prepare_paypal_payment(return_url, notify_url)

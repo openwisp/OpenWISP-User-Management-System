@@ -136,12 +136,17 @@
 75:
   system_key: f
   key: "gestpay_webservice_url"
-  value: "https://testecomm.sella.it/gestpay/gestpayws/WSCryptDecrypt.asmx?WSDL"
+  value: "https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL"
 
-76:
+77:
   system_key: f
-  key: "gestpay_payment_url"
-  value: "https://testecomm.sella.it/gestpay/pagam.asp"
+  key: "gestpay_vbv_session"
+  value: "300"
+
+78:
+  system_key: f
+  key: "gestpay_vbv_url"
+  value: "https://testecomm.sella.it/gestpay/pagamvisa3d.asp"
 
 80:
   system_key: f
