@@ -226,7 +226,6 @@ class Account < AccountCommon
         # save bank response (shop_transaction, authorization_code) and verify user
         self.set_credit_card_info(response)
         self.credit_card_identity_verify!
-        #self.captive_portal_login(request.remote_ip)
       end
       # verified by visa case
       if response[:error_code] == '8006'
