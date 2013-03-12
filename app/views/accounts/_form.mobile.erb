@@ -19,6 +19,9 @@
 
 <div id="verification-explain">
   <%= t(:verification_explain).html_safe %>
+  <p>
+    <% if account_verification_methods.include? 'mobile_phone' %><%= t(:verification_explain_mobile).html_safe %><% end %><% if account_verification_methods.include? 'gestpay_credit_card' %><%= t(:verification_explain_credit_card).html_safe %><% else %>.<% end %>
+  </p>
 </div>
 
 <ul data-role="listview" data-inset="true" id="mobile-registration">
