@@ -226,7 +226,7 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
 77:
   system_key: f
   key: "gestpay_vbv_session"
-  value: "300"
+  value: "360"
 
 78:
   system_key: f
