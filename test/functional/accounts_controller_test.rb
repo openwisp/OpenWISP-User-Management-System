@@ -1,9 +1,24 @@
 require 'test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
+  
+  setup :activate_authlogic
+  
   test "account registration should be accessible" do
     get :new
     assert_response :success
+  end
+  
+  test "account page restricted to logged in users" do
+    # unauthenticated user will be redirected to login
+    get :show
+    assert_redirected_to new_account_session_path
+    # authenticated user should succeed
+    # can't manage to get this to work...
+    #AccountSession.create(users(:one))
+    #get :show
+    #puts response
+    #assert_redirected_to account_path
   end
   
   test "gestpay_verify_credit_card should redirect to login" do
