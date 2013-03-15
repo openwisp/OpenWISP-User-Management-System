@@ -115,7 +115,7 @@
 
 43:
   system_key: f
-  key: "use_mobile_phone_as_username"
+  key: "use_automatic_username"
   value: "false"
 
 50:

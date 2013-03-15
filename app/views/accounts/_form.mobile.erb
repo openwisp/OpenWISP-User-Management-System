@@ -18,7 +18,7 @@
 #%>
 
 <ul data-role="listview" data-inset="true">
-  <% if Configuration.get('use_mobile_phone_as_username') == "false" || !account.new_record? %>
+  <% if Configuration.get('use_automatic_username') == "false" or Configuration.get('use_mobile_phone_as_username') == "false" or !account.new_record? %>
       <li data-role="fieldcontain">
         <%= f.input :username, :disabled => !account.new_record? %>
       </li>
