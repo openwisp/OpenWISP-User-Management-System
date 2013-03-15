@@ -4,7 +4,7 @@ select {
     width:99%;
 }
 
-div.field_with_errors .lbl, div.field_with_errors .error {
+div.field_with_errors .lbl, div.field_with_errors .error, p.error {
     padding: 2px;
     background-color: #ff6666;
 }
@@ -153,9 +153,7 @@ li > .off {
     background-color: #4A4344 !important;
 }
 
-#eula_priv {
-    margin:30px 5px 0 5px;
-}
+#eula_priv { margin:30px 5px 0 5px; overflow: hidden }
 
 #notice {
     color:green;
@@ -254,9 +252,7 @@ li > .off {
     float: right;
 }
 
-
-
-#loading-overlay{
+#loading-overlay, #loading-message{
     display: none;
     position:fixed;
     width:60px;
@@ -266,6 +262,16 @@ li > .off {
     background:#333 url(../images/spinner_black.gif) no-repeat scroll center center;
     z-index:9999;
     border-radius: 4px;
+}
+
+#loading-message{
+    background: #EEE none;
+    width: 350px;
+    padding: 15px 25px;
+    height: auto;
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 9998;
 }
 
 #mask{
@@ -284,12 +290,10 @@ li > .off {
     position: absolute;
     left: 10%;
     top: 10%;
-    max-width:900px;
-    min-width:400px;
-    min-height:500px;
+    width: 650px;
+    /*height: 450px;*/
     z-index:99;
     background-color:#333;
-    min-height:200px;
     border:1px solid #666;
     -moz-box-shadow:0 0 90px 5px #000;
     -webkit-box-shadow: 0 0 90px #000;
@@ -298,18 +302,11 @@ li > .off {
 
 .nolayout{
     width: 90%;
-    height: 96%;
-    padding: 2% 5%;
+    height: 93%;
+    padding: 3.5% 5%;
     background: #EEEEEE; font: 14px/1.5 Helvetica,Arial,'Liberation Sans',FreeSans,sans-serif
 }
 
-.overlay iframe{
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    background: #EEE;
-}
- 
 .overlay .close {
     background-image:url(../images/close.png);
     position:absolute;
@@ -321,4 +318,115 @@ li > .off {
     z-index:100;
     overflow: hidden;
     text-indent: -1000px;
+}
+
+.readonly{ background: #EEE }
+#confirm_mobile_phone_number{ clear: both }
+#confirm_mobile_phone_number .block, #confirm_mobile_phone_number{ overflow: hidden }
+#registration{ font-size: 12px }
+#verify-mobile-phone .block{ overflow: hidden }
+#verify-mobile-phone .grid_4,
+#verify-mobile-phone .grid_5{ margin: 0; display: block }
+#verify-mobile-phone .grid_4{ width: 260px; margin-right: 25px }
+#verify-mobile-phone .grid_5{ width: 390px; }
+
+#registration{ margin: 0 15px 15px }
+#registration fieldset{ padding: 10px 25px }
+#registration input{ margin-left: 0 }
+#registration input[type=text],
+#registration input[type=password]{ margin-top: 3px; width: 97%; padding: 5px 1%; font-size: 14px }
+#registration select{
+    margin: 3px 0 0 0; background: #fff; border-color: gray; height: 32px; line-height: 1; padding: 6px 0; vertical-align: middle; font-size: 12px;
+}
+
+#registration #account_submit, #bank-gateway .button{
+    display: block; width: 40%; margin: 30px auto;
+    font: normal 15px Helvetica, Arial, Freesans, sans-serif;
+	color: #545454;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(top,#ffffff 0%,#cccccc);
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff),to(#cccccc));
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #fafafa;
+	-moz-box-shadow: 0px 1px 2px rgba(000,000,000,0.4),inset 0px 0px 1px rgba(255,255,255,1);
+	-webkit-box-shadow:0px 1px 2px rgba(000,000,000,0.4),inset 0px 0px 1px rgba(255,255,255,1);
+	box-shadow:0px 1px 2px rgba(000,000,000,0.4),inset 0px 0px 1px rgba(255,255,255,1);
+	text-shadow:0px -1px 0px rgba(000,000,000,0.7),0px 1px 0px rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+#registration a{ text-decoration: underline }
+#registration .cancel{ text-align: center }
+#eula_priv input{ float: left; margin-top: 7px }
+#eula_priv label{ float: right; width: 96%; margin-top: 5px }
+#eula_priv .signup{ overflow: hidden; margin-bottom: 0 }
+#eula_priv .field_with_errors label{ width: 95% }
+#eula_priv div.boolean{ overflow: hidden; margin-bottom: 2px }
+
+#verification-explain{
+    font-size: 14px;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 20px 20px 10px;
+    text-align: justify
+}
+
+ul.main.nav{ margin-bottom: 20px; font-size: 12px }
+#notice{
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #3b6d08; color: #fff
+}
+#notice p{ margin: 0; text-align: center }
+#notice .close{
+    background-color: #003500 !important;
+    padding: 5px 10px;
+    color: white;
+    margin-left: 13px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+#notice .close:hover{ background-color: #000 !important }
+
+/* gestpay S2S */
+#bank-gateway fieldset{ padding: 20px 20px 10px }
+#bank-gateway .button{
+    width: 160px;
+    margin: 20px 0 0;
+    padding: 6px 7px 5px;
+    cursor: pointer;
+}
+#bank-gateway .button.proceed{ margin: 0 0 5px; }
+
+#bank-gateway select{ width: 60px }
+#bank-gateway input, #bank-gateway select{ font-size: 13px }
+#id_credit_card_cvv{ width: 70px; text-align: center; font-weight: bold; font-size: 15px; letter-spacing: 2px }
+#bank-gateway p.error, #bank-gateway p.notice{
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 5px 0 3px 20px;
+}
+#bank-gateway p.notice{ background-color: #4B8F30 }
+#credit_card_number label{ display: block }
+#credit_card_number input{
+    width: 95px;
+    padding-left: 10px;
+    padding-right: 10px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+#gestpaylogo{ text-align: center; margin: 20px 0 2px }
+input.error{ border: 2px solid red }
+#verify-credit-card td{ font-size:13px }
+
+#visa_mastercard{
+    position: absolute;
+    right: 33px;
+    bottom: 65px;
 }

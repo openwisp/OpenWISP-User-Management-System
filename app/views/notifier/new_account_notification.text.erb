@@ -16,20 +16,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
-
-<%= stylesheet_link_tag 'custom' %>
-
-<div class="nolayout">
-  <h3><%=t_safe :Credit_Card_Verification_Error_Heading %></h3>
-  <p class="meta"><%=t :Credit_Card_Verification_Error_Paragraph %></p>
-  <p><a href="#" onclick="parent.window.$('.close').trigger('click');return false;"><%=t :Close %></a></p>
-</div>
-<script type="text/javascript">
-    $ = parent.window.$
-    $('.close').removeAttr('data-confirm-message')
-    .unbind('click')
-    .click(function(){
-      parent.window.owums.toggleOverlay();
-      parent.location.href = '<%= url_for(:action => :show) %>';
-    });
-</script>
+<%= @message.html_safe %>

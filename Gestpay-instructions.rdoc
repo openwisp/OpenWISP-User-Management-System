@@ -1,0 +1,73 @@
+= Gestpay Credit Card verification 
+
+Instructions to enable the "Gestpay Credit Card" verification method for the user registration procedure.
+
+== Configuration Keys
+
+Ensure the following configuration keys are available in */configurations* and configured correctly.
+
+* *gestpay_enabled*: indicate if gestpay credit card verification method is enabled
+* *credit_card_verification_cost*: cost of the transaction
+* *credit_card_registration_expire*: user registered with this method are automatically deleted after this time
+* *gestpay_currency*: currency used, defaults to 242 which means EURO, for other codes see the Gestpay documentation
+* *gestpay_payment_url*: URL to which the user will be redirected to perform the payment; should be https://testecomm.sella.it/gestpay/pagam.asp for the DEMO or https://ecomm.sella.it/gestpay/pagam.asp for the real environment
+* *gestpay_webservice_url*: Web Service URL, should be https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the DEMO or https://ecomms2s.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the real environment
+* *gestpay_shoplogin*: Gestpay CODE provided by Banca Sella after signing their contract. Also known as "Codice esercente"
+* *notifier_base_url*: base url of the OWUMS application without the protocol, eg: *mywifiservice.com/owums*
+* *notifier_protocol*: https or http
+* *captive_portal_baseurl*: URL of the OWCPM (OpenWISP Captive Portal Manager) instance, which should be used with OWUMS
+* *gestpay_vbv_session*: duration in seconds of the time in which users can insert their card password if needed; explained in detail in the "Verified By Visa" Section
+* *gestpay_vbv_url*: url of which users will be redirected to insert their credit card password; should be https://testecomm.sella.it/gestpay/pagamvisa3d.asp for the DEMO or https://ecomm.sella.it/gestpay/pagamvisa3d.asp for the real environment
+
+If the configuration keys are not available you are probably upgrading from an older version,
+you will have to manually insert the configuration keys with the rails console unless you want
+to reset all your configuration keys to the default ones (in that case just run *rake db:seed* from the command line).
+
+To manually set the configuration keys with the console follow this procedure:
+
+    =>:$ bundle exec rails console
+    1.8.7 :001 > Configuration.set('key_name', 'value')
+    # substitute key_name and value with the missing configuration keys
+
+== Gestpay Backoffice configuration
+
+Login into the backoffice:
+
+Demo: https://testecomm.sella.it/gestpay/backoffice/LoginGestPay.asp
+
+Production: https://ecomm.sella.it/gestpay/backoffice/LoginGestPay.asp  
+
+=== Configurazione > Ambiente > Indirizzi ip
+
+Insert the ip addresses from which your owums instance will communicate with gestpay.
+
+=== Configurazione > Ambiente > Risposte
+
+URL per risposta positiva: */account/gestpay_success*
+
+URL per risposta negativa: */account/gestpay_error*
+
+URL Server to Server: */account/verify_gestpay*  
+
+All the other fields are related to email notifications and can be set according to personal needs and preferences.
+
+=== Configurazione Cliente > Campi & Parametri > NO DISPLAY
+
+1. Click on BuyerEmail, then check "Input", then "Obbligatorio" and "Parametro", then click Ok  
+2. Click on BuyerName, then check "Input", then "Obbligatorio" and "Parametro", then click Ok
+4. Click on CVV, then check "Input", then "Parametro", then click OK
+5. Click on Language, then check "Parametro", then click OK
+5. Click on CustomInfo, then check "Risposta", then click OK  
+
+Add new parameter (click on "Nuovo"), then check "Inserisci", write "Server", save by clicking on "Ok", then uncheck "Visibile" and save again
+Repeat the same procedure for the new parameter "UserID".
+
+After saving, click on the button "Pubblica" on the bottom right position of the page (under the list with all the available parameters).
+
+== Verified By Visa Notes
+
+Verified By Visa is a service which if enabled requires the users of some credit cards to insert a special password to confirm every operation of their card.
+Users of verified by visa or master card security code cards will be redirected to their bank's website to insert the special password.
+For this mecchanism to work OWUMS needs to be able to communicate with OWCPM's API in order to temporary login the user so he can be redirected to the website of his bank.
+
+TODO: write unit tests that verify that OWUMS can talk to OWCPM's API

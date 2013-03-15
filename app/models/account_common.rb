@@ -56,7 +56,7 @@ class AccountCommon < ActiveRecord::Base
             :presence => true,
             :uniqueness => {:allow_blank => true},
             :length => {:in => 4..64, :allow_blank => true},
-            :format => {:with => /\A[a-z0-9_\-\.@]+\Z/i, :allow_blank => true}
+            :format => {:with => /\A[a-z0-9_\-\.]+\Z/i, :allow_blank => true}
 
   validates :email,
             :presence => true,
@@ -252,10 +252,149 @@ class AccountCommon < ActiveRecord::Base
   def email_confirmation
     read_attribute(:email_confirmation) ? read_attribute(:email_confirmation) : self.email
   end
+  
+  def set_credit_card_info(data)
+    values = {}
+    if data.has_key?(:shop_transaction_id) && !data[:shop_transaction_id].nil?
+      values[:shop_transaction] = data[:shop_transaction_id]
+    end
+    if data.has_key?(:datetime) && !data[:datetime].nil?
+      values[:datetime] = data[:datetime]
+    end
+    if data.has_key?(:bank_transaction_id) && !data[:bank_transaction_id].nil?
+      values[:bank_transaction] = data[:bank_transaction_id]
+    end
+    if data.has_key?(:authorization_code) && !data[:authorization_code].nil?
+      values[:authorization_code] = data[:authorization_code]
+    end
+    if data.has_key?(:vb_v) && !data[:vb_v].nil?
+      values[:transaction_key] = data[:transaction_key]
+      values[:VbVRisp] = data[:vb_v][:vb_v_risp]
+    end
+    self.credit_card_info = values.to_json
+  end
+  
+  def credit_card_identity_verify!
+    if self.verify_with_paypal? or verify_with_gestpay?
+      self.verified = true
+      self.save!
+      self.captive_portal_login!
+      self.clear_ip!
+      self.new_account_notification!      
+    else
+      Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
+    end
+  end
+
+  def mobile_phone_identity_verify!
+    if self.verify_with_mobile_phone?
+      self.verified = true
+      self.save!
+      self.captive_portal_login!
+      self.clear_ip!
+      self.new_account_notification!
+    else
+      Rails.logger.error("Verification method is not 'mobile_phone'!")
+    end
+  end
 
   def password_reset_instructions!
     reset_perishable_token!
     Notifier.password_reset_instructions(self).deliver
+  end
+  
+  def new_account_notification!
+    if CONFIG['send_email_notification_to_users']
+      Notifier.new_account_notification(self).deliver
+    end
+  end
+  
+  def store_ip(ip)
+    # temporary store IP address, it must be called from the controller
+    self.notes = "<ip>#{ip}</ip>"
+  end
+  
+  def retrieve_ip()
+    # retrieves ip from notes
+    matches = /<ip>(.*)<\/ip>/i.match(self.notes)
+    # return match or nil
+    unless matches.nil?
+      matches[1]
+    end
+  end
+  
+  def clear_ip!
+    # clear ip address from notes when finished
+    self.notes = self.notes.gsub(/<ip>(.*)<\/ip>/i, '')
+    self.save!
+  end
+  
+  def captive_portal_login(ip_address=false, timeout=false, config_check=true)
+    # to use indipendently from configuration supply :config_check => false
+    if not CONFIG['automatic_captive_portal_login'] and config_check
+      return false
+    end
+    # determine ip address
+    ip_address = ip_address ? ip_address : self.retrieve_ip()
+    # automatically log in an user in the captive portal to allow the user to surf
+    cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    if cp_base_url
+      params = {
+        :username => self.username,
+        :password => self.crypted_password,
+        :ip => ip_address
+      }
+      # specify session timeout if necessary to achieve a temporary login
+      if timeout
+        params[:timeout] = Configuration.get('gestpay_vbv_session', '300').to_i
+      end
+      uri = URI::parse "#{cp_base_url}/api/v1/account/login"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request.set_form_data(params)
+      response = http.request(request)
+    else
+      raise 'key captive_portal_baseurl not present in the database'
+    end
+  end
+  
+  alias captive_portal_login! captive_portal_login
+  
+  def captive_portal_logout(ip_address=false)
+    # determine ip address
+    ip_address = ip_address ? ip_address : self.retrieve_ip()
+    cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    if cp_base_url
+      params = {
+        :username => self.username,
+        :ip => ip_address
+      }
+      uri = URI::parse "#{cp_base_url}/api/v1/account/logout"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request.set_form_data(params)
+      response = http.request(request)
+    else
+      raise 'key captive_portal_baseurl not present in the database'
+    end
+  end
+  
+  # determine if a login attempt is ok for verified by visa users
+  def captive_portal_login_ok_for_vbv?(login_response)
+    # successfully logged in
+    if login_response.code == "200"
+      return true
+    end
+    # not logged in most probably because the user is registering from her own internet connection and not from one of our APs
+    if login_response.code == "403" and (login_response.body.include?('non associato') or login_response.body.include?('not associated'))
+      return true
+    end
+    # something is wrong
+    return false
   end
 
   def mobile_prefix_confirmation=(value)
@@ -324,10 +463,6 @@ class AccountCommon < ActiveRecord::Base
     [traffic_out_sessions_from(date), traffic_in_sessions_from(date)]
   end
   
-  def clear_gestpay_notes
-    self.notes = self.notes.gsub(/<gestpay>(.*)<\/gestpay>/i, '')
-  end
-
   private
 
   def new_or_password_not_blank?
@@ -347,7 +482,7 @@ class AccountCommon < ActiveRecord::Base
 
   def no_parameter_tampering
     @countries = Country.all
-    unless @countries.map { |p| p.printable_name }.include?(self.state)
+    unless CONFIG['state'] == false || @countries.map { |p| p.printable_name }.include?(self.state)
       errors.add(:base, "Parameters tampering, uh? Nice try but it's going to be reported...")
       Rails.logger.error("'state' attribute tampering")
     end

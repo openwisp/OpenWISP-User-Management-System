@@ -20,7 +20,7 @@
 <%= content_for :data_url, account_registration_path %>
 
 <% content_for :header do %>
-    <h1><%=t :Register %></h1>
+    <h1><%=t(:Register).html_safe %></h1>
 <% end %>
 
 <% content_for :back do %>

@@ -1,4 +1,14 @@
-.bundle
 config/database.yml
+config/config.yml
+
 db/*.sqlite3
+db/*.db
 db/schema.rb
+*.sql
+
+.bundle
+vendor/
+tmp/
+
+*.komodoproject
+.DS_STORE

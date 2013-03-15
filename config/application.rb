@@ -6,7 +6,12 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-CONFIG = YAML.load_file("config/registration_fields.yml")[Rails.env]
+# in case config.yml has not been created load the default settings
+begin
+  CONFIG = YAML.load_file("config/config.yml")[Rails.env]
+rescue Errno::ENOENT
+  CONFIG = YAML.load_file("config/config.default.yml")[Rails.env]
+end
 
 module Owums
   class Application < Rails::Application

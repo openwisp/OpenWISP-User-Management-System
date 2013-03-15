@@ -21,6 +21,28 @@ class Notifier < ActionMailer::Base
 
   default :from => Configuration.get('password_reset_from')
 
+  def new_account_notification(account)
+    @user = account
+    subject = Configuration.get("account_notification_subject_#{I18n.locale}")
+    @message = Configuration.get("account_notification_message_#{I18n.locale}")
+    
+    baseurl = '%s://%s' % [default_url_options[:protocol], default_url_options[:host]]
+    
+    dictionary = {
+      :first_name => @user.given_name,
+      :last_name => @user.surname,
+      :username => @user.username,
+      :account_url => "#{baseurl}/account",
+      :password_reset_url => "#{baseurl}/account/reset",
+    }
+    
+    dictionary.each do |key, value|
+      @message.gsub!("{%s}" % key.to_s, value.to_s)
+    end
+    
+    mail :to => account.email, :subject => subject
+  end
+
   def password_reset_instructions(account)
     if Configuration.get('password_reset_custom_url_enabled') == 'true'
       @reset_url = Configuration.get('password_reset_custom_url') + account.perishable_token

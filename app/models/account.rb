@@ -25,9 +25,9 @@ class Account < AccountCommon
   end
   
   # After save
-  after_save :prepare_gestpay_payment
+  #after_save :prepare_gestpay_payment
 
-  # If the configuration key use_automatic_username is set to true, the username is automatically set
+  # If the configuration key use_mobile_phone_as_username is set to true, the username is automatically set
   before_validation :set_username_if_required, :on => :create
 
   # Validations
@@ -180,31 +180,144 @@ class Account < AccountCommon
     ]
   end
   
-  def retrieve_gestpay_url
-    # retrieves url saved before
-    matches = /<gestpay>(.*)<\/gestpay>/i.match(self.notes)
-    # return match or nil
-    unless matches.nil?
-      matches[1]
+  def gestpay_s2s_verify_credit_card(request, cc, amount, currency)
+    # build credit card number
+    number = cc['number1'] + cc['number2'] + cc['number3'] + cc['number4']
+    # verify validity of credit card before sending it to the gateway
+    credit_card = ActiveMerchant::Billing::CreditCard.new(
+      :number     => number,
+      :month      => cc['expiration_month'],
+      :year       => '20'+cc['expiration_year'],
+      :first_name => self.given_name,
+      :last_name  => self.surname,
+      :verification_value  => cc['cvv']
+    )
+    # if credit card looks valid proceed to bank gateway
+    if credit_card.valid?
+      webservice_url = Configuration.get('gestpay_webservice_url')
+      time = DateTime.now
+      shop_transaction_id = Digest::MD5.hexdigest("#{number}#{time}")
+      # prepare SOAP params
+      params = {
+        :shopLogin => Configuration.get('gestpay_shoplogin'),
+        :uicCode => currency,
+        :amount => amount,
+        :shopTransactionId => shop_transaction_id,
+        :cardNumber => number,
+        :expiryMonth => cc['expiration_month'].length > 1 ? cc['expiration_month'] : '0' + cc['expiration_month'],
+        :expiryYear => cc['expiration_year'],
+        :cvv => cc['cvv'],
+        :buyerName => '%s %s' % [self.given_name, self.surname],
+        :buyerEmail => self.email,
+        :languageId => I18n.locale == :it ? '1' : '2',
+        :customInfo => "USERID=%s*P1*SERVER=%s" % [self.id.to_s, Configuration.get("notifier_base_url")]
+      }
+      # init SOAP client
+      client = Savon.client(webservice_url)
+      # execute a SOAP request to call the "callPagamS2S" action
+      response = client.request(:call_pagam_s2_s) do
+        soap.body = params
+      end
+      # convert response to hash
+      response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
+      response[:datetime] = time
+      # if verification and payment succeded
+      if response[:transaction_result] == 'OK':
+        # save bank response (shop_transaction, authorization_code) and verify user
+        self.set_credit_card_info(response)
+        self.credit_card_identity_verify!
+      end
+      # verified by visa case
+      if response[:error_code] == '8006'
+        response[:shop_transaction_id] = shop_transaction_id
+        # save shop_transaction_id, transaction_key and vbv_risp in DB
+        self.set_credit_card_info(response)
+        # prolong account validity so it won't expire while the user is verifying
+        self.created_at = time
+        # temporarily set the user as verified in order to be able to log her in just for the time necessary to complete the payment
+        self.verified = true
+        self.save!
+        # temporarily login user
+        login_response = self.captive_portal_login(request.remote_ip, timeout=true, config_check=false)
+        # unverify user
+        self.verified = false
+        self.save!
+        # ensure user is logged in otherwise log error and return failure
+        if self.captive_portal_login_ok_for_vbv?(login_response)
+          # add some keys to response hash
+          response[:a] = params[:shopLogin]
+          response[:b] = response[:vb_v][:vb_v_risp]
+          response[:url] = Configuration.get('gestpay_vbv_url')
+        # one of the 403 cases can happen when a user is not registering from an access point but from another internet connection
+        else
+          Rails.logger.error('captive portal login failed for verified_by_visa credit card user with error %s: %s' % [login_response.code, login_response.body])
+          response[:error_description] = I18n.t(:VBV_system_error)
+          response[:error_code] = false
+        end        
+      end
+      # explicit return just for clarity
+      return response
     end
+    # translate active merchant errors and display them nicely
+    error_description = ''
+    i = 0
+    credit_card.errors.each do |key, value|
+      if value.empty?
+        next
+      end
+      br = i > 0 ? '<br />' : ''
+      error_description = error_description + br + I18n.t("active_merchant_#{key}")
+      i += 1
+    end
+    # emulate gestpay response
+    return { :transaction_result => 'KO', :error_description => error_description, :error_code => false }
+  end
+  
+  def gestpay_s2s_verified_by_visa(pares, ip_address)
+    webservice_url = Configuration.get('gestpay_webservice_url')
+    amount = Configuration.get('credit_card_verification_cost', '1')
+    currency = Configuration.get('gestpay_currency')
+    # retrieve data from DB
+    credit_card_info = JSON::load(self.credit_card_info)
+    # prepare SOAP params
+    params = {
+      :shopLogin => Configuration.get('gestpay_shoplogin'),
+      :uicCode => currency,
+      :amount => amount,
+      :shopTransactionId => credit_card_info['shop_transaction'],
+      :transKey => credit_card_info['transaction_key'],
+      "PARes" => pares
+    }
+    # init SOAP client
+    client = Savon.client(webservice_url)
+    # execute a SOAP request to call the "callPagamS2S" action
+    response = client.request(:call_pagam_s2_s) do
+      soap.body = params
+    end
+    # convert response to hash
+    response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
+    
+    if response[:transaction_result] == 'OK':
+      response[:datetime] = credit_card_info['datetime']
+      response[:transaction_key] = credit_card_info['transaction_key']
+      response[:VbVRisp] = credit_card_info['VbVRisp']
+      self.set_credit_card_info(response)
+      # log out user from captive portal because he's using a temporary login
+      self.captive_portal_logout(ip_address)
+      # this method will login the user again if the default configuration has not been changed (config.yml)
+      self.credit_card_identity_verify!
+    end
+    return response
   end
 
   private
 
   def set_username_if_required
-    if Configuration.get('use_mobile_phone_as_username')
-      Rails.logger.warn "Deprecation warning: 'use_mobile_phone_as_username' configuration key will be soon removed. Please use 'use_automatic_username' instead"
-    end
-
-    # Retro-compatibility...  "use_mobile_phone_as_username" is deprecated
-    if Configuration.get('use_automatic_username') == "true" or Configuration.get('use_mobile_phone_as_username') == "true"
+    if Configuration.get('use_mobile_phone_as_username') == "true"
       if verify_with_mobile_phone?
         self.username = mobile_phone
-      else
-        self.username = email
       end
     end
-
   end
 
   def prepare_paypal_payment(return_url, notify_url)
@@ -233,132 +346,6 @@ class Account < AccountCommon
     end
 
     {:paypal_base_url => paypal_base_url, :values => values}
-  end
-  
-  def prepare_gestpay_payment()
-    if self.verify_with_gestpay? and !self.verified
-      url = self.retrieve_gestpay_url
-      if url.nil?
-        # generate and return url (saves to notes)
-        encrypt_gestpay()
-      end
-    end
-  end
-  
-  def encrypt_gestpay()  
-    # import ruby soap library
-    require 'savon'
-    
-    # config
-    webservice_url = Configuration.get("gestpay_webservice_url")
-    shop_login = Configuration.get("gestpay_shoplogin")
-    payment_url = Configuration.get("gestpay_payment_url")
-    # base url
-    server = Configuration.get("notifier_base_url")
-    # transaction id: id+datetime hashed, positive numbers only
-    transaction_id = (('%s+%s' % [self.id, DateTime.now]).hash.abs).to_s
-    # user id
-    # I had to convert self.id to string because something was converting it to a different!
-    user_id = self.id.to_s
-    
-    # init SOAP client
-    client = Savon.client(webservice_url)
-
-    # execute a SOAP request to call the "encrypt" action
-    response = client.request(:encrypt) do
-      soap.body = {
-        :shopLogin => shop_login,
-        :uicCode => Configuration.get("gestpay_currency", "242"),
-        :amount => Configuration.get("credit_card_verification_cost", "1"),
-        :shopTransactionId => transaction_id,
-        :buyerName => '%s %s' % [self.given_name, self.surname],
-        :buyerEmail => self.email,
-        :customInfo => 'USERID=%s*P1*SERVER=%s' % [user_id, server]
-      }
-    end
-    
-    encrypted_string = response.body[:encrypt_response][:encrypt_result][:gest_pay_crypt_decrypt][:crypt_decrypt_string]
-    
-    # return URL in the form of "https://<PAYMENT_URL>?a=<SHOP_LOGIN>&b=<ENCRYPTED_STRING>"
-    url = "#{payment_url}?a=#{shop_login}&b=#{encrypted_string}"
-    
-    # append url in notes and save
-    self.notes = self.notes.to_s.concat('<gestpay>%s</gestpay>' % url)
-    self.save!
-    return url
-  end
-  
-  # static method
-  def self.validate_gestpay_payment(shop_login, encrypted_string)
-    # validates a payment done through the Gestpay banking system
-
-    # config
-    webservice_url = Configuration.get("gestpay_webservice_url")
-    
-    # import ruby soap library
-    require 'savon'
-    
-    # init SOAP client
-    client = Savon.client(webservice_url)
-    
-    # xml - why? Because by using plain savon code it didn't work
-    xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ecom="https://ecomm.sella.it/">
-    <soapenv:Header/>
-      <soapenv:Body>
-        <ecom:Decrypt>
-           <ecom:shopLogin>%s</ecom:shopLogin>
-           <ecom:CryptedString>%s</ecom:CryptedString>
-        </ecom:Decrypt>
-      </soapenv:Body>
-    </soapenv:Envelope>' % [shop_login, encrypted_string]
-    # strip new lines
-    xml = xml.gsub!("\n", '')
-    
-    response = client.request :decrypt do
-      soap.xml = xml
-    end
-    
-    decrypted = response[:decrypt_response][:decrypt_result][:gest_pay_s2_s]
-    
-    # DEBUG
-    # maybe it shouldn't be DEBUG only
-    if Rails.env.development?
-      Rails.logger.warn(response[:decrypt_response][:decrypt_result].to_json)
-    end
-    
-    #success
-    if decrypted[:transaction_result] == 'OK'
-      # retrieve params
-      params = decrypted[:custom_info].split("*P1*")
-      # init vars
-      server = ''
-      user_id = ''
-      # extract params from custom_info
-      params.each do |param|
-        if param.include?('SERVER=')
-          server = param.sub('SERVER=','')
-        elsif param.include?('USERID=')
-          user_id = param.sub('USERID=','')
-        end
-      end
-      
-      # if the server param is correct
-      if server == Configuration.get('notifier_base_url')
-        # retrieve account
-        user = User.find(user_id)
-        # activate user account
-        user.credit_card_identity_verify!
-        # once validated clear notes field
-        user.clear_gestpay_notes
-        user.save!
-      end
-    # error
-    else
-      # log error
-      Rails.logger.error("Gestpay payment validation unsuccessful: #{encrypted_string}")
-    end
-    
-    response
   end
 
   # Validations

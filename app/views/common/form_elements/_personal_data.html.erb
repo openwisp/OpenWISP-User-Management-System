@@ -46,6 +46,8 @@
     <%= form.input :state, :collection => countries, :prompt => false; %>
 </div>
 
+<%= form.input :username, :disabled => !owner.new_record? %>
+
 <%= form.input :email %>
 
 <%= form.input :email_confirmation %>

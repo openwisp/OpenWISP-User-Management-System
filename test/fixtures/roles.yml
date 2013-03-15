@@ -1,0 +1,43 @@
+users_destroyer:
+  id: 1
+  name: "users_destroyer"
+
+users_manager:
+  id: 2
+  name: "users_manager"
+
+users_registrant:
+  id: 3
+  name: "users_registrant"
+
+stats_viewer:
+  id: 4
+  name: "stats_viewer"
+
+users_finder:
+  id: 5
+  name: "users_finder"
+
+users_browser:
+  id: 6
+  name: "users_browser"
+
+configurations_manager:
+  id: 7
+  name: "configurations_manager"
+
+operators_manager:
+  id: 8
+  name: "operators_manager"
+
+registrant_by_nothing:
+  id: 9
+  name: "registrant_by_nothing"
+
+registrant_by_id_card:
+  id: 10
+  name: "registrant_by_id_card"
+
+user_manager:
+  id: 11
+  name: "user_manager"

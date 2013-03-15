@@ -163,24 +163,6 @@ class User < AccountCommon
     end
   end
 
-  def credit_card_identity_verify!
-    if self.verify_with_paypal? or verify_with_gestpay?
-      self.verified = true
-      self.save!
-    else
-      Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
-    end
-  end
-
-  def mobile_phone_identity_verify!
-    if self.verify_with_mobile_phone?
-      self.verified = true
-      self.save!
-    else
-      Rails.logger.error("Verification method is not 'mobile_phone'!")
-    end
-  end
-
   def mobile_phone_password_recover!
     if self.verify_with_mobile_phone?
       self.recovered = true

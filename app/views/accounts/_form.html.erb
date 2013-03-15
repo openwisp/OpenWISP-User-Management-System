@@ -17,19 +17,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<% if Configuration.get('use_automatic_username') == "false" or Configuration.get('use_mobile_phone_as_username') == "false" or !account.new_record? %>
-    <%= f.input :username, :disabled => !account.new_record? %>
-<% end %>
-
-
 <% if account.new_record? %>
+    <div id="verification-explain">
+        <%= t(:verification_explain).html_safe %>
+        <p>
+            <% if account_verification_methods.include? 'mobile_phone' %><%= t(:verification_explain_mobile).html_safe %><% end %><% if account_verification_methods.include? 'gestpay_credit_card' %><%= t(:verification_explain_credit_card).html_safe %><% else %>.<% end %>
+        </p>
+    </div>
     <% if account_verification_methods.length == 1 %>
         <%= f.input :verification_method, :as => :hidden %>
     <% else %>
         <%= f.input :verification_method, :collection => account_verification_select, :prompt => false %>
     <% end %>
 <% end %>
-
 
 <%= render 'common/form_elements/mobile_phone', :form => f, :owner => account, :prefixes => mobile_prefixes %>
 
@@ -39,6 +39,11 @@
 
 <%= render 'common/form_elements/personal_data', :form => f, :owner => account, :countries => countries %>
 
+<script type="text/javascript">
+    owums.use_mobile_phone_as_username = <%= Configuration.get('use_mobile_phone_as_username', 'true') %>;
+    owums.use_mobile_phone_as_username_hidden = <%= Configuration.get('use_mobile_phone_as_username_hidden', 'false') %>;
+    owums.enhance_registration_form = <%= Configuration.get('enhance_registration_form', 'true') %>;
+</script>
 
 <% if account.new_record? %>
     <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
@@ -52,11 +57,12 @@
     <% end %>
 
     <div id="eula_priv">
-      <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
       <%= f.input :eula_acceptance, :error => false %>
-
-      <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
+      <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
+    <br />
+    <br />
       <%= f.input :privacy_acceptance, :error => false %>
+      <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
     </div>
 <% else %>
     <div id="disable_account">
@@ -67,4 +73,4 @@
 
 
 <%= f.button :submit %>
-<%= link_to t(:Undo), :back %>
+<p class="cancel"><%= link_to t(:Undo), :back %></p>

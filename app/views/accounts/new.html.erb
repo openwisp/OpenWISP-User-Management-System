@@ -22,7 +22,7 @@
     <div class="block" id="registration">
       <%= simple_form_for @account, :url => account_path do |f| %>
           <fieldset>
-            <legend><%=t :Register %></legend>
+            <legend><%=t(:Register).html_safe %></legend>
             <p><%= f.error_messages %></p>
 
             <%= render 'form', :f => f, :account => @account, :countries => @countries, :mobile_prefixes => @mobile_prefixes %>
