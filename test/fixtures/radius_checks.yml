@@ -7,7 +7,7 @@ radius_checks_001:
   updated_at: 2009-12-28 13:36:50
   id: "1"
   value: Local
-  attribute: Auth-Type
+  check_attribute: Auth-Type
 radius_checks_002: 
   radius_entity_type: RadiusGroup
   op: ":="
@@ -16,7 +16,7 @@ radius_checks_002:
   updated_at: 2009-12-28 13:36:50
   id: "2"
   value: Local
-  attribute: Auth-Type
+  check_attribute: Auth-Type
 radius_checks_003: 
   radius_entity_type: RadiusGroup
   op: ":="
@@ -25,7 +25,7 @@ radius_checks_003:
   updated_at: 2009-12-28 13:36:50
   id: "3"
   value: __m4c4uthrul3z!
-  attribute: User-Password
+  check_attribute: User-Password
 radius_checks_004: 
   radius_entity_type: RadiusGroup
   op: ":="
@@ -34,4 +34,4 @@ radius_checks_004:
   updated_at: 2009-12-28 13:36:50
   id: "4"
   value: Reject
-  attribute: Auth-Type
+  check_attribute: Auth-Type

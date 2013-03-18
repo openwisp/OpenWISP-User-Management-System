@@ -93,7 +93,7 @@
                   current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant'
           %>
               <li>
-                <%= menu_link_to t(:Users), '#' %>
+                <%= menu_link_to(t(:Users), current_operator.has_role?('users_browser') ? users_browse_url : '#') %>
                 <ul>
                   <% if current_operator.has_role? 'users_browser' %>
                       <li><%= menu_link_to t(:Browse_users), users_browse_url %></li>
@@ -110,7 +110,7 @@
           <% if current_operator.has_role? 'radius_groups_viewer' or
                   current_operator.has_role? 'radius_groups_creator' %>
               <li>
-                <%= menu_link_to t(:Radius_groups), '#' %>
+                <%= menu_link_to t(:Radius_groups), radius_groups_url %>
                 <ul>
                   <% if current_operator.has_role? 'radius_groups_viewer' %>
                       <li><%= menu_link_to t(:Browse_radius_groups), radius_groups_url %></li>
@@ -123,7 +123,7 @@
           <% end %>
           <% if current_operator.has_role? 'operators_manager' %>
               <li>
-                <%= menu_link_to t(:Operators), '#' %>
+                <%= menu_link_to t(:Operators), operators_url %>
                 <ul>
                   <li><%= menu_link_to t(:Browse_operators), operators_url %></li>
                   <li><%= menu_link_to t(:Add_new_operator), new_operator_url %></li>
@@ -131,7 +131,7 @@
               </li>
           <% end %>
           <li>
-            <%= menu_link_to t(:System_settings), '#' %>
+            <%= menu_link_to(t(:System_settings), current_operator.has_role?('configurations_manager') ? configurations_url : '#') %>
             <ul>
               <% if current_operator.has_role? 'configurations_manager' %>
                   <li><%= menu_link_to t(:Configuration_keys), configurations_url %></li>
@@ -147,8 +147,8 @@
               <li><%= menu_link_to t(:Edit_account), edit_account_url %></li>
               <li class="secondary"><%= link_to t(:Logout), account_logout_url, :method => :delete %></li>
           <% else %>
-              <li><%= menu_link_to t(:Manage_your_account), account_login_url %></li>
-              <li><%= menu_link_to t(:Register), account_registration_url %></li>
+              <li><%= menu_link_to t(:Login), account_login_url %></li>
+              <li><%= menu_link_to t(:Register).html_safe, account_registration_url %></li>
               <li><%= menu_link_to t(:Forgot_password), password_reset_url %></li>
           <% end %>
       <% end %>
@@ -156,11 +156,11 @@
   </div>
   <div class="clear"></div>
   <div class="grid_12">
+    <% if flash[:notice] %>
     <div id="notice" class="box">
-      <% if flash[:notice] %>
-          <p><%= flash[:notice] %>&nbsp;</p>
-      <% end %>
+      <p><%= flash[:notice] %> <a class="close">&times;&nbsp;chiudi</a></p>
     </div>
+    <% end %>
   </div>
   <div class="clear"></div>
 

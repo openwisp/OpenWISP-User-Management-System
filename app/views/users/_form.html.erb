@@ -17,9 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<%= f.input :username, :disabled => !user.new_record? %>
-
-
 <% if user.new_record? %>
     <% if user_verification_methods.length == 1 %>
         <%= f.input :verification_method, :as => :hidden %>
@@ -47,9 +44,7 @@
     </div>
 <% end %>
 
-
 <%= render 'common/form_elements/personal_data', :form => f, :owner => user, :countries => countries %>
-
 
 <div id="eula_priv">
   <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
@@ -65,7 +60,6 @@
     <%= f.label :radius_groups %>
     <%= render 'radius_group_select', :user => user, :radius_groups => radius_groups %>
 <% end %>
-
 
 <%= f.button :submit %>
 <%= link_to t(:Undo), :back %>

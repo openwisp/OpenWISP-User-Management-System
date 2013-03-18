@@ -18,34 +18,37 @@
 */
 
 $(document).ready(function(){
-    owums.toggleVerificationMethod();
     owums.ajaxQuickSearch();
     owums.ajaxLoading();
     owums.loadCheckboxWarnings();
     owums.hideWhenJsIsAvailable('.no_js');
     owums.hideWhenGraphsAreAvailable('.no_graphs');
+    owums.initNotice();
+    owums.initRegistration();
     owums.initCreditCardOverlay();
+    owums.initUserForm();
 });
 
-$.fn.resizeElement = function(padding){
-    padding = padding || 60;
-    var el = $(this);  
-    el.height($(window).height()-padding)
-    .width($(window).width()-padding);
-    return el;
-}
 $.fn.centerElement = function(){
     var el = $(this);
-    el.css('top', ($(window).height() - el.height()) / 2)
-    .css('left', ($(window).width() - el.width()) / 2);
+    el.css('top', ($(window).height() - (el.height() + parseInt(el.css('padding-top')) + parseInt(el.css('padding-bottom'))) ) / 2)
+    .css('left', ($(window).width() - (el.width() + parseInt(el.css('padding-left')) + parseInt(el.css('padding-right'))) ) / 2);
     return el;
 }
 $.fn.togglePop = function(speed){
     speed = speed || 150;
-    el = $(this);
+    var el = $(this);
     el.centerElement();
     (el.is(':visible')) ? el.fadeOut(speed) : el.fadeIn(speed);
     return el;
+}
+$.fn.toggleMessage = function(message, speed){
+    var el = $(this);
+    if(!el.is(':visible')){
+        el.html(message);
+    }
+    el.togglePop(speed);
+    el.css('top', parseInt(el.css('top')) + 80);
 }
 
 var owums = {
@@ -118,16 +121,135 @@ var owums = {
         var verification_method = $('#account_verification_method');
         verification_method.change(function(){
             if(verification_method.val() != 'mobile_phone'){
-                $('#verify-mobile-phone').hide();
+                $('#verify-mobile-phone, li.verification-block.mobile-phone').hide();
                 $('#verify-credit-card').show();
             }
             else{
-                $('#verify-mobile-phone').show();
+                $('#verify-mobile-phone, li.verification-block.mobile-phone').show();
                 $('#verify-credit-card').hide();
             }
+            owums.toggleReadonlyUsername();
         });
-        // the following is necessary for the case in which there's a validation error
+        // trigger once on page load
         verification_method.trigger('change');
+    },
+    
+    initRegistration: function(){
+        if($('#new_account').length){
+            owums.toggleVerificationMethod();
+            owums.initMobile2Username();
+            owums.enhanceRegistration();
+        }
+    },
+    
+    initUserForm: function(){
+        var id_document = $('#identity-document');
+        if(id_document.length){
+            var verification_method = $('#user_verification_method');
+            verification_method.change(function(){
+                if(verification_method.val() != 'identity_document'){
+                    id_document.hide();
+                }
+                else{
+                    id_document.show();
+                }
+            });
+            // trigger once on page load
+            verification_method.trigger('change');
+        }
+    },
+    
+    enhanceRegistration: function(){
+        if(!owums.enhance_registration_form){
+            return;
+        }
+        
+        var mobile_confirmation = $('#confirm_mobile_phone_number'),
+            email_confirmation = $('#account_email_confirmation'),
+            password_confirmation = $('#account_password_confirmation'),
+            mobile_suffix = $('#account_mobile_suffix'),
+            email = $('#account_email'),
+            password = $('#account_password'),
+            is_mobile = $('#mobile-registration').length || false;
+        
+        if(is_mobile){
+            email_confirmation = email_confirmation.parent().parent();
+            password_confirmation = password_confirmation.parent().parent();
+        }
+        else{
+            email_confirmation = email_confirmation.parent();
+            password_confirmation = password_confirmation.parent();
+        }
+        
+        mobile_confirmation.hide();
+        email_confirmation.hide();
+        password_confirmation.hide();
+        
+        mobile_suffix.focusin(function(e){
+            if(!mobile_confirmation.is(':visible')){
+                mobile_confirmation.slideToggle(250);
+            }
+        });
+        if(mobile_suffix.val()!=''){
+            mobile_confirmation.show();
+        }
+        
+        email.focusin(function(e){
+            if(!email_confirmation.is(':visible')){
+                email_confirmation.slideToggle(250);
+            }
+        });
+        if(email.val()!=''){
+            email_confirmation.show();
+        }
+        
+        password.focusin(function(e){
+            if(!password_confirmation.is(':visible')){
+                password_confirmation.slideToggle(250);
+            }
+        });
+        if(password.val()!=''){
+            password_confirmation.show();
+        }
+        
+        $('#account_email, #account_email_confirmation, #account_password, #account_password_confirmation').bind('contextmenu cut copy paste', function(e){
+            e.preventDefault();
+        });
+    },
+    
+    initMobile2Username: function(){
+        if(owums.use_mobile_phone_as_username){
+            var username = $('#account_username'),
+                prefix = $('#account_mobile_prefix'),
+                suffix = $('#account_mobile_suffix');
+            var updateUsername = function(){
+                username.val(prefix.val()+suffix.val());
+            }
+            suffix.bind('keyup', function(e){
+                updateUsername();
+            });
+            prefix.change(function(e){
+                updateUsername();
+            });
+        }
+    },
+    
+    toggleReadonlyUsername: function(){
+        if(owums.use_mobile_phone_as_username){
+            var username = $('#account_username');
+            if($('#account_verification_method').val() == 'mobile_phone'){
+                username.attr('readonly', 'readonly').addClass('readonly');
+                if(owums.use_mobile_phone_as_username_hidden){
+                    username.parent().hide();
+                }
+            }
+            else{
+                username.removeAttr('readonly').removeClass('readonly');
+                if(owums.use_mobile_phone_as_username_hidden){
+                    username.parent().show();
+                }
+            }
+        }
     },
     
     toggleOverlay: function(closeCallback){
@@ -149,7 +271,7 @@ var owums = {
         
         if(!overlay.is(':visible')){
             mask.css('opacity','0').show().fadeTo(250, 0.7);
-            overlay.resizeElement().centerElement().fadeIn(250);
+            overlay.centerElement().fadeIn(250);
         }
         else{
             closeOverlay();
@@ -162,14 +284,14 @@ var owums = {
     },
     
     initCreditCardOverlay: function(){
-        if($('#bank-gateway').length){
+        var bank_gateway = $('#bank-gateway');
+        if(bank_gateway.length && !bank_gateway.hasClass('mobile')){
             var overlay = $('.overlay'),
-            loading = $('#loading-overlay');
-            
+                loading = $('#loading-overlay');
             loading.togglePop();    
-            
+            owums.enhanceCreditCardForm();
             $(window).resize(function(e){
-              overlay.resizeElement().centerElement();
+              overlay.centerElement();
             }).load(function(e){
                 var closeCallback = function(){
                     var url = $('.close').attr('data-callback-url');
@@ -177,10 +299,189 @@ var owums = {
                 }
                 owums.toggleOverlay(closeCallback);
             });
-            $('iframe').one('load', function(){
-              loading.togglePop();
-            });    
+            loading.togglePop();
         }
+        else if(bank_gateway.length && bank_gateway.hasClass('mobile')){
+            owums.enhanceCreditCardFormMobile();
+        }
+    },
+    
+    enhanceCreditCardForm: function(){
+        $('#credit_card_number input').bind('keyup', function(e){
+            var $this = $(this);
+            // when max length of input form is reached and a number key is pressed
+            if($this.val().length == $this.attr('maxlength') &&
+               ( (e.keyCode >= 48 && e.keyCode < 57) || (e.keyCode >= 96 && e.keyCode < 105) )
+            ){
+                var next = $this.next();
+                // focus next input
+                if(next.length){
+                    next.focus()
+                }
+                // focus on select month of expiry date
+                else{
+                    $('#bank-gateway select').eq(0).focus()
+                }
+            }
+        });
+        // allow only numbers on credit card number and cvv fields
+        $('#bank-gateway input[type=text]').keydown(function(e) {
+            var $this = $(this);
+            // Allow: backspace, delete, tab, escape, and enter
+            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
+                 // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) || 
+                 // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {                    
+                    // let it happen, don't do anything
+                    return
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105 )) {
+                    e.preventDefault()
+                }
+                else{
+                    // remove any error class if present
+                    if($this.hasClass('error')){
+                        $this.removeClass('error');
+                    }
+                }
+            }
+        });
+        // on submit
+        $('#bank-gateway form').submit(function(e){
+            var error = false;
+            $(this).find('input[type=text]').each(function(i, e){
+                var input = $(e)
+                if(
+                   ( input.attr('name').indexOf('number') >= 0 && input.val().length < 4 ) ||
+                   ( input.attr('name').indexOf('cvv') >= 0 && input.val().length < 3 )
+                ){
+                    input.addClass('error');
+                    error = true;
+                }
+            });
+            if(error){
+                return false
+            }
+            else{
+                owums.toggleLockOverlay();
+                owums.initCreditCardLoading();
+                return true
+            }
+        });
+    },
+    
+    enhanceCreditCardFormMobile: function(){
+        $('#credit_card_number input').bind('keyup', function(e){
+            var $this = $(this);
+            // when max length of input form is reached and a number key is pressed
+            if($this.val().length == 4 &&
+               ( (e.keyCode >= 48 && e.keyCode < 57) || (e.keyCode >= 96 && e.keyCode < 105) )
+            ){
+                var next = $this.next();
+                // focus next input
+                if(next.length){
+                    next.focus()
+                }
+                // focus on select month of expiry date
+                else{
+                    $('select').eq(0).focus()
+                }
+                return true
+            }
+            return false;
+        });
+        // allow only numbers on credit card number and cvv fields
+        $('form#cc_form input[type=text]').keydown(function(e) {
+            var $this = $(this);
+            // Allow: backspace, delete, tab, escape, and enter
+            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
+                 // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) || 
+                 // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {                    
+                    // let it happen, don't do anything
+                    return
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105 )) {
+                    e.preventDefault()
+                }
+                else{
+                    // remove any error class if present
+                    if($this.hasClass('error')){
+                        $this.removeClass('error');
+                    }
+                }
+            }
+        });
+        $('form#cc_form').submit(function(e){
+            var error = false;
+            $(this).find('input[type=text]').each(function(i, e){
+                var input = $(e)
+                if(
+                   ( input.attr('name').indexOf('number') >= 0 && input.val().length < 4 ) ||
+                   ( input.attr('name').indexOf('cvv') >= 0 && input.val().length < 3 )
+                ){
+                    input.addClass('error');
+                    error = true;
+                }
+            });
+            if(error){
+                return false
+            }
+            else{
+                if(!$('#mask').length){
+                    $('#verification').after('<div id="mask"></div><div id="loading-overlay"></div><div id="loading-message"></div>');    
+                }
+                $('#mask').css('opacity','0').show().fadeTo(250, 0.5);
+                owums.initCreditCardLoading();
+                return true
+            }
+        });
+    },
+    
+    toggleLockOverlay: function(){
+        var mask = $('#mask'),
+            z = 10,
+            o = 0.7;
+        if(mask.css('z-index') < 20){
+            z = 99;
+            o = 0.5;
+        }
+        mask.css({
+            zIndex: z,
+            opacity: o
+        });
+    },
+    
+    initCreditCardLoading: function(){
+        $('#loading-overlay').togglePop();
+        owums.timeouts = [];
+        owums.timeouts[0] = setTimeout(function(){
+            $('#loading-message').toggleMessage(i18n.verification_message_first_step);
+        }, 1500);
+        owums.timeouts[1] = setTimeout(function(){
+            $('#loading-message').html(i18n.verification_message_second_step);    
+        }, 4000);
+    },
+    
+    clearTimeouts: function(){
+        if(owums.timeouts){
+            for(i in owums.timeouts){
+                clearTimeout(owums.timeouts[i]);
+            }
+        }
+    },
+    
+    initNotice: function(){
+        $('#notice .close').click(function(e){
+            e.preventDefault();
+            $(this).parent().parent().fadeToggle(400);
+        });
     },
 
     ajaxQuickSearch: function() {

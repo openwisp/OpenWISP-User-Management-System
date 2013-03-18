@@ -51,14 +51,18 @@
           <strong><%=t :State %></strong><br />
           <%= @account.state %>
         </p>
+        <% if CONFIG['city'] %>
         <p>
           <strong><%=t :City %></strong><br />
           <%= @account.city %>
         </p>
+        <% end %>
+        <% if CONFIG['address'] %>
         <p>
           <strong><%=t :Address %></strong><br />
           <%= @account.address %>
         </p>
+        <% end %>
         <p>
           <strong><%=t :Email %></strong><br />
           <%= @account.email %>
