@@ -53,6 +53,8 @@ All the other fields are related to email notifications and can be set according
 
 === Configurazione Cliente > Campi & Parametri > NO DISPLAY
 
+Log in the Gestpay Backoffice, go to "Configurazione Cliente", then go to the page "NO DISPLAY". 
+
 1. Click on BuyerEmail, then check "Input", then "Obbligatorio" and "Parametro", then click Ok  
 2. Click on BuyerName, then check "Input", then "Obbligatorio" and "Parametro", then click Ok
 4. Click on CVV, then check "Input", then "Parametro", then click OK
@@ -67,7 +69,8 @@ After saving, click on the button "Pubblica" on the bottom right position of the
 == Verified By Visa Notes
 
 Verified By Visa is a service which if enabled requires the users of some credit cards to insert a special password to confirm every operation of their card.
-Users of verified by visa or master card security code cards will be redirected to their bank's website to insert the special password.
+Users of "verified by visa" or "master card security code" cards will be redirected to their bank's website to insert the special password.
+
 For this mecchanism to work OWUMS needs to be able to communicate with OWCPM's API in order to temporary login the user so he can be redirected to the website of his bank.
 
 TODO: write unit tests that verify that OWUMS can talk to OWCPM's API
