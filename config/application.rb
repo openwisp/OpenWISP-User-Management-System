@@ -8,9 +8,9 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 # in case config.yml has not been created load the default settings
 begin
-  CONFIG = YAML.load_file("config/config.yml")[Rails.env]
+  CONFIG = YAML.load(File.read(File.expand_path('../config.yml', __FILE__)))[Rails.env]
 rescue Errno::ENOENT
-  CONFIG = YAML.load_file("config/config.default.yml")[Rails.env]
+  CONFIG = YAML.load(File.read(File.expand_path('../config.default.yml', __FILE__)))[Rails.env]
 end
 
 module Owums
