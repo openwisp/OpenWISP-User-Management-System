@@ -27,6 +27,7 @@ $(document).ready(function(){
     owums.initRegistration();
     owums.initCreditCardOverlay();
     owums.initUserForm();
+    owums.initMenuAdjustments();
 });
 
 $.fn.centerElement = function(){
@@ -58,6 +59,16 @@ var owums = {
 
     exists: function(selector) {
         return ($(selector).length > 0);
+    },
+    
+    initMenuAdjustments: function(){
+        $('ul.nav.main ul a').each(function(i, el){
+            var $el = $(el);
+            // if width of link is less than container enlarge the link to fit
+            if($el.width() + parseInt($el.css('padding-left'), 10) * 2 < $el.parent().width()){
+                $el.width($el.parent().width() - 26);
+            }
+        });
     },
 
     loadCheckboxWarnings: function() {

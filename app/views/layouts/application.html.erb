@@ -77,6 +77,7 @@
   <div class="grid_12">
     <ul class="nav main">
       <% if current_operator %>
+          <li><%= menu_link_to t(:Home), operator_url(current_operator) %></li>
           <% if current_operator.has_role? 'stats_viewer' %>
               <li>
                 <%= menu_link_to t(:Show_stats), stats_url %>
@@ -139,7 +140,6 @@
             </ul>
           </li>
           <li class="secondary"><%= menu_link_to t(:Logout), operator_logout_url, :method => :delete %></li>
-          <li class="secondary"><%= menu_link_to t(:Home), operator_url(current_operator) %></li>
       <% else %>
           <li><%= menu_link_to t(:How_to_use_service), account_instructions_url, :disable_if => on_root? %></li>
           <% if current_account %>
