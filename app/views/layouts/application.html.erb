@@ -52,28 +52,22 @@
 
   <%= javascript_include_tag 'fluid16' %>
 
-  <link rel="shortcut icon" href="<%= image_path 'openwisp.ico' %>"/>
+  <link rel="shortcut icon" href="<%= image_path 'favicon.png' %>"/>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
 
-<div class="container_12">
-  <div class="grid_12">
-    <table class="branding">
-      <tr>
-        <td style="text-align:left">
-          <h1 id="branding">
-            OpenWISP User Management System
-          </h1>
-        </td>
-        <td style="text-align:right">
-          <%= link_to_locale 'it' %> <%= link_to_locale 'en' %>
-        </td>
-      </tr>
-    </table>
+<div class="container_12" id="container">
+  <div class="grid_12" id="branding">
+    <h1>
+      OpenWISP User Management System
+    </h1>
+    <p>
+      <%= link_to_locale 'it' %> <%= link_to_locale 'en' %>
+    </p>
   </div>
-  <div class="clear">&nbsp;</div>
+  
   <div class="grid_12">
     <ul class="nav main">
       <% if current_operator %>
@@ -168,7 +162,7 @@
 
   <div class="grid_12" id="site_info">
     <div class="box" style="text-align:center">
-      <p>OpenWISP User Management System - Copyright (C) 2012 <a href="http://openwisp.org/">OpenWISP.org</a></p>
+      <p>OpenWISP User Management System - Copyright (C) 2013 <a href="http://openwisp.org/">OpenWISP.org</a></p>
 
       <% if is_mobile_device? %>
           <p><%= link_to_toggle_mobile %></p>

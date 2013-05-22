@@ -44,6 +44,8 @@ select:focus {
     outline: green solid thin;
 }
 
+textarea{ font-size: 14px }
+
 textarea:focus {
     outline: green solid thin;
 }
@@ -62,8 +64,8 @@ fieldset p div {
 }
 
 fieldset p textarea {
-    width:98%;
-    margin-left:5px;
+    width:95%;
+    padding: 10px 2%;
 }
 
 fieldset p label {
@@ -145,7 +147,7 @@ table.branding tr td {
     border:0;
 }
 
-tr:hover td {
+.hover tr:hover td {
     background-color: #ffffee;
 }
 
@@ -167,10 +169,15 @@ li > .off {
 
 #operator_info td strong {
     float: left;
+    margin-left: 10px;
 }
 
-#operator_roles {
-    background-color: #eee;
+#operator_roles { background-color: #eee }
+#operator_roles ul{ margin-top: 15px }
+
+#operator_roles li{
+    font-size: 13px;
+    margin-top: 2px;
 }
 
 #remember_me *{
@@ -320,7 +327,7 @@ li > .off {
     text-indent: -1000px;
 }
 
-.readonly{ background: #EEE }
+.readonly, input[disabled=disabled]{ background: #EEE }
 #confirm_mobile_phone_number{ clear: both }
 #confirm_mobile_phone_number .block, #confirm_mobile_phone_number{ overflow: hidden }
 #registration{ font-size: 12px }
@@ -333,15 +340,16 @@ li > .off {
 #registration{ margin: 0 15px 15px }
 #registration fieldset{ padding: 10px 25px }
 #registration input{ margin-left: 0 }
-#registration input[type=text],
-#registration input[type=password]{ margin-top: 3px; width: 97%; padding: 5px 1%; font-size: 14px }
-#registration select{
+input[type=text],
+input[type=password]{ margin-top: 3px; width: 97%; padding: 5px 1%; font-size: 14px }
+select{
     margin: 3px 0 0 0; background: #fff; border-color: gray; height: 32px; line-height: 1; padding: 6px 0; vertical-align: middle; font-size: 12px;
 }
 
-#registration #account_submit, #bank-gateway .button{
-    display: block; width: 40%; margin: 30px auto;
+.button{
+    display: block; width: 250px; margin: 10px auto 30px;
     font: normal 15px Helvetica, Arial, Freesans, sans-serif;
+    text-align: center;
 	color: #545454;
 	padding: 10px 20px;
 	background: -moz-linear-gradient(top,#ffffff 0%,#cccccc);
@@ -356,6 +364,11 @@ li > .off {
 	text-shadow:0px -1px 0px rgba(000,000,000,0.7),0px 1px 0px rgba(255,255,255,0.3);
     letter-spacing: 1px;
     cursor: pointer;
+}
+.button.nomargin{ margin-bottom: 0 }
+
+#registration #account_submit, #bank-gateway .button{
+    width: 40%; margin: 30px auto;
 }
 
 #registration a{ text-decoration: underline }
@@ -429,3 +442,56 @@ input.error{ border: 2px solid red }
     right: 33px;
     bottom: 65px;
 }
+
+table.selectable td{ cursor: pointer }
+table.selectable tr:hover td{ background-color: #FFFFEE !important }
+tr.selected td{ background-color: #fff1ce }
+#operator_roles td { padding-left: 45%; text-align: left; background: #EEE url(../images/delete.png) no-repeat scroll 40% center }
+#operator_roles tr.selected td{ background-image: url(../images/accept.png) }
+#radius_groups-table td.first{ background: #EEE url(../images/delete.png) no-repeat scroll 110px center  }
+#radius_groups-table tr.selected td.first{ background-image: url(../images/accept.png)  }
+
+#configuration_keys .key{ width: 37% }
+#configuration_keys .value{ width: 43% }
+#configuration_keys .operations{ width: 20% }
+#configuration_keys td{ font-size: 12px; cursor: pointer }
+#configuration_keys td.value{ font-style: italic }
+
+#errorExplanation{
+	margin: 10px 5px 20px;
+	padding: 20px 25px 5px 25px;
+	background: #ff6666;
+	color: #fff;
+	font: normal 14px/25px "Arial", sans-serif;
+	border-radius: 3px
+}
+#errorExplanation h2{
+	width: auto; margin: 0; padding: 0; background: transparent; text-transform: none;
+	font-size: 16px; font-weight: bold; margin-bottom: 10px;
+}
+#errorExplanation li{ font-weight: bold }
+.field_with_errors input[type=text], .field_with_errors input[type=password]{ border: 1px solid red }
+
+.block.stats{ margin-top: -5px; padding: 0 }
+#stats h5{ padding-left: 0 }
+#stats input{ width: auto }
+#ui-datepicker-div select{ padding: 0; height: auto }
+
+#users{ margin-top: 20px }
+#users tbody td{ font-size: 12px }
+
+.pagination{ float: left; margin: 4px 10px 15px 0 }
+
+.pagination a{
+    padding: 4px 10px;
+    margin: 0 3px 0 0;
+    background: #333;
+    color: #fff;
+    border-radius: 3px;
+}
+.pagination a.button{ font-size: 13px }
+.pagination a{ font-size: 13px }
+.pagination .current{ font-weight: bold }
+.pagination a:hover, .pagination a:focus,
+.pagination a.button:hover, .pagination a.button:focus{ background: #000 !important }
+.pagination .current a{ background: #d3d3d3 !important; color: #333; cursor: default  }

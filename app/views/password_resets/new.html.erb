@@ -29,7 +29,7 @@
             <%= select_tag "recovery_method", options_for_select(@recovery_methods.map { |r| [t(r), r] }) %>
           </p>
           <p>
-            <%= submit_tag t(:Next), :class => 'submit' %>
+            <%= submit_tag t(:Next), :class => 'submit button nomargin' %>
           </p>
         </fieldset>
       <% end %>

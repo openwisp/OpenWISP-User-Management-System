@@ -20,26 +20,30 @@
 <div class="grid_12">
   <div class="box">
     <h2><%=t :Configuration_keys %></h2>
-    <br />
 
-    <table>
+    <table id="configuration_keys" class="hover">
       <thead>
         <tr>
-          <th><%=t :Key %></th>
-          <th><%=t :Value %></th>
-          <th><%=t :Operations %></th>
+          <th class="key"><%=t :Key %></th>
+          <th class="value"><%=t :Value %></th>
+          <th class="operations"><%=t :Operations %></th>
         </tr>
       </thead>
       <tbody>
         <% @configurations.each do |configuration| %>
           <tr class="hover">
-            <td><strong><%= configuration.key %></strong></td>
-            <td><%= truncate h(configuration.value), :length => 50 %></td>
-            <td><%= link_to t(:Edit), edit_configuration_path(configuration) %></td>
+            <td class="first key"><strong><%= configuration.key %></strong></td>
+            <td class="value"><%= truncate h(configuration.value), :length => 50 %></td>
+            <td class="operations"><%= link_to t(:Edit), edit_configuration_path(configuration) %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <script type="text/javascript">
+      $('#configuration_keys td').click(function(e){
+        location.href = $(this).parent().find('a').attr('href');
+      });
+    </script>
 
   </div>
 </div>

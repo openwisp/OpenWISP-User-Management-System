@@ -18,11 +18,12 @@
 #%>
 
 <div id="search_results">
-  <div style="text-align:center">
+  <div class="pagination">
     <%= total_users %> <%=t :results %>
     <%= paginate users, :remote => true %>
   </div>
-  <table>
+  
+  <table id="users">
     <thead>
     <tr>
       <th scope="col" <%= sort_td_class_helper "registered_at" %>>
@@ -55,11 +56,6 @@
         <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
         <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
       </th>
-      <th scope="col" <%= sort_td_class_helper "address" %>>
-        <%= sort_remote_link_helper t(:Address), 'address' %>
-        <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
-        <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
-      </th>
       <th scope="col" <%= sort_td_class_helper "verified" %>>
         <%= sort_remote_link_helper t(:Verified_qm), 'verified' %>
         <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
@@ -85,17 +81,8 @@
           <td><%= user.surname %></td>
           <td><%= user.state %></td>
           <td><%= user.city %></td>
-          <td><%= user.address %></td>
-          <% if user.verified? %>
-              <td><span class="green"><%=t :affirmative %> </span></td>
-          <% else %>
-              <td><span class="red"><%=t :negative %> </span></td>
-          <% end %>
-          <% if user.active? %>
-              <td><span class="green"><%=t :affirmative %> </span></td>
-          <% else %>
-              <td><span class="red"><%=t :negative %> </span></td>
-          <% end %>
+          <td><%= image_tag( user.verified? ? 'accept.png' : 'delete.png' ) %></td>
+          <td><%= image_tag( user.active? ? 'accept.png' : 'delete.png' ) %></td>
           <% if current_operator.has_role? 'users_manager' %>
               <td><%= link_to t(:Edit), edit_user_path(user) %></td>
           <% end %>
@@ -106,4 +93,10 @@
     <% end %>
     </tbody>
   </table>
+  
+  <div class="pagination">
+    <%= total_users %> <%=t :results %>
+    <%= paginate users, :remote => true %>
+  </div>
+  <div class="clear"></div>
 </div>

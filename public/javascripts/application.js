@@ -527,3 +527,22 @@ var owums = {
     }
 };
 
+$.fn.customSelectable = function(options){
+    var opts = $.extend({
+        'init': null,
+        'beforeSelect': null,
+        'afterSelect': null
+    }, options);
+    var table = $(this);
+    table.addClass('selectable');
+    if(opts.init){ opts.init.apply(table) }
+    table.find('tbody tr').click(function(e){
+        if(opts.beforeSelect){ opts.beforeSelect.apply($(this)) }
+        el = $(this);
+        var checkbox = el.find('input[type=checkbox]');
+        checkbox.attr('checked', !checkbox.attr('checked'))
+        el.toggleClass('selected');
+        if(opts.afterSelect){ opts.afterSelect.apply($(this)) }
+    });
+    return table;
+}

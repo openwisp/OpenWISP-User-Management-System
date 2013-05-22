@@ -48,7 +48,7 @@ en:
   Credit_Card_Verification_Success_Paragraph: "Thank you for verifying your account, you will be redirected to your profile page in"
   Credit_Card_Verification_Success_Paragraph_Mobile: "Thank you for verifying your account, you are going to be redirected to your profile page in few seconds."
   Current_login_at: "Current login at"
-  Current_login_ip: "Current login IP"
+  Current_login_ip: "Current IP"
   Data_insertion: "Insert personal data"
   Data_verification: "Verify personal data"
   Destroy: "Delete"
@@ -101,7 +101,7 @@ en:
   IP_address: "IP address"
   Key: "Key"
   Last_login_at: "Last login at"
-  Last_login_ip: "Last login from IP"
+  Last_login_ip: "Last login IP"
   Last_x_days_traffic_download:
     one: "Downloaded today"
     other: "Downloaded last %{count} days"

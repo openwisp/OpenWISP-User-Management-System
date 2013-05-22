@@ -20,8 +20,10 @@
 <%= form_for @operator do |f| %>
     <fieldset>
       <legend><strong><%=t :Operator %>:</strong> <%= @operator.login %></legend>
+      <% unless f.error_messages.nil? %>
       <p><%= f.error_messages %></p>
-
+      <% end %>
+        
       <p>
         <strong><%= label_tag t(:login) %>:</strong>
         <br />
@@ -46,19 +48,20 @@
       <table id="operator_roles">
         <thead>
         <tr>
-          <th><%=t :Select %></th>
-          <th><%=t :Name %></th>
+          <th><%=t :Roles %></th>
         </tr>
         </thead>
         <tbody>
         <% Operator::ROLES.each do |role| %>
             <tr>
-              <td><%= check_box_tag("operator[roles][]", role, @operator.roles.include?(role)) %></td>
-              <td><%= role %></td>
+              <td>
+                <span class="hidden"><%= check_box_tag("operator[roles][]", role, @operator.roles.include?(role)) %></span> <strong><%= role %></strong>
+              </td>
             </tr>
         <% end %>
         </tbody>
       </table>
+      <script>$('#operator_roles').customSelectable();</script>
 
       <p>
         <strong><%= label_tag t(:notes) %>:</strong>
@@ -68,9 +71,9 @@
 
       <p>
         <% if @operator.new_record? %>
-            <%= f.submit t(:Create), :class => 'submit' %>
+            <%= f.submit t(:Create), :class => 'submit button' %>
         <% else %>
-            <%= f.submit t(:Edit), :class => 'submit' %>
+            <%= f.submit t(:Edit), :class => 'submit button' %>
         <% end %>
       </p>
     </fieldset>
