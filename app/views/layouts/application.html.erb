@@ -81,6 +81,7 @@
               <li>
                 <%= menu_link_to t(:Show_stats), stats_url %>
                 <ul>
+                  <li><%= menu_link_to t(:Registered_users_daily), stat_url('registered_users_daily') %></li>
                   <li><%= menu_link_to t(:Registered_users), stat_url('registered_users') %></li>
                   <li><%= menu_link_to t(:Logins), stat_url('logins') %></li>
                   <li><%= menu_link_to t(:Traffic), stat_url('traffic') %></li>

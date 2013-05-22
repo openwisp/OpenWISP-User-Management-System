@@ -20,7 +20,7 @@
 <% content_for :after_defaults do %>
     <%= javascript_include_tag 'highcharts',
                                'owums.graphs',
-                               'owums.registered_users_graph.js',
+                               'owums.registered_users_daily_graph.js',
                                'owums.logins_graph',
                                'owums.traffic_graph'
     %>
@@ -28,8 +28,8 @@
 
 <div class="grid_4">
   <div class="box">
-    <h2><a href="#" id="toggle-registered_users_graph"><%= t(:Registered_users) %></a></h2>
-    <div class="block small_graph" id="registered_users_graph">
+    <h2><a href="#" id="toggle-registered_users_graph"><%= t(:Registered_users_daily) %></a></h2>
+    <div class="block small_graph" id="registered_users_daily_graph">
       <h5 class="center"><%=t :Loading_data %> <%= image_tag "spinner.gif" %></h5>
     </div>
   </div>
