@@ -201,7 +201,7 @@ class ApplicationController < ActionController::Base
       @settings = {}
       
       Configuration.all.each do |config|
-        @settings[config.key] = config.value
+        @settings[config.key.to_sym] = config.value
       end
       
       Rails.cache.write(cache_key, @settings)
