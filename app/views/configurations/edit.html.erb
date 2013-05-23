@@ -17,6 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
+<% content_for :after_defaults do %>
+  <%= stylesheet_link_tag 'jHtmlArea/jHtmlArea' %>
+  <%= javascript_include_tag "jHtmlArea-0.7.5.min" %>
+<% end %>
+
 <div class="grid_12">
   <div class="box">
     <h2><%=t :Edit_configuration_key %></h2>
@@ -36,4 +41,10 @@
     <% end %>
   </div>
 </div>
-
+<% if @html %>
+  <script type="text/javascript">
+    $('textarea').htmlarea({
+      css: '<%= root_url %>stylesheets/jHtmlArea/jHtmlArea.Editor.css'
+    });
+  </script>
+<% end %>
