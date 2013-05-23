@@ -20,8 +20,7 @@
 <div class="grid_12">
   <div class="box">
     <h2><%=t :Edit_configuration_key %></h2>
-    <br />
-
+    
     <%= form_for @configuration do |f| %>
       <fieldset>
         <legend><strong><%=t :Key %>:</strong> <%= @configuration.key %></legend>
@@ -31,7 +30,7 @@
             <%= f.text_area :value %>
           </p>
           <p>
-            <%= f.submit t(:Update), :class => 'submit' %>
+            <%= f.submit t(:Update), :class => 'submit button' %>
           </p>
       </fieldset>
     <% end %>

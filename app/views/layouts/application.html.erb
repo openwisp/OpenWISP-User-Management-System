@@ -61,7 +61,13 @@
 <div class="container_12" id="container">
   <div class="grid_12" id="branding">
     <h1>
-      OpenWISP User Management System
+      <a href="<%= root_url %>">
+        <% unless @settings['logo'].nil? or @settings['logo'] == '' %>
+          <%= image_tag(@settings['logo']) %>
+        <% else %>
+          OpenWISP User Management System
+        <% end %>
+      </a>
     </h1>
     <p>
       <%= link_to_locale 'it' %> <%= link_to_locale 'en' %>

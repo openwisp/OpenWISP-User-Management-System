@@ -48,19 +48,20 @@ h1 a {
 
 /* branding
 ----------------------------------------------- */
-#branding{ position: relative; height: 120px }
+#branding{ position: relative; height: 130px }
 
 #branding h1 {
 	font-weight:normal;
 	font-size:3em;
 	text-align:left;
 	background:#fff;
-	padding:0 0 0 30px;
+	padding:0 0 0 20px;
 	margin-bottom:0;
-	line-height: 115px
+	line-height: 130px
 }
 
-#branding p{ position: absolute; top: 50px; right: 5px }
+#branding img{ margin-top: 15px }
+#branding p{ position: absolute; top: 70px; right: 5px }
 
 
 /* page heading

@@ -118,6 +118,11 @@
   key: password_reset_instructions_custom
   value: ""
 
+61:
+  system_key: t
+  key: "logo"
+  value: "openwisp-logo.png"
+
 72:
   system_key: f
   key: "gestpay_enabled"
