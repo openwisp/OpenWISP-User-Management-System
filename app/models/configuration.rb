@@ -21,6 +21,8 @@ class Configuration < ActiveRecord::Base
   validates_format_of :key, :with => /\A[a-z_\.,]+\Z/
 
   attr_accessible :key, :value, :system_key
+  
+  after_save :invalidate_cache
 
   def self.get(key, default=false)
     # get key method, can provide default value
@@ -53,5 +55,9 @@ class Configuration < ActiveRecord::Base
   
   def system_key?
     self.system_key
+  end
+  
+  def invalidate_cache
+    Rails.cache.delete("owums_settings")
   end
 end
