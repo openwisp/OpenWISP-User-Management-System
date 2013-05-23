@@ -61,7 +61,11 @@ h1 a {
 }
 
 #branding img{ margin-top: 15px }
-#branding p{ position: absolute; top: 70px; right: 5px }
+#locale{ position: absolute; top: 30px; right: 5px }
+
+#whoami{ position: absolute; top: 90px; right: 5px; text-align: right }
+#whoami a{ text-decoration: underline }
+#whoami a:hover{ text-decoration: none }
 
 
 /* page heading

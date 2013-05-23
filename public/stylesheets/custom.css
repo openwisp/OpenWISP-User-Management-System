@@ -495,3 +495,5 @@ tr.selected td{ background-color: #fff1ce }
 .pagination a:hover, .pagination a:focus,
 .pagination a.button:hover, .pagination a.button:focus{ background: #000 !important }
 .pagination .current a{ background: #d3d3d3 !important; color: #333; cursor: default  }
+
+ul.nomargin{ margin-bottom: 0 !important }

@@ -69,9 +69,14 @@
         <% end %>
       </a>
     </h1>
-    <p>
+    <p id="locale">
       <%= link_to_locale 'it' %> <%= link_to_locale 'en' %>
     </p>
+    <% if authenticated? %>
+    <p id="whoami">
+      <%= t :logged_in_as %> <%= link_to_user_or_operator %>
+    </p>
+    <% end %>
   </div>
   
   <div class="grid_12">
