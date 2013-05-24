@@ -198,9 +198,8 @@ li > .off {
     display:inline-block;
 }
 
-#eula_priv label, #user_status label {
-    display:block;
-}
+#user_status{ clear: both }
+#eula_priv label, #user_status label { display:block }
 
 #disable_account input, #eula_priv input, #user_status input {
     width: 20px;
@@ -210,7 +209,9 @@ li > .off {
     width: 100%;
     height: 220px;
     margin-bottom: 20px;
+    padding-top: 0;
 }
+#rad_list_block{ padding-top: 0 }
 
 .button {
     margin: 5px 0 15px 7px;
@@ -445,7 +446,6 @@ input.error{ border: 2px solid red }
 
 table.selectable td{ cursor: pointer }
 table.selectable tr:hover td{ background-color: #FFFFEE !important }
-tr.selected td{ background-color: #fff1ce }
 #operator_roles td { padding-left: 45%; text-align: left; background: #EEE url(../images/delete.png) no-repeat scroll 40% center }
 #operator_roles tr.selected td{ background-image: url(../images/accept.png) }
 #radius_groups-table td.first{ background: #EEE url(../images/delete.png) no-repeat scroll 110px center  }

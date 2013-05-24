@@ -28,6 +28,7 @@ $(document).ready(function(){
     owums.initCreditCardOverlay();
     owums.initUserForm();
     owums.initMenuAdjustments();
+    owums.initSelectable();
 });
 
 $.fn.centerElement = function(){
@@ -524,6 +525,11 @@ var owums = {
         } else {
             return _curr+'/'+path+_params;
         }
+    },
+    
+    initSelectable: function(){
+        $('#operator_roles').customSelectable();
+        $("#radius_groups-table").customSelectable();
     }
 };
 
@@ -544,5 +550,8 @@ $.fn.customSelectable = function(options){
         el.toggleClass('selected');
         if(opts.afterSelect){ opts.afterSelect.apply($(this)) }
     });
+    
+    table.find('input[type=checkbox]').parents('tr').addClass('selected');
+    
     return table;
 }
