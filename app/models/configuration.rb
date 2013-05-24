@@ -22,9 +22,19 @@ class Configuration < ActiveRecord::Base
 
   attr_accessible :key, :value, :system_key
 
-  def self.get(key)
+  def self.get(key, default=false)
+    # get key method, can provide default value
     res = Configuration.find_by_key(key)
-    res.nil? ? nil : res.value
+    # neither result and neither a default value return nil
+    if res.nil? and not default
+      nil
+    # no result but default value return default
+    elsif res.nil?
+      default
+    # return value
+    else
+      res.value
+    end
   end
 
   def self.set(key, value)

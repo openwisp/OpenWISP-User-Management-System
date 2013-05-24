@@ -182,3 +182,8 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   system_key: t
   key: "disabled_account_expire_days"
   value: ""
+
+71:
+  system_key: f
+  key: "captcha_enabled"
+  value: "true"
