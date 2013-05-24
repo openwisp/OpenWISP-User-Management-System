@@ -61,10 +61,10 @@
 23:
   system_key: f
   key: "credit_card_verification_cost"
-  value: "1"
+  value: "0.1"
 
 24:
-  system_key: t
+  system_key: f
   key: "credit_card_registration_expire"
   value: "600"
 
@@ -87,6 +87,11 @@
   system_key: f
   key: "paypal_currency"
   value: "EUR"
+
+29:
+  system_key: f
+  key: "tax_rate"
+  value: 20
 
 30:
   system_key: f
@@ -311,3 +316,23 @@ Staff"
   system_key: f
   key: "account_notification_subject_it"
   value: "Nuovo account creato su [OpenWISP User Management System]"
+
+90:
+  system_key: f
+  key: "invoice_owner_en"
+  value: "Changeme"
+
+91:
+  system_key: f
+  key: "invoice_owner_it"
+  value: "Cambiami"
+
+92:
+  system_key: f
+  key: "invoice_description_en"
+  value: "Identity verification for wifi service."
+
+93:
+  system_key: f
+  key: "invoice_description_it"
+  value: "Verifica Identità per servizio wifi."

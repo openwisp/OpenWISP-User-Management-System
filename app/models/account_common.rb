@@ -274,13 +274,18 @@ class AccountCommon < ActiveRecord::Base
     self.credit_card_info = values.to_json
   end
   
+  def generate_invoice!
+    
+  end
+  
   def credit_card_identity_verify!
     if self.verify_with_paypal? or verify_with_gestpay?
       self.verified = true
       self.save!
+      self.generate_invoice!
       self.captive_portal_login!
       self.clear_ip!
-      self.new_account_notification!      
+      self.new_account_notification!
     else
       Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
     end

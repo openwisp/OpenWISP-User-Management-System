@@ -9,6 +9,11 @@ class AddNewConfigurationKeys < ActiveRecord::Migration
     keys[63], # verification_explain_mobile_en
     keys[64], # verification_explain_creditcard_it
     keys[65], # verification_explain_creditcard_en
+    keys[23], # credit_card_verification_tax
+    keys[90], # invoice_owner_en
+    keys[91], # invoice_owner_it
+    keys[92], # invoice_description_en
+    keys[93], # invoice_description_it
   ]
   
   def self.up
