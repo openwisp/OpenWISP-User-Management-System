@@ -19,9 +19,9 @@
 
 <div id="verification-explain">
   <% if account_verification_methods.include? 'gestpay_credit_card' %>
-      <%= @settings[('verification_explain_creditcard_%s' % I18n.locale.to_s).to_sym].html_safe %>
+      <%= Configuration.get('verification_explain_creditcard_%s' % I18n.locale.to_s).html_safe %>
   <% else %>
-      <%= @settings[('verification_explain_mobile_%s' % I18n.locale.to_s).to_sym].html_safe %>
+      <%= Configuration.get('verification_explain_mobile_%s' % I18n.locale.to_s).html_safe %>
   <% end %>
 </div>
 

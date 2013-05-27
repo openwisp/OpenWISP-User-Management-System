@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   helper_method :has_mobile?
   protect_from_forgery
 
-  before_filter :set_locale, :set_current_operator, :load_additional_exception_data, :load_config
+  before_filter :set_locale, :set_current_operator, :load_additional_exception_data
   after_filter :reset_last_captcha_code! # reset captcha code after each request for security
 
   # Additional gem/plugin functionality
@@ -187,25 +187,6 @@ class ApplicationController < ActionController::Base
   # URL helpers for controllers
   def subject_url(subject)
     subject.is_a?(User) ? user_url(subject) : radius_group_url(subject)
-  end
-  
-  # load configuration keys from cache
-  def load_config
-    cache_key = "owums_settings"
-    
-    # retrieve settings from cache if present
-    @settings = Rails.cache.fetch(cache_key)
-    
-    # otherwise retrieve from database and create the hash we will cache
-    if @settings.nil?
-      @settings = {}
-      
-      Configuration.all.each do |config|
-        @settings[config.key.to_sym] = config.value
-      end
-      
-      Rails.cache.write(cache_key, @settings)
-    end
   end
   
   private

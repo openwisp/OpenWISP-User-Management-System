@@ -62,8 +62,9 @@
   <div class="grid_12" id="branding">
     <h1>
       <a href="<%= root_url %>">
-        <% unless @settings[:logo].nil? or @settings[:logo] == '' %>
-          <%= image_tag(@settings[:logo]) %>
+        <% @logo = Configuration.get('logo')
+          unless @logo.nil? or @logo == '' %>
+          <%= image_tag(@logo) %>
         <% else %>
           OpenWISP User Management System
         <% end %>
