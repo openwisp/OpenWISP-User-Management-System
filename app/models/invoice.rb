@@ -19,6 +19,10 @@ class Invoice < ActiveRecord::Base
     "%.2f" % self.attributes['amount'].to_f
   end
   
+  def tax
+    "%.2f" % self.attributes['tax'].to_f
+  end
+  
   def total
     "%.2f" % self.attributes['total'].to_f
   end
@@ -36,13 +40,18 @@ class Invoice < ActiveRecord::Base
     
     # it is possible to pass an ID or an user instance
     invoice.user_id = user.id
-    invoice.transaction_id = ActiveSupport::JSON.decode(user.credit_card_info)['shop_transaction_id']
+    invoice.transaction_id = ActiveSupport::JSON.decode(user.credit_card_info)['shop_transaction']
     
-    tax_rate = @settings['tax_rate'].to_f
-    total = @settings['credit_card_verification_cost'].to_f
+    # calculate VAT depending on tax rate
+    tax_costant = 1.0 + Configuration.get('tax_rate').to_f / 100
+    total = Configuration.get('credit_card_verification_cost').to_f
+    amount = total / tax_costant
     
+    invoice.amount = amount
+    invoice.tax = total - amount
+    invoice.total = total
     
-    invoice.tax = total * (invoice.tax / 100)
-    invoice.amount = total - invoice.tax
+    invoice.save!
+    return invoice
   end
 end

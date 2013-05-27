@@ -43,10 +43,19 @@ class InvoiceTest < ActiveSupport::TestCase
   end
   
   test "create according to configuration" do
+    Configuration.set('tax_rate', '20')
+    Configuration.set('credit_card_verification_cost', '1.20')
+    
     tax = Configuration.get('tax_rate')
     total = Configuration.get('credit_card_verification_cost')
     
-    assert !tax.nil
-    assert !total.nil?
+    assert_equal '20', tax
+    assert_equal '1.20', total
+    
+    invoice = Invoice.create_for_user(users(:creditcard))
+    
+    assert_equal "1.20", invoice.total
+    assert_equal "1.00", invoice.amount
+    assert_equal "0.20", invoice.tax
   end
 end

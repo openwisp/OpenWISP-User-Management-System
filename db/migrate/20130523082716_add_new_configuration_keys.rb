@@ -3,6 +3,7 @@ class AddNewConfigurationKeys < ActiveRecord::Migration
   keys = YAML::load(File.open("db/fixtures/configurations.yml"))
   
   @configurations = [
+    keys[71], # captcha enabled
     keys[59], # custom_account_instructions_en
     keys[61], # logo
     keys[62], # verification_explain_mobile_it
