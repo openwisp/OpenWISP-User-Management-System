@@ -1,6 +1,6 @@
-source :gemcutter
+source 'http://rubygems.org'
 
-gem 'rails', '3.0.12'
+gem 'rails', :git => 'git://github.com/spawnazzo/rails.git', :branch => '3-0-stable'
 gem 'mysql2', '~> 0.2.7'
 
 gem 'exception_notification', :require => 'exception_notifier'
