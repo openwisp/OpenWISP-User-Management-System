@@ -551,7 +551,7 @@ $.fn.customSelectable = function(options){
         if(opts.afterSelect){ opts.afterSelect.apply($(this)) }
     });
     
-    table.find('input[type=checkbox]').parents('tr').addClass('selected');
+    table.find('input[checked=checked]').parents('tr').addClass('selected');
     
     return table;
 }

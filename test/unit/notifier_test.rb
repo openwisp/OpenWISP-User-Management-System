@@ -9,7 +9,7 @@ class NotifierTest < ActionMailer::TestCase
       :username => 'foobar',
       :password => 'foobarpassword0',
       :mobile_prefix => '334',
-      :mobile_suffix => '4254804',
+      :mobile_suffix => '4254814',
       :verification_method => 'mobile_phone',
       :birth_date => '1980-10-10',
       :address => 'Via dei Tizii 6',
