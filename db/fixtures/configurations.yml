@@ -336,3 +336,8 @@ Staff"
   system_key: f
   key: "invoice_description_it"
   value: "Verifica Identità per servizio wifi."
+
+94:
+  system_key: f
+  key: "invoice_logo"
+  value: "openwisp-logo.png"

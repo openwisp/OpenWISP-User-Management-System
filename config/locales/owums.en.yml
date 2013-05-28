@@ -378,3 +378,13 @@ If you still have problems resetting the password, try repeating the procedure"
   gestpay_error_417: "Authorization denied, wrong security code"
   verification_message_first_step: "Verifying your credit card, please wait..."
   verification_message_second_step: "Bank successfully contacted, we are verifying your data, please wait a bit more..."
+  Receipt: Receipt
+  Date: Date
+  Description: Description
+  Amount: Amount
+  Tax: Tax
+  Total: Total
+  Customer_details: Customer details
+  Transaction_info: Transaction Info
+  Transaction_ID: Transaction ID
+  Gateway: Gateway

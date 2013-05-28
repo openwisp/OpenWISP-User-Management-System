@@ -28,9 +28,18 @@ class ConfigurationsController < ApplicationController
   def edit
     @configuration = Configuration.find(params[:id])
     
-    @html = ['verification_explain_mobile_it', 'verification_explain_mobile_en',
-       'verification_explain_creditcard_it', 'verification_explain_creditcard_en',
-       'custom_account_instructions_it', 'custom_account_instructions_en'].include?(@configuration.key)
+    html_configs = [
+      'verification_explain_mobile_it',
+      'verification_explain_mobile_en',
+      'verification_explain_creditcard_it',
+      'verification_explain_creditcard_en',
+      'custom_account_instructions_it',
+      'custom_account_instructions_en',
+      'invoice_owner_en',
+      'invoice_owner_it'
+    ]
+    
+    @html = html_configs.include?(@configuration.key)
   end
 
   def update

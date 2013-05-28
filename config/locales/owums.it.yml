@@ -375,3 +375,13 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   gestpay_error_417: "Autorizzazione negata: codice di sicurezza errato"
   verification_message_first_step: "Verifica della carta di credito in corso, attendere prego..."
   verification_message_second_step: "Banca contattata, stiamo verificando i dati, attendere ancora qualche istante prego..."
+  Receipt: Ricevuta
+  Date: Data
+  Description: Descrizione
+  Amount: Importo
+  Tax: IVA
+  Total: Totale
+  Customer_details: Dettagli intestatario
+  Transaction_info: Informazioni Transazione
+  Transaction_ID: ID Transazione
+  Gateway: Gateway

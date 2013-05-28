@@ -275,6 +275,11 @@ class AccountCommon < ActiveRecord::Base
   end
   
   def generate_invoice!
+    Invoice.create_for_user(User.find(self.id))
+    
+    # generate PDF with an asynchronous job with sidekick
+    
+    # send PDF via email to both user and admin 
     
   end
   

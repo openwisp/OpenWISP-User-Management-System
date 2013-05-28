@@ -15,6 +15,7 @@ class AddNewConfigurationKeys < ActiveRecord::Migration
     keys[91], # invoice_owner_it
     keys[92], # invoice_description_en
     keys[93], # invoice_description_it
+    keys[94], # invoice_logo
   ]
   
   def self.up
