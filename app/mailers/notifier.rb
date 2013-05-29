@@ -40,7 +40,7 @@ class Notifier < ActionMailer::Base
       :username => @user.username,
       :account_url => "#{baseurl}/account",
       :password_reset_url => "#{baseurl}/account/reset",
-      :invoice_message => invoice_message
+      :invoice_message => invoice_message.nil? ? '' : "\n%s\n" % invoice_message
     }
     
     dictionary.each do |key, value|
