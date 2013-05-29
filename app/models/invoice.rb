@@ -67,7 +67,6 @@ class Invoice < ActiveRecord::Base
     
     owner_lines.each do |line|
       pdf.text line, :inline_format => true, :align => :right, :size => 12
-      pdf.move_down 5
     end
     
     # insert logo if it exist

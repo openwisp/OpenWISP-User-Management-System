@@ -69,7 +69,7 @@
   key: credit_card_verification_cost
   value: 1.20
 
-94:
+20:
   system_key: f
   key: "tax_rate"
   value: 20
