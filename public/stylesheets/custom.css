@@ -416,7 +416,7 @@ select{
 #bank-gateway .button.proceed{ margin: 0 0 5px; }
 
 #bank-gateway select{ width: 60px }
-#bank-gateway input, #bank-gateway select{ font-size: 13px }
+#bank-gateway input, #bank-gateway select{ font-size: 13px; height: auto; padding-top: 0; padding-bottom: 0 }
 #id_credit_card_cvv{ width: 70px; text-align: center; font-weight: bold; font-size: 15px; letter-spacing: 2px }
 #bank-gateway p.error, #bank-gateway p.notice{
     color: #FFFFFF;
