@@ -25,11 +25,11 @@ class Notifier < ActionMailer::Base
     @user = account
     subject = Configuration.get("account_notification_subject_#{I18n.locale}")
     @message = Configuration.get("account_notification_message_#{I18n.locale}")
-    @invoice_message = nil
+    invoice_message = nil
     
     if filename
       attachments[filename.split('/')[-1]] = File.read(filename)
-      @invoice_message = I18n.t(:account_notification_invoice_message)
+      invoice_message = I18n.t(:account_notification_invoice_message)
     end
     
     baseurl = '%s://%s' % [default_url_options[:protocol], default_url_options[:host]]
@@ -40,17 +40,19 @@ class Notifier < ActionMailer::Base
       :username => @user.username,
       :account_url => "#{baseurl}/account",
       :password_reset_url => "#{baseurl}/account/reset",
+      :invoice_message => invoice_message
     }
     
     dictionary.each do |key, value|
-      @message.gsub!("{%s}" % key.to_s, value.to_s)
+      # replace placeholders with dynamic values unless value is nil
+      @message.gsub!("{%s}" % key.to_s, value.nil? ? '' : value.to_s)
     end
     
     mail :to => account.email, :subject => subject
   end
   
   def send_invoice_to_admin(filename)
-    subject = I18n.t(:invoice_admin_notification_subject)
+    subject = Configuration.get("invoice_admin_notification_subject_#{I18n.locale}")
     @message = I18n.t(:invoice_admin_notification_message)
     email = Configuration.get('invoice_owner_email')
     

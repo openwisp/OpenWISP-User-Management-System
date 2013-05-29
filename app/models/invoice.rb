@@ -100,8 +100,16 @@ class Invoice < ActiveRecord::Base
     end
     
     # city, zip, country
-    user_secondline = '%s, %s, %s' % [user.city, user.zip, user.state]
+    user_secondline = ''
+    for field in ['city', 'zip', 'state']
+      if CONFIG[field]
+        user_secondline << ', %s' % user.attributes[field].capitalize
+      end
+    end
+    
     if user_secondline != ''
+      # remove initial ", "
+      user_secondline = user_secondline[2 .. -1]
       pdf.move_down 5
       pdf.text user_secondline, :align => :left, :size => 11
     end

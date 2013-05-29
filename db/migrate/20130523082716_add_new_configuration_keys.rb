@@ -17,6 +17,9 @@ class AddNewConfigurationKeys < ActiveRecord::Migration
     keys[93], # invoice_description_it
     keys[94], # invoice_logo
     keys[95], # invoice_owner_email
+    keys[96], # invoice_admin_notification_subject_en
+    keys[97], # invoice_admin_notification_subject_it
+    keys[29], # tax rate
   ]
   
   def self.up

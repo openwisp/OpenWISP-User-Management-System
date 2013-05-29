@@ -286,7 +286,9 @@ You can monitor your use of the available traffic at the account management page
 
 If you ever forget your password, you can use the password reset procedure available at the following web address:
 {password_reset_url}
+{invoice_message}
 
+Best regards
 Staff"
 
 81:
@@ -303,6 +305,7 @@ Puoi monitorare l'utilizzo del servizio dalla pagina di gestione del tuo account
 
 Se dovessi dimenticare la password, potrai utilizzare la procedura di reset disponibile al seguente indirizzo:
 {password_reset_url}
+{invoice_message}
 
 Cordiali Saluti
 Staff"
@@ -346,4 +349,13 @@ Staff"
   system_key: f
   key: "invoice_owner_email"
   value: ""
-  
+
+96:
+  system_key: f
+  key: "invoice_admin_notification_subject_en"
+  value: "[OWUMS] New Receipt Generated"
+
+97:
+  system_key: f
+  key: "invoice_admin_notification_subject_it"
+  value: "[OWUMS] Nuova Ricevuta Generata"

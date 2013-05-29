@@ -19,6 +19,22 @@ Ensure the following configuration keys are available in */configurations* and c
 * *gestpay_vbv_session*: duration in seconds of the time in which users can insert their card password if needed; explained in detail in the "Verified By Visa" Section
 * *gestpay_vbv_url*: url of which users will be redirected to insert their credit card password; should be https://testecomm.sella.it/gestpay/pagamvisa3d.asp for the DEMO or https://ecomm.sella.it/gestpay/pagamvisa3d.asp for the real environment
 
+Ensure the following keys are customized according to your needs:
+
+* *invoice_description_en*: description that will be included in the invoice (english)
+* *invoice_description_it*: description that will be included in the invoice (italian)
+* *invoice_logo*: logo that will be inserted in the invoice
+* *invoice_owner_en*: details for the invoice heading (english)
+* *invoice_owner_it*: details for the invoice heading (italian)
+* *invoice_owner_email*: email of administrators to which every invoice will be sent
+* *invoice_admin_notification_subject_en*: subject of the notification that will be sent to "invoice_owner_email" (english)
+* *invoice_admin_notification_subject_it*: subject of the notification that will be sent to "invoice_owner_email" (italian)
+
+Ensure the folder "invoices/" is writable.
+
+Eg:
+    chown -R www-data:www-data invoices/
+
 If the configuration keys are not available you are probably upgrading from an older version,
 you will have to manually insert the configuration keys with the rails console unless you want
 to reset all your configuration keys to the default ones (in that case just run *rake db:seed* from the command line).
