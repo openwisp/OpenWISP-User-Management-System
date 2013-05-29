@@ -385,3 +385,6 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Transaction_info: Informazioni Transazione
   Transaction_ID: ID Transazione
   Gateway: Gateway
+  invoice_admin_notification_subject: Nuova Ricevuta Generata
+  invoice_admin_notification_message: Una nuova ricevuta è stata generata ed è allegata a quest'email.
+  account_notification_invoice_message: Grazie per aver usato il nostro sistema di verifica d'identità basato su carta di credito. Puoi trovare la ricevuta in allegato a quest'email.

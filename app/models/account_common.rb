@@ -275,22 +275,28 @@ class AccountCommon < ActiveRecord::Base
   end
   
   def generate_invoice!
-    Invoice.create_for_user(User.find(self.id))
+    invoice = Invoice.create_for_user(User.find(self.id))
     
-    # generate PDF with an asynchronous job with sidekick
+    # generate PDF with an asynchronous job with sidekiq
+    # unfortunately sidekiq needs ruby 1.9.3
+    # send PDF via email to both user and admin
+    filename = invoice.generate_pdf()
     
-    # send PDF via email to both user and admin 
+    # send invoice to admin
+    Notifier.send_invoice_to_admin(filename).deliver
     
+    return filename
   end
   
   def credit_card_identity_verify!
     if self.verify_with_paypal? or verify_with_gestpay?
       self.verified = true
       self.save!
-      self.generate_invoice!
       self.captive_portal_login!
       self.clear_ip!
-      self.new_account_notification!
+      filename = self.generate_invoice!
+      # pass filename to new_account_notification
+      self.new_account_notification!(filename)
     else
       Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
     end
@@ -313,9 +319,9 @@ class AccountCommon < ActiveRecord::Base
     Notifier.password_reset_instructions(self).deliver
   end
   
-  def new_account_notification!
+  def new_account_notification!(filename=false)
     if CONFIG['send_email_notification_to_users']
-      Notifier.new_account_notification(self).deliver
+      Notifier.new_account_notification(self, filename).deliver
     end
   end
   

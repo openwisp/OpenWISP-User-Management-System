@@ -341,3 +341,9 @@ Staff"
   system_key: f
   key: "invoice_logo"
   value: "openwisp-logo.png"
+
+95:
+  system_key: f
+  key: "invoice_owner_email"
+  value: ""
+  

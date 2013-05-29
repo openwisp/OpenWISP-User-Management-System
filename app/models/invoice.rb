@@ -59,7 +59,7 @@ class Invoice < ActiveRecord::Base
     path = Rails.root
     
     # create new document from template
-    pdf = Prawn::Document.new(:margin => 59)#, :template => "#{path}/invoices/invoice-template.pdf")
+    pdf = Prawn::Document.new(:margin => 59)
     
     # owner: upper right corner
     owner = Configuration.get('invoice_owner_%s' % I18n.locale)
@@ -84,25 +84,29 @@ class Invoice < ActiveRecord::Base
     pdf.text '%s: %s' % [I18n.t(:Date), created_at.strftime("%d/%m/%Y")], :inline_format => true, :align => :right, :size => 12#, :indent_paragraphs => 4
     pdf.move_down 10
     
-    # user details    
+    ### --- USER DETAILS --- ###    
+    
     user = self.user
     
+    # customer details heading
     pdf.text '<b>%s</b>' % I18n.t(:Customer_details), :inline_format => true, :align => :left, :size => 14
     pdf.move_down 4
     
+    # full name
     pdf.text '%s %s' % [user.given_name.capitalize, user.surname.capitalize], :align => :left, :size => 11
     if user.address != '' and not user.address.nil?
       pdf.move_down 5
       pdf.text user.address.capitalize, :align => :left, :size => 11
     end
     
+    # city, zip, country
     user_secondline = '%s, %s, %s' % [user.city, user.zip, user.state]
     if user_secondline != ''
       pdf.move_down 5
       pdf.text user_secondline, :align => :left, :size => 11
     end
     
-    # prepare data for table
+    # prepare data for table containing price and description
     description = Configuration.get('invoice_description_%s' % I18n.locale)
     description.gsub!('</div>', '<br>')
     description.gsub!('</p>', '<br>')
@@ -126,6 +130,7 @@ class Invoice < ActiveRecord::Base
     
     pdf.move_down 50
     
+    # print table
     pdf.table(data) do |table|
       table.width = 500
       table.column_widths = [360, 140]
@@ -150,14 +155,16 @@ class Invoice < ActiveRecord::Base
       [created_at.strftime("%d/%m/%Y"), 'Gestpay Banca Sella', self.transaction_id.upcase, "#{self.total} #{currency}"]
     ]
     
+    # Print transaction info table
     pdf.table(data) do |table|
       table.width = 500
-      #table.column_widths = [360, 120]
       table.style(table.rows(0), :background_color => 'E8E9EC', :font_style => :bold )
       table.style(table.rows(0..3).columns(0..4), :size => 10, :align => :center )
       table.style(table.rows(1), :size => 9 )
     end
     
-    pdf.render_file("#{path}/invoices/receipt-%s-date-%s.pdf" % [self.id, created_at.strftime("%Y-%m-%d")])
+    filename = "#{path}/invoices/receipt-%s-date-%s.pdf" % [self.id, created_at.strftime("%Y-%m-%d")]
+    pdf.render_file(filename)
+    return filename
   end
 end

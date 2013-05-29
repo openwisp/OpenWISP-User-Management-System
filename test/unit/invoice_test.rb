@@ -58,4 +58,11 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_equal "1.00", invoice.amount
     assert_equal "0.20", invoice.tax
   end
+  
+  test "generate_pdf" do
+    invoice = Invoice.create_for_user(users(:creditcard))
+    filename = invoice.generate_pdf()
+    
+    assert File.exists?(filename)
+  end
 end

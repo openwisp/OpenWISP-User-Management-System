@@ -388,3 +388,6 @@ If you still have problems resetting the password, try repeating the procedure"
   Transaction_info: Transaction Info
   Transaction_ID: Transaction ID
   Gateway: Gateway
+  invoice_admin_notification_subject: New Receipt Generated
+  invoice_admin_notification_message: A new receipt was generated, see the attachment to this mail.
+  account_notification_invoice_message: Thank you for using our credit card identity verification system. You can find a receipt of your operation attached to this mail.
