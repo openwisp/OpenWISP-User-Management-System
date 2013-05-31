@@ -17,9 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
+<div id="verify-mobile-phone">
 <% if owner.is_a? Account %>
     <% if owner.can_signup_via? AccountCommon::VERIFY_BY_MOBILE %>
-        <div id="verify-mobile-phone">
         <% if owner.new_record? %>
             <div class="verification-block">
               <span><%= form.label :mobile_phone %></span>
@@ -62,7 +62,6 @@
                 </div>
             <% end %>
         <% end %>
-    </div>
     <% end %>
 <% elsif owner.is_a? User %>
     <% if owner.verify_with_mobile_phone? %>
@@ -78,3 +77,4 @@
         </div>
     <% end %>
 <% end %>
+</div>

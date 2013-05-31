@@ -4,10 +4,12 @@ select {
     width:99%;
 }
 
-div.field_with_errors .lbl, div.field_with_errors .error, p.error {
+/*div.field_with_errors .lbl, div.field_with_errors .error, p.error {
     padding: 2px;
     background-color: #ff6666;
-}
+}*/
+
+div.field_with_errors span.error{ color: #ce0006 }
 
 div.field_with_errors input {
     width:98%;
@@ -496,4 +498,4 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 .pagination a.button:hover, .pagination a.button:focus{ background: #000 !important }
 .pagination .current a{ background: #d3d3d3 !important; color: #333; cursor: default  }
 
-ul.nomargin{ margin-bottom: 0 !important }
+ul.nomargin,.button.nomargin{ margin-bottom: 0 !important }
