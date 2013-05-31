@@ -48,7 +48,7 @@ en:
   Credit_Card_Verification_Success_Paragraph: "Thank you for verifying your account, you will be redirected to your profile page in"
   Credit_Card_Verification_Success_Paragraph_Mobile: "Thank you for verifying your account, you are going to be redirected to your profile page in few seconds."
   Current_login_at: "Current login at"
-  Current_login_ip: "Current login IP"
+  Current_login_ip: "Current IP"
   Data_insertion: "Insert personal data"
   Data_verification: "Verify personal data"
   Destroy: "Delete"
@@ -101,7 +101,7 @@ en:
   IP_address: "IP address"
   Key: "Key"
   Last_login_at: "Last login at"
-  Last_login_ip: "Last login from IP"
+  Last_login_ip: "Last login IP"
   Last_x_days_traffic_download:
     one: "Downloaded today"
     other: "Downloaded last %{count} days"
@@ -127,6 +127,7 @@ en:
   Loading: "Loading"
   Loading_data: "Loading data: please wait"
   Logged_in: "Logged in?"
+  logged_in_as: "Logged in as"
   Loggedin_users: "Currently logged in users"
   Login: "Login"
   Logins: "Logins"
@@ -238,7 +239,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Sort_by_this_field: "Sort by this field"
   Show: "Show"
   Show_account_info: "Show account info"
-  Show_stats: "Show stats"
+  Show_stats: "Statistics"
   Start_time: "Connection start"
   State: "State"
   Stop_time: "Connection end"
@@ -377,6 +378,16 @@ If you still have problems resetting the password, try repeating the procedure"
   gestpay_error_417: "Authorization denied, wrong security code"
   verification_message_first_step: "Verifying your credit card, please wait..."
   verification_message_second_step: "Bank successfully contacted, we are verifying your data, please wait a bit more..."
-  verification_explain: "<p>In order to <strong>prevent any abuse of service</strong>, we have to <strong>verify the identity of all the users</strong> who use this wifi service.</p>"
-  verification_explain_mobile: "If you own an <strong>Italian mobile phone SIM card</strong> select <strong>\"Mobile Phone Number\"</strong> from the following menu"
-  verification_explain_credit_card: ", otherwise you can select the method <strong>\"Credit Card\"</strong>"
+  Receipt: Receipt
+  Date: Date
+  Description: Description
+  Amount: Amount
+  Tax: Tax
+  Total: Total
+  Customer_details: Customer details
+  Transaction_info: Transaction Info
+  Transaction_ID: Transaction ID
+  Gateway: Gateway
+  invoice_admin_notification_subject: New Receipt Generated
+  invoice_admin_notification_message: A new receipt was generated, see the attachment to this mail.
+  account_notification_invoice_message: Thank you for using our credit card identity verification system. You can find a receipt of your operation attached to this mail.

@@ -28,7 +28,7 @@
   <tbody>
     <% @radius_groups.each do |radius_group| %>
         <tr>
-          <td><%= check_box_tag("user[radius_group_ids][]", radius_group.id, @user.radius_group_ids.include?(radius_group.id)) %></td>
+          <td class="first"><span class="hidden"><%= check_box_tag("user[radius_group_ids][]", radius_group.id, @user.radius_group_ids.include?(radius_group.id)) %></span></td>
           <td><%= radius_group.name %></td>
           <td><%= radius_group.priority %></td>
         </tr>

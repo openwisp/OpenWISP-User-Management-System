@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  user_id: 1
+#  transaction_id: MyString
+#  amount: 9.99
+#  tax: 9.99
+#  total: 9.99
+#  created_at: 2013-05-24 10:13:15
+#
+#two:
+#  user_id: 1
+#  transaction_id: MyString
+#  amount: 9.99
+#  tax: 9.99
+#  total: 9.99
+#  created_at: 2013-05-24 10:13:15

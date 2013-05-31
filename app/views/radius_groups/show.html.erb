@@ -19,13 +19,8 @@
 
 <div class="grid_12">
   <h2><%= t :Radius_group %> <%= @radius_group.name %></h2>
-</div>
-<p>&nbsp;</p>
-
-<div class="grid_5">
   <div id="radius_group_info" class="box">
     <h2><%= t :Radius_group_info %></h2>
-    <br/>
     <table>
       <tbody>
       <tr>
@@ -45,7 +40,7 @@
       <% if auth? :radius_groups_manager %>
           <tr>
             <td colspan="2">
-              <p><%= link_to t(:Edit), edit_radius_group_url(@radius_group) %></p>
+              <p><%= link_to t(:Edit), edit_radius_group_url(@radius_group), :class => 'button nomargin' %></p>
             </td>
           </tr>
       <% end %>
@@ -53,20 +48,17 @@
     </table>
   </div>
 </div>
-<div class="clear"></div>
 
 <div class="grid_12">
   <% if auth? :radius_checks_viewer %>
       <div id="radius_group_checks" class="box">
         <h2><%= t :Radius_checks %></h2>
-        <br/>
         <%= render :partial => 'radius_checks/list', :locals => { :subject => @radius_group } %>
       </div>
   <% end %>
   <% if auth? :radius_replies_viewer %>
       <div id="radius_group_replies" class="box">
         <h2><%= t :Radius_replies %></h2>
-        <br/>
         <%= render :partial => 'radius_replies/list', :locals => { :subject => @radius_group } %>
       </div>
   <% end %>

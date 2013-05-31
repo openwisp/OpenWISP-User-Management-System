@@ -49,7 +49,7 @@
   <% if auth? :radius_replies_creator %>
       <tr>
         <td colspan="4">
-          <p><%= link_to t(:Add_radius_reply), new_subject_radius_reply_url(subject) %></p>
+          <p><%= link_to t(:Add_radius_reply), new_subject_radius_reply_url(subject), :class => 'button nomargin' %></p>
         </td>
       </tr>
   <% end %>

@@ -61,7 +61,6 @@ class ApplicationController < ActionController::Base
     else
       render :xml => { :error => 'disabled' }, :status => :unauthorized
     end
-
   end
 
   protected

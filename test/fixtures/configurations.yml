@@ -62,11 +62,18 @@
   system_key: f
   key: sandbox_ipn_url
   value: https://www.sandbox.paypal.com/cgi-bin/webscr
-    
+
+# BEGIN: "DO NOT EDIT - NEEDED FOR UNIT TESTING"
 25:
   system_key: f
   key: credit_card_verification_cost
-  value: 1
+  value: 1.20
+
+20:
+  system_key: f
+  key: "tax_rate"
+  value: 20
+# END;
 
 26:
   system_key: t
@@ -118,6 +125,46 @@
   key: password_reset_instructions_custom
   value: ""
 
+59:
+  system_key: f
+  key: "custom_account_instructions_en"
+  value: ""
+
+60:
+  system_key: f
+  key: "custom_account_instructions_it"
+  value: ""
+
+61:
+  system_key: t
+  key: "logo"
+  value: "openwisp-logo.png"
+
+62:
+  system_key: f
+  key: "verification_explain_mobile_it"
+  value: "<p>Al fine di <strong>prevenire abusi del servizio</strong>, siamo costretti a <strong>verificare l'identità</strong> degli utenti che utilizzano il servizio wifi.</p><p>Sei sei in possesso di una <strong>SIM italiana</strong> seleziona il metodo di verifica dell'identità <strong>\"Numero di cellulare\"</strong> dal seguente menu.</p>"
+
+63:
+  system_key: f
+  key: "verification_explain_mobile_en"
+  value: "<p>In order to <strong>prevent any abuse of service</strong>, we have to <strong>verify the identity of all the users</strong> who use this wifi service.</p><p>If you own an <strong>Italian mobile phone SIM card</strong> select <strong>\"Mobile Phone Number\"</strong> from the following menu.</p>"
+
+64:
+  system_key: f
+  key: "verification_explain_creditcard_it"
+  value: "<p>Al fine di <strong>prevenire abusi del servizio</strong>, siamo costretti a <strong>verificare l'identità</strong> degli utenti che utilizzano il servizio wifi.</p><p>Sei sei in possesso di una <strong>SIM italiana</strong> seleziona il metodo di verifica dell'identità <strong>\"Numero di cellulare\"</strong> dal seguente menu, altrimenti seleziona il metodo <strong>\"Carta di Credito\"</strong>.</p>"
+
+65:
+  system_key: f
+  key: "verification_explain_creditcard_en"
+  value: "<p>In order to <strong>prevent any abuse of service</strong>, we have to <strong>verify the identity of all the users</strong> who use this wifi service.</p><p>If you own an <strong>Italian mobile phone SIM card</strong> select <strong>\"Mobile Phone Number\"</strong> from the following menu, otherwise you can select the method <strong>\"Credit Card\"</strong>.</p>"
+
+71:
+  system_key: f
+  key: "captcha_enabled"
+  value: "true"
+
 72:
   system_key: f
   key: "gestpay_enabled"
@@ -161,7 +208,9 @@ You can monitor your use of the available traffic at the account management page
 
 If you ever forget your password, you can use the password reset procedure available at the following web address:
 {password_reset_url}
+{invoice_message}
 
+Best regards
 Staff"
 
 81:
@@ -178,6 +227,7 @@ Puoi monitorare l'utilizzo del servizio dalla pagina di gestione del tuo account
 
 Se dovessi dimenticare la password, potrai utilizzare la procedura di reset disponibile al seguente indirizzo:
 {password_reset_url}
+{invoice_message}
 
 Cordiali Saluti
 Staff"
@@ -191,3 +241,43 @@ Staff"
   system_key: f
   key: "account_notification_subject_it"
   value: "Nuovo account creato su [OpenWISP User Management System]"
+
+90:
+  system_key: f
+  key: "invoice_owner_en"
+  value: "Changeme"
+
+91:
+  system_key: f
+  key: "invoice_owner_it"
+  value: "Cambiami"
+
+92:
+  system_key: f
+  key: "invoice_description_en"
+  value: "Identity verification for wifi service."
+
+93:
+  system_key: f
+  key: "invoice_description_it"
+  value: "Verifica Identità per servizio wifi."
+
+94:
+  system_key: f
+  key: "invoice_logo"
+  value: "openwisp-logo.png"
+
+95:
+  system_key: f
+  key: "invoice_owner_email"
+  value: "test@test.com"
+
+96:
+  system_key: f
+  key: "invoice_admin_notification_subject_en"
+  value: "[OWUMS] New Receipt Generated"
+
+97:
+  system_key: f
+  key: "invoice_admin_notification_subject_it"
+  value: "[OWUMS] Nuova Ricevuta Generata"

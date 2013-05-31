@@ -20,12 +20,10 @@
 <div class="grid_12">
   <h2><%=t :Operator %> <%= @operator.login %></h2>
 </div>
-<p>&nbsp;</p>
 
 <div class="grid_3">
   <div id="operator_roles" class="box">
     <h2><%=t :Roles %></h2>
-    <br />
     <ul>
       <% @operator.roles.sort.each do |role|%>
           <li><%= role %></li>
@@ -37,32 +35,33 @@
 <div class="grid_9">
   <div id="operator_info" class="box">
     <h2><%=t :Additional_info %></h2>
+    
     <table>
       <tbody>
-      <tr>
-        <td><strong><%=t :Logged_in %></strong></td>
-        <td><%=t @operator.logged_in? ? :affirmative : :negative %></td>
-      </tr>
-      <tr>
-        <td><strong><%=t :Current_login_at %></strong></td>
-        <td><%=l @operator.current_login_at rescue t(:blank) %></td>
-      </tr>
-      <tr>
-        <td><strong><%=t :Current_login_ip %></strong></td>
-        <td><%= @operator.current_login_ip || t(:blank) %></td>
-      </tr>
-      <tr>
-        <td><strong><%=t :Last_login_at %></strong></td>
-        <td><%=l @operator.last_login_at rescue t(:blank) %></td>
-      </tr>
-      <tr>
-        <td><strong><%=t :Last_login_ip %></strong></td>
-        <td><%= @operator.last_login_ip || t(:blank) %></td>
-      </tr>
-      <tr>
-        <td><strong><%=t :Login_count %></strong></td>
-        <td><%= @operator.login_count %></td>
-      </tr>
+        <tr class="odd">
+          <td><strong><%=t :Logged_in %></strong></td>
+          <td><%=t @operator.logged_in? ? :affirmative : :negative %></td>
+        </tr>
+        <tr>
+          <td><strong><%=t :Current_login_at %></strong></td>
+          <td><%=l @operator.current_login_at rescue t(:blank) %></td>
+        </tr>
+        <tr class="odd">
+          <td><strong><%=t :Current_login_ip %></strong></td>
+          <td><%= @operator.current_login_ip || t(:blank) %></td>
+        </tr>
+        <tr>
+          <td><strong><%=t :Last_login_at %></strong></td>
+          <td><%=l @operator.last_login_at rescue t(:blank) %></td>
+        </tr>
+        <tr class="odd">
+          <td><strong><%=t :Last_login_ip %></strong></td>
+          <td><%= @operator.last_login_ip || t(:blank) %></td>
+        </tr>
+        <tr>
+          <td><strong><%=t :Login_count %></strong></td>
+          <td><%= @operator.login_count %></td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -71,11 +70,9 @@
 <div class="grid_12">
   <div class="box">
     <h2><%=t :Notes %></h2>
-    <br />
-
     <p><%= @operator.notes %></p>
   </div>
   <% if auth? :operators_manager %>
-      <p><%= link_to t(:Edit), edit_operator_path(@operator) %></p>
+    <p><%= link_to t(:Edit), edit_operator_path(@operator), :class => 'button' %></p>
   <% end %>
 </div>

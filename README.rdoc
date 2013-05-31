@@ -41,6 +41,10 @@ Once deployed using your favourite environment, you need to configure two deamon
 
 To do this, you can use the following init.d script (customization may be needed, this script was coded for Ubuntu 10.04). 
 
+Be sure the cache folder is writable:
+
+    chown -R www-data:www-data tmp/cache/
+
 ==== Simplify the Registration Form
 
 By default, all the fields of the user profile are mandatory, however, in order to simplify and speed up the user registration procedure it is possible to change this behaviour and hide the following fields:

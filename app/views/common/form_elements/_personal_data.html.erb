@@ -21,7 +21,7 @@
 
 <%= form.input :surname, :disabled => !owner.new_record? %>
 
-<div<%= unless CONFIG['birth_date']: " class='hidden'" end %>>
+<div<% unless CONFIG['birth_date'] %> class="hidden"<% end %>>
     <%= form.input :birth_date, :as => :date,
                :disabled => !owner.new_record?,
                :start_year => Date.today.year - 90,
@@ -30,19 +30,19 @@
                :prompt => true %>
 </div>
 
-<div<%= unless CONFIG['address']: " class='hidden'" end %>>
+<div<% unless CONFIG['address'] %> class="hidden"<% end %>>
     <%= form.input :address %>
 </div>
 
-<div<%= unless CONFIG['zip']: " class='hidden'" end %>>
+<div<% unless CONFIG['zip'] %> class="hidden"<% end %>>
     <%= form.input :zip %>
 </div>
 
-<div<%= unless CONFIG['city']: " class='hidden'" end %>>
+<div<% unless CONFIG['city'] %> class="hidden"<% end %>>
     <%= form.input :city %>
 </div>
 
-<div<%= unless CONFIG['state']: " class='hidden'" end %>>
+<div<% unless CONFIG['state'] %> class="hidden"<% end %>>
     <%= form.input :state, :collection => countries, :prompt => false; %>
 </div>
 

@@ -28,7 +28,7 @@
 <div class="grid_12">
   <div class="box">
     <h2><%= t :User_information %></h2>
-    <ul class="nav main">
+    <ul class="nav main nomargin">
       <li><%= link_to t(:Refresh_data), "" %></li>
       <% if current_operator.has_role? 'users_manager' %>
           <li><%= link_to t(:Edit), edit_user_path(@user) %></li>

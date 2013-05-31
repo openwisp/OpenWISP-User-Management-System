@@ -1,6 +1,6 @@
-source :gemcutter
+source 'http://rubygems.org'
 
-gem 'rails', '3.0.12'
+gem 'rails', :git => 'git://github.com/spawnazzo/rails.git', :branch => '3-0-stable'
 gem 'mysql2', '~> 0.2.7'
 
 gem 'exception_notification', :require => 'exception_notifier'
@@ -27,11 +27,13 @@ gem 'capistrano-ext', '~> 1.2.1', :require => false
 gem 'cap-recipes', '~> 0.3.36', :require => false
 gem 'capistrano_colors', '~> 0.5.4', :require => false
 
+# gestpay credit card
 gem 'savon', '~> 1.2.0'
 gem 'activemerchant'
+gem 'prawn'
 
 group :test do
-  gem "sqlite3"
+  gem 'sqlite3'
 end
 
 group :development do

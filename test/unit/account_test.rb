@@ -30,4 +30,14 @@ class AccountTest < ActiveSupport::TestCase
     assert a.errors.length <= 1, 'more than 1 errors'
     assert a.errors.has_key?(:username), 'there should be an errror related to the username'
   end
+  
+  test "generate_invoice!" do
+    assert ActionMailer::Base.deliveries.empty?
+    
+    user = users(:creditcard)
+    filepath = user.generate_invoice!
+    
+    assert File.exist?(filepath)
+    assert !ActionMailer::Base.deliveries.empty?
+  end
 end
