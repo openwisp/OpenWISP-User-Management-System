@@ -47,11 +47,12 @@
 <%= render 'common/form_elements/personal_data', :form => f, :owner => user, :countries => countries %>
 
 <div id="eula_priv">
-  <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
   <%= f.input :eula_acceptance, :error => false %>
-
-  <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
+  <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
+  <br>
+  <br>
   <%= f.input :privacy_acceptance, :error => false %>
+  <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
 </div>
 
 <%= f.input :notes, :input_html => { :rows => 4 } %>

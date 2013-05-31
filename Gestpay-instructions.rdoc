@@ -15,9 +15,26 @@ Ensure the following configuration keys are available in */configurations* and c
 * *gestpay_shoplogin*: Gestpay CODE provided by Banca Sella after signing their contract. Also known as "Codice esercente"
 * *notifier_base_url*: base url of the OWUMS application without the protocol, eg: *mywifiservice.com/owums*
 * *notifier_protocol*: https or http
-* *captive_portal_baseurl*: URL of the OWCPM (OpenWISP Captive Portal Manager) instance, which should be used with OWUMS
+* *captive_portal_baseurl*: URL of the OWCPM (OpenWISP Captive Portal Manager) instance, if any
 * *gestpay_vbv_session*: duration in seconds of the time in which users can insert their card password if needed; explained in detail in the "Verified By Visa" Section
 * *gestpay_vbv_url*: url of which users will be redirected to insert their credit card password; should be https://testecomm.sella.it/gestpay/pagamvisa3d.asp for the DEMO or https://ecomm.sella.it/gestpay/pagamvisa3d.asp for the real environment
+
+Ensure the following keys are customized according to your needs:
+
+* *invoice_description_en*: description that will be included in the invoice (english)
+* *invoice_description_it*: description that will be included in the invoice (italian)
+* *invoice_logo*: logo that will be inserted in the invoice
+* *invoice_owner_en*: details for the invoice heading (english)
+* *invoice_owner_it*: details for the invoice heading (italian)
+* *invoice_owner_email*: email of administrators to which every invoice will be sent
+* *invoice_admin_notification_subject_en*: subject of the notification that will be sent to "invoice_owner_email" (english)
+* *invoice_admin_notification_subject_it*: subject of the notification that will be sent to "invoice_owner_email" (italian)
+* *tax_rate*: tax rate to apply to verification cost
+
+Ensure the folder "invoices/" is writable.
+
+Eg:
+    chown -R www-data:www-data invoices/
 
 If the configuration keys are not available you are probably upgrading from an older version,
 you will have to manually insert the configuration keys with the rails console unless you want

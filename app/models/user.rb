@@ -39,6 +39,7 @@ class User < AccountCommon
 
   has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
+  has_one :invoice
 
   attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
                   :email, :email_confirmation, :password, :password_confirmation,

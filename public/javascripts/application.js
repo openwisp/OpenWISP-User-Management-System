@@ -27,6 +27,8 @@ $(document).ready(function(){
     owums.initRegistration();
     owums.initCreditCardOverlay();
     owums.initUserForm();
+    owums.initMenuAdjustments();
+    owums.initSelectable();
 });
 
 $.fn.centerElement = function(){
@@ -58,6 +60,16 @@ var owums = {
 
     exists: function(selector) {
         return ($(selector).length > 0);
+    },
+    
+    initMenuAdjustments: function(){
+        $('ul.nav.main ul a').each(function(i, el){
+            var $el = $(el);
+            // if width of link is less than container enlarge the link to fit
+            if($el.width() + parseInt($el.css('padding-left'), 10) * 2 < $el.parent().width()){
+                $el.width($el.parent().width() - 26);
+            }
+        });
     },
 
     loadCheckboxWarnings: function() {
@@ -513,6 +525,33 @@ var owums = {
         } else {
             return _curr+'/'+path+_params;
         }
+    },
+    
+    initSelectable: function(){
+        $('#operator_roles').customSelectable();
+        $("#radius_groups-table").customSelectable();
     }
 };
 
+$.fn.customSelectable = function(options){
+    var opts = $.extend({
+        'init': null,
+        'beforeSelect': null,
+        'afterSelect': null
+    }, options);
+    var table = $(this);
+    table.addClass('selectable');
+    if(opts.init){ opts.init.apply(table) }
+    table.find('tbody tr').click(function(e){
+        if(opts.beforeSelect){ opts.beforeSelect.apply($(this)) }
+        el = $(this);
+        var checkbox = el.find('input[type=checkbox]');
+        checkbox.attr('checked', !checkbox.attr('checked'))
+        el.toggleClass('selected');
+        if(opts.afterSelect){ opts.afterSelect.apply($(this)) }
+    });
+    
+    table.find('input[checked=checked]').parents('tr').addClass('selected');
+    
+    return table;
+}

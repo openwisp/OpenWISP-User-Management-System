@@ -310,7 +310,7 @@ class AccountsController < ApplicationController
   end
 
   def instructions
-    @custom_instructions = Configuration.get('custom_account_instructions')
+    @custom_instructions = Configuration.get('custom_account_instructions_%s' % I18n.locale).html_safe
   end
 
   private

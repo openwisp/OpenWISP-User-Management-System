@@ -9,7 +9,7 @@ class NotifierTest < ActionMailer::TestCase
       :username => 'foobar',
       :password => 'foobarpassword0',
       :mobile_prefix => '334',
-      :mobile_suffix => '4254804',
+      :mobile_suffix => '4254814',
       :verification_method => 'mobile_phone',
       :birth_date => '1980-10-10',
       :address => 'Via dei Tizii 6',
@@ -46,5 +46,25 @@ class NotifierTest < ActionMailer::TestCase
     end
     
     assert_match(message, email.body)
+  end
+  
+  def test_send_invoice
+    assert ActionMailer::Base.deliveries.empty?
+    
+    # create invoice in DB
+    invoice = Invoice.create_for_user(users(:creditcard))
+    # generate PDF
+    filename = invoice.generate_pdf()
+    
+    email = Notifier.send_invoice_to_admin(filename).deliver
+    
+    assert !ActionMailer::Base.deliveries.empty?
+    assert email.has_attachments?
+    
+    email_length = ActionMailer::Base.deliveries.length
+    
+    email = Notifier.new_account_notification(users(:creditcard), filename).deliver
+    assert email.has_attachments?
+    assert_equal email_length+1, ActionMailer::Base.deliveries.length
   end
 end
