@@ -133,7 +133,7 @@ it:
   activerecord:
     errors:
       messages:
-        inclusion: "non è incluso nella lista"
+        inclusion: "non è un valore valido"
         exclusion: "è riservato"
         invalid: "non è valido"
         invalid_captcha: "testo e immagine non erano uguali"

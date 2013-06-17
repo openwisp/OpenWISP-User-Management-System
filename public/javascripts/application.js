@@ -132,13 +132,20 @@ var owums = {
     toggleVerificationMethod: function() {
         var verification_method = $('#account_verification_method');
         verification_method.change(function(){
-            if(verification_method.val() != 'mobile_phone'){
-                $('#verify-mobile-phone, li.verification-block.mobile-phone').hide();
-                $('#verify-credit-card').show();
+            var val = verification_method.val(),
+                mobile_phone_elements = $('#verify-mobile-phone, li.verification-block.mobile-phone'),
+                credit_card_elements = $('#verify-credit-card');
+            if(val == 'gestpay_credit_card'){
+                mobile_phone_elements.hide();
+                credit_card_elements.show();
+            }
+            else if(val == 'mobile_phone'){
+                mobile_phone_elements.show();
+                credit_card_elements.hide();
             }
             else{
-                $('#verify-mobile-phone, li.verification-block.mobile-phone').show();
-                $('#verify-credit-card').hide();
+                mobile_phone_elements.hide();
+                credit_card_elements.hide();
             }
             owums.toggleReadonlyUsername();
         });

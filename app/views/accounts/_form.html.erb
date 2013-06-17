@@ -28,7 +28,7 @@
     <% if account_verification_methods.length == 1 %>
         <%= f.input :verification_method, :as => :hidden %>
     <% else %>
-        <%= f.input :verification_method, :collection => account_verification_select, :prompt => false %>
+        <%= f.input :verification_method, :collection => account_verification_select, :selected => false %>
     <% end %>
 <% end %>
 
