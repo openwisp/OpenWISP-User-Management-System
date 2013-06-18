@@ -25,12 +25,12 @@
   <% end %>
 </div>
 
-<ul data-role="listview" data-inset="true" id="mobile-registration">
+<ul data-role="listview" data-inset="true" id="mobile-registration"<% if account_verification_methods.length > 1 and account.new_record? %> class="has-more-verification-methods"<% end %>>
   <% if account.new_record? %>
-      <% if account_verification_methods.length == 1 %>
+      <% if account_verification_methods.length <= 1 %>
           <%= f.input :verification_method, :as => :hidden %>
       <% else %>
-        <li data-role="fieldcontain">
+        <li data-role="fieldcontain" class="ignore-toggle" id="verification-methods-container">
           <%= f.input :verification_method, :collection => account_verification_select, :selected => false %>
         </li>
       <% end %>
