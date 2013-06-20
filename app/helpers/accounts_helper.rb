@@ -46,6 +46,7 @@ module AccountsHelper
   end
 
   def account_verification_select
-    account_verification_methods.map{ |method| [ t(method.to_sym), method ] }
+    options = ["select_verification_method"] + account_verification_methods
+    options.map{ |method| [ t(method.to_sym), method ] }
   end
 end

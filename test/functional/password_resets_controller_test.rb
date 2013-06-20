@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class PasswordResetsControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  
+  setup :activate_authlogic
+  
+  test "password reset bug" do
+    AccountSession.create(users(:one))
+    get :new
+    assert_response :success
   end
 end

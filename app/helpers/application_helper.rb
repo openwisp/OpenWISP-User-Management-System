@@ -165,7 +165,7 @@ module ApplicationHelper
   
   def link_to_user_or_operator
     if current_account
-      link_to(@current_account.username, account_url)
+      link_to(current_account.username, account_url)
     elsif @current_operator
       link_to(@current_operator.login, root_url)
     end

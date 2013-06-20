@@ -43,12 +43,12 @@ class AddNewConfigurationKeys < ActiveRecord::Migration
         c.destroy
       end
     end
-  end
-  
-  # rename "custom_account_instructions_it" to "custom_account_instructions"
-  c = Configuration.find_by_key('custom_account_instructions_it')
-  unless c.nil?
-    c.key = 'custom_account_instructions'
-    c.save
+    
+    # rename "custom_account_instructions_it" to "custom_account_instructions"
+    c = Configuration.find_by_key('custom_account_instructions_it')
+    unless c.nil?
+      c.key = 'custom_account_instructions'
+      c.save
+    end
   end
 end

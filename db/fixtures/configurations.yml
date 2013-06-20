@@ -61,7 +61,7 @@
 23:
   system_key: f
   key: "credit_card_verification_cost"
-  value: "0.1"
+  value: "0.10"
 
 24:
   system_key: f
