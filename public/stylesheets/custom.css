@@ -4,10 +4,9 @@ select {
     width:99%;
 }
 
-/*div.field_with_errors .lbl, div.field_with_errors .error, p.error {
-    padding: 2px;
+#bank-gateway p.error {
     background-color: #ff6666;
-}*/
+}
 
 div.field_with_errors span.error{ color: #ce0006 }
 
