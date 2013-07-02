@@ -1,0 +1,100 @@
+es:
+  date:
+    formats:
+      default: "%m/%d/%Y"
+
+  time:
+    formats:
+      default: "%m/%d/%y - %H:%M"
+
+  errors:
+    template:
+      header:
+        one: "Hubo un error"
+        other: "Hubo %{count} errores"
+      body: "Por favor arregle los siquientes errores:"
+
+  helpers:
+    submit:
+      account:
+        create: "Registrarse"
+        update: "Actualizar"
+      account_session:
+        create: "Iniciar sesión"
+      operator_session:
+        create: "Iniciar session"
+
+  activerecord:
+    errors:
+      messages:
+        invalid_captcha: "texto e imagen no son iguales"
+        password_format: "sólo puede tener caracteres alfanuméricos, espacios o el símbolo
+	“_”, y al menos un carácter alfabético y uno numérico."
+        mobile_phone_format: "sólo puede tener números"
+        mobile_prefix_format: "sólo puede tener números"
+        mobile_suffix_format: "sólo puede tener números"
+        name_format: "solo puede tener caracteres alfabéticos y los siguientes símbolos: ''', '.' y ','"
+        address_format: "sólo debe tener números, letras, y los siguientes símbolos : ''', '.' y ','"
+        zip_format: "es inválido"
+        email_invalid: "debe parecer una dirección de correo electrónico"
+        eula_must_be_accepted: "debe ser aceptado"
+        privacy_must_be_accepted: " debe ser aceptado"
+    attributes:
+      account:
+        image_file: "escaner tarjeta de ID"
+      user:
+        image_file: " escaner tarjeta de ID"
+
+  authlogic:
+    attributes:
+      operator_session:
+        login: "Nombre de usuario"
+
+  simple_form:
+    "yes": 'Sí'
+    "no": 'No'
+    required:
+      text: "requerido"
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Se hallaron algunos errors. Por favor, véalos."
+
+    # Labels and hints examples
+    labels:
+      account:
+        eula_acceptance: "Al hacer click en la casilla inferior está aceptando los Términos de
+	Servicio."
+        privacy_acceptance: "Al hacer click en la casilla inferior está aceptando las Políticas de Provacidad."
+        new:
+          password: "Clave secreta"
+        edit:
+          password: "Nueva clave secreta"
+      user:
+        eula_acceptance: "Al hacer click en la casilla inferior, el usuario declara aceptar los Términos de Servicio."
+        privacy_acceptance: "Al hacer click en la casilla inferior, el usuario declara aceptar las Políticas de Privacidad."
+        new:
+          password: "Clave secreta"
+        edit:
+          password: "Nueva clave secreta"
+    hints:
+      mobile_phone: "Necesitará este número para realizar su llamada. Sólo puede utilizar operadoras locales de números telefónicos móviles."
+      account:
+        captcha: "Escriba aquí el texto que ve en la imagen inferior."
+        email: "Podrá utilizar la dirección de correo electrónico para restablecer su clave secreta en caso de que la olvide."
+        password: "Debe tener al menos una letra y un número y tener 8 caracteres o más."
+        username: "Debe utilizar este nombre de usuario y su clave secreta para iniciar sesión"
+      user:
+        active: "Un usuario deshabilitado no puede utilizar el servicio. Sólo el operador podrá habilitar de nuevo al usuario. Por lo general es preferible deshabilitar el atributo de verificación del usuario ya que, al hacerlo, el usuario puede verificarse a sí mismo sin ayuda."
+        email: "Se podrá utilizar la dirección de correo electrónico para restablecer la clave	secreta del usuario en caso de que la olvide."
+        username: "Debe utilizar este nombre de usuario y clave secreta para iniciar sesión."
+        verified: "El usuario que esté verificado no podrá utilizar el servicio; pero si el usuario se registra, puede verificarse de forma autónoma repitiendo el procedimiento de verificación. Después de un periodo de inactividad (generalmente 6 meses), el usuario no verificado será eliminado permanentemente del sistema."
+  views:
+    pagination:
+      first: ""
+      last: ""
+      previous: "&laquo; anterior"
+      next: "siguiente &raquo;"
+      truncate: "..."
