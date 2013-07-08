@@ -55,13 +55,14 @@ Owums::Application.routes.draw do
     resources :stats, :only => :show
     resources :radius_checks
     resources :radius_replies
-    resources :radius_accountings, :only => :index
+    resources :radius_accountings, :only => :index # API method
   end
   resources :radius_groups do
     resources :radius_checks
     resources :radius_replies
   end
-  resources :online_users, :only => :index
+  resources :online_users, :only => :index # API method
+  resources :radius_accountings, :only => :index # API method
   resources :operators
   resources :password_resets
   resources :email_password_resets
