@@ -1,6 +1,7 @@
 xml.radius_accountings do
   @radius_accountings.each do |radius_accounting|
     xml.radius_accounting do
+      xml.rad_acct_id radius_accounting.id
       xml.username radius_accounting.username
       xml.full_name "%s %s" % [radius_accounting.given_name, radius_accounting.surname]
       xml.framed_ip_address radius_accounting.framed_ip_address

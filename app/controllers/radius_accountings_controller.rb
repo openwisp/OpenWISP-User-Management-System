@@ -17,9 +17,6 @@
 
 class RadiusAccountingsController < ApplicationController
   before_filter :require_operator
-  #before_filter :load_user
-  #before_filter :load_radius_accountings
-
   skip_before_filter :set_mobile_format
 
   access_control do
@@ -27,47 +24,71 @@ class RadiusAccountingsController < ApplicationController
 
     allow :users_browser, :to => [ :index ]
     allow :users_finder,  :to => [ :index ]
-
   end
 
   respond_to :xml, :json
 
-  # TODO:
-  # last vs limit?
-  # limit uses less resources
-  # @user.radius_accountings.with_full_name.limit(params[:last].to_i).order("id DESC").reverse
-  # use .scoped to clean up and DRY
-  # generalize last and day
-  # implement 404 (look for user first, then select radius accountings which have that username)
-
-  # GET /radius_accountings?[limit=N|ap=MAC_ADDRESS]
-  # GET /users/:user_id/radius_accountings?[day=YYYY-MM-DD|last=N]
+  # GET /radius_accountings.xml or /radius_accountings.json
+  # GET /users/:user_id/radius_accountings.xml or /users/:user_id/radius_accountings.json
+  #
+  # Querystring Parameters:
+  #   * day: filters records of specified date (string in "YYYY-MM-DD" format)
+  #   * last: limit records to specified number
+  #   * ap: filter records which contain mac address of specified AP in CallingStationId column
+  #
   def index
-    # if requesting accountings of a user
-    unless params[:user_id].nil?
-      @user = User.find_by_id_or_username!(params[:user_id])
-      # filter by date if 
-      if params[:day] and Date.parse(params[:day])
-        @radius_accountings = @user.radius_accountings.with_full_name.on_day(Date.parse(params[:day]))
-      elsif params[:last]
-        @radius_accountings = @user.radius_accountings.with_full_name.last(params[:last].to_i)
-      else
-        @radius_accountings = @user.radius_accountings.with_full_name
+    # scope object
+    @radius_accountings = RadiusAccounting.with_full_name.order("AcctStartTime DESC").scoped
+    
+    # if not requesting accountings of a user and no limit specified default to 50
+    if params[:last].nil? and params[:user_id].nil?
+      limit = 50
+    # if user accounting and no limit specified disable limit
+    elsif params[:last].nil? and params[:user_id]
+      limit = false
+    # limit according to param
+    else
+      limit = params[:last].to_i  # avoid SQL injection attempts
+    end
+    
+    # filter AP if requested
+    if params[:ap]
+      # convert semicolon-separted mac address in uppercase dash-separated
+      # eg: 00:15:6D:9F:CF:EC becomes 00-15-6D-9F-CF-EC
+      mac = params[:ap].gsub(':', '-').upcase
+      # search for specified mac address in CalledStationId column
+      @radius_accountings = @radius_accountings.where("CalledStationId LIKE ?", "#{mac}:%").scoped
+    end
+    
+    # filter by date if any specified date and format is correct 
+    if params[:day]
+      begin
+        date = Date.parse(params[:day])
+      rescue ArgumentError
+        # in case day parameter is incorrectly formatted return 400 HTTP error
+        result = { 'error' => 'Bad format for day parameter' }
+        respond_to do |format|
+          format.xml  { render :xml => result, :status => 400 }
+          format.json { render :json => result, :status => 400 }
+        end
+        return
       end
-    # requesting all the accountings
-  else
-      # determine limit if present, otherwise default limit is 50, maximum limit is also 50
-      limit = (!params[:limit].nil? and params[:limit].to_i <= 50) ? params[:limit] : 50
       
-      # filter AP if requested
-      unless params[:ap].nil?
-        # convert semicolon-separted mac address in uppercase dash-separated
-        # eg: 00:15:6D:9F:CF:EC becomes 00-15-6D-9F-CF-EC
-        mac = params[:ap].gsub(':', '-').upcase
-        @radius_accountings = RadiusAccounting.with_full_name.where("CalledStationId LIKE ?", "#{mac}:%").order("AcctStartTime DESC").limit(limit)
-      else
-        @radius_accountings = RadiusAccounting.with_full_name.order("AcctStartTime DESC").limit(limit)
-      end
+      @radius_accountings = @radius_accountings.on_day(date).scoped
+    end
+    
+    if limit
+      @radius_accountings = @radius_accountings.limit(limit)
+    end
+    
+    # if requesting accountings of a user
+    if params[:user_id]
+      # retrieve user
+      @user = User.find_by_id_or_username!(params[:user_id])
+      # scope radius accounting query to retrieve records belonging to user only
+      @radius_accountings = @radius_accountings.where(:UserName => @user.username)
+      # backward compatibility: emulate the same behaviour of .last()
+      @radius_accountings = @radius_accountings.reverse
     end
 
     respond_to do |format|
@@ -75,20 +96,4 @@ class RadiusAccountingsController < ApplicationController
       format.json { render :json => @radius_accountings.to_json }
     end
   end
-
-  private
-
-  #def load_user
-  #  @user = User.find_by_id_or_username!(params[:user_id])
-  #end
-  #
-  #def load_radius_accountings
-  #  if params[:day] and Date.parse(params[:day])
-  #    @radius_accountings = @user.radius_accountings.on_day(Date.parse(params[:day]))
-  #  elsif params[:last]
-  #    @radius_accountings = @user.radius_accountings.last(params[:last].to_i)
-  #  else
-  #    @radius_accountings = @user.radius_accountings
-  #  end
-  #end
 end
