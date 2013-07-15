@@ -23,8 +23,7 @@
         <% if owner.new_record? %>
             <div class="verification-block">
               <span><%= form.label :mobile_phone %></span>
-              <span style="float:right"><%=t :mobile_phone, :scope => [:simple_form, :hints] %></span>
-
+              <div><%=t :mobile_phone, :scope => [:simple_form, :hints] %></div> 
               <div class="block">
                 <div class="grid_4">
                   <%= form.input :mobile_prefix, :collection => prefixes, :prompt => t(:select_prefix) %>
