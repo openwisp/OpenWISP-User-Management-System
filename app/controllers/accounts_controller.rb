@@ -195,9 +195,14 @@ class AccountsController < ApplicationController
         unless flash[:error].nil?
           flash.delete(:error)
         end
-        # instance variable needed for credit card verification
-        @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
+        # instance variables needed for credit card verification
         @currency_code = Configuration.get('gestpay_currency')
+        # verification cost, 0 if verification web service method us used
+        if Configuration.get('gestpay_webservice_method') == 'verification'
+          @credit_card_verification_cost = 0
+        else
+          @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
+        end
       end
       respond_to do |format|
         if request.xhr? # Ajax request

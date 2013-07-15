@@ -442,7 +442,7 @@ input.error{ border: 2px solid red }
 #visa_mastercard{
     position: absolute;
     right: 33px;
-    bottom: 65px;
+    top: 108px;
 }
 
 table.selectable td{ cursor: pointer }
@@ -478,7 +478,7 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 #stats input{ width: auto }
 #ui-datepicker-div select{ padding: 0; height: auto }
 
-#users{ margin-top: 20px }
+#users{ margin-top: 20px; clear: both }
 #users tbody td{ font-size: 12px }
 
 .pagination{ float: left; margin: 4px 10px 15px 0 }

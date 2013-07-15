@@ -30,9 +30,9 @@
           <% ((Date.today.strftime "%y").to_i..(Date.today.strftime "%y").to_i+8).each do |i| %><option value="<%= i %>"<% if i == params[:expiration_year].to_i %> selected="selected"<% end %>><%= i %></option><% end %>
         </select>
       </p>
-      <p>
+      <p<% if Configuration.get('gestpay_webservice_method') == 'verification' %> class="hidden"<% end %>>
         <label for="credit_card_cvv"><%= t :Security_code %></label>
-        <input type="text" id="id_credit_card_cvv" name="cvv" maxlength="4" value="<%= params[:cvv] %>" />
+        <input type="text" id="id_credit_card_cvv" name="cvv" maxlength="4" value="<%= Configuration.get('gestpay_webservice_method') == 'verification' ? '000' : params[:cvv] %>" />
       </p>
       <p><input class="button" name="commit" type="submit" value="<%= t :Verify_card %>" /></p>
       <%= image_tag('visa-mastercard.png', :id => 'visa_mastercard') %>
