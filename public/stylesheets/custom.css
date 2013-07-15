@@ -498,3 +498,5 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 .pagination .current a{ background: #d3d3d3 !important; color: #333; cursor: default  }
 
 ul.nomargin,.button.nomargin{ margin-bottom: 0 !important }
+
+#go-to-mobile a{ color: #333 }

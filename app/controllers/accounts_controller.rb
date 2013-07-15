@@ -59,12 +59,18 @@ class AccountsController < ApplicationController
     save_account = request.format.xml? ? @account.save : @account.save_with_captcha
 
     if save_account
+      # by default no verification method is selected
+      @verification_method = false
+      
       respond_to do |format|
         format.html { redirect_to account_path }
         format.mobile { redirect_to account_path }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :created }
       end
     else
+      # select verification method automatically
+      @verification_method = params[:account][:verification_method]
+      
       respond_to do |format|
         format.html   { render :action => :new }
         format.mobile { render :action => :new }
