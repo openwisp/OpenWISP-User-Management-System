@@ -43,7 +43,7 @@ class User < AccountCommon
 
   attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
                   :email, :email_confirmation, :password, :password_confirmation,
-                  :mobile_prefix, :mobile_suffix, :verified, :verification_method,
+                  :mobile_prefix, :mobile_suffix, :verified, :active, :verification_method,
                   :notes, :eula_acceptance, :privacy_acceptance,
                   :username, :image_file_temp, :image_file, :image_file_data, :radius_group_ids
 

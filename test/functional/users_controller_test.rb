@@ -66,4 +66,30 @@ class UsersControllerTest < ActionController::TestCase
   
     assert_redirected_to users_path
   end
+  
+  test "should unverify user" do
+    OperatorSession.create(operators(:admin))
+    
+    user = users(:one)
+    assert_equal true, user.verified
+    
+    put :update, :id => user.to_param, :user => { :verified => 0 }
+    assert_redirected_to user_path(assigns(:user))
+    
+    user = User.find(user.id)
+    assert_equal false, user.verified
+  end
+  
+  test "should disable user" do
+    OperatorSession.create(operators(:admin))
+    
+    user = users(:one)
+    assert_equal true, user.active
+    
+    put :update, :id => user.to_param, :user => { :active => 0 }
+    assert_redirected_to user_path(assigns(:user))
+    
+    user = User.find(user.id)
+    assert_equal false, user.active
+  end
 end
