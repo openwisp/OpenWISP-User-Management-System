@@ -44,4 +44,17 @@ class AccountsControllerTest < ActionController::TestCase
     #  account.captive_portal_login!
     end
   end
+  
+  test "is_expired false" do
+    AccountSession.create(users(:one))
+    get :is_expired
+    assert_response :success
+    assert_equal false, JSON::parse(response.body)['is_expired']
+  end
+  
+  test "is_expired true" do
+    get :is_expired
+    assert_response :success
+    assert_equal true, JSON::parse(response.body)['is_expired']
+  end
 end
