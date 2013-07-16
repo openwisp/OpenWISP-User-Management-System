@@ -216,6 +216,10 @@ class AccountsController < ApplicationController
       end
     end
   end
+  
+  def is_expired
+    render :json => { :is_expired => @account.nil? }
+  end
 
   def verify_paypal
     # Method to be called by paypal (IPN) to

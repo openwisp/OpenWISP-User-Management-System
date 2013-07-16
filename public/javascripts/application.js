@@ -100,12 +100,17 @@ var owums = {
     },
 
     periodicallyCheckVerification: function(opts){
-        var _freq = opts.frequency*1000;
+        var _freq = opts.frequency*2000;
         var _url = opts.url;
         var _update = opts.update;
 
         setInterval(function(){
-            $(_update).load(_url);
+            if(typeof _update === "function"){
+                _update();
+            }
+            else{
+                $(_update).load(_url);
+            }
         }, _freq);
     },
 
