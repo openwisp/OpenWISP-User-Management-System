@@ -27,6 +27,22 @@
           <%= form_tag users_path, :method => :get, :remote => true do %>
               <%= label_tag :search, t(:Search_by_user_name_surname_mobile) %>
               <%= text_field_tag :search %>
+              <p>
+                <label>Verification method: <%= select_tag :verification_method, options_for_select(user_search_verification_methods()) %> </label> 
+              </p>
+              <p>
+                Verified:
+                <label><input type="radio" name="verified" value="" style="width:auto" /> All</label>
+                <label><input type="radio" name="verified" value="true" style="width:auto" /> Yes</label>
+                <label><input type="radio" name="verified" value="false" style="width:auto" /> No</label>
+              </p>
+              <p>
+                Enabled:
+                <label><input type="radio" name="enabled" value="" style="width:auto" /> All</label>
+                <label><input type="radio" name="enabled" value="true" style="width:auto" /> Yes</label>
+                <label><input type="radio" name="enabled" value="false" style="width:auto" /> No</label>
+              </p>
+              <input type="submit">
           <% end %>
         </fieldset>
       </div>

@@ -41,4 +41,9 @@ module UsersHelper
   def user_verification_select
     user_verification_methods.map{ |method| [ t(method.to_sym), method ] }
   end
+  
+  def user_search_verification_methods
+    options = ["all"] + User.self_verification_methods
+    options.map{ |method| [ t(method.to_sym), method ] }
+  end
 end
