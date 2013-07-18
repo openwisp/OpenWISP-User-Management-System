@@ -442,7 +442,7 @@ input.error{ border: 2px solid red }
 #visa_mastercard{
     position: absolute;
     right: 33px;
-    top: 108px;
+    bottom: 20px;
 }
 
 table.selectable td{ cursor: pointer }

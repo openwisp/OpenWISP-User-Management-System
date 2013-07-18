@@ -17,11 +17,15 @@
 
 class AccountsController < ApplicationController
   before_filter :require_account, :only => [
-      :show, :edit, :update, :gestpay_verify_credit_card, :gestpay_verified_by_visa
+    :show, :edit, :update, :gestpay_verify_credit_card, :gestpay_verified_by_visa
   ]
 
   before_filter :require_no_account, :only => [
-      :new, :create, :verify_paypal, :secure_verify_paypal
+    :new, :create, :verify_paypal, :secure_verify_paypal
+  ]
+  
+  before_filter :get_credit_card_verification_cost, :only => [
+    :new, :create, :verification, :gestpay_verify_credit_card
   ]
 
   before_filter :require_no_operator
@@ -177,6 +181,7 @@ class AccountsController < ApplicationController
     end
   end
 
+  # before_filters: (load_account, get_credit_card_verification_cost)
   def verification
     if @account.nil? # Account expired (and removed by the housekeeping backgroundrb job)
       respond_to do |format|
@@ -194,14 +199,6 @@ class AccountsController < ApplicationController
         # delete any remaining flash message
         unless flash[:error].nil?
           flash.delete(:error)
-        end
-        # instance variables needed for credit card verification
-        @currency_code = Configuration.get('gestpay_currency')
-        # verification cost, 0 if verification web service method us used
-        if Configuration.get('gestpay_webservice_method') == 'verification'
-          @credit_card_verification_cost = 0
-        else
-          @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
         end
       end
       respond_to do |format|
@@ -252,9 +249,9 @@ class AccountsController < ApplicationController
     render :nothing => true
   end
   
+  # before_filter: get_credit_card_verification_cost
   def gestpay_verify_credit_card
     gestpay_enabled = Configuration.get('gestpay_enabled') == 'true' ? true : false;
-    @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
     @currency_code = Configuration.get('gestpay_currency')
     @verified_by_visa = false
     
@@ -332,6 +329,18 @@ class AccountsController < ApplicationController
 
   def load_account
     @account = current_account
+  end
+  
+  def get_credit_card_verification_cost
+    if Configuration.get('gestpay_enabled') != 'true'
+      return @credit_card_verification = false
+    end
+    # verification cost, 0 if verification web service method us used
+    if Configuration.get('gestpay_webservice_method') == 'verification'
+      @credit_card_verification_cost = 0
+    else
+      @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
+    end
   end
 
   def sort_and_paginate_accountings

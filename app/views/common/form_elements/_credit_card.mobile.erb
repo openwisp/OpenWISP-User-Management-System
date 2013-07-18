@@ -22,7 +22,11 @@
 %>
     <% if owner.new_record? %>
         <li data-role="fieldcontain" class="verification-block" id="verify-credit-card">
-          <%=t :credit_card_instructions, :count => Configuration.get("credit_card_verification_cost") %>
+          <% if @credit_card_verification_cost > 0 %>
+            <%= t(:credit_card_instructions, :count => number_to_currency_custom(@credit_card_verification_cost)).html_safe %>
+          <% else %>
+            <%= t(:credit_card_instructions_free).html_safe %>
+          <% end %>
         </li>
     <% end %>
 <% end %>

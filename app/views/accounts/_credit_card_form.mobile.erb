@@ -1,11 +1,11 @@
 <% unless @verified_by_visa %>
 <h3><%= t :Verify_your_credit_card %></h3>
 <% if @credit_card_verification_cost > 0 and not flash[:notice] %>
-<p><%= t(:Credit_card_verification_cost, :cost => number_to_currency_custom(@credit_card_verification_cost, @currency_code)).html_safe %></p>
+<p><%= t(:Credit_card_verification_cost, :cost => number_to_currency_custom(@credit_card_verification_cost)).html_safe %></p>
 <% elsif not flash[:notice] %>
-<p><%= t :Credit_card_verification_cost0 %></p>
+<p><%= t(:Credit_card_verification_cost0).html_safe %></p>
 <% end %>
-<p><strong><%= t :Credit_card_secure_operation %></strong></p>
+<p><strong><%= t(:Credit_card_secure_operation).html_safe %></strong></p>
 <p id="visa-mastercard-logo"><%= image_tag('visa-mastercard.png') %></p>
 <form id="cc_form" action="<%= gestpay_verify_credit_card_path %>" method="post" data-remote="true">
   <ul data-role="listview" data-inset="true" id="credit-card-verification">
