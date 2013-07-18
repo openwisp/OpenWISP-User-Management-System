@@ -194,6 +194,8 @@ class AccountsController < ApplicationController
           format.xml { render_if_xml_restful_enabled :nothing => true, :status => :request_timeout }
         end
       end
+    elsif @account.verified?
+      redirect_to account_path
     else
       if Configuration.get('gestpay_enabled') == 'true':        
         # delete any remaining flash message

@@ -51,6 +51,7 @@
   </script>
 
   <% if account.new_record? %>
+      
       <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
       <li data-role="fieldcontain">
         <%= f.input :captcha %>
