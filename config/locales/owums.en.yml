@@ -285,6 +285,7 @@ If you still have problems resetting the password, try repeating the procedure"
   Verification_expire_time_x_mins:
     one: "You have about %{count} minute left to verify your account."
     other: "You have about %{count} minutes left to verify your account."
+  Verification_expire_time_remaining: Verification time expires in
   Verification_time_expired: "Verification time expired"
   Verified: "Verified"
   Verified_qm: "Verified?"

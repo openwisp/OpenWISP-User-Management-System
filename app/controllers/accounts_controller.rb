@@ -215,7 +215,12 @@ class AccountsController < ApplicationController
   end
   
   def is_expired
-    render :json => { :is_expired => @account.nil? }
+    remaining_time = @account.verification_time_remaining rescue 0
+    
+    render :json => {
+      :is_expired => @account.nil?,
+      :remaining_time => remaining_time
+    }
   end
 
   def verify_paypal

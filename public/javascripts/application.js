@@ -100,7 +100,7 @@ var owums = {
     },
 
     periodicallyCheckVerification: function(opts){
-        var _freq = opts.frequency*2000;
+        var _freq = opts.frequency*1000;
         var _url = opts.url;
         var _update = opts.update;
 
@@ -323,7 +323,7 @@ var owums = {
         if(bank_gateway.length && !bank_gateway.hasClass('mobile')){
             var overlay = $('.overlay'),
                 loading = $('#loading-overlay');
-            loading.togglePop();    
+            loading.togglePop();
             owums.enhanceCreditCardForm();
             $(window).resize(function(e){
               overlay.centerElement();

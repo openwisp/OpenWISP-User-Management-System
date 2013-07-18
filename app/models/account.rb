@@ -98,6 +98,18 @@ class Account < AccountCommon
   def expire_time
     (self.verification_expire_timeout - (Time.now - self.created_at).to_i + 60) / 60
   end
+  
+  def expire_seconds
+    (self.verification_expire_timeout - (Time.now - self.created_at).to_i)
+  end
+  
+  def verification_time_remaining
+    if self.expire_seconds > 0
+      Time.at(self.expire_seconds).gmtime.strftime('%M:%S')
+    else
+      return 0
+    end
+  end
 
   def ask_for_mobile_phone_password_recovery!
     if self.verify_with_mobile_phone?

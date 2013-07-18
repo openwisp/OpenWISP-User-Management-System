@@ -24,7 +24,8 @@
             frequency: 2,
             url: false,
             update: function(){
-                $.get('is_expired', function(response){
+                $.get('<%= is_expired_url %>', function(response){
+                    $('#expire-in').html(response['remaining_time']);
                     if(response['is_expired'] === true){
                         // update
                         location.href = location.href;
