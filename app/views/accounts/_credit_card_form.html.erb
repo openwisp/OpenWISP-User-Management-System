@@ -42,13 +42,15 @@
         <%= image_tag('visa-mastercard.png', :id => 'visa_mastercard') %>
       </fieldset>
     </form>
-    <p id="verification-expire-time">
-    <% if @account.expire_time > 0 %>
-      <%= t(:Verification_expire_time_remaining) %>: <strong id="expire-in"><%= @account.verification_time_remaining %></strong>
-    <% else %>
-      <%= t(:Verification_expire_time_less_than_a_minute) %>
+    <% unless @account.already_verified_once? %>
+      <p id="verification-expire-time">
+        <% if @account.expire_time > 0 %>
+          <%= t(:Verification_expire_time_remaining) %>: <strong id="expire-in"><%= @account.verification_time_remaining %></strong>
+        <% else %>
+          <%= t(:Verification_expire_time_less_than_a_minute) %>
+        <% end %>
+      </p>
     <% end %>
-    </p>
   <% else %>
   <p class="notice"><%= flash[:notice] %></p>
   <% end %>

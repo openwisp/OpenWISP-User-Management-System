@@ -104,7 +104,7 @@ class Account < AccountCommon
   end
   
   def verification_time_remaining
-    if self.expire_seconds > 0
+    if not self.verified? and self.expire_seconds > 0
       Time.at(self.expire_seconds).gmtime.strftime('%M:%S')
     else
       return 0
