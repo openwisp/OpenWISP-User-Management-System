@@ -17,24 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<script type="text/javascript">
-    // detect expired registration attempts
-    $(function(){
-        owums.periodicallyCheckVerification({
-            frequency: 2,
-            url: false,
-            update: function(){
-                $.get('<%= is_expired_url %>', function(response){
-                    $('#expire-in').html(response['remaining_time']);
-                    if(response['is_expired'] === true){
-                        // update
-                        location.href = location.href;
-                    }
-                })
-            }
-        });
-    });
-</script>
+<%= render :partial => 'verification_periodic_check.html.erb' %>
 
 <% unless @account.verify_with_gestpay? %>    
     <% content_for :header do %>

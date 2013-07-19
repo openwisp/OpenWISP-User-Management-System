@@ -195,6 +195,7 @@ class AccountsController < ApplicationController
         end
       end
     elsif @account.verified?
+      flash[:notice] = I18n.t(:Account_verified_successfully)
       redirect_to account_path
     else
       if Configuration.get('gestpay_enabled') == 'true':        
@@ -216,13 +217,25 @@ class AccountsController < ApplicationController
     end
   end
   
-  def is_expired
-    remaining_time = @account.verification_time_remaining rescue 0
+  # account status
+  def status_json
+    unless @account.nil?
+      remaining_time = @account.verification_time_remaining rescue 0
+      
+      data = {
+        :is_verified => @account.verified?,
+        :is_expired => false,
+        :remaining_time => remaining_time
+      }
+    else
+      data = {
+        :is_verified => false,
+        :is_expired => true,
+        :remaining_time => 0
+      }
+    end
     
-    render :json => {
-      :is_expired => @account.nil?,
-      :remaining_time => remaining_time
-    }
+    render :json => data
   end
 
   def verify_paypal

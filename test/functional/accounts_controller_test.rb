@@ -45,16 +45,26 @@ class AccountsControllerTest < ActionController::TestCase
     end
   end
   
-  test "is_expired false" do
+  test "status is_expired false" do
     AccountSession.create(users(:one))
-    get :is_expired
+    get :status_json
     assert_response :success
-    assert_equal false, JSON::parse(response.body)['is_expired']
+    
+    # convert response into hash
+    data = JSON::parse(response.body)
+    
+    assert_equal false, data['is_expired']
+    assert_equal true, data['is_verified']
   end
   
-  test "is_expired true" do
-    get :is_expired
+  test "status is_expired true" do
+    get :status_json
     assert_response :success
-    assert_equal true, JSON::parse(response.body)['is_expired']
+    
+    # convert response into hash
+    data = JSON::parse(response.body)
+    
+    assert_equal true, data['is_expired']
+    assert_equal false, data['is_verified']
   end
 end
