@@ -397,3 +397,18 @@ Staff"
     system_key: f
     key: "account_notification_subject_es"
     value: "Ha sido creada una nueva cuenta [OpenWISP User Management System]"
+
+103:
+  system_key: f
+  key: "custom_account_instructions_es"
+  value: ""
+
+104:
+  system_key: f
+  key: "verification_explain_creditcard_es"
+  value: "<p>In order to <strong>prevent any abuse of service</strong>, we have to <strong>verify the identity of all the users</strong> who use this wifi service.</p><p>If you own an <strong>Italian mobile phone SIM card</strong> select <strong>\"Mobile Phone Number\"</strong> from the following menu, otherwise you can select the method <strong>\"Credit Card\"</strong>.</p>"
+  
+105:
+  system_key: f
+  key: "verification_explain_mobile_es"
+  value: "<p>Al fine di <strong>prevenire abusi del servizio</strong>, siamo costretti a <strong>verificare l'identità</strong> degli utenti che utilizzano il servizio wifi.</p><p>Sei sei in possesso di una <strong>SIM italiana</strong> seleziona il metodo di verifica dell'identità <strong>\"Numero di cellulare\"</strong> dal seguente menu.</p>"
