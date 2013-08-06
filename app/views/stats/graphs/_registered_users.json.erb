@@ -24,11 +24,13 @@
     }<% if User.self_verification_methods.length > 1 %>,
     {
         "name": "<%=t :mobile_phone %>",
-        "data": <%= data['mobile_phone'].to_json %>
+        "data": <%= data['mobile_phone'].to_json %>,
+        "visible": false
     },
     {
         "name": "<%=t :credit_card %>",
-        "data": <%= data['credit_card'].to_json %>
+        "data": <%= data['credit_card'].to_json %>,
+        "visible": false
     }
     <% end %>
 ]
