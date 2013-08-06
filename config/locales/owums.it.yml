@@ -391,3 +391,8 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   invoice_admin_notification_message: Una nuova ricevuta è stata generata ed è allegata a quest'email.
   account_notification_invoice_message: Grazie per aver usato il nostro sistema di verifica d'identità basato su carta di credito. Puoi trovare la ricevuta in allegato a quest'email.
   select_verification_method: "Seleziona un metodo di verifica dell'identità"
+  Verification_method: Metodo di verifica
+  all: Tutti
+  Enabled: Abilitato
+  "Yes": 'Sì'
+  "No": 'No'

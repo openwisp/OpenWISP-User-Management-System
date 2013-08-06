@@ -17,6 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
+<% content_for :after_defaults do %>
+    <%= stylesheet_link_tag 'jquery-ui/styles' %>
+    <%= javascript_include_tag 'jquery-ui' %>
+<% end %>
+
 <div class="grid_12">
   <div class="box">
     <h2><%=t :Browse_users %> <%= image_tag 'spinner_black.gif', :id => 'loading', :class => 'hidden' %></h2>
@@ -27,29 +32,42 @@
           <%= form_tag users_path, :method => :get, :remote => true do %>
               <%= label_tag :search, t(:Search_by_user_name_surname_mobile) %>
               <%= text_field_tag :search %>
-              <p>
-                <label>Verification method: <%= select_tag :verification_method, options_for_select(user_search_verification_methods()) %> </label> 
+              <% if User.self_verification_methods.length > 1 %>
+                <p id="verification-method-search">
+                  <label><%=t :Verification_method %>: <%= select_tag :verification_method, options_for_select(user_search_verification_methods()) %> </label> 
+                </p>
+              <% end %>
+              <p id="verified-radio">
+                <%=t :Verified %>:
+                <input type="radio" name="verified" value="" id="verified-all" checked="checked" /> <label for="verified-all"><%=t :all %></label>
+                <input type="radio" name="verified" value="true" id="verified-yes" /> <label for="verified-yes"><%=t :Yes %></label>
+                <input type="radio" name="verified" value="false" id="verified-no" /> <label for="verified-no"><%=t :No %></label>
               </p>
-              <p>
-                Verified:
-                <label><input type="radio" name="verified" value="" style="width:auto" /> All</label>
-                <label><input type="radio" name="verified" value="true" style="width:auto" /> Yes</label>
-                <label><input type="radio" name="verified" value="false" style="width:auto" /> No</label>
+              <p id="enabled-radio">
+                <%=t :Enabled %>:
+                <input type="radio" name="enabled" value="" id="enabled-all" checked="checked" /> <label for="enabled-all"><%=t :all %></label>
+                <input type="radio" name="enabled" value="true" id="enabled-yes" /> <label for="enabled-yes"><%=t :Yes %></label>
+                <input type="radio" name="enabled" value="false" id="enabled-no" /> <label for="enabled-no"><%=t :No %></label>
               </p>
-              <p>
-                Enabled:
-                <label><input type="radio" name="enabled" value="" style="width:auto" /> All</label>
-                <label><input type="radio" name="enabled" value="true" style="width:auto" /> Yes</label>
-                <label><input type="radio" name="enabled" value="false" style="width:auto" /> No</label>
-              </p>
-              <input type="submit">
           <% end %>
         </fieldset>
       </div>
+      
+      <script>
+        $(function(){
+          $("#verified-radio").buttonset();
+          $("#enabled-radio").buttonset();
+          $('#verified-radio, #enabled-radio, #verification_method').change(function(e){
+            $(this).parents('form').trigger('submit')
+          });
+        });
+      </script>
 
       <div class="block" id="search_block">
         <%= render 'list', :users => @users, :total_users => @total_users %>
       </div>
+      
+      <%= link_to t(:Add_new_user), new_user_url, :class => 'button submit' %>
     </div>
   </div>
 </div>

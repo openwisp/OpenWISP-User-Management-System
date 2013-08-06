@@ -500,3 +500,7 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 ul.nomargin,.button.nomargin{ margin-bottom: 0 !important }
 
 #go-to-mobile a{ color: #333 }
+
+.ui-buttonset label{ width: auto !important; min-width: 60px }
+
+#verified-radio, #enabled-radio{ float: left; margin-right: 20px }

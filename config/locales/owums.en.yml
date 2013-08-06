@@ -392,3 +392,8 @@ If you still have problems resetting the password, try repeating the procedure"
   invoice_admin_notification_message: A new receipt was generated, see the attachment to this mail.
   account_notification_invoice_message: Thank you for using our credit card identity verification system. You can find a receipt of your operation attached to this mail.
   select_verification_method: "Please select an identity verification method"
+  Verification_method: Verification method
+  all: All
+  Enabled: Enabled
+  "Yes": 'Yes'
+  "No": 'No'
