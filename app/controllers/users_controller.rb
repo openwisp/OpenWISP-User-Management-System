@@ -298,10 +298,10 @@ class UsersController < ApplicationController
 
     unless search.nil?
       search.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      sql <<  "AND (given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix)" +
+      sql <<  "AND (given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR email LIKE ? OR CONCAT(mobile_prefix,mobile_suffix)" +
               "LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?)"
       bind_params += [
-        "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
+        "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
       ]
     end
     
