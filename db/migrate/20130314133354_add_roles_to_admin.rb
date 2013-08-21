@@ -16,7 +16,7 @@ class AddRolesToAdmin < ActiveRecord::Migration
 
   def self.down
     admin = Operator.find_by_login("admin")
-    
+
     if admin.nil?
       return
     end
