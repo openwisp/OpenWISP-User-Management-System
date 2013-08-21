@@ -4,6 +4,17 @@ class AccountsControllerTest < ActionController::TestCase
   
   setup :activate_authlogic
   
+  test "index accessible" do
+    get :instructions
+    assert_response :success
+    
+    get :instructions, { :locale => :en }
+    assert_response :success
+    
+    get :instructions, { :locale => :es }
+    assert_response :success
+  end
+  
   test "account registration should be accessible" do
     get :new
     assert_response :success

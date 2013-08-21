@@ -127,6 +127,7 @@ es:
   Loading: "Cargando"
   Loading_data: "Cargando datos: por favor, espere."
   Logged_in: "¿Inició sesión?"
+  logged_in_as: "conectado como"
   Loggedin_users: "Usuarios que tienen sesión abierta."
   Login: "Iniciar Sesión"
   Logins: "Iniciar Sesiones"
@@ -361,3 +362,41 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
   verified_qm: "¿Verificado?"
   will_be_your_username: "sera su nombre de usuario"
   zip: "zip"
+  Verified_by_visa_heading: "Completa la procedura sul sito della tua banca"
+  Verified_by_visa_text: "<p>Accedi al sito della tua banca per inserire il <strong>PIN di sicurezza</strong> della tua carta di credito <strong>Verified By Visa</strong> e completare quindi la procedura di verifica della tua identità.</p>
+  <p>Hai a disposizione <strong>%{minutes} minuti</strong> per completare il procedimento, dopodichè la tua sessione scadrà.</p>"
+  Proceed: "Procedi"
+  Gestpay_verified_by_visa_error_heading: "Errore verifica Verified by Visa"
+  Gestpay_verified_by_visa_error_text: "C'è stato un errore con la procedura di verifica della tua carta verified by visa"
+  Repeat_procedure: "Ripeti la procedura di verifica della carta di credito"
+  Account_verified_successfully: "Account verificato con successo, ora puoi navigare."
+  VBV_system_error: "C'è stato un errore di sistema, perfavore segnala il problema ad un amministratore"
+  active_merchant_year: "Carta scaduta"
+  active_merchant_number: "Numero di carta di credito non valido"
+  active_merchant_brand: "Tipo di carta non riconosciuto"
+  gestpay_error_433: "Data di scadenza della carta errata"
+  gestpay_error_454: "Data di scadenza della carta errata"
+  gestpay_error_74: "Autorizzazione negata: codice di sicurezza errato"
+  gestpay_error_97: "Autorizzazione negata: codice di sicurezza errato"
+  gestpay_error_417: "Autorizzazione negata: codice di sicurezza errato"
+  verification_message_first_step: "Verifica della carta di credito in corso, attendere prego..."
+  verification_message_second_step: "Banca contattata, stiamo verificando i dati, attendere ancora qualche istante prego..."
+  Receipt: Ricevuta
+  Date: Data
+  Description: Descrizione
+  Amount: Importo
+  Tax: IVA
+  Total: Totale
+  Customer_details: Dettagli intestatario
+  Transaction_info: Informazioni Transazione
+  Transaction_ID: ID Transazione
+  Gateway: Gateway
+  invoice_admin_notification_subject: Nuova Ricevuta Generata
+  invoice_admin_notification_message: Una nuova ricevuta è stata generata ed è allegata a quest'email.
+  account_notification_invoice_message: Grazie per aver usato il nostro sistema di verifica d'identità basato su carta di credito. Puoi trovare la ricevuta in allegato a quest'email.
+  select_verification_method: "Seleziona un metodo di verifica dell'identità"
+  Verification_method: Metodo di verifica
+  all: Tutti
+  Enabled: Abilitato
+  "Yes": 'Sì'
+  "No": 'No'

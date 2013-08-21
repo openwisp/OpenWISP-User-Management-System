@@ -342,7 +342,11 @@ class AccountsController < ApplicationController
   end
 
   def instructions
-    @custom_instructions = Configuration.get('custom_account_instructions_%s' % I18n.locale).html_safe
+    begin
+      @custom_instructions = Configuration.get('custom_account_instructions_%s' % I18n.locale).html_safe
+    rescue NoMethodError
+      @custom_instructions = Configuration.get('custom_account_instructions_en').html_safe
+    end
   end
 
   private
