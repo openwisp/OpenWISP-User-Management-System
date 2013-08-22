@@ -99,8 +99,20 @@ class StatsController < ApplicationController
       when 'user_logins' then User.find(params[:user_id]).session_times_from(@from)
       when 'user_traffic' then User.find(params[:user_id]).traffic_sessions_from(@from)
 
-      when 'registered_users' then User.registered_each_day(@from, @to)
-      when 'registered_users_daily' then User.registered_daily(@from, @to)
+      when 'registered_users'
+        data = { 'all' => User.registered_each_day(@from, @to) }
+        if User.self_verification_methods.length > 1
+          data['mobile_phone'] = User.registered_each_day(@from, @to, 'mobile_phone')
+          data['credit_card'] = User.registered_each_day(@from, @to, 'gestpay_credit_card')
+        end
+        return data
+      when 'registered_users_daily'
+        data = { 'all' => User.registered_daily(@from, @to) }
+        if User.self_verification_methods.length > 1
+          data['mobile_phone'] = User.registered_daily(@from, @to, 'mobile_phone')
+          data['credit_card'] = User.registered_daily(@from, @to, 'gestpay_credit_card')
+        end
+        return data
       when 'traffic' then RadiusAccounting.traffic_each_day(@from, @to)
       when 'logins' then RadiusAccounting.logins_each_day(@from, @to)
 

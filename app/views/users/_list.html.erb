@@ -46,16 +46,20 @@
         <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
         <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
       </th>
+      <% if CONFIG['state'] %>
       <th scope="col" <%= sort_td_class_helper "state" %>>
         <%= sort_remote_link_helper t(:State), 'state' %>
         <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
         <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
       </th>
+      <% end %>
+      <% if CONFIG['city'] %>
       <th scope="col" <%= sort_td_class_helper "city" %>>
         <%= sort_remote_link_helper t(:City), 'city' %>
         <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
         <%= image_tag("arrow_down.gif", :class =>"arrow_down", :size => "14x14") %>
       </th>
+      <% end %>
       <th scope="col" <%= sort_td_class_helper "verified" %>>
         <%= sort_remote_link_helper t(:Verified_qm), 'verified' %>
         <%= image_tag("arrow_up.gif", :class =>"arrow_up", :size => "14x14") %>
@@ -79,8 +83,12 @@
           <td><%= link_to h(user.username), user %></td>
           <td><%= user.given_name %></td>
           <td><%= user.surname %></td>
+          <% if CONFIG['state'] %>
           <td><%= user.state %></td>
+          <% end %>
+          <% if CONFIG['city'] %>
           <td><%= user.city %></td>
+          <% end %>
           <td><%= image_tag( user.verified? ? 'accept.png' : 'delete.png' ) %></td>
           <td><%= image_tag( user.active? ? 'accept.png' : 'delete.png' ) %></td>
           <% if current_operator.has_role? 'users_manager' %>

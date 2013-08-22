@@ -42,11 +42,11 @@
           <a href="#"><%= image_tag('gestpay_new_mobile.png') %></a>
           <br /><br /><br />-->
       <% end %>      
-      <% unless @account.already_verified_once? %>
+      <% unless @account.already_verified_once? or @account.verify_with_gestpay? %>
           <% if @account.expire_time > 0 %>
-              <p style="font-size:100%"><%= t(:Verification_expire_time_x_mins, :count => @account.expire_time) %></p>
+              <p style="font-size:80%"><%= t(:Verification_expire_time_remaining) %>: <strong id="expire-in"><%= @account.verification_time_remaining %></strong></p>
               <% if @account.verify_with_mobile_phone? %>
-                  <p style="font-size:100%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
+                  <p style="font-size:80%"><%=t :If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire %></p>
               <% end %>
           <% else %>
               <p style="font-size:80%"><%= t(:Verification_expire_time_less_than_a_minute) %></p>

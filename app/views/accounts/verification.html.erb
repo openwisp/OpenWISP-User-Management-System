@@ -17,21 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<%#
-# if verification method is not gestpay do a periodic check and if necessary redirect the specified page
-# otherwise the check will be done one time only after clicking on the close icon of the payment overlay
-#%>
-<% unless @account.verify_with_gestpay? %>
-    <% content_for :after_defaults do %>
-        <%= javascript_tag "$(function(){
-            owums.periodicallyCheckVerification({
-                frequency: 2,
-                url: '#{ url_for(:action => 'verification', :id => @single_access_token) }',
-                update: '#verification'
-            });
-        }); " %>
-    <% end %>
-<% end %>
+<%= render :partial => 'verification_periodic_check.html.erb' %>
 
 <div class="grid_12">
   <div id="verification">

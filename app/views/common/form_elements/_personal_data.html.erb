@@ -23,11 +23,12 @@
 
 <div<% unless CONFIG['birth_date'] %> class="hidden"<% end %>>
     <%= form.input :birth_date, :as => :date,
-               :disabled => !owner.new_record?,
-               :start_year => Date.today.year - 90,
-               :end_year => Date.today.year - 14,
-               :order => [:day, :month, :year],
-               :prompt => true %>
+        :disabled => !owner.new_record?,
+        :start_year => Date.today.year - 4,
+        :end_year => Date.today.year - 100,
+        :order => [:day, :month, :year],
+        :prompt => true
+    %>
 </div>
 
 <div<% unless CONFIG['address'] %> class="hidden"<% end %>>

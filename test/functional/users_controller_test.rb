@@ -10,6 +10,45 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:users)
   end
+  
+  test "filters" do
+    OperatorSession.create(operators(:admin))
+    
+    get :index
+    assert_select "table#users tbody" do
+      assert_select "tr", User.count
+    end
+    
+    get :index, { :verification_method => 'mobile_phone' }
+    assert_select "table#users tbody" do
+      assert_select "tr", User.where(:verification_method => 'mobile_phone').count
+    end
+    
+    get :index, { :verification_method => 'gestpay_credit_card' }
+    assert_select "table#users tbody" do
+      assert_select "tr", 1
+    end
+    
+    get :index, { :enabled => 'true' }
+    assert_select "table#users tbody" do
+      assert_select "tr", 2
+    end
+    
+    get :index, { :verified => 'true' }
+    assert_select "table#users tbody" do
+      assert_select "tr", 2
+    end
+    
+    get :index, { :enabled => 'false' }
+    assert_select "table#users tbody" do
+      assert_select "tr", 0
+    end
+    
+    get :index, { :verified => 'false' }
+    assert_select "table#users tbody" do
+      assert_select "tr", 0
+    end
+  end
 
   test "should get new" do
     OperatorSession.create(operators(:admin))
@@ -65,5 +104,31 @@ class UsersControllerTest < ActionController::TestCase
     end
   
     assert_redirected_to users_path
+  end
+  
+  test "should unverify user" do
+    OperatorSession.create(operators(:admin))
+    
+    user = users(:one)
+    assert_equal true, user.verified
+    
+    put :update, :id => user.to_param, :user => { :verified => 0 }
+    assert_redirected_to user_path(assigns(:user))
+    
+    user = User.find(user.id)
+    assert_equal false, user.verified
+  end
+  
+  test "should disable user" do
+    OperatorSession.create(operators(:admin))
+    
+    user = users(:one)
+    assert_equal true, user.active
+    
+    put :update, :id => user.to_param, :user => { :active => 0 }
+    assert_redirected_to user_path(assigns(:user))
+    
+    user = User.find(user.id)
+    assert_equal false, user.active
   end
 end

@@ -71,7 +71,15 @@
       </a>
     </h1>
     <p id="locale">
-      <%= link_to_locale 'it' %> <%= link_to_locale 'en' %>
+      <% if CONFIG['english'] %>
+        <%= link_to_locale 'en' %>
+      <% end %>
+      <% if CONFIG['italian'] %>
+        <%= link_to_locale 'it' %>
+      <% end %>
+      <% if CONFIG['spanish'] %>
+        <%= link_to_locale 'es' %>
+      <% end %>
     </p>
     <% if authenticated? %>
     <p id="whoami">
@@ -177,7 +185,7 @@
       <p>OpenWISP User Management System - Copyright (C) 2013 <a href="http://openwisp.org/">OpenWISP.org</a></p>
 
       <% if is_mobile_device? %>
-          <p><%= link_to_toggle_mobile %></p>
+          <p id="go-to-mobile"><%= link_to_toggle_mobile %></p>
       <% end %>
     </div>
   </div>

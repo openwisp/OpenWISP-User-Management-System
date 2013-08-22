@@ -185,6 +185,11 @@
   key: "gestpay_webservice_url"
   value: "https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL"
 
+76:
+  system_key: f
+  key: "gestpay_webservice_method"
+  value: "verification"
+
 77:
   system_key: f
   key: "gestpay_vbv_session"

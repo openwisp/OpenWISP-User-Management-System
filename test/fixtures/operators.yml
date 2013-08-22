@@ -1,8 +1,9 @@
 admin:
   id: 1
   login: "admin"
-  crypted_password: 194839a05ae301e63ba1b3f85470c4f976561e9ffd7e08388fa39e0761d979ead7eb472c703033c2fd7ff3dc453c60c29a9b88b99ca085c623e72bd67bf14c2b
-  password_salt: "fZ8XM1M8UjDX4DuVmnC6"
-  persistence_token: "08aacf1009a0e42c3393940ef3fb0a98f5cc087adbcd76d3b41b255103568ea6dec0455b08edf39cf53984bc71b32059c9d4f3005bf93f5ffd8dccff19172a88"
+  # password is "adminadmin3"
+  crypted_password: 789decb0a1421e3ca27538cff14080a9b33ea2103149917e0ee6c22bd230a7b8432d3b3519cc55a7e823902d12cd53d5ef64c040c0933fd00494013409fc43e2
+  password_salt: "yNPfh1wZAzMnPisBbUJX"
+  persistence_token: "47af0743c4757348bfb53fc838287084e9be3f20c15c341ec85d54f19310d91ff995028e00a577f474cf282d85228ba2a469d4430b5807cb73d4d53cb9221028"
   notes: "admin"
   

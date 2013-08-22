@@ -26,7 +26,7 @@ $.getJSON(owums.path('/stats/registered_users.json'), function(registered_users)
         title: { text: null },
         credits: { enabled: false },
         legend: { borderWidth: 0 },
-        colors: ['#BF2424'],
+        colors: ['#BF2424', '#5ad900', '#1a32ea'],
         plotOptions: {
             series: {
                 marker: {

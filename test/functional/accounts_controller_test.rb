@@ -4,6 +4,17 @@ class AccountsControllerTest < ActionController::TestCase
   
   setup :activate_authlogic
   
+  test "index accessible" do
+    get :instructions
+    assert_response :success
+    
+    get :instructions, { :locale => :en }
+    assert_response :success
+    
+    get :instructions, { :locale => :es }
+    assert_response :success
+  end
+  
   test "account registration should be accessible" do
     get :new
     assert_response :success
@@ -43,5 +54,28 @@ class AccountsControllerTest < ActionController::TestCase
     #  # method should not raise an exception otherwise it means there's a misconfiguration issue
     #  account.captive_portal_login!
     end
+  end
+  
+  test "status is_expired false" do
+    AccountSession.create(users(:one))
+    get :status_json
+    assert_response :success
+    
+    # convert response into hash
+    data = JSON::parse(response.body)
+    
+    assert_equal false, data['is_expired']
+    assert_equal true, data['is_verified']
+  end
+  
+  test "status is_expired true" do
+    get :status_json
+    assert_response :success
+    
+    # convert response into hash
+    data = JSON::parse(response.body)
+    
+    assert_equal true, data['is_expired']
+    assert_equal false, data['is_verified']
   end
 end

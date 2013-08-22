@@ -23,7 +23,7 @@ OWUMS is being developed to use FreeRADIUS 2.1 (http://freeradius.org/), so othe
 
 === Prerequisites
 
-The OpenWISP User Management System is currently being developed with Ruby on Rails 2.3.5. Being a RoR application, it can be 
+The OpenWISP User Management System is currently being developed with Ruby on Rails 3.0.20. Being a RoR application, it can be 
 deployed using any of the methods Rails supports. 
 Even so, what we are currently using (and find quite stable) is the following environment:
 
@@ -44,54 +44,6 @@ To do this, you can use the following init.d script (customization may be needed
 Be sure the cache folder is writable:
 
     chown -R www-data:www-data tmp/cache/
-
-==== Simplify the Registration Form
-
-By default, all the fields of the user profile are mandatory, however, in order to simplify and speed up the user registration procedure it is possible to change this behaviour and hide the following fields:
-
-* birth date
-* address
-* city
-* postal code
-* state
-
-To do that proceed by copying the file *config/config.default.yml* and rename it to *config/config.yml*, then set to *false* the fields you want to disable and hide.
-This change requires OWUMS to be restarted, either by reloading the webserver or, if you use passenger, by reloading rails with the *tmp/restart.txt* trick: http://www.modrails.com/documentation/Users%20guide%20Nginx.html#_redeploying_restarting_the_rack_application (for more info follow the link).
-
-If the file *config/config.yml* does not exist, OWUMS will read the default values from *config/config.default.yml* (so do not delete it).
-
-==== Disable Captcha in the Registration Form
-
-If you need to disable the Captcha field in the registration form you can do it by going into OWUMS's admin web interface to *configurations/*, look for *captcha_enabled* and set it to *false* .
-
-==== User notifications
-
-Users are notified / emailed in two occasions:
-
-1. *New account notification*: when they register and verify their new account
-2. *Password reset*: when they reset their password
-
-This means that the rails SMTP server must be configured correctly otherwise the owums will not work properly.
-
-===== New account notification
-
-This feature might be disabled by setting *send_email_notification_to_users* to "false" in *config/config.yml*.
-
-If you want to customize this behaviour the configuration keys to look for are:
-
-* account_notification_message_en
-* account_notification_message_it
-* account_notification_subject_en
-* account_notification_subject_it
-
-===== Password reset
-
-If you want to customize this behaviour the configuration keys to look for are:
-
-* password_reset_from
-* password_reset_instructions_custom
-
-TODO: change *password_reset_from* into *email_from*
 
 ==== Startup script
 
@@ -227,7 +179,7 @@ You'll have to create a "static routing" between a PSTN number and OpenWISP User
 There are many ways for doing this (see below). in every case you'll need to configure the OpenWISP User Management Systemas follow (I'm assuming you're running OpenWISP User Management Systemin production environment):
 
     ~# <owums root>/script/console production
-    Loading production environment (Rails 2.3.5)
+    Loading production environment (Rails 3.0.20)
     >> Configuration.set("verification_numbers", "<TELEPHONE NUMBER>")
     >> Configuration.set("sip_listen_address","0.0.0.0")
     >> Configuration.set("sip_servers", "<SIP MEDIAGATWAY/PROXY/SERVER IP ADDRESS>")
@@ -322,6 +274,104 @@ For instance, if you're using MySQL:
         password = "<MyPasswordIsBetterThanYours>"
         radius_db = "<DBMS name>"
     [...]
+
+== Rails App Configuration
+
+The behaviour of some features can be tweaked, some instructions on the most important features follows.
+
+=== Simplify the Registration Form
+
+By default, all the fields of the user profile are mandatory, however, in order to simplify and speed up the user registration procedure it is possible to change this behaviour and hide the following fields:
+
+* birth date
+* address
+* city
+* postal code
+* state
+
+To do that proceed by copying the file *config/config.default.yml* and rename it to *config/config.yml*, then set to *false* the fields you want to disable and hide.
+This change requires OWUMS to be restarted, either by reloading the webserver or, if you use passenger, by reloading rails with the *tmp/restart.txt* trick: http://www.modrails.com/documentation/Users%20guide%20Nginx.html#_redeploying_restarting_the_rack_application (for more info follow the link).
+
+If the file *config/config.yml* does not exist, OWUMS will read the default values from *config/config.default.yml* (so do not delete it).
+
+=== Disable Captcha in the Registration Form
+
+If you need to disable the Captcha field in the registration form you can do it by going into OWUMS's admin web interface to *configurations/*, look for *captcha_enabled* and set it to *false* .
+
+=== User notifications
+
+Users are notified / emailed in two occasions:
+
+1. <b>New account notification</b>: when they register and verify their new account
+2. <b>Password reset</b>: when they reset their password
+
+This means that the rails SMTP server must be configured correctly otherwise the owums will not work properly.
+
+=== New account notification
+
+This feature might be disabled by setting *send_email_notification_to_users* to "false" in *config/config.yml*.
+
+If you want to customize this behaviour the configuration keys to look for are:
+
+* account_notification_message_en
+* account_notification_message_it
+* account_notification_subject_en
+* account_notification_subject_it
+
+=== Password reset
+
+If you want to customize this behaviour the configuration keys to look for are:
+
+* password_reset_from
+* password_reset_instructions_custom
+
+TODO: change *password_reset_from* into *email_from*
+
+=== Radius Accounting API Usage
+
+Retrieve information about radius sessions through a simple HTTP API.
+
+<b>Requires authentication as an operator</b> (HTTP Basic auth or Session Based, it is highly suggested to use over SSL).
+
+==== All sessions:
+
+Retrieve information of all latest sessions.
+
+<b>HTTP method</b>:: GET
+
+*XML*:: /radius_accountings.xml
+
+*JSON*:: /radius_accountings.json
+
+<b>Accepted querystring parameters (filters)</b>:
+
+* *day*: filter records of specified date (string in "YYYY-MM-DD" format)
+* *last*: limit records to specified number
+* *ap*: filter records which contain mac address of specified AP in CallingStationId column
+
+==== User related sessions:
+
+Retrieve information of latest sessions of a specified user.
+
+<b>HTTP method</b>:: GET
+
+*XML*:: /users/:user_id/radius_accountings.xml
+
+*JSON*:: /users/:user_id/radius_accountings.json
+
+<b>Accepted querystring parameters (filters)</b>:
+
+Same filters of "All sessions".
+
+=== Languages
+
+By default, english, italian and spanish are active.
+
+You can disable them by editing: *config/config.yml*.
+
+    english: true
+    italian: false
+    spanish: true
 
 == Notice
 

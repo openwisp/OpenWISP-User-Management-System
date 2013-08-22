@@ -136,7 +136,9 @@ module ApplicationHelper
     subject.is_a?(User) ? new_user_radius_reply_url(subject) : new_radius_group_radius_reply_url(subject)
   end
 
-  def number_to_currency_custom(number, currency_code, options = {})
+  def number_to_currency_custom(number, options = {})
+    currency_code = Configuration.get('gestpay_currency')
+    
     dictionary = {
       '242' => '&euro;',
       '1' => '$',

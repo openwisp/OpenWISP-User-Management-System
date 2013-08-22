@@ -1,0 +1,402 @@
+es:
+  Account_disabled: "Cuenta deshabilitada"
+  Account_disable_confirmation: "Si deshabilita su cuenta, no podrá ingresar al sistema.
+	Puede habilitar de nuevo su cuenta repitiendo el procedimiento de confirmación de
+	cuenta."
+  Account_registered: "Su cuenta se ha registrado con éxito."
+  Account_updated: "Su cuenta se ha actualizado con éxito."
+  Account_verification_status: "Verificación del estado de la cuenta"
+  Active_qm: "¿Habilidada?"
+  Additional_info: "Información adicional"
+  Address: "Dirección"
+  Add_new_operator: "Agregar un nuevo operador."
+  Add_new_radius_group: "Agregar un nuevo grupo RADIUS."
+  Add_new_user: "Agregar un nuevo usuario."
+  Add_radius_check: "Add RADIUS check"
+  Add_radius_reply: "Agregar revisión RADIUS."
+  Are_you_sure: "¿Está seguro? El procedimiento no puede deshacerse."
+  Back: "Retroceder"
+  Birth_date: "Fecha de nacimiento"
+  Browse_operators: "Browse operators"
+  Browse_users: "Explorar operadores"
+  Browse_radius_groups: "Explorar grupos RADIUS"
+  Call_one_of_the_following_numbers:
+    one: "Llamar a este número telefónico."
+    other: "Llamar a uno de los siguientes números telefónicos."
+  Change_password: "Cambiar la clave secreta."
+  Check_attribute: "Verificar atributo"
+  Choose: "Seleccionar"
+  City: "Ciudad"
+  Click_for_eula: "Haga click aquí para leer los Términos de Servicio."
+  Click_for_privacy: "Haga click aquí para leer las Políticas de Privacidad."
+  Configuration_keys: "Claves de configuración"
+  Configuration_key_updated: "Se ha actualizado la clave de configuración."
+  Cookies_disabled_or_session_expired: "Su buscador ha deshabilitado las cookies o la sesión ha expirado."
+  Create: "Crear"
+  Create_new_user: "Crear nuevo usuario"
+  Create_radius_group: "Crear grupo RADIUS"
+  Create_user: "Crear usuario"
+  Created_by: "Creado por"
+  Current_login_at: "Ingreso actual desde"
+  Current_login_ip: "IP de ingreso actual"
+  Data_insertion: "Insertar datos personales"
+  Data_verification: "Verificar datos personales"
+  Destroy: "Eliminar"
+  Document_photo: "Escanear tarjeta de ID"
+  Document_photo_preview: "Vista previa del escaneo de la tarjeta de ID."
+  Download: "Tráfico de descarga"
+  Downloaded_bytes: "Bytes descargados"
+  Dunno_how_to_register_click_here: "¿Tiene problemas para registrarse? Haga click aquí."
+  Edit: "Editar"
+  Edit_user: "Editar usuario"
+  Edit_account: "Editar cuenta"
+  Edit_configuration_key: "Editar configuración"
+  Edit_operator: "Editar operador"
+  Edit_radius_check: "Editar verificación RADIUS."
+  Edit_radius_group: "Editar grupo RADIUS."
+  Edit_radius_reply: "Editar respuesta RADIUS."
+  Email: "Correo electrónico"
+  Filter_data_by_date: "Examinar datos dentro de un periodo:"
+  Flash_not_supported: "No soporta Flash"
+  Forgot_password: "Clave secreta olvidada"
+  Forgot_password_description_email: "Utilice el correo que utilizó al registrarse para
+	completar la siguiente forma y haga click en \"restablecer\" para obtener una clave secreta nueva."
+  Forgot_password_description_email_for_mobile: "Utilice el correo que utilizó al registrarse
+	 para 	completar la siguiente forma y haga click en \"restablecer\" para crear obtener
+	una clave secreta nueva."
+  Forgot_password_description_mobile_phone: "Utilice el correo que utilizó al
+	registrarse para completar la siguiente forma y haga click en \"restablecer\" para
+	obtener una clave secreta nueva."
+  Forgot_password_description_mobile_phone_for_mobile: "Utilice el correo
+	que utilizó al 	registrarse para completar la siguiente forma y haga click en
+	\"restablecer\" para obtener una clave secreta nueva."
+  Forgot_password_description_select: "Seleccione debajo cómo restablecer su
+	clave secreta."
+  Free_call_description: "Esta llamada es libre de cargo, después de algunos tonos
+	terminará automáticamente."
+  From: "Desde"
+  From_mobile_phone_number: "Desde el número de teléfono"
+  General_infos: "Información general"
+  General_infos_howto: "Owuns es la plataforma de registro de usuarios. Con Owuns puede
+	registrar su cuenta personal para utilizar el servicio y monitorear sus estadísticas de
+	uso diario. <br /> Después de registrarse, podrá ver y editar sus datos personales.
+	<br /> Si ya tiene un cuenta, vaya a '<strong>%{login}</strong>' desde el menú
+	principal e ingrese con sus credenciales o vea abajo para más información."
+  General_infos_subheading: "¿Qué es Owuns y para qué me sirve?"
+  Given_name: "Nombre"
+  Graphs: "Gráficos"
+  Graphs_not_supported: "Su explorador no soporta el dibujo de gráficos."
+  Home: "Inicio"
+  Hours: "Horas"
+  How_to_use_service: "Cómo utilizar el servicio."
+  I_agree: "Acepto"
+  If_problem_with_redirect: "Si su explorador no es redireccionado después del procedimiento de verificación"
+  If_you_entered_a_wrong_mobile_phone_number_simply_wait_for_this_registration_to_expire: "Si el número de teléfono móvil que usted marcó es incorrecto, por favor espere que expire el tiempo del procedimiento de registro e intente de nuevo."
+  Information: "Información"
+  Instruction_reset_has_been_mailed: "Se le ha enviado un correo
+	electrónico con las instrucciones para restablecer su clave secreta. Por favor revise
+	su correo."
+  Instructions: "Instruciones"
+  Invalid_request: "¡Solicitud inválida!"
+  IP_address: "Dirección IP"
+  Key: "Clave"
+  Last_login_at: "Último ingreso a"
+  Last_login_ip: "Último ingreso desde IP"
+  Last_x_days_traffic_download:
+    one: "Descargas de hoy"
+    other: "Descargas de los últimos %{count} días"
+  Last_x_days_traffic_upload:
+    one: "Cargas de  hoy "
+    other: "Cargas de los últimos %{count} días"
+  Last_x_days_time:
+    one: "Tiempo utilizado hoy"
+    other: "Tiempo utilizado en los últimos %{count} días"
+  Last_x_logins:
+    one: "Último inicio de sesión"
+    other: "Últimos %{count} inicios de sesión"
+  Last_x_online_users:
+    one: "Último usuario en línea"
+    other: "Últimos %{count} usuarios en línea"
+  Last_x_registered_users:
+    one: "Último usuario registrado"
+    other: "Últimos %{count} usuarios registrados"
+  Last_x_user_sessions:
+    one: "Última sesión"
+    other: "Últimas %{count} sesiones"
+  Listing_users: "Lista de Usuarios"
+  Loading: "Cargando"
+  Loading_data: "Cargando datos: por favor, espere."
+  Logged_in: "¿Inició sesión?"
+  logged_in_as: "conectado como"
+  Loggedin_users: "Usuarios que tienen sesión abierta."
+  Login: "Iniciar Sesión"
+  Logins: "Iniciar Sesiones"
+  Login_successful: "Inicio de sesión exitoso"
+  Login_count: "Conteo de inicio de sesión"
+  Login_error: "Nombre de usuario o clave secreta incorrectos."
+  Logout: "Cerrar sesión"
+  Logout_successful: "Cierre de sesión exitoso"
+  Mac_address: "Dirección MAC"
+  Manage_your_account: "Administre su cuenta."
+  Manage_your_account_howto:
+    "Después de iniciar sesión, yendo a
+	'<strong>%{login}</strong>'  desde el menú principal y completando la forma con su
+	nombre de usuario (es decir, su número de teléfono móvil) y su clave secreta, se le
+	dará acceso a su sección privada sobre estadísticas de uso y datos personales.
+	En caso de que quiera deshabilitar su cuenta (es decir, asegurarse de que nadie la
+	utilice mientras está de viaje), puede deshabilitarla en la sección ‘Editar’ de su
+	sección personal (después de iniciar sesión). Luego puede habilitarla de nuevo
+	repitiendo el procedimiento de verificación de datos."
+  Manage_your_account_subheading: "Después de iniciar sesión"
+  Minutes: "Minutos"
+  Mobile_phone_number: "Número de teléfono móvil"
+  My_account: "Mi cuenta"
+  My_profile: "Mi perfil"
+  Must_be_logged_in: "Debe iniciar sesión para ver esta página."
+  Must_be_logged_out: "Debe cerrar sesión para ver esta página."
+  Name: "Nombre"
+  New_operator: "Nuevo operador"
+  New_radius_check: "Nueva revisión RADIUS"
+  New_radius_group: "Nuevo grupo RADIUS."
+  New_radius_reply: "Nueva respuesta RADIUS"
+  New_user: "Nuevo usuario"
+  Next: "Siguiente"
+  Notes: "Notas"
+  No_ajax_verification_success: "Su cuente ha sido verificada."
+  No_user_found_with_that_email: "No se encontró ningún usuario con esa dirección
+	de correo electrónico."
+  No_user_found_with_that_mobile_phone: "No se encontró ningún usuario con ese
+	número de teléfono móvil."
+  Not_verified: "No verificado"
+  No_verification_possible: "En este momento no es posible verificar esta cuenta. Por favor
+	llame al número de soporte técnico para resolver el problema."
+  Online_users: "Usuarios en línea"
+  Operations: "Operaciones"
+  Operator: "Operator"
+  Operators: "Operadores"
+  Operator_created_success: "Operador creado con éxito."
+  Operator_deleted_success: "Operador eliminado con éxito."
+  Operator_login: "Inicio de sesión del Operador."
+  Operator_updated_success: "Operador actualizado con éxito."
+  Password: "Clave secreta"
+  Password_format_error: "La clave secreta debe contener al menos un caracter
+	alfabético y uno numérico."
+  Password_successfully_updated: "Clave secreta actualizada con éxito."
+  Password_not_successfully_updated: "No se actualizó la clave secreta."
+  Perishable_token_error: "No se pudo hallar su cuenta. En lugar de hacer click en la URL
+	que le enviamos por correo electrónico, por favor copie y pegue la URL en su
+	 buscador. Si persiste el problema para restablecer la clave secreta, repita de nuevo
+	 el procedimiento."
+  Personal_details: "Detalles personales"
+  Please_verify_credit_card: "Para completar su solicitud necesitamos verificar su
+	identidad por medio de una tarjeta de crédito. Ir a"
+  Please_verify_mobile_number: "Para completar su solicitud necesitamos verificar su
+	número de móvil."
+  Prefix: "Prefijo"
+  Prefix_confirmation: "Confirmar prefijo"
+  Print_credentials: "Imprimir credenciales"
+  Priority: "Prioridad"
+  Radius_group: "Grupo RADIUS"
+  Redirecting_in_x_secs:
+    one: "redirecionar en %{count} segundo"
+    other: "redirecionar en %{count} segundos"
+  Radius_check: "Verificación RADIUS"
+  Radius_checks: "Verificaciones RADIUS"
+  Radius_logins: "Inicios de sesión de Internet"
+  Radius_group_info: "Info grupo RADIUS"
+  Radius_groups: "Grupos RADIUS"
+  Radius_replies: "Respuestas RADIUS"
+  Radius_reply: "Respuesta RADIUS"
+  Refresh_data: "Refrescar datos"
+  Recover: "Recuperar"
+  Register: "Registrarse"
+  Register_howto_1: "Si no tiene un cuenta, siga el procedimiento de registro en
+	 <strong>%{registration}</strong>' desde el menu principal.<br />
+	El registro requiere  de dos pasos"
+  Register_howto_2: "En el primer paso se le pide que complete sus datos personales,
+	siguiendo las instrucciones dadas en '<strong>%{registration}</strong>'.
+	Registrarse <strong> requiere un número de móvil local </strong>. Si no tiene
+	uno, el Centro de Ayuda le asignará uno si suministra una ID válida..<br />
+Después de completar los formularios con su información, para poder usar el servicio es necesario que los datos sean verificados. La mayoría de las veces, el paso de verificación se hace llamando (sin cargos) a su teléfono móvil (el que utilizó al completar el formulario). El procedimiento de verificación sólo funciona si <strong> el número de teléfono de la persona que llama no está oculto </strong> y el número de móvil es un número local.<br /> En caso de que no se cumplan las condiciones previas, no podrá utilizar el servicio. Una vez completado el paso de verificación, será llevado a su página personal y privada. Para utilizar el servicio, sólo necesita abrir una página nueva (i.e. www.google.com) para comenzar a navegar."
+  Register_subheading: "¿Qué tengo que hacer para registrarme?"
+  Registered_users: "Registros acumulativos de usuarios"
+  Registered_users_daily: "Registros diarios de usuarios"
+  Registration_date: "Fecha del registro"
+  Repeat_registration: "Haga click aquí para repetir el registro."
+  Reply_attribute: "Respuesta de atributo"
+  Reset: "Restablecer"
+  Reset_password: "Restablecer clave secreta"
+  Reset_password_subheading: "¿Olvidó su clave secreta?"
+  Reset_password_howto: "En caso de que haya olvidado su clave secreta, puede ir
+	a '<strong>%{reset_password}</strong>' desde el menú principal para
+	recuperarla. La clave secreta se puede recuperar por correo electrónico o por
+	llamada telefónica (sólo si usted se registró con un número de teléfono local). <br />
+Mientras recupera su clave secreta, también se le recordará su Nombre de Usuario. Una vez que ha restablecido la clave secreta, podrá ingresar con sus nuevas credenciales."
+  Roles: "Roles"
+  Search: "Búsqueda"
+  Search_by_user_mobile_email: "Buscar usuario por nombre, número de teléfono o correo 	electrónico."
+  Search_by_user_name_surname_mobile: "Buscar usuario por nombre, apellido o  número 	de teléfono."
+  Search_user: "Buscar usuario"
+  Search_users: "Buscar usuarios"
+  Select: "Seleccionar"
+  Sort_by_this_field: "Clasificar por este campo"
+  Show: "Mostrar"
+  Show_account_info: "Mostrar información de la cuenta"
+  Show_stats: "Mostrar estadísticas"
+  Start_time: "Inicio de la conexión"
+  State: "Estado"
+  Stop_time: "Fin de la conexión"
+  Suffix: "Sufijo"
+  Suffix_confirmation: "Confirmar sufijo"
+  Surname: "Apellido"
+  Switch_to_full_site: "Cambiar a versión estándar."
+  Switch_to_mobile_site: "Cambiar a versión móvil."
+  System_settings: "Configuración del sistema"
+  Tick_to_agree_to: "Al seleccionar la casilla de abajo, acepto…"
+  Tick_to_examine_of: "Al seleccionar la casilla de abajo, declaro que he leído…"
+  Title: "Título"
+  To: "Para"
+  Too_many_search_results: "Demasiados resultados para la búsqueda. Por favor,
+	sea más específico."
+  Top_x_active_users:
+    one: "Usuario más activo"
+    other: "%{count} usuarios más activos"
+  Traffic: "Tráfico"
+  Traffic_total: "Tráfico total"
+  Undo: "Deshacer"
+  Unique_logins: "Inicios de sesión únicos"
+  Update: "Actualizar"
+  Update_my_password: "Actualizar mi clave secreta"
+  Update_my_password_and_log_me_in: "Actualizar_mi clave secreta e iniciar
+	sesión."
+  Upload: "Tráfico de carga"
+  Uploaded_bytes: "Bytes cargados"
+  Username: "Nombre de Usuario"
+  Username_or_mobile_or_email: "Teléfono móvil, dirección de correo electrónico, o
+	Nombre de Usuario"
+  Users: "Usuarios"
+  Users_management: "Administración de la cuenta"
+  User_created_success: "Usuario creado con éxito."
+  User_credentials: "Credenciales del usuario"
+  User_information: "Información del usuario"
+  User_management_logins: "Inicios a este sistema."
+  User_not_found: "Usuario no encontrado."
+  User_sessions: "Sesiones de usuario"
+  Users_management_system: "Sistema de administración de cuentas"
+  Users_nationality: "Nacionalidad de los usuarios"
+  Value: "Valor"
+  Verification: "Verificación"
+  Verification_date: "Fecha de verificación"
+  Verification_expire_time_less_than_a_minute: "Tiene menos de un minuto para
+	verificar su cuenta."
+  Verification_expire_time_x_mins:
+    one: "Le queda cerca de un %{count} minuto para verificar su cuenta."
+    other: "Le quedan unos %{count} minutos para verificar su cuenta."
+  Verification_time_expired: "Ha expirado el tiempo de verificación."
+  Verified: "Verificado"
+  Verified_qm: "¿Verificado?"
+  Warning: "¡Advertencia!"
+  Your_account_is_not_yet_verified: "Su cuenta aún no ha sido verificada."
+  Zip: "Zip"
+  active: "activo"
+  address: "dirección "
+  affirmative: "sí"
+  autogenerate: "generar aleatoriamente"
+  birth_date: "fecha de nacimiento"
+  blank: "-"
+  change_password: "Nueva clave secreta"
+  city: "ciudad"
+  click_here: "Haga click aquí."
+  credit_card: "Tarjeta de crédito"
+  credit_card_instructions:
+    one: "Después de iniciar sesión, se le pedirá que pague %{count} euro para verificar su
+	identidad."
+    other: " Después de iniciar sesión, se le pedirá que pague %{count} euro para verificar su
+	identidad ."
+  credit_card_item_name: "Registro con tarjeta de crédito"
+  disable_account: "Deshabilitar cuenta"
+  document_photo: "Escanear ID tarjeta"
+  email: "Correo electrónico"
+  email_confirmation: "Confirmación de correo electrónico"
+  eula: "Términos de Servicio"
+  privacy: "Políticas de Privacidad"
+  given_name: "Nombre"
+  identity_document: "Tarjeta ID"
+  key: "clave"
+  listen_captcha: "Escuchar el captcha"
+  login: "Iniciar sesión"
+  mobile_phone: "Número de teléfono móvil"
+  mobile_prefix: "Prefijo número de teléfono móvil"
+  mobile_prefix_confirmation: " Confirmar prefijo número de teléfono móvil"
+  mobile_suffix: "Número de teléfono móvil sin prefijo"
+  mobile_suffix_confirmation: "Confirmar número de teléfono móvil sin prefijo"
+  mobile_phone_number: "Número de teléfono móvil."
+  mobile_phone_confirmation: "Confirmar número de teléfono móvil."
+  negative: "no"
+  next: "siguiente"
+  no_identity_verification: "No se ha verificado la identidad."
+  none: "ninguno"
+  notes: "notas"
+  online: "en línea"
+  password: "clave secreta"
+  password_confirmation: "Confirmar clave secreta"
+  please_no_reload_no_back_1: "Para evitar perder las credenciales generadas o
+	guardar varías veces a un usuario."
+  please_no_reload_no_back_2: "No recargue la página ni haga clic en el botón de
+	regresar del explorador."
+  previous: "anterior"
+  radius_groups: "grupos radius"
+  remember_me: "recordarme"
+  results: "resultados"
+  select_prefix: "Prefijo telefónico"
+  state: "estado"
+  surname: "apellido"
+  there_are_x_errors:
+    one: "Hay un error"
+    other: "Hay  {{count}} errores"
+  total_results: "Resultado de totales"
+  username: "apellido"
+  value: "valor"
+  verification_method: "Método de verificación de ID"
+  verified: "verificado"
+  verified_qm: "¿Verificado?"
+  will_be_your_username: "sera su nombre de usuario"
+  zip: "zip"
+  Verified_by_visa_heading: "Completa la procedura sul sito della tua banca"
+  Verified_by_visa_text: "<p>Accedi al sito della tua banca per inserire il <strong>PIN di sicurezza</strong> della tua carta di credito <strong>Verified By Visa</strong> e completare quindi la procedura di verifica della tua identità.</p>
+  <p>Hai a disposizione <strong>%{minutes} minuti</strong> per completare il procedimento, dopodichè la tua sessione scadrà.</p>"
+  Proceed: "Procedi"
+  Gestpay_verified_by_visa_error_heading: "Errore verifica Verified by Visa"
+  Gestpay_verified_by_visa_error_text: "C'è stato un errore con la procedura di verifica della tua carta verified by visa"
+  Repeat_procedure: "Ripeti la procedura di verifica della carta di credito"
+  Account_verified_successfully: "Account verificato con successo, ora puoi navigare."
+  VBV_system_error: "C'è stato un errore di sistema, perfavore segnala il problema ad un amministratore"
+  active_merchant_year: "Carta scaduta"
+  active_merchant_number: "Numero di carta di credito non valido"
+  active_merchant_brand: "Tipo di carta non riconosciuto"
+  gestpay_error_433: "Data di scadenza della carta errata"
+  gestpay_error_454: "Data di scadenza della carta errata"
+  gestpay_error_74: "Autorizzazione negata: codice di sicurezza errato"
+  gestpay_error_97: "Autorizzazione negata: codice di sicurezza errato"
+  gestpay_error_417: "Autorizzazione negata: codice di sicurezza errato"
+  verification_message_first_step: "Verifica della carta di credito in corso, attendere prego..."
+  verification_message_second_step: "Banca contattata, stiamo verificando i dati, attendere ancora qualche istante prego..."
+  Receipt: Ricevuta
+  Date: Data
+  Description: Descrizione
+  Amount: Importo
+  Tax: IVA
+  Total: Totale
+  Customer_details: Dettagli intestatario
+  Transaction_info: Informazioni Transazione
+  Transaction_ID: ID Transazione
+  Gateway: Gateway
+  invoice_admin_notification_subject: Nuova Ricevuta Generata
+  invoice_admin_notification_message: Una nuova ricevuta è stata generata ed è allegata a quest'email.
+  account_notification_invoice_message: Grazie per aver usato il nostro sistema di verifica d'identità basato su carta di credito. Puoi trovare la ricevuta in allegato a quest'email.
+  select_verification_method: "Seleziona un metodo di verifica dell'identità"
+  Verification_method: Metodo di verifica
+  all: Tutti
+  Enabled: Abilitato
+  "Yes": 'Sì'
+  "No": 'No'

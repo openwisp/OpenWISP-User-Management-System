@@ -1,0 +1,22 @@
+<% unless @account.nil? %>
+<script type="text/javascript">
+    // detect expired registration attempts
+    $(function(){
+        owums.periodicallyCheckVerification({
+            frequency: 2,
+            url: false,
+            update: function(){
+                $.get('<%= account_status_url %>', function(response){
+                    // once verified or expired reload the page
+                    if(response['is_verified'] === true || response['is_expired'] === true){
+                        location.href = location.href;
+                        return;
+                    }
+                    // update timer
+                    $('#expire-in').html(response['remaining_time']);
+                })
+            }
+        });
+    });
+</script>
+<% end %>
