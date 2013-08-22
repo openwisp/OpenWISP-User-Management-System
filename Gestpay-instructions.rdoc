@@ -10,14 +10,14 @@ Ensure the following configuration keys are available in */configurations* and c
 * *credit_card_verification_cost*: cost of the transaction
 * *credit_card_registration_expire*: user registered with this method are automatically deleted after this time
 * *gestpay_currency*: currency used, defaults to 242 which means EURO, for other codes see the Gestpay documentation
-* *gestpay_payment_url*: URL to which the user will be redirected to perform the payment; should be https://testecomm.sella.it/gestpay/pagam.asp for the DEMO or https://ecomm.sella.it/gestpay/pagam.asp for the real environment
+* *gestpay_webservice_method*: web service method used, depending on your agreement with banca sella, can be *verification* or *payment*
 * *gestpay_webservice_url*: Web Service URL, should be https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the DEMO or https://ecomms2s.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL for the real environment
 * *gestpay_shoplogin*: Gestpay CODE provided by Banca Sella after signing their contract. Also known as "Codice esercente"
 * *notifier_base_url*: base url of the OWUMS application without the protocol, eg: *mywifiservice.com/owums*
 * *notifier_protocol*: https or http
 * *captive_portal_baseurl*: URL of the OWCPM (OpenWISP Captive Portal Manager) instance, if any
 * *gestpay_vbv_session*: duration in seconds of the time in which users can insert their card password if needed; explained in detail in the "Verified By Visa" Section
-* *gestpay_vbv_url*: url of which users will be redirected to insert their credit card password; should be https://testecomm.sella.it/gestpay/pagamvisa3d.asp for the DEMO or https://ecomm.sella.it/gestpay/pagamvisa3d.asp for the real environment
+* *gestpay_vbv_url*: url of which users will be redirected to insert their credit card password if "verified by visa" is active; should be https://testecomm.sella.it/gestpay/pagamvisa3d.asp for the DEMO or https://ecomm.sella.it/gestpay/pagamvisa3d.asp for the real environment
 
 Ensure the following keys are customized according to your needs:
 
@@ -52,25 +52,17 @@ Login into the backoffice:
 
 Demo: https://testecomm.sella.it/gestpay/backoffice/LoginGestPay.asp
 
-Production: https://ecomm.sella.it/gestpay/backoffice/LoginGestPay.asp  
+Production: https://www.sella.it/
 
 === Configurazione > Ambiente > Indirizzi ip
 
 Insert the ip addresses from which your owums instance will communicate with gestpay.
 
-=== Configurazione > Ambiente > Risposte
-
-URL per risposta positiva: */account/gestpay_success*
-
-URL per risposta negativa: */account/gestpay_error*
-
-URL Server to Server: */account/verify_gestpay*  
-
-All the other fields are related to email notifications and can be set according to personal needs and preferences.
-
 === Configurazione Cliente > Campi & Parametri > NO DISPLAY
 
-Log in the Gestpay Backoffice, go to "Configurazione Cliente", then go to the page "NO DISPLAY". 
+Log in the Gestpay Backoffice, go to "Configurazione Cliente", and check if the page "NO DISPLAY" exists, if it does not exist create it.
+
+Go now to "Campi & Parametri", then click on the number besides of "NO DISPLAY".
 
 1. Click on BuyerEmail, then check "Input", then "Obbligatorio" and "Parametro", then click Ok  
 2. Click on BuyerName, then check "Input", then "Obbligatorio" and "Parametro", then click Ok

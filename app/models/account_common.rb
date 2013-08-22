@@ -275,6 +275,11 @@ class AccountCommon < ActiveRecord::Base
   end
   
   def generate_invoice!
+    # do not generate invoice for verification operations
+    if Configuration.get('gestpay_webservice_method') == 'verification'
+      return false
+    end
+    
     invoice = Invoice.create_for_user(User.find(self.id))
     
     # generate PDF with an asynchronous job with sidekiq
@@ -350,10 +355,12 @@ class AccountCommon < ActiveRecord::Base
     if not CONFIG['automatic_captive_portal_login'] and config_check
       return false
     end
+    
     # determine ip address
     ip_address = ip_address ? ip_address : self.retrieve_ip()
     # automatically log in an user in the captive portal to allow the user to surf
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    
     if cp_base_url
       params = {
         :username => self.username,
@@ -364,6 +371,7 @@ class AccountCommon < ActiveRecord::Base
       if timeout
         params[:timeout] = Configuration.get('gestpay_vbv_session', '300').to_i
       end
+      
       uri = URI::parse "#{cp_base_url}/api/v1/account/login"
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true

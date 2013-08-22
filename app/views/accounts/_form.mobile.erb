@@ -31,7 +31,7 @@
           <%= f.input :verification_method, :as => :hidden %>
       <% else %>
         <li data-role="fieldcontain" class="ignore-toggle" id="verification-methods-container">
-          <%= f.input :verification_method, :collection => account_verification_select, :selected => false %>
+          <%= f.input :verification_method, :collection => account_verification_select, :selected => @verification_method %>
         </li>
       <% end %>
   <% end %>
@@ -51,6 +51,7 @@
   </script>
 
   <% if account.new_record? %>
+      
       <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
       <li data-role="fieldcontain">
         <%= f.input :captcha %>

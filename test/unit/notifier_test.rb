@@ -36,13 +36,14 @@ class NotifierTest < ActionMailer::TestCase
       :last_name => account.surname,
       :username => account.username,
       :password_reset_url => "#{baseurl}/account/reset",
-      :account_url => "#{baseurl}/account"
+      :account_url => "#{baseurl}/account",
+      :invoice_message => ''
     }
     
     message = Configuration.get("account_notification_message_#{I18n.locale}")
     
     dictionary.each do |key, value|
-      message.gsub!("{%s}" % key.to_s, value.to_s)
+      message = message.gsub("{%s}" % key.to_s, value.to_s)
     end
     
     assert_match(message, email.body)

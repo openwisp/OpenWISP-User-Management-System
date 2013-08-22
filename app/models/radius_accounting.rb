@@ -126,6 +126,10 @@ class RadiusAccounting < ActiveRecord::Base
   def self.find_by_username(username)
     find_by_UserName(username)
   end
+  
+  def self.with_full_name
+    select("radacct.*, users.username, users.given_name, users.surname").joins("LEFT OUTER JOIN users ON radacct.UserName = users.username")
+  end
 
   # Accessors
 
