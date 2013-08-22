@@ -363,6 +363,16 @@ Retrieve information of latest sessions of a specified user.
 
 Same filters of "All sessions".
 
+=== Languages
+
+By default, english, italian and spanish are active.
+
+You can disable them by editing: *config/config.yml*.
+
+    english: true
+    italian: false
+    spanish: true
+
 == Notice
 
 The OWUMS uses the Highcharts library. 
