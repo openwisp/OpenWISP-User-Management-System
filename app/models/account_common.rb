@@ -27,6 +27,7 @@ class AccountCommon < ActiveRecord::Base
   VERIFY_BY_PAYPAL = "paypal_credit_card"
   VERIFY_BY_GESTPAY = "gestpay_credit_card"
   VERIFY_BY_NOTHING = "no_identity_verification"
+  VERIFY_BY_MACADDRESS = "mac_address"
 
   # Authlogic
   acts_as_authentic do |c|
@@ -121,7 +122,6 @@ class AccountCommon < ActiveRecord::Base
               :format => {:with => /[a-z0-9]/, :message => :zip_format, :allow_blank => true}
   end
 
-
   if CONFIG['birth_date']:
     validates_presence_of :birth_date
     validate :birth_date_present_and_valid
@@ -155,6 +155,7 @@ class AccountCommon < ActiveRecord::Base
       methods.push VERIFY_BY_NOTHING  if OperatorSession.find.operator.has_role?('registrant_by_nothing')
       methods.push VERIFY_BY_DOCUMENT if OperatorSession.find.operator.has_role?('registrant_by_id_card')
       # Add your methods here ...
+      methods.push VERIFY_BY_MACADDRESS if CONFIG['mac_address_authentication']
     end
 
     methods

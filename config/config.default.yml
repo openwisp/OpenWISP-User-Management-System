@@ -8,6 +8,7 @@ defaults: &defaults
   # other stuff
   send_email_notification_to_users: true
   automatic_captive_portal_login: true
+  mac_address_authentication: false
   # additional languages
   english: true
   italian: true

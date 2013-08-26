@@ -89,7 +89,7 @@
           <td><%= l(@user.created_at, :format => :short) %></td>
           <td>
             <% if @user.verified %>
-                <%= l(@user.verified_at, :format => :short) %>
+                <%= l(@user.verified_at, :format => :short) rescue @user.created_at %>
             <% else %>
                 <span style="color: red; "><%= t :Not_verified %></span>
             <% end %>
