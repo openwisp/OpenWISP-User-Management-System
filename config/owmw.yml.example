@@ -1,0 +1,13 @@
+defaults: &defaults
+  url: "https://owmw.domain.com/url"
+  username: "owmw"
+  password: "password"
+
+production:
+  <<: *defaults
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
