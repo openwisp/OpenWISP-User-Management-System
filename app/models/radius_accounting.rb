@@ -134,7 +134,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.find_unaware_radius_accountings
     # returns radius accounting records which do not have the format
     # <mac_address_of_ap_from_where_user_accessed>:<captive_portal_interface>
-    where("CHAR_LENGTH(CalledStationId) <= 17")
+    # and are still connected
+    where("CHAR_LENGTH(CalledStationId) <= 17 AND AcctStopTime IS NULL")
   end
   
   def self.convert_radius_accountings_to_aware
