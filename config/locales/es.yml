@@ -7,7 +7,60 @@ es:
 
   time:
     formats:
-      default: "%m/%d/%y - %H:%M"
+      default: "%d/%m/%y - %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y %H:%M"
+
+    am: "am"
+    pm: "pm"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "medio minuto"
+      less_than_x_seconds:
+        one:  "menos de un segundo"
+        other: "menos de %{count} segundos"
+      x_seconds:
+        one:  "1 segundo"
+        other: "%{count} segundos"
+      less_than_x_minutes:
+        one:  "menos de un minuto"
+        other: "menos de %{count} minutos"
+      x_minutes:
+        one:  "1 minuto"
+        other: "%{count} minuti"
+      about_x_hours:
+        one:  "acerca de una hora"
+        other: "acerca de %{count} horas"
+      x_days:
+        one:  "1 dia"
+        other: "%{count} dias"
+      about_x_months:
+        one:  "acerca de un mes"
+        other: "acerca de %{count} meses"
+      x_months:
+        one:  "1 mes"
+        other: "%{count} meses"
+      about_x_years:
+        one:  "acerca de un año"
+        other: "acerca de %{count} años"
+      over_x_years:
+        one:  "más de un año"
+        other: "más de %{count} años"
+
+    prompts:
+      year:   "Años"
+      month:  "Mes"
+      day:    "Dia"
+      hour:   "Hora"
+      minute: "Minuto"
+      second: "Segundo"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " y "
+      last_word_connector: ", y "
 
   errors:
     template:
