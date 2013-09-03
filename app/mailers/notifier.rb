@@ -23,7 +23,15 @@ class Notifier < ActionMailer::Base
 
   def new_account_notification(account, filename=false)
     subject = Configuration.get("account_notification_subject_#{I18n.locale}")
+    if subject.nil?
+      subject = Configuration.get("account_notification_subject_en")
+    end
+    
     message = Configuration.get("account_notification_message_#{I18n.locale}")
+    if message.nil?
+      message = Configuration.get("account_notification_message_en")
+    end
+    
     invoice_message = nil
     
     if filename
@@ -57,6 +65,9 @@ class Notifier < ActionMailer::Base
   
   def send_invoice_to_admin(filename)
     subject = Configuration.get("invoice_admin_notification_subject_#{I18n.locale}")
+    if subject.nil?
+      subject = Configuration.get("invoice_admin_notification_subject_en")
+    end
     @message = I18n.t(:invoice_admin_notification_message)
     email = Configuration.get('invoice_owner_email')
     

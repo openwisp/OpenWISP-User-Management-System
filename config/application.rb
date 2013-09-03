@@ -13,6 +13,7 @@ rescue Errno::ENOENT
   CONFIG = YAML.load(File.read(File.expand_path('../config.default.yml', __FILE__)))[Rails.env]
 end
 
+CONFIG['mac_address_authentication'] = CONFIG['mac_address_authentication'].nil? ? false : CONFIG['mac_address_authentication']
 CONFIG['english'] = CONFIG['english'].nil? ? true : CONFIG['english']
 CONFIG['italian'] = CONFIG['italian'].nil? ? true : CONFIG['italian']
 CONFIG['spanish'] = CONFIG['spanish'].nil? ? true : CONFIG['spanish']

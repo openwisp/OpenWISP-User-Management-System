@@ -420,3 +420,15 @@ Staff"
   system_key: f
   key: "verification_explain_mobile_es"
   value: "<p>Con el fin de evitar cualquier <strong>abuso del servicio</strong>, tenemos que <strong>verificar la identidad de todos los usuarios</strong> que utilizan este servicio wifi.</p><p>Si usted es dueño de <strong>una tarjeta SIM italiana de telefono movìl</strong> selecione <strong>\"Número de teléfono móvil\"</strong> en el menú.</p>"
+
+106:
+  key: "invoice_owner_es"
+  value: "Cambiame"
+
+107:
+  key: "invoice_description_es"
+  value: "Verificación de la identidad para el servicio wifi."
+
+108:
+  key: "invoice_admin_notification_subject_es"
+  value: "[OWUMS] Nuevo recibo generado"

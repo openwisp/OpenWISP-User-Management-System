@@ -2,7 +2,7 @@ class AddSpanishTranslations < ActiveRecord::Migration
   keys = YAML::load(File.open("db/fixtures/configurations.yml"))
   
   # new spanish config keys
-  @configurations = (98..105).map { |n| keys[n] }
+  @configurations = (98..108).map { |n| keys[n] }
   
   def self.up
     @configurations.each do |config|

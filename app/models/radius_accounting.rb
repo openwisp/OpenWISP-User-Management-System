@@ -130,6 +130,36 @@ class RadiusAccounting < ActiveRecord::Base
   def self.with_full_name
     select("radacct.*, users.username, users.given_name, users.surname").joins("LEFT OUTER JOIN users ON radacct.UserName = users.username")
   end
+  
+  def self.find_unaware_radius_accountings
+    # returns radius accounting records which do not have the format
+    # <mac_address_of_ap_from_where_user_accessed>:<captive_portal_interface>
+    # and are still connected
+    where("CHAR_LENGTH(CalledStationId) <= 17 AND AcctStopTime IS NULL")
+  end
+  
+  def self.convert_radius_accountings_to_aware
+    # convert radius accounting CalledStationId attribute so that it's in the format:
+    # <mac_address_of_ap_from_where_user_accessed>:<captive_portal_interface>
+    ra = self.find_unaware_radius_accountings()
+    modified_records = []
+    
+    ra.each do |accounting|
+      user_mac = accounting.calling_station_id
+      ap_mac = AssociatedUser.access_point_mac_address_by_user_mac_address(user_mac) rescue next
+      
+      new_called_station_id = "%s:%s" % [
+        ap_mac.upcase.gsub(':', '-'),
+        accounting.called_station_id.gsub(':', '-').gsub(' ', '')
+      ]
+      
+      accounting.called_station_id = new_called_station_id
+      accounting.save
+      modified_records.push(accounting)
+    end
+    
+    return modified_records
+  end
 
   # Accessors
 

@@ -347,7 +347,7 @@ Retrieve information of all latest sessions.
 
 * *day*: filter records of specified date (string in "YYYY-MM-DD" format)
 * *last*: limit records to specified number
-* *ap*: filter records which contain mac address of specified AP in CallingStationId column
+* *ap*: filter records which contain mac address of specified AP in CalledStationId column
 
 ==== User related sessions:
 
@@ -362,6 +362,41 @@ Retrieve information of latest sessions of a specified user.
 <b>Accepted querystring parameters (filters)</b>:
 
 Same filters of "All sessions".
+
+
+=== OWMW Integration
+
+OWMW might be used to retrieve the mac address of the access point from which users connected.
+
+To enable OWMW, copy and rename the file *config/owmw.yml.example* in *config/owmw.yml*, then set the correct values for "url", "username" and "password".
+
+==== Rake task radius_accountings:convert
+
+A rake task is available to convert called station id values which are not aware from which the users connected.
+
+<b>This task depends from OWMW 0.0.7</b>.
+
+    rake radius_accountings:convert
+
+It will convert the CalledStationId of the records of online users which do not
+contain the mac address of the access point from which they connected to the following format:
+
+    <uppercase_dashed_access_point_mac_address>:<original_called_station_id>
+
+eg::
+
+    10-40-F3-7E-56-B8:pfsense
+
+This rake task can be run periodically or can be triggered by radius each time a user authenticates.
+
+If you need to run it periodically you can uncomment the following lines in the
+file *config/backgroundrb.yml*::
+
+    #:convert_radius_accountings:
+    #  :trigger_args: 0  *  * * * * *
+
+This functionality is used in OpenWISP Geographic Monitoring to show
+the 10 latest logins of each access point.
 
 === Languages
 
