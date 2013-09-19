@@ -5,7 +5,7 @@
 OpenWISP User Management System (OWUMS) is a Ruby on Rails application, capable of managing a wISP's user base. 
 
 OWUMS supports the following functionalities:
-* user registration via mobile phone, ID card, credit card -Paypal IPN- fully compliant with the Italian Laws.
+* user registration via mobile phone, ID card, credit card -Banca Sella Gestpay- fully compliant with the Italian Laws.
 * user interface supports common browsers as well as mobile phone web browsers
 * password recovery via mobile phone or email
 * per user traffic monitoring
