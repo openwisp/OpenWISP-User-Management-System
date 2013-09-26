@@ -307,6 +307,21 @@ Users are notified / emailed in two occasions:
 
 This means that the rails SMTP server must be configured correctly otherwise the owums will not work properly.
 
+=== Experimental features configurable in config/config.yml
+
+*automatic_captive_portal_login*
+
+*default*: true
+
+Attempts to login users automatically after they confirm their account. Depends on OWCPM auth_api branch.
+Configuration key (found in the web interface at /configurations) "captive_portal_baseurl" must be filled correctly (base url of the OWCPM instance).
+
+*mac_address_authentication*
+
+*default*: false
+
+Enable mac address authentication as "verification_method" for users.
+
 === New account notification
 
 This feature might be disabled by setting *send_email_notification_to_users* to "false" in *config/config.yml*.
@@ -363,7 +378,6 @@ Retrieve information of latest sessions of a specified user.
 
 Same filters of "All sessions".
 
-
 === OWMW Integration
 
 OWMW might be used to retrieve the mac address of the access point from which users connected.
@@ -407,6 +421,10 @@ You can disable them by editing: *config/config.yml*.
     english: true
     italian: false
     spanish: true
+
+=== Credit Card verification method for new accounts
+
+For this subject see the file *Gestpay-instructions.rdoc*.
 
 == Notice
 
