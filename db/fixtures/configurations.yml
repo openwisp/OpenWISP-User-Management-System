@@ -45,7 +45,7 @@
 
 20:
   system_key: f
-  key: "credit_card_enabled"
+  key: "paypal_enabled"
   value: "false"
     
 21:
@@ -61,16 +61,16 @@
 23:
   system_key: f
   key: "credit_card_verification_cost"
-  value: "1"
+  value: "0.10"
 
 24:
-  system_key: t
+  system_key: f
   key: "credit_card_registration_expire"
-  value: "300"
+  value: "600"
 
 25:
   system_key: f
-  key: "credit_card_business_account"
+  key: "paypal_business_account"
   value: "mtylty_1277212890_biz@gmail.com"
 
 26:
@@ -82,6 +82,16 @@
   system_key: f
   key: "ipn_shared_secret"
   value: ""
+
+28:
+  system_key: f
+  key: "paypal_currency"
+  value: "EUR"
+
+29:
+  system_key: f
+  key: "tax_rate"
+  value: 21
 
 30:
   system_key: f
@@ -115,8 +125,18 @@
 
 43:
   system_key: f
-  key: "use_automatic_username"
+  key: "use_mobile_phone_as_username"
+  value: "true"
+
+44:
+  system_key: f
+  key: "use_mobile_phone_as_username_hidden"
   value: "false"
+
+45:
+  system_key: f
+  key: "enhance_registration_form"
+  value: "true"
 
 50:
   system_key: f
@@ -173,10 +193,40 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   key: "password_reset_custom_url"
   value: "http://placeholder.url.com/&t="
 
-60:
-  system_key: t
-  key: "custom_account_instructions"
+59:
+  system_key: f
+  key: "custom_account_instructions_en"
   value: ""
+
+60:
+  system_key: f
+  key: "custom_account_instructions_it"
+  value: ""
+
+61:
+  system_key: f
+  key: "logo"
+  value: "openwisp-logo.png"
+
+62:
+  system_key: f
+  key: "verification_explain_mobile_it"
+  value: "<p>Al fine di <strong>prevenire abusi del servizio</strong>, siamo costretti a <strong>verificare l'identità</strong> degli utenti che utilizzano il servizio wifi.</p><p>Sei sei in possesso di una <strong>SIM italiana</strong> seleziona il metodo di verifica dell'identità <strong>\"Numero di cellulare\"</strong> dal seguente menu.</p>"
+
+63:
+  system_key: f
+  key: "verification_explain_mobile_en"
+  value: "<p>In order to <strong>prevent any abuse of service</strong>, we have to <strong>verify the identity of all the users</strong> who use this wifi service.</p><p>If you own an <strong>Italian mobile phone SIM card</strong> select <strong>\"Mobile Phone Number\"</strong> from the following menu.</p>"
+
+64:
+  system_key: f
+  key: "verification_explain_creditcard_it"
+  value: "<p>Al fine di <strong>prevenire abusi del servizio</strong>, siamo costretti a <strong>verificare l'identità</strong> degli utenti che utilizzano il servizio wifi.</p><p>Sei sei in possesso di una <strong>SIM italiana</strong> seleziona il metodo di verifica dell'identità <strong>\"Numero di cellulare\"</strong> dal seguente menu, altrimenti seleziona il metodo <strong>\"Carta di Credito\"</strong>.</p>"
+
+65:
+  system_key: f
+  key: "verification_explain_creditcard_en"
+  value: "<p>In order to <strong>prevent any abuse of service</strong>, we have to <strong>verify the identity of all the users</strong> who use this wifi service.</p><p>If you own an <strong>Italian mobile phone SIM card</strong> select <strong>\"Mobile Phone Number\"</strong> from the following menu, otherwise you can select the method <strong>\"Credit Card\"</strong>.</p>"
 
 70:
   system_key: t
@@ -187,3 +237,198 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   system_key: f
   key: "captcha_enabled"
   value: "true"
+
+72:
+  system_key: f
+  key: "gestpay_enabled"
+  value: "false"
+
+73:
+  system_key: f
+  key: "gestpay_shoplogin"
+  value: "90000001"
+
+74:
+  system_key: f
+  key: "gestpay_currency"
+  value: "242"
+
+75:
+  system_key: f
+  key: "gestpay_webservice_url"
+  value: "https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL"
+
+76:
+  system_key: f
+  key: "gestpay_webservice_method"
+  value: "verification"
+
+77:
+  system_key: f
+  key: "gestpay_vbv_session"
+  value: "360"
+
+78:
+  system_key: f
+  key: "gestpay_vbv_url"
+  value: "https://testecomm.sella.it/gestpay/pagamvisa3d.asp"
+
+79:
+  system_key: f
+  key: "captive_portal_baseurl"
+  value: "https://captiveportal.org/your_owcpm_here"
+
+80:
+  system_key: f
+  key: "account_notification_message_en"
+  value: "Hi {first_name} {last_name},
+You just created and verified successfully your account for wifi access.
+
+You can now login and use the wifi service with username \"{username}\" and the password you chose during the registration phase.
+
+You can monitor your use of the available traffic at the account management page:
+{account_url}
+
+If you ever forget your password, you can use the password reset procedure available at the following web address:
+{password_reset_url}
+{invoice_message}
+
+Best regards
+Staff"
+
+81:
+  system_key: f
+  key: "account_notification_message_it"
+  value: "Ciao {first_name} {last_name},
+
+Hai appena creato e verificato con successo il tuo account per l'accesso al wifi.
+
+Ora puoi effettuare il login e usare il servizio wifi, il tuo username è \"{username}\" e la password è quella che hai scelto in fase di registrazione.
+
+Puoi monitorare l'utilizzo del servizio dalla pagina di gestione del tuo account:
+{account_url}
+
+Se dovessi dimenticare la password, potrai utilizzare la procedura di reset disponibile al seguente indirizzo:
+{password_reset_url}
+{invoice_message}
+
+Cordiali Saluti
+Staff"
+
+82:
+  system_key: f
+  key: "account_notification_subject_en"
+  value: "New account created on [OpenWISP User Management System]"
+
+83:
+  system_key: f
+  key: "account_notification_subject_it"
+  value: "Nuovo account creato su [OpenWISP User Management System]"
+
+90:
+  system_key: f
+  key: "invoice_owner_en"
+  value: "Changeme"
+
+91:
+  system_key: f
+  key: "invoice_owner_it"
+  value: "Cambiami"
+
+92:
+  system_key: f
+  key: "invoice_description_en"
+  value: "Identity verification for wifi service."
+
+93:
+  system_key: f
+  key: "invoice_description_it"
+  value: "Verifica Identità per servizio wifi."
+
+94:
+  system_key: f
+  key: "invoice_logo"
+  value: "openwisp-logo.png"
+
+95:
+  system_key: f
+  key: "invoice_owner_email"
+  value: ""
+
+96:
+  system_key: f
+  key: "invoice_admin_notification_subject_en"
+  value: "[OWUMS] New Receipt Generated"
+
+97:
+  system_key: f
+  key: "invoice_admin_notification_subject_it"
+  value: "[OWUMS] Nuova Ricevuta Generata"
+
+98:
+  system_key: f
+  key: "password_reset_subject_es"
+  value: "Instrucciones para recuperación de la contraseña"
+
+99:
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_es"
+  value: "Ha sido solicitado un reseteo de la contraseña para su cuenta.
+Si usted no solicitó el reseteo, por favor ignore este mensaje.
+Si fue usted quien lo solicitó, haga click en el siguiente URL."
+
+100:
+  system_key: f
+  key: "password_reset_instructions_after_reset_url_es"
+  value: "Si hacer click en el URL no funciona, por favor intente copiar y pegar el URL en su navegador.
+Si an tiene problemas , por favor contactenos."
+
+101:
+  system_key: f
+  key: "account_notification_message_es"
+  value: "{first_name} {last_name},
+Has creado tu cuenta de manera exitosa.
+
+Puede ingresar para disfrutar del servicio Wifi con el usuario \"{username}\" y la contraseña que usted selecciono durante la fase de registro.
+
+Usted puede verificar la cantidad de triàfico disponible en la página gestión:
+{account_url}
+
+Si alguna vez pierde su contraseña, siga el siguiente procedimiento para recuperarla:
+{password_reset_url}
+{invoice_message}
+
+Saludos cordiales
+Staff"
+
+102:
+  system_key: f
+  key: "account_notification_subject_es"
+  value: "Ha sido creada una nueva cuenta [OpenWISP User Management System]"
+
+103:
+  system_key: f
+  key: "custom_account_instructions_es"
+  value: ""
+
+104:
+  system_key: f
+  key: "verification_explain_creditcard_es"
+  value: "<p>Con el fin de evitar cualquier <strong>abuso del servicio</strong>, tenemos que <strong>verificar la identidad de todos los usuarios</strong> que utilizan este servicio wifi.</p><p>Si usted es dueño de <strong>una tarjeta SIM italiana de telefono movìl</strong> selecione <strong>\"Número de teléfono móvil\"</strong> en el menú, de lo contrario se puede seleccionar el método <strong>\"tarjeta de crédito\"</strong>.</p>"
+  
+105:
+  system_key: f
+  key: "verification_explain_mobile_es"
+  value: "<p>Con el fin de evitar cualquier <strong>abuso del servicio</strong>, tenemos que <strong>verificar la identidad de todos los usuarios</strong> que utilizan este servicio wifi.</p><p>Si usted es dueño de <strong>una tarjeta SIM italiana de telefono movìl</strong> selecione <strong>\"Número de teléfono móvil\"</strong> en el menú.</p>"
+
+106:
+  key: "invoice_owner_es"
+  value: "Cambiame"
+
+107:
+  key: "invoice_description_es"
+  value: "Verificación de la identidad para el servicio wifi."
+
+108:
+  key: "invoice_admin_notification_subject_es"
+  value: "[OWUMS] Nuevo recibo generado"

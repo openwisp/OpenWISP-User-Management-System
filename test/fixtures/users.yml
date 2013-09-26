@@ -1,0 +1,54 @@
+one:
+  id: 1
+  username: "user1"
+  email: user1@testing.com
+  crypted_password: user1
+  password_salt: "cCAAp2MDRcJ9rpEkMIV"
+  persistence_token: "7c5898443444e2a3d1526eda82f7b950db72de049e9a538e45199ca08a8479d02ba8687bccc22e58a81d17c94af7049349c2d192ce25866351fc24c087e92099"
+  single_access_token: "uPLj4Cj03Bdsazh6UbTy"
+  perishable_token: "xRdt0YTiCyeNDHETnyU2"
+  given_name: "Tester"
+  surname: "One"
+  mobile_prefix: "334"
+  mobile_suffix: "4254804"
+  birth_date: 1986-02-04
+  state: "Italy"
+  city: "Roma"
+  address: "Via dei Tizii"
+  zip: "00185"
+  verification_method: "mobile_phone"
+  eula_acceptance: 1
+  privacy_acceptance: 1
+  active: 1
+  verified: 1
+  verified_at: "2013-03-14 11:00:42"
+  created_at: "2013-03-14 11:00:42"
+  updated_at: "2013-03-14 11:00:42"
+
+creditcard:
+  id: 2
+  username: "creditcard"
+  email: creditcard@testing.com
+  crypted_password: creditcard2
+  password_salt: "cCAAp2MDRcJ9rpEkMIV"
+  persistence_token: "7c5898443445e2a3d1526eda82f7b950db72de049e9a538e45199ca08a8479d02ba8687bccc22e58a81d17c94af7049349c2d192ce25866351fc24c087e92099"
+  single_access_token: "uPLj4Cj03Bdsazh6UbTv"
+  perishable_token: "xRdt1YTiCyeNDHETnyU2"
+  given_name: "Credit"
+  surname: "Card"
+  mobile_prefix: "366"
+  mobile_suffix: "4254804"
+  birth_date: 1987-02-04
+  state: "Italy"
+  city: "Roma"
+  address: "Via dei Tizii"
+  zip: "00185"
+  verification_method: "gestpay_credit_card"
+  eula_acceptance: 1
+  privacy_acceptance: 1
+  active: 1
+  verified: 1
+  verified_at: "2013-03-14 11:00:42"
+  created_at: "2013-03-14 11:00:42"
+  updated_at: "2013-03-14 11:00:42"
+  credit_card_info: '{"VbVRisp":null,"datetime":"2013-05-27T10:18:44+02:00","bank_transaction":"197","shop_transaction":"33e1d40df9b107dc55cfd1dc22edc67a","transaction_key":"190473352","authorization_code":"895601"}'

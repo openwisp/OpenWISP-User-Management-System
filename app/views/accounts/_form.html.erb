@@ -17,54 +17,62 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<% if Configuration.get('use_automatic_username') == "false" or Configuration.get('use_mobile_phone_as_username') == "false" or !account.new_record? %>
-    <%= f.input :username, :disabled => !account.new_record? %>
-<% end %>
-
-
 <% if account.new_record? %>
-    <% if account_verification_methods.length == 1 %>
+    <div id="verification-explain">
+        <% if account_verification_methods.include? 'gestpay_credit_card' %>
+            <%= Configuration.get('verification_explain_creditcard_%s' % I18n.locale.to_s).html_safe %>
+        <% else %>
+            <%= Configuration.get('verification_explain_mobile_%s' % I18n.locale.to_s).html_safe %>
+        <% end %>
+    </div>
+    <% if account_verification_methods.length <= 1 %>
         <%= f.input :verification_method, :as => :hidden %>
     <% else %>
-        <%= f.input :verification_method, :collection => account_verification_select, :prompt => false %>
+        <%= f.input :verification_method, :collection => account_verification_select, :selected => @verification_method %>
     <% end %>
 <% end %>
 
-
-<%= render 'common/form_elements/mobile_phone', :form => f, :owner => account, :prefixes => mobile_prefixes %>
-
-<%= render 'common/form_elements/identity_document', :form => f, :owner => account %>
-
-<%= render 'common/form_elements/credit_card', :form => f, :owner => account %>
-
-<%= render 'common/form_elements/personal_data', :form => f, :owner => account, :countries => countries %>
-
-
-<% if account.new_record? %>
-    <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
-    <div id="captcha">
-      <p class="center">
-        <%= captcha_tag %><br />
-        <%= link_to t(:listen_captcha), spoken_captcha_url %><br />
-      </p>
-      <%= f.input :captcha %>
-    </div>
+<div id="registration-second-step"<% if account_verification_methods.length > 1 and account.new_record? %> class="hidden"<% end %>>
+    <%= render 'common/form_elements/mobile_phone', :form => f, :owner => account, :prefixes => mobile_prefixes %>
+    
+    <%= render 'common/form_elements/identity_document', :form => f, :owner => account %>
+    
+    <%= render 'common/form_elements/credit_card', :form => f, :owner => account %>
+    
+    <%= render 'common/form_elements/personal_data', :form => f, :owner => account, :countries => countries %>
+    
+    <script type="text/javascript">
+        owums.use_mobile_phone_as_username = <%= Configuration.get('use_mobile_phone_as_username', 'true') %>;
+        owums.use_mobile_phone_as_username_hidden = <%= Configuration.get('use_mobile_phone_as_username_hidden', 'false') %>;
+        owums.enhance_registration_form = <%= Configuration.get('enhance_registration_form', 'true') %>;
+    </script>
+    
+    <% if account.new_record? %>
+        <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
+        <div id="captcha">
+          <p class="center">
+            <%= captcha_tag %><br />
+            <%= link_to t(:listen_captcha), spoken_captcha_url %><br />
+          </p>
+          <%= f.input :captcha %>
+        </div>
+        <% end %>
+    
+        <div id="eula_priv">
+          <%= f.input :eula_acceptance, :error => false %>
+          <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
+        <br />
+        <br />
+          <%= f.input :privacy_acceptance, :error => false %>
+          <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
+        </div>
+    <% else %>
+        <div id="disable_account">
+          <strong><%= label_tag t(:disable_account) %></strong><br/>
+          <%= check_box_tag 'account_disable_account', '1', false, 'data-warning' => t(:Account_disable_confirmation), :name => 'account[disable_account]'  %>
+        </div>
     <% end %>
 
-    <div id="eula_priv">
-      <%= link_to t(:Click_for_eula), document_path('eula.pdf'), :target => '_blank' %>
-      <%= f.input :eula_acceptance, :error => false %>
-
-      <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
-      <%= f.input :privacy_acceptance, :error => false %>
-    </div>
-<% else %>
-    <div id="disable_account">
-      <strong><%= label_tag t(:disable_account) %></strong><br/>
-      <%= check_box_tag 'account_disable_account', '1', false, 'data-warning' => t(:Account_disable_confirmation), :name => 'account[disable_account]'  %>
-    </div>
-<% end %>
-
-
-<%= f.button :submit %>
-<%= link_to t(:Undo), :back %>
+    <%= f.button :submit %>
+</div>
+<p class="cancel"><%= link_to t(:Undo), :back %></p>

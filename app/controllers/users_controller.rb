@@ -266,16 +266,46 @@ class UsersController < ApplicationController
       params[:sort] = "registered_at_rev"
       sort = "created_at DESC"
     end
+    
+    enabled = params[:enabled] == '' ? nil : params[:enabled]
+    verified = params[:verified] == '' ? nil : params[:verified]
+    verification_method = params[:verification_method] == 'all' ? nil : params[:verification_method]
+    
+    sql = "1=1 "
+    bind_params = []
+    
+    unless enabled.nil?
+      sql << "AND active = ? "
+      bind_params += [
+        (enabled == 'true' ? 1 : 0) 
+      ]
+    end
+    
+    unless verified.nil?
+      sql << "AND verified = ? "
+      bind_params += [
+        (verified == 'true' ? 1 : 0) 
+      ]
+    end
+    
+    unless verification_method.nil?
+      sql << "AND verification_method = ? "
+      bind_params += [verification_method]
+    end
 
     search = params[:search]
     page = params[:page].nil? ? 1 : params[:page]
 
-    if search.nil?
-      conditions = []
-    else
+    unless search.nil?
       search.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      conditions = ["given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR CONCAT(mobile_prefix,mobile_suffix) LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"]
+      sql <<  "AND (given_name LIKE ? OR surname LIKE ? OR username LIKE ? OR email LIKE ? OR CONCAT(mobile_prefix,mobile_suffix)" +
+              "LIKE ? OR CONCAT_WS(' ', given_name, surname) LIKE ? OR CONCAT_WS(' ', surname, given_name) LIKE ?)"
+      bind_params += [
+        "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
+      ]
     end
+    
+    conditions = [sql] + bind_params
 
     @total_users = User.count :conditions => conditions
     @users = User.where(conditions).order(sort).page(page).per(items_per_page)

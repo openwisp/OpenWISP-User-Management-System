@@ -52,31 +52,46 @@
 
   <%= javascript_include_tag 'fluid16' %>
 
-  <link rel="shortcut icon" href="<%= image_path 'openwisp.ico' %>"/>
+  <link rel="shortcut icon" href="<%= image_path 'favicon.png' %>"/>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
 
-<div class="container_12">
-  <div class="grid_12">
-    <table class="branding">
-      <tr>
-        <td style="text-align:left">
-          <h1 id="branding">
-            OpenWISP User Management System
-          </h1>
-        </td>
-        <td style="text-align:right">
-          <%= link_to_locale 'it' %> <%= link_to_locale 'en' %>
-        </td>
-      </tr>
-    </table>
+<div class="container_12" id="container">
+  <div class="grid_12" id="branding">
+    <h1>
+      <a href="<%= root_url %>">
+        <% @logo = Configuration.get('logo')
+          unless @logo.nil? or @logo == '' %>
+          <%= image_tag(@logo) %>
+        <% else %>
+          OpenWISP User Management System
+        <% end %>
+      </a>
+    </h1>
+    <p id="locale">
+      <% if CONFIG['english'] %>
+        <%= link_to_locale 'en' %>
+      <% end %>
+      <% if CONFIG['italian'] %>
+        <%= link_to_locale 'it' %>
+      <% end %>
+      <% if CONFIG['spanish'] %>
+        <%= link_to_locale 'es' %>
+      <% end %>
+    </p>
+    <% if authenticated? %>
+    <p id="whoami">
+      <%= t :logged_in_as %> <%= link_to_user_or_operator %>
+    </p>
+    <% end %>
   </div>
-  <div class="clear">&nbsp;</div>
+  
   <div class="grid_12">
     <ul class="nav main">
       <% if current_operator %>
+          <li><%= menu_link_to t(:Home), operator_url(current_operator) %></li>
           <% if current_operator.has_role? 'stats_viewer' %>
               <li>
                 <%= menu_link_to t(:Show_stats), stats_url %>
@@ -93,7 +108,7 @@
                   current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant'
           %>
               <li>
-                <%= menu_link_to t(:Users), '#' %>
+                <%= menu_link_to(t(:Users), current_operator.has_role?('users_browser') ? users_browse_url : '#') %>
                 <ul>
                   <% if current_operator.has_role? 'users_browser' %>
                       <li><%= menu_link_to t(:Browse_users), users_browse_url %></li>
@@ -110,7 +125,7 @@
           <% if current_operator.has_role? 'radius_groups_viewer' or
                   current_operator.has_role? 'radius_groups_creator' %>
               <li>
-                <%= menu_link_to t(:Radius_groups), '#' %>
+                <%= menu_link_to t(:Radius_groups), radius_groups_url %>
                 <ul>
                   <% if current_operator.has_role? 'radius_groups_viewer' %>
                       <li><%= menu_link_to t(:Browse_radius_groups), radius_groups_url %></li>
@@ -123,7 +138,7 @@
           <% end %>
           <% if current_operator.has_role? 'operators_manager' %>
               <li>
-                <%= menu_link_to t(:Operators), '#' %>
+                <%= menu_link_to t(:Operators), operators_url %>
                 <ul>
                   <li><%= menu_link_to t(:Browse_operators), operators_url %></li>
                   <li><%= menu_link_to t(:Add_new_operator), new_operator_url %></li>
@@ -131,7 +146,7 @@
               </li>
           <% end %>
           <li>
-            <%= menu_link_to t(:System_settings), '#' %>
+            <%= menu_link_to(t(:System_settings), current_operator.has_role?('configurations_manager') ? configurations_url : '#') %>
             <ul>
               <% if current_operator.has_role? 'configurations_manager' %>
                   <li><%= menu_link_to t(:Configuration_keys), configurations_url %></li>
@@ -139,7 +154,6 @@
             </ul>
           </li>
           <li class="secondary"><%= menu_link_to t(:Logout), operator_logout_url, :method => :delete %></li>
-          <li class="secondary"><%= menu_link_to t(:Home), operator_url(current_operator) %></li>
       <% else %>
           <li><%= menu_link_to t(:How_to_use_service), account_instructions_url, :disable_if => on_root? %></li>
           <% if current_account %>
@@ -147,8 +161,8 @@
               <li><%= menu_link_to t(:Edit_account), edit_account_url %></li>
               <li class="secondary"><%= link_to t(:Logout), account_logout_url, :method => :delete %></li>
           <% else %>
-              <li><%= menu_link_to t(:Manage_your_account), account_login_url %></li>
-              <li><%= menu_link_to t(:Register), account_registration_url %></li>
+              <li><%= menu_link_to t(:Login), account_login_url %></li>
+              <li><%= menu_link_to t(:Register).html_safe, account_registration_url %></li>
               <li><%= menu_link_to t(:Forgot_password), password_reset_url %></li>
           <% end %>
       <% end %>
@@ -156,11 +170,11 @@
   </div>
   <div class="clear"></div>
   <div class="grid_12">
+    <% if flash[:notice] %>
     <div id="notice" class="box">
-      <% if flash[:notice] %>
-          <p><%= flash[:notice] %>&nbsp;</p>
-      <% end %>
+      <p><%= flash[:notice] %> <a class="close">&times;&nbsp;chiudi</a></p>
     </div>
+    <% end %>
   </div>
   <div class="clear"></div>
 
@@ -168,10 +182,10 @@
 
   <div class="grid_12" id="site_info">
     <div class="box" style="text-align:center">
-      <p>OpenWISP User Management System - Copyright (C) 2012 <a href="http://openwisp.org/">OpenWISP.org</a></p>
+      <p>OpenWISP User Management System - Copyright (C) 2013 <a href="http://openwisp.org/">OpenWISP.org</a></p>
 
       <% if is_mobile_device? %>
-          <p><%= link_to_toggle_mobile %></p>
+          <p id="go-to-mobile"><%= link_to_toggle_mobile %></p>
       <% end %>
     </div>
   </div>

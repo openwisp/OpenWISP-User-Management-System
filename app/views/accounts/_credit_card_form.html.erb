@@ -1,0 +1,71 @@
+<% unless @verified_by_visa %>
+  <h3><%= t :Verify_your_credit_card %></h3>
+<% if @credit_card_verification_cost > 0 and not flash[:notice] %>
+  <p><%= t(:Credit_card_verification_cost, :cost => number_to_currency_custom(@credit_card_verification_cost)).html_safe %></p>
+<% elsif not flash[:notice] %>
+  <p><%= t(:Credit_card_verification_cost0).html_safe %></p>
+<% end %>
+
+<% if not flash[:notice] %>
+  <p><strong><%= t(:Credit_card_secure_operation).html_safe %></strong></p>
+<% end %>
+
+<div class="box">
+  <% unless flash[:notice] %>
+    <form action="<%= gestpay_verify_credit_card_path %>" method="post" data-remote="true">
+      <fieldset>
+        <% if flash[:error] %>
+          <p class="error"><%= flash[:error].html_safe %></p>
+        <% end %>
+        
+        <p id="credit_card_number">
+          <label for="id_credit_card_number1"><%= t :Credit_card_number %></label>
+          <input type="text" id="id_credit_card_number1" name="number1" maxlength="4" value="<%= params[:number1] %>" />
+          <input type="text" id="id_credit_card_number2" name="number2" maxlength="4" value="<%= params[:number2] %>" />
+          <input type="text" id="id_credit_card_number3" name="number3" maxlength="4" value="<%= params[:number3] %>" />
+          <input type="text" id="id_credit_card_number4" name="number4" maxlength="4" value="<%= params[:number4] %>" />
+        </p>
+        <p>
+          <label for="credit_card_expiration_month"><%= t :Expiration_date %></label>
+          <select id="credit_card_expiration_month" name="expiration_month">
+            <% (1..12).each do |i| %><option value="<%= i %>"<% if i == params[:expiration_month].to_i %> selected="selected"<% end %>><%= i %></option><% end %>
+          </select>
+          <select id="credit_card_expiration_year" name="expiration_year">
+            <% ((Date.today.strftime "%y").to_i..(Date.today.strftime "%y").to_i+8).each do |i| %><option value="<%= i %>"<% if i == params[:expiration_year].to_i %> selected="selected"<% end %>><%= i %></option><% end %>
+          </select>
+        </p>
+        <p<% if Configuration.get('gestpay_webservice_method') == 'verification' %> class="hidden"<% end %>>
+          <label for="credit_card_cvv"><%= t :Security_code %></label>
+          <input type="text" id="id_credit_card_cvv" name="cvv" maxlength="4" value="<%= Configuration.get('gestpay_webservice_method') == 'verification' ? '000' : params[:cvv] %>" />
+        </p>
+        <p><input class="button" name="commit" type="submit" value="<%= t :Verify_card %>" /></p>
+        <%= image_tag('visa-mastercard.png', :id => 'visa_mastercard') %>
+      </fieldset>
+    </form>
+    <% unless @account.already_verified_once? %>
+      <p id="verification-expire-time">
+        <% if @account.expire_time > 0 %>
+          <%= t(:Verification_expire_time_remaining) %>: <strong id="expire-in"><%= @account.verification_time_remaining %></strong>
+        <% else %>
+          <%= t(:Verification_expire_time_less_than_a_minute) %>
+        <% end %>
+      </p>
+    <% end %>
+  <% else %>
+  <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+</div>
+
+<p id="gestpaylogo"><%= image_tag('gestpay_new.png') %></p>
+
+<% else %>
+  <h3><%= t :Verified_by_visa_heading %></h3>
+  <%= t(:Verified_by_visa_text, :minutes => Configuration.get('gestpay_vbv_session', '300').to_i/60).html_safe  %>
+  <form action="<%= @verified_by_visa[:url] %>" id="vbv" method="post">
+    <input type="hidden" name="a" value="<%= @verified_by_visa[:a] %>" />
+    <input type="hidden" name="b" value="<%= @verified_by_visa[:b] %>" />
+    <input type="hidden" name="c" value="<%= @verified_by_visa[:c] %>" />
+    <input class="button proceed" name="commit" type="submit" value="<%= t :Proceed %>" />
+  </form>
+  <script type="text/javascript">$('.overlay').centerElement()</script>
+<% end %>
