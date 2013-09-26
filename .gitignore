@@ -1,5 +1,6 @@
 config/database.yml
 config/config.yml
+config/owmw.yml
 
 db/*.sqlite3
 db/*.db
@@ -12,3 +13,5 @@ tmp/
 
 *.komodoproject
 .DS_STORE
+cineca*
+TODO.txt
