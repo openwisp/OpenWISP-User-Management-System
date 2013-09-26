@@ -1,11 +1,66 @@
 es:
   date:
     formats:
-      default: "%m/%d/%Y"
+      default: "%d/%m/%y - %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y %H:%M"
 
   time:
     formats:
-      default: "%m/%d/%y - %H:%M"
+      default: "%d/%m/%y - %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y %H:%M"
+
+    am: "am"
+    pm: "pm"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "medio minuto"
+      less_than_x_seconds:
+        one:  "menos de un segundo"
+        other: "menos de %{count} segundos"
+      x_seconds:
+        one:  "1 segundo"
+        other: "%{count} segundos"
+      less_than_x_minutes:
+        one:  "menos de un minuto"
+        other: "menos de %{count} minutos"
+      x_minutes:
+        one:  "1 minuto"
+        other: "%{count} minuti"
+      about_x_hours:
+        one:  "acerca de una hora"
+        other: "acerca de %{count} horas"
+      x_days:
+        one:  "1 dia"
+        other: "%{count} dias"
+      about_x_months:
+        one:  "acerca de un mes"
+        other: "acerca de %{count} meses"
+      x_months:
+        one:  "1 mes"
+        other: "%{count} meses"
+      about_x_years:
+        one:  "acerca de un año"
+        other: "acerca de %{count} años"
+      over_x_years:
+        one:  "más de un año"
+        other: "más de %{count} años"
+
+    prompts:
+      year:   "Años"
+      month:  "Mes"
+      day:    "Dia"
+      hour:   "Hora"
+      minute: "Minuto"
+      second: "Segundo"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " y "
+      last_word_connector: ", y "
 
   errors:
     template:
@@ -27,9 +82,34 @@ es:
   activerecord:
     errors:
       messages:
+        inclusion: "non è un valore valido"
+        exclusion: "è riservato"
+        invalid: "non è valido"
         invalid_captcha: "texto e imagen no son iguales"
-        password_format: "sólo puede tener caracteres alfanuméricos, espacios o el símbolo
-	“_”, y al menos un carácter alfabético y uno numérico."
+        confirmation: "non coincide con la conferma"
+        accepted: "deve essere accettata"
+        email_invalid: "non sembra un indirizzo e-mail"
+        empty: "non può essere vuoto"
+        blank: "deve essere specificato"
+        too_long: "è troppo lungo (il massimo è %{count} lettere)"
+        too_short: "è troppo corto (il minimo è %{count} lettere)"
+        wrong_length: "è della lunghezza sbagliata (deve essere di %{count} lettere)"
+        taken: "è già stato utilizzato"
+        not_a_number: "non è un numero"
+        greater_than: "deve essere superiore a %{count}"
+        greater_than_or_equal_to: "deve essere superiore o uguale a %{count}"
+        equal_to: "deve essere uguale a %{count}"
+        less_than: "deve essere meno di %{count}"
+        less_than_or_equal_to: "deve essere meno o uguale a %{count}"
+        odd: "deve essere dispari"
+        even: "deve essere pari"
+        not_valid_f: "non valida"
+        not_valid_m: "non valido"
+        record_invalid: "record non valido"
+        missing_image: "mancante"
+        invalid_image: "non è valida"
+        image_too_small: "è troppo piccola (deve essere >= %{minimum})"
+        password_format: "sólo puede tener caracteres alfanuméricos, espacios o el símbolo “_”, y al menos un carácter alfabético y uno numérico."
         mobile_phone_format: "sólo puede tener números"
         mobile_prefix_format: "sólo puede tener números"
         mobile_suffix_format: "sólo puede tener números"
@@ -38,17 +118,109 @@ es:
         zip_format: "es inválido"
         email_invalid: "debe parecer una dirección de correo electrónico"
         eula_must_be_accepted: "debe ser aceptado"
-        privacy_must_be_accepted: " debe ser aceptado"
+        privacy_must_be_accepted: "privacidad debe ser aceptado"
     attributes:
       account:
         image_file: "escaner tarjeta de ID"
       user:
         image_file: " escaner tarjeta de ID"
 
-  authlogic:
+    # Translate model names. Used in Model.human_name().
+    models:
+      operator_session: "sessione operatore"
+      user_session: "sessione utente"
+      user: "utente"
+
+    # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     attributes:
+      user:
+        mobile_phone: "Numero di cellulare"
+        mobile_phone_confirmation: "Conferma numero di cellulare"
+        mobile_prefix: "Prefisso telefono cellulare"
+        mobile_prefix_confirmation: "Conferma prefisso telefono cellulare"
+        mobile_suffix: "Numero telefono cellulare senza prefisso"
+        mobile_suffix_confirmation: "Conferma numero telefono cellulare senza prefisso"
+        image_file: "Fotocopia del documento"
+        email: "E-mail"
+        username: "Nome utente"
+        password: "Password"
+        change_password: "Nuova password"
+        password_confirmation: "Conferma password"
+        email_confirmation: "Conferma e-mail"
+        birth_date: "Data di nascita"
+        given_name: "Nome"
+        surname: "Cognome"
+        state: "Stato"
+        city: "Città"
+        address: "Indirizzo"
+        zip: "CAP"
+        verification_method: "Modalità di verifica dell'identità"
+        verified: "Verificato"
+        active: "Abilitato"
+        radius_groups: "Gruppi RADIUS"
+        eula_acceptance: "Condizioni e termini di utilizzo del servizio"
+        privacy_acceptance: "Informativa sul trattamento dei dati personali"
+        document_photo: "Fotocopia del documento d'identità"
+      account:
+        mobile_phone: "Numero di cellulare"
+        mobile_phone_confirmation: "Conferma numero di cellulare"
+        mobile_prefix: "Prefisso telefono cellulare"
+        mobile_prefix_confirmation: "Conferma prefisso telefono cellulare"
+        mobile_suffix: "Numero telefono cellulare senza prefisso"
+        mobile_suffix_confirmation: "Conferma numero telefono cellulare senza prefisso"
+        image_file: "Fotocopia del documento"
+        email: "E-mail"
+        username: "Nome utente"
+        password: "Password"
+        change_password: "Nuova password"
+        password_confirmation: "Conferma password"
+        email_confirmation: "Conferma e-mail"
+        birth_date: "Data di nascita"
+        given_name: "Nome"
+        surname: "Cognome"
+        state: "Stato"
+        city: "Città"
+        address: "Indirizzo"
+        zip: "CAP"
+        verification_method: "Modalità di verifica dell'identità"
+        verified: "Verificato"
+        active: "Abilitato"
+        radius_groups: "Gruppi RADIUS"
+        eula_acceptance: "Condizioni e termini di utilizzo del servizio"
+        privacy_acceptance: "Informativa sul trattamento dei dati personali"
+        document_photo: "Fotocopia del documento d'identità"
+
+  authlogic:
+    error_messages:
+      login_blank: "deve essere specificato"
+      login_not_found: "non è valido"
+      login_invalid: "utilizza solo lettere numeri, spazi e .-_@"
+      consecutive_failed_logins_limit_exceeded: "Limite di tentativi errati superato, account disabilitato"
+      email_invalid: "non sembra un indirizzo e-mail"
+      password_blank: "deve essere specificata"
+      password_invalid: "non è valida"
+      not_active: "L'account non è attivo"
+      not_confirmed: "L'account non è confermato"
+      not_approved: "L'account non è approvato"
+      no_authentication_details: "Non hai fornito alcun dettaglio per l'autenticazione"
+      is_not_valid: "non è valida"
+    models:
+      operator_session: "sessione operatore"
+      user_session: "sessione utente"
+    attributes:
+      account_session:
+        mobile_phone: "Numero di telefono"
+        login: "nome utente"
+        username: "Nome utente"
+        email: "e-mail"
+        password: "Password"
+        remember_me: "Ricorda il login"
       operator_session:
+        mobile_phone: "Numero di telefono"
         login: "Nombre de usuario"
+        email: "e-mail"
+        password: "Password"
+        remember_me: "Ricorda il login"
 
   simple_form:
     "yes": 'Sí'

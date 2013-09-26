@@ -21,19 +21,64 @@ class Configuration < ActiveRecord::Base
   validates_format_of :key, :with => /\A[a-z_\.,]+\Z/
 
   attr_accessible :key, :value, :system_key
+  
+  after_save :invalidate_cache
+  after_create :invalidate_cache
+  after_destroy :invalidate_cache
+  
+  @@cache = nil
+  
+  def self.cache
+    cache_key = "owums_settings"
+    
+    if @@cache.nil?
+      # retrieve settings from cache if present
+      @@cache = Rails.cache.fetch(cache_key)
+    end
+    
+    # otherwise retrieve from database and create the hash we will cache
+    if @@cache.nil?
+      @@cache = {}
+      
+      Configuration.all.each do |config|
+        @@cache[config.key.to_sym] = config.value
+      end
+      
+      Rails.cache.write(cache_key, @@cache)
+    end
+    
+    @@cache
+  end
+  
+  def invalidate_cache
+    @@cache = nil
+    Rails.cache.delete("owums_settings")
+  end
 
   def self.get(key, default=false)
-    # get key method, can provide default value
-    res = Configuration.find_by_key(key)
-    # neither result and neither a default value return nil
-    if res.nil? and not default
-      nil
-    # no result but default value return default
-    elsif res.nil?
-      default
-    # return value
+    # load from DB if necessary
+    if @@cache.nil?
+      self.cache()
+    end
+    
+    # return from cache
+    unless @@cache[key.to_sym].nil?
+      return @@cache[key.to_sym]
+    # otherwise try retrieving from DB
     else
-      res.value
+      # get key method, can provide default value
+      res = Configuration.find_by_key(key)
+      # neither result and neither a default value return nil
+      if res.nil? and not default
+        nil
+      # no result but default value return default
+      elsif res.nil?
+        default
+      # if found a result, update the cache and return the value
+      else
+        res.invalidate_cache
+        res.value
+      end
     end
   end
 

@@ -25,7 +25,7 @@
             <legend><%=t :Login %></legend>
             <p><%= f.error_messages %></p>
 
-            <% if Configuration.get('use_automatic_username') == "true" or Configuration.get('use_mobile_phone_as_username') == "true" %>
+            <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
                 <%= f.input :username, :label => t(:Username_or_mobile_or_email) %>
             <% else %>
                 <%= f.input :username %>
@@ -37,7 +37,8 @@
               <%= f.input :remember_me, :as => :boolean %>
             </div>
 
-            <%= f.button :submit %>
+            <%= f.button :submit, :class => 'submit button nomargin' %>
+            <br>
           </fieldset>
       <% end %>
     </div>

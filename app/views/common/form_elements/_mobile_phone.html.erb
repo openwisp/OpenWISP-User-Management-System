@@ -17,13 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
+<div id="verify-mobile-phone">
 <% if owner.is_a? Account %>
     <% if owner.can_signup_via? AccountCommon::VERIFY_BY_MOBILE %>
         <% if owner.new_record? %>
             <div class="verification-block">
               <span><%= form.label :mobile_phone %></span>
-              <span style="float:right"><%=t :mobile_phone, :scope => [:simple_form, :hints] %></span>
-
+              <div><%=t :mobile_phone, :scope => [:simple_form, :hints] %></div> 
               <div class="block">
                 <div class="grid_4">
                   <%= form.input :mobile_prefix, :collection => prefixes, :prompt => t(:select_prefix) %>
@@ -34,16 +34,18 @@
                 </div>
               </div>
 
-              <%= form.label :mobile_phone_confirmation %>
-              <div class="block">
-                <div class="grid_4">
-                  <%= form.input :mobile_prefix_confirmation, :collection => prefixes, :prompt => t(:select_prefix) %>
+                <div id="confirm_mobile_phone_number">
+                  <%= form.label :mobile_phone_confirmation %>
+                  <div class="block">
+                    <div class="grid_4">
+                      <%= form.input :mobile_prefix_confirmation, :collection => prefixes, :prompt => t(:select_prefix) %>
+                    </div>
+    
+                    <div class="grid_5">
+                      <%= form.input :mobile_suffix_confirmation %>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="grid_5">
-                  <%= form.input :mobile_suffix_confirmation %>
-                </div>
-              </div>
             </div>
         <% else %>
             <% if owner.verify_with_mobile_phone? %>
@@ -74,3 +76,4 @@
         </div>
     <% end %>
 <% end %>
+</div>

@@ -31,7 +31,18 @@ es:
   Click_for_privacy: "Haga click aquí para leer las Políticas de Privacidad."
   Configuration_keys: "Claves de configuración"
   Configuration_key_updated: "Se ha actualizado la clave de configuración."
+  Confirm_Close_Payment_Overlay: "¿Está seguro que desea cancelar esta operación?"
   Cookies_disabled_or_session_expired: "Su buscador ha deshabilitado las cookies o la sesión ha expirado."
+  Credit_card_number: "Número de tarjeta de crédito"
+  Credit_card_invalid: "Número de tarjeta de crédito no válido"
+  Credit_card_verification_cost: "El coste de la operación de verificación de la tarjeta de crédito es %{cost}"
+  Credit_card_verification_cost0: "La operación de verificación de la tarjeta de crédito es gratis."
+  Credit_card_secure_operation: "La operación se realiza a través de una conexión fiable y segura.<br /><br />Su número de tarjeta de crédito no se almacenan en nuestra base de datos."
+  Credit_Card_Verification_Error_Heading: "Error en la verificación de la tarjeta"
+  Credit_Card_Verification_Error_Paragraph: "Ha habido un problema con el proceso de verificación, por favor, inténtelo de nuevo en unos segundos."
+  Credit_Card_Verification_Success_Heading: "Cuenta verificada con éxito"
+  Credit_Card_Verification_Success_Paragraph: "Gracias por verificar su cuenta, se le redirige a la página de perfil en"
+  Credit_Card_Verification_Success_Paragraph_Mobile: "Gracias por verificar su cuenta, usted va a ser redirigido a la página de perfil en pocos segundos."
   Create: "Crear"
   Create_new_user: "Crear nuevo usuario"
   Create_radius_group: "Crear grupo RADIUS"
@@ -56,6 +67,7 @@ es:
   Edit_radius_group: "Editar grupo RADIUS."
   Edit_radius_reply: "Editar respuesta RADIUS."
   Email: "Correo electrónico"
+  Expiration_date: "Fecha de expiración"
   Filter_data_by_date: "Examinar datos dentro de un periodo:"
   Flash_not_supported: "No soporta Flash"
   Forgot_password: "Clave secreta olvidada"
@@ -127,6 +139,7 @@ es:
   Loading: "Cargando"
   Loading_data: "Cargando datos: por favor, espere."
   Logged_in: "¿Inició sesión?"
+  logged_in_as: "conectado como"
   Loggedin_users: "Usuarios que tienen sesión abierta."
   Login: "Iniciar Sesión"
   Logins: "Iniciar Sesiones"
@@ -188,7 +201,7 @@ es:
 	 el procedimiento."
   Personal_details: "Detalles personales"
   Please_verify_credit_card: "Para completar su solicitud necesitamos verificar su
-	identidad por medio de una tarjeta de crédito. Ir a"
+	identidad por medio de una tarjeta de crédito."
   Please_verify_mobile_number: "Para completar su solicitud necesitamos verificar su
 	número de móvil."
   Prefix: "Prefijo"
@@ -291,6 +304,9 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
   Verification_expire_time_x_mins:
     one: "Le queda cerca de un %{count} minuto para verificar su cuenta."
     other: "Le quedan unos %{count} minutos para verificar su cuenta."
+  Verify_your_credit_card: "Verifique su Tarjeta de Crédito"
+  Verify_card: "Verica tarjeta"
+  Verification_expire_time_remaining: Tiempo de verificación restante
   Verification_time_expired: "Ha expirado el tiempo de verificación."
   Verified: "Verificado"
   Verified_qm: "¿Verificado?"
@@ -304,6 +320,8 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
   birth_date: "fecha de nacimiento"
   blank: "-"
   change_password: "Nueva clave secreta"
+  paypal_credit_card: "Paypal o tarjeta de credito"
+  gestpay_credit_card: "Tarjeta de credito"
   city: "ciudad"
   click_here: "Haga click aquí."
   credit_card: "Tarjeta de crédito"
@@ -312,6 +330,7 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
 	identidad."
     other: " Después de iniciar sesión, se le pedirá que pague %{count} euro para verificar su
 	identidad ."
+  credit_card_instructions_free: "Al termine della procedura di registrazione ti verrà chiesto di verificare la tua carta di credito.<br /><br /><strong>L'operazione è gratuita</strong> e verrà effettuata attraverso una <strong>connessione sicura</strong>.<br /><br /><strong>Il tuo numero di carta di credito NON sarà conservato nei nostri database ma su quello della banca che effettuerà la verifica.</strong>"
   credit_card_item_name: "Registro con tarjeta de crédito"
   disable_account: "Deshabilitar cuenta"
   document_photo: "Escanear ID tarjeta"
@@ -361,3 +380,41 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
   verified_qm: "¿Verificado?"
   will_be_your_username: "sera su nombre de usuario"
   zip: "zip"
+  Verified_by_visa_heading: "Completa la procedura sul sito della tua banca"
+  Verified_by_visa_text: "<p>Accedi al sito della tua banca per inserire il <strong>PIN di sicurezza</strong> della tua carta di credito <strong>Verified By Visa</strong> e completare quindi la procedura di verifica della tua identità.</p>
+  <p>Hai a disposizione <strong>%{minutes} minuti</strong> per completare il procedimento, dopodichè la tua sessione scadrà.</p>"
+  Proceed: "Procedi"
+  Gestpay_verified_by_visa_error_heading: "Errore verifica Verified by Visa"
+  Gestpay_verified_by_visa_error_text: "C'è stato un errore con la procedura di verifica della tua carta verified by visa"
+  Repeat_procedure: "Ripeti la procedura di verifica della carta di credito"
+  Account_verified_successfully: "Account verificato con successo, ora puoi navigare."
+  VBV_system_error: "C'è stato un errore di sistema, perfavore segnala il problema ad un amministratore"
+  active_merchant_year: "Carta scaduta"
+  active_merchant_number: "Numero di carta di credito non valido"
+  active_merchant_brand: "Tipo di carta non riconosciuto"
+  gestpay_error_433: "Data di scadenza della carta errata"
+  gestpay_error_454: "Data di scadenza della carta errata"
+  gestpay_error_74: "Autorizzazione negata: codice di sicurezza errato"
+  gestpay_error_97: "Autorizzazione negata: codice di sicurezza errato"
+  gestpay_error_417: "Autorizzazione negata: codice di sicurezza errato"
+  verification_message_first_step: "Verifica della carta di credito in corso, attendere prego..."
+  verification_message_second_step: "Banca contattata, stiamo verificando i dati, attendere ancora qualche istante prego..."
+  Receipt: Ricevuta
+  Date: Data
+  Description: Descrizione
+  Amount: Importo
+  Tax: IVA
+  Total: Totale
+  Customer_details: Dettagli intestatario
+  Transaction_info: Informazioni Transazione
+  Transaction_ID: ID Transazione
+  Gateway: Gateway
+  invoice_admin_notification_subject: Nuova Ricevuta Generata
+  invoice_admin_notification_message: Una nuova ricevuta è stata generata ed è allegata a quest'email.
+  account_notification_invoice_message: Grazie per aver usato il nostro sistema di verifica d'identità basato su carta di credito. Puoi trovare la ricevuta in allegato a quest'email.
+  select_verification_method: "Seleziona un metodo di verifica dell'identità"
+  Verification_method: Metodo di verifica
+  all: Tutti
+  Enabled: Abilitato
+  "Yes": 'Sì'
+  "No": 'No'

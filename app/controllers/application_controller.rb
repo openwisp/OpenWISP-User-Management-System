@@ -61,7 +61,6 @@ class ApplicationController < ActionController::Base
     else
       render :xml => { :error => 'disabled' }, :status => :unauthorized
     end
-
   end
 
   protected
@@ -72,11 +71,20 @@ class ApplicationController < ActionController::Base
     elsif session[:locale]
       locale = session[:locale]
     else
-      locale = I18n.default_locale
+      locale = set_locale_from_preference
     end
 
     if I18n.available_locales.include? locale.to_sym
       I18n.locale = session[:locale] = locale
+    end
+  end
+  
+  def set_locale_from_preference
+    # set locale to the first preferred language of the user if present in the available locales, otherwise set to english
+    if I18n.available_locales.include? preferred_user_language.to_sym
+      preferred_user_language.to_sym
+    else
+      :en
     end
   end
 
@@ -180,5 +188,14 @@ class ApplicationController < ActionController::Base
   def subject_url(subject)
     subject.is_a?(User) ? user_url(subject) : radius_group_url(subject)
   end
-
+  
+  private
+  
+  def preferred_user_language
+    unless request.env['HTTP_ACCEPT_LANGUAGE'].nil?
+      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    else
+      I18n.default_locale
+    end
+  end
 end

@@ -136,4 +136,40 @@ module ApplicationHelper
     subject.is_a?(User) ? new_user_radius_reply_url(subject) : new_radius_group_radius_reply_url(subject)
   end
 
+  def number_to_currency_custom(number, options = {})
+    currency_code = Configuration.get('gestpay_currency')
+    
+    dictionary = {
+      '242' => '&euro;',
+      '1' => '$',
+      '2' => '&pound;',
+      '71' => '&yen;'
+    }
+    unless dictionary[currency_code].nil?
+      options[:unit] = dictionary[currency_code]
+    else
+      raise(Exception, 'Unkown currency code')
+    end
+    number_to_currency(number, options)
+  end
+  
+  def with_format(format, &block)
+    old_formats = formats
+    self.formats = [format]
+    block.call
+    self.formats = old_formats
+    nil
+  end
+  
+  def authenticated?
+    current_account or @current_operator
+  end
+  
+  def link_to_user_or_operator
+    if current_account
+      link_to(current_account.username, account_url)
+    elsif @current_operator
+      link_to(@current_operator.login, root_url)
+    end
+  end
 end

@@ -49,7 +49,7 @@
   <% if auth? :radius_checks_creator %>
       <tr>
         <td colspan="4">
-          <p><%= link_to t(:Add_radius_check), new_subject_radius_check_url(subject) %></p>
+          <p><%= link_to t(:Add_radius_check), new_subject_radius_check_url(subject), :class => 'button nomargin' %></p>
         </td>
       </tr>
   <% end %>

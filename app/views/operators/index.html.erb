@@ -20,14 +20,13 @@
 <div class="grid_12">
   <div class="box">
     <h2><%=t :Operators %></h2>
-    <br />
-
+    
     <table>
       <thead>
         <tr>
           <th><%=t :Login %></th>
           <th><%=t :Logged_in %></th>
-          <th><%=t :Current_login_at %></th>
+          <!--<th><%=t :Current_login_at %></th>-->
           <th><%=t :Current_login_ip %></th>
           <th><%=t :Last_login_at %></th>
           <th><%=t :Last_login_ip %></th>
@@ -37,10 +36,10 @@
       </thead>
       <tbody>
         <% @operators.each do |operator| %>
-          <tr class="hover">
+          <tr class="hover <%= cycle 'odd', 'even' %>">
             <td><%= link_to operator.login, operator %></td>
-            <td><%= operator.logged_in? %></td>
-            <td><%=l operator.current_login_at rescue t(:blank) %></td>
+            <td><%= image_tag(operator.logged_in? ? 'accept.png' : 'delete.png' ) %></td>
+            <!--<td><%=l operator.current_login_at rescue t(:blank) %></td>-->
             <td><%= operator.current_login_ip || t(:blank) %></td>
             <td><%=l operator.last_login_at rescue t(:blank) %></td>
             <td><%= operator.last_login_ip || t(:blank) %></td>
@@ -51,5 +50,8 @@
         <% end %>
       </tbody>
     </table>
+    
+    <%= link_to t(:Add_new_operator), new_operator_url, :class => 'button' %>
+    
   </div>
 </div>

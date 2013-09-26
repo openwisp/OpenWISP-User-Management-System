@@ -1,0 +1,43 @@
+admin_1:
+  operator_id: 1
+  role_id: 1
+
+admin_2:
+  operator_id: 1
+  role_id: 2
+
+admin_3:
+  operator_id: 1
+  role_id: 3
+
+admin_4:
+  operator_id: 1
+  role_id: 4
+
+admin_5:
+  operator_id: 1
+  role_id: 5
+
+admin_6:
+  operator_id: 1
+  role_id: 6
+
+admin_7:
+  operator_id: 1
+  role_id: 7
+
+admin_8:
+  operator_id: 1
+  role_id: 8
+
+admin_9:
+  operator_id: 1
+  role_id: 9
+
+admin_10:
+  operator_id: 1
+  role_id: 10
+
+admin_11:
+  operator_id: 1
+  role_id: 11
