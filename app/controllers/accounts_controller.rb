@@ -17,18 +17,22 @@
 
 class AccountsController < ApplicationController
   before_filter :require_account, :only => [
-      :show, :edit, :update
+    :show, :edit, :update, :gestpay_verify_credit_card, :gestpay_verified_by_visa
   ]
 
   before_filter :require_no_account, :only => [
-      :new, :create, :verify_credit_card, :secure_verify_credit_card
+    :new, :create, :verify_paypal, :secure_verify_paypal
+  ]
+  
+  before_filter :get_credit_card_verification_cost, :only => [
+    :new, :create, :verification, :gestpay_verify_credit_card
   ]
 
   before_filter :require_no_operator
 
   before_filter :load_account, :except => [ :new, :create ]
 
-  protect_from_forgery :except => [ :verify_credit_card, :secure_verify_credit_card ]
+  protect_from_forgery :except => [ :verify_paypal, :secure_verify_paypal ]
 
   STATS_PERIOD = 14
 
@@ -52,16 +56,25 @@ class AccountsController < ApplicationController
     @account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
 
     @account.captcha_verification = session[:captcha]
+    
+    # store IP temporarily, necessary to automatically log in the user in the captive portal
+    @account.store_ip(request.remote_ip)
 
     save_account = request.format.xml? ? @account.save : @account.save_with_captcha
 
     if save_account
+      # by default no verification method is selected
+      @verification_method = false
+      
       respond_to do |format|
         format.html { redirect_to account_path }
         format.mobile { redirect_to account_path }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :created }
       end
     else
+      # select verification method automatically
+      @verification_method = params[:account][:verification_method]
+      
       respond_to do |format|
         format.html   { render :action => :new }
         format.mobile { render :action => :new }
@@ -79,8 +92,8 @@ class AccountsController < ApplicationController
       end
     elsif @current_operator.nil? and !@account.verified?
       respond_to do |format|
-        format.html   { render :action => :verification }
-        format.mobile { render :action => :verification }
+        format.html   { redirect_to :action => :verification }
+        format.mobile { redirect_to :action => :verification }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
@@ -105,8 +118,8 @@ class AccountsController < ApplicationController
       end
     elsif @current_operator.nil? and !@account.verified?
       respond_to do |format|
-        format.html   { render :action => :verification }
-        format.mobile { render :action => :verification }
+        format.html   { redirect_to :action => :verification }
+        format.mobile { redirect_to :action => :verification }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
@@ -123,8 +136,8 @@ class AccountsController < ApplicationController
   def update
     if !@current_operator.nil? or !@account.verified?
       respond_to do |format|
-        format.html   { render :action => :verification }
-        format.mobile { render :action => :verification }
+        format.html   { redirect_to :action => :verification }
+        format.mobile { redirect_to :action => :verification }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :forbidden }
       end
     else
@@ -168,6 +181,7 @@ class AccountsController < ApplicationController
     end
   end
 
+  # before_filters: (load_account, get_credit_card_verification_cost)
   def verification
     if @account.nil? # Account expired (and removed by the housekeeping backgroundrb job)
       respond_to do |format|
@@ -180,7 +194,16 @@ class AccountsController < ApplicationController
           format.xml { render_if_xml_restful_enabled :nothing => true, :status => :request_timeout }
         end
       end
+    elsif @account.verified?
+      flash[:notice] = I18n.t(:Account_verified_successfully)
+      redirect_to account_path
     else
+      if Configuration.get('gestpay_enabled') == 'true':        
+        # delete any remaining flash message
+        unless flash[:error].nil?
+          flash.delete(:error)
+        end
+      end
       respond_to do |format|
         if request.xhr? # Ajax request
           format.html   { render :partial => 'verification' }
@@ -193,8 +216,29 @@ class AccountsController < ApplicationController
       end
     end
   end
+  
+  # account status
+  def status_json
+    unless @account.nil?
+      remaining_time = @account.verification_time_remaining rescue 0
+      
+      data = {
+        :is_verified => @account.verified?,
+        :is_expired => false,
+        :remaining_time => remaining_time
+      }
+    else
+      data = {
+        :is_verified => false,
+        :is_expired => true,
+        :remaining_time => 0
+      }
+    end
+    
+    render :json => data
+  end
 
-  def verify_credit_card
+  def verify_paypal
     # Method to be called by paypal (IPN) to
     # verify user. Invoice is the account's id.
     # I know this method is verbose but, since 
@@ -209,7 +253,7 @@ class AccountsController < ApplicationController
     render :nothing => true
   end
 
-  def secure_verify_credit_card
+  def secure_paypal
     # Method to be called by paypal (IPN) to
     # verify user. Invoice is the account's id.
     # I know this method is verbose but, since 
@@ -224,15 +268,103 @@ class AccountsController < ApplicationController
     end
     render :nothing => true
   end
+  
+  # before_filter: get_credit_card_verification_cost
+  def gestpay_verify_credit_card
+    gestpay_enabled = Configuration.get('gestpay_enabled') == 'true' ? true : false;
+    @currency_code = Configuration.get('gestpay_currency')
+    @verified_by_visa = false
+    
+    unless gestpay_enabled
+      render :nothing => true, :status => '403'
+      return false
+    end
+    
+    unless @account.nil?
+      validation = @account.gestpay_s2s_verify_credit_card(request, params, @credit_card_verification_cost, @currency_code)
+    else
+      validation = {
+        :transaction_result => 'KO',
+        :error_code => '000',
+        :error_description => I18n.t(:Verification_time_expired)
+      }
+      flash[:expired] = true
+    end
+    
+    if validation[:transaction_result] == 'OK'
+      unless flash[:error].nil?
+        flash.delete(:error)
+      end
+      flash[:notice] = I18n.t(:Account_verified_successfully)
+    elsif validation[:error_code] == '8006'
+      @verified_by_visa = {
+        :a => validation[:a],
+        :b => validation[:b],
+        :c => url_for(:action => :gestpay_verified_by_visa, :only_path => false),
+        :url => validation[:url]
+      }
+    else
+      # translate gestpay error message if possible otherwise just return the string
+      begin
+        flash[:error] = I18n.translate!(('gestpay_error_'+validation[:error_code]).parameterize.underscore.to_sym, :raise => true)
+      rescue I18n::MissingTranslationData, TypeError
+        flash[:error] = validation[:error_description]
+      end      
+    end
+    
+    respond_to do |format|
+      format.html{ redirect_to verification_path }
+      format.js{
+        @is_mobile = params[:mobile].nil? ? false : true
+        @template_suffix = @is_mobile ? 'mobile.erb' : 'html.erb'
+      }
+    end
+  end
+  
+  def gestpay_verified_by_visa
+    if not Configuration.get('gestpay_enabled') == 'true'
+      head 404
+    # if PaRes param is missing from POST request return 400 Bad Request
+    elsif not params[:PaRes]
+      head 400
+    else
+      # perform gestpay webservice verification again
+      validation = @account.gestpay_s2s_verified_by_visa(params[:PaRes], request.remote_ip)
+      # if success redirect to account page
+      if validation[:transaction_result] == 'OK'
+        flash[:notice] = I18n.t(:Account_verified_successfully)
+        redirect_to account_path
+      # else render error template
+      else
+        render :template => 'accounts/gestpay_verified_by_visa_error'
+      end
+    end
+  end
 
   def instructions
-    @custom_instructions = Configuration.get('custom_account_instructions')
+    begin
+      @custom_instructions = Configuration.get('custom_account_instructions_%s' % I18n.locale).html_safe
+    rescue NoMethodError
+      @custom_instructions = Configuration.get('custom_account_instructions_en').html_safe
+    end
   end
 
   private
 
   def load_account
     @account = current_account
+  end
+  
+  def get_credit_card_verification_cost
+    if Configuration.get('gestpay_enabled') != 'true'
+      return @credit_card_verification = false
+    end
+    # verification cost, 0 if verification web service method us used
+    if Configuration.get('gestpay_webservice_method') == 'verification'
+      @credit_card_verification_cost = 0
+    else
+      @credit_card_verification_cost = Configuration.get('credit_card_verification_cost', '1').to_f
+    end
   end
 
   def sort_and_paginate_accountings

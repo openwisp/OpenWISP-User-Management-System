@@ -21,19 +21,39 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
   def create(args = nil)
 
   end
+  
+  def convert_radius_accountings
+    # converts the attribute "CalledStationId" of radius accounting records which
+    # do not contain the mac address of the access point from where the users connected
+    # so that they will include this info
+    begin
+      RadiusAccounting.convert_radius_accountings_to_aware
+    rescue Exception => exception
+      puts "Exception raised while converting radius sessions: #{exception.message}"
+    end
+  end
 
   def remove_unverified_users
     User.unverified.each do |user|
       if user.verification_expired?
-        puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate it's account. I'm going to remove him/her..."
-        user.destroy
+        # if verified by visa user just disable
+        if user.verify_with_gestpay? and user.active and Configuration.get('gestpay_webservice_method') != 'verification' and !user.credit_card_info.nil? and !user.credit_card_info.empty?
+          puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account but it's a verified by visa attempt. Disabling it..."
+          user.active = false
+          user.save!
+        # else delete
+        else
+          puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account. I'm going to remove him/her..."
+          user.destroy
+        end
       end
     end
   end
 
   def remove_disabled_users
     User.disabled.each do |user|
-      if user.registration_expired?
+      # do not remove verified by visa disabled users
+      if user.registration_expired? and not (user.verify_with_gestpay? and !user.credit_card_info.nil? and !user.credit_card_info.empty?)
         puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) was disabled for a long time. I'm going to remove him/her..."
         user.destroy
       end

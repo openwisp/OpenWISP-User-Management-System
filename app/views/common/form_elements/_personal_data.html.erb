@@ -21,21 +21,33 @@
 
 <%= form.input :surname, :disabled => !owner.new_record? %>
 
-<%= form.input :birth_date, :as => :date,
-               :disabled => !owner.new_record?,
-               :start_year => Date.today.year - 90,
-               :end_year => Date.today.year - 14,
-               :order => [:day, :month, :year],
-               :prompt => true
-%>
+<div<% unless CONFIG['birth_date'] %> class="hidden"<% end %>>
+    <%= form.input :birth_date, :as => :date,
+        :disabled => !owner.new_record?,
+        :start_year => Date.today.year - 4,
+        :end_year => Date.today.year - 100,
+        :order => [:day, :month, :year],
+        :prompt => true
+    %>
+</div>
 
-<%= form.input :address %>
+<div<% unless CONFIG['address'] %> class="hidden"<% end %>>
+    <%= form.input :address %>
+</div>
 
-<%= form.input :zip %>
+<div<% unless CONFIG['zip'] %> class="hidden"<% end %>>
+    <%= form.input :zip %>
+</div>
 
-<%= form.input :city %>
+<div<% unless CONFIG['city'] %> class="hidden"<% end %>>
+    <%= form.input :city %>
+</div>
 
-<%= form.input :state, :collection => countries, :prompt => false %>
+<div<% unless CONFIG['state'] %> class="hidden"<% end %>>
+    <%= form.input :state, :collection => countries, :prompt => false; %>
+</div>
+
+<%= form.input :username, :disabled => !owner.new_record? %>
 
 <%= form.input :email %>
 

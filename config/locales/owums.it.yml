@@ -40,14 +40,14 @@ it:
   Credit_card_number: "Numero carta di credito"
   Credit_card_verification_cost: "L'operazione di verifica della carta di credito ha un costo di %{cost}"
   Credit_card_verification_cost0: "L'operazione di verifica della carta di credito è gratuita."
-  Credit_card_secure_operation: "L'operazione viene effettuata su una connessione sicura."
+  Credit_card_secure_operation: "L'operazione viene effettuata su una connessione sicura.<br /><br />Il tuo numero di carta di credito NON sarà conservato nei nostri database."
   Credit_Card_Verification_Error_Heading: "Errore Verifica Account"
   Credit_Card_Verification_Error_Paragraph: "C'è stato un problema con la verifica della tua carta di credito, perfavore prova di nuovo fra qualche secondo."
   Credit_Card_Verification_Success_Heading: "Account Verificato con Successo"
   Credit_Card_Verification_Success_Paragraph: "Grazie per aver verificato il tuo account, verrai automaticamente redirezionato alla pagina del tuo profilo fra"
   Credit_Card_Verification_Success_Paragraph_Mobile: "Grazie per aver verificato il tuo account, stai per essere redirezionato sulla pagina del tuo profilo fra pochi secondi."
   Current_login_at: "Data accesso corrente"
-  Current_login_ip: "IP accesso corrente"
+  Current_login_ip: "IP corrente"
   Data_insertion: "Inserimento dati personali"
   Data_verification: "Verifica dati personali"
   Destroy: "Elimina"
@@ -66,7 +66,7 @@ it:
   Edit_radius_reply: "Modifica RADIUS reply"
   Email: "E-mail"
   Expiration_date: "Data di scadenza"
-  Filter_data_by_date: "Consultando i dati nel periodo:"
+  Filter_data_by_date: "Stai consultando i dati del periodo:"
   Flash_not_supported: "Flash non supportato"
   Forgot_password: "Password dimenticata"
   Forgot_password_description_email: "Scrivi qui sotto l'indirizzo email utilizzato in fase di registrazione e premi \"reimposta password\" per recuperare la tua password"
@@ -100,8 +100,8 @@ it:
   Invalid_request: "Richiesta non valida!"
   IP_address: "Indirizzo IP"
   Key: "Chiave"
-  Last_login_at: "Data ultimo accesso"
-  Last_login_ip: "IP ultimo accesso"
+  Last_login_at: "Ultimo login"
+  Last_login_ip: "IP ultimo login"
   Last_x_days_traffic_download:
     one: "Download odierni"
     other: "Download degli ultimi %{count} giorni"
@@ -127,11 +127,12 @@ it:
   Loading: "Caricamento"
   Loading_data: "Caricamento dati: attendere"
   Logged_in: "Connesso?"
+  logged_in_as: "autenticato come"
   Loggedin_users: "Utenti attualmente connessi"
   Login: "Accedi"
   Logins: "Accessi"
   Login_successful: "Login riuscito"
-  Login_count: "Numero di accessi"
+  Login_count: "N. di accessi"
   Login_error: "Nome utente o password errati"
   Logout: "Esci"
   Logout_successful: "Logout riuscito"
@@ -238,7 +239,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Sort_by_this_field: "Ordina per questo campo"
   Show: "Mostra"
   Show_account_info: "Mostra informazioni account"
-  Show_stats: "Mostra statistiche"
+  Show_stats: "Statistiche"
   Start_time: "Inizio connessione"
   State: "Stato"
   Stop_time: "Fine connessione"
@@ -284,6 +285,7 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Verification_expire_time_x_mins:
     one: "Ti rimane circa %{count} minuto per verificare il tuo account."
     other: "Ti rimangono circa %{count} minuti per verificare il tuo account."
+  Verification_expire_time_remaining: Tempo rimanente per la verifica dell'account
   Verification_time_expired: "Hai esaurito il tempo a tua disposizione per la verifica."
   Verified: "Verificato"
   Verified_qm: "Verificato?"
@@ -304,7 +306,8 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   credit_card: "Carta di credito"
   paypal_credit_card: "Paypal o carta di credito"
   gestpay_credit_card: "Carta di credito"
-  credit_card_instructions: "Al termine della procedura di registrazione ti verrà chiesto di verificare la tua carta di credito. L'operazione ha un costo di %{count} euro e viene effettuata attraverso una connessione sicura."
+  credit_card_instructions: "Al termine della procedura di registrazione ti verrà chiesto di verificare la tua carta di credito.<br /><br /><strong>L'operazione ha un costo di %{count}</strong> e viene effettuata attraverso una <strong>connessione sicura</strong>.<br /><br /><strong>Il tuo numero di carta di credito NON sarà conservato nei nostri database ma su quello della banca che effettuerà la verifica.</strong>"
+  credit_card_instructions_free: "Al termine della procedura di registrazione ti verrà chiesto di verificare la tua carta di credito.<br /><br /><strong>L'operazione è gratuita</strong> e verrà effettuata attraverso una <strong>connessione sicura</strong>.<br /><br /><strong>Il tuo numero di carta di credito NON sarà conservato nei nostri database ma su quello della banca che effettuerà la verifica.</strong>"
   credit_card_item_name: "Registrazione con carta di credito"
   disable_account: "disabilita account"
   document_photo: "fotocopia del documento"
@@ -374,6 +377,22 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   gestpay_error_417: "Autorizzazione negata: codice di sicurezza errato"
   verification_message_first_step: "Verifica della carta di credito in corso, attendere prego..."
   verification_message_second_step: "Banca contattata, stiamo verificando i dati, attendere ancora qualche istante prego..."
-  verification_explain: "<p>Al fine di <strong>prevenire abusi del servizio</strong>, siamo costretti a <strong>verificare l'identità</strong> degli utenti che utilizzano il servizio wifi.</p>"
-  verification_explain_mobile: "Sei sei in possesso di una <strong>SIM italiana</strong> seleziona il metodo di verifica dell'identità <strong>\"Numero di cellulare\"</strong> dal seguente menu"
-  verification_explain_credit_card: ", altrimenti seleziona il metodo <strong>\"Carta di Credito\"</strong>."
+  Receipt: Ricevuta
+  Date: Data
+  Description: Descrizione
+  Amount: Importo
+  Tax: IVA
+  Total: Totale
+  Customer_details: Dettagli intestatario
+  Transaction_info: Informazioni Transazione
+  Transaction_ID: ID Transazione
+  Gateway: Gateway
+  invoice_admin_notification_subject: Nuova Ricevuta Generata
+  invoice_admin_notification_message: Una nuova ricevuta è stata generata ed è allegata a quest'email.
+  account_notification_invoice_message: Grazie per aver usato il nostro sistema di verifica d'identità basato su carta di credito. Puoi trovare la ricevuta in allegato a quest'email.
+  select_verification_method: "Seleziona un metodo di verifica dell'identità"
+  Verification_method: Metodo di verifica
+  all: Tutti
+  Enabled: Abilitato
+  "Yes": 'Sì'
+  "No": 'No'

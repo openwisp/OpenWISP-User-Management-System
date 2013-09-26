@@ -26,3 +26,16 @@ gem 'capistrano', '~> 2.9.0', :require => false
 gem 'capistrano-ext', '~> 1.2.1', :require => false
 gem 'cap-recipes', '~> 0.3.36', :require => false
 gem 'capistrano_colors', '~> 0.5.4', :require => false
+
+# gestpay credit card
+gem 'savon', '~> 1.2.0'
+gem 'activemerchant'
+gem 'prawn'
+
+group :test do
+  gem 'sqlite3'
+end
+
+group :development do
+  gem "rack-mini-profiler"
+end

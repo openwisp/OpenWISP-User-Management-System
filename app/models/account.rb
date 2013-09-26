@@ -23,8 +23,11 @@ class Account < AccountCommon
   acts_as_authentic do |c|
     c.maintain_sessions = true
   end
+  
+  # After save
+  #after_save :prepare_gestpay_payment
 
-  # If the configuration key use_automatic_username is set to true, the username is automatically set
+  # If the configuration key use_mobile_phone_as_username is set to true, the username is automatically set
   before_validation :set_username_if_required, :on => :create
 
   # Validations
@@ -95,6 +98,18 @@ class Account < AccountCommon
   def expire_time
     (self.verification_expire_timeout - (Time.now - self.created_at).to_i + 60) / 60
   end
+  
+  def expire_seconds
+    (self.verification_expire_timeout - (Time.now - self.created_at).to_i)
+  end
+  
+  def verification_time_remaining
+    if not self.verified? and self.expire_seconds > 0
+      Time.at(self.expire_seconds).gmtime.strftime('%M:%S')
+    else
+      return 0
+    end
+  end
 
   def ask_for_mobile_phone_password_recovery!
     if self.verify_with_mobile_phone?
@@ -144,12 +159,12 @@ class Account < AccountCommon
     end
   end
 
-  def verify_with_credit_card(return_url, notify_url)
+  def verify_with_paypal(return_url, notify_url)
     prepared = prepare_paypal_payment(return_url, notify_url)
     prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
   end
 
-  def encrypted_verify_with_credit_card(return_url, notify_url)
+  def encrypted_verify_with_paypal(return_url, notify_url)
     prepared = prepare_paypal_payment(return_url, notify_url)
 
     prepared[:values].merge!({:cert_id => Configuration.get("ipn_cert_id")})
@@ -176,44 +191,185 @@ class Account < AccountCommon
       ).to_s.gsub("\n", "")
     ]
   end
-
+  
+  def gestpay_s2s_verify_credit_card(request, cc, amount, currency)
+    # build credit card number
+    number = cc['number1'] + cc['number2'] + cc['number3'] + cc['number4']
+    # verify validity of credit card before sending it to the gateway
+    credit_card = ActiveMerchant::Billing::CreditCard.new(
+      :number     => number,
+      :month      => cc['expiration_month'],
+      :year       => '20'+cc['expiration_year'],
+      :first_name => self.given_name,
+      :last_name  => self.surname,
+      :verification_value  => cc['cvv']
+    )
+    # if credit card looks valid proceed to bank gateway
+    if credit_card.valid?
+      webservice_url = Configuration.get('gestpay_webservice_url')
+      time = DateTime.now
+      shop_transaction_id = Digest::MD5.hexdigest("#{number}#{time}")
+      # prepare SOAP params
+      params = {
+        :shopLogin => Configuration.get('gestpay_shoplogin'),
+        :uicCode => currency,
+        :amount => amount,
+        :shopTransactionId => shop_transaction_id,
+        :cardNumber => number,
+        :expiryMonth => cc['expiration_month'].length > 1 ? cc['expiration_month'] : '0' + cc['expiration_month'],
+        :expiryYear => cc['expiration_year'],
+        :cvv => cc['cvv'],
+        :buyerName => '%s %s' % [self.given_name, self.surname],
+        :buyerEmail => self.email,
+        :languageId => I18n.locale == :it ? '1' : '2',
+        :customInfo => "USERID=%s*P1*SERVER=%s" % [self.id.to_s, Configuration.get("notifier_base_url")]
+      }
+      # init SOAP client
+      client = Savon.client(webservice_url)
+      
+      if Configuration.get('gestpay_webservice_method') == 'verification'
+        method = :call_verifycard_s2_s
+        params[:expMonth] = params[:expiryMonth]
+        params[:expYear] = params[:expiryYear]
+        params.delete(:amount)
+        params.delete(:expiryMonth)
+        params.delete(:expiryYear)
+      else
+        method = :call_pagam_s2_s
+      end
+      
+      # execute a SOAP request to call the "callPagamS2S" action
+      response = client.request(method) do
+        soap.body = params
+      end
+      
+      # convert response to hash
+      begin
+        response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
+      rescue NoMethodError
+        response = response.to_hash[:call_verifycard_s2_s_response][:call_verifycard_s2_s_result][:gest_pay_s2_s]
+      end
+      
+      response[:datetime] = time
+      # if verification and payment succeded
+      if response[:transaction_result] == 'OK':
+        # save bank response (shop_transaction, authorization_code) and verify user
+        self.set_credit_card_info(response)
+        self.credit_card_identity_verify!
+      end
+      # verified by visa case
+      if response[:error_code] == '8006'
+        response[:shop_transaction_id] = shop_transaction_id
+        # save shop_transaction_id, transaction_key and vbv_risp in DB
+        self.set_credit_card_info(response)
+        # prolong account validity so it won't expire while the user is verifying
+        self.created_at = time
+        # temporarily set the user as verified in order to be able to log her in just for the time necessary to complete the payment
+        self.verified = true
+        self.save!
+        # temporarily login user
+        login_response = self.captive_portal_login(request.remote_ip, timeout=true, config_check=false)
+        # unverify user
+        self.verified = false
+        self.save!
+        # ensure user is logged in otherwise log error and return failure
+        if self.captive_portal_login_ok_for_vbv?(login_response)
+          # add some keys to response hash
+          response[:a] = params[:shopLogin]
+          response[:b] = response[:vb_v][:vb_v_risp]
+          response[:url] = Configuration.get('gestpay_vbv_url')
+        # one of the 403 cases can happen when a user is not registering from an access point but from another internet connection
+        else
+          Rails.logger.error('captive portal login failed for verified_by_visa credit card user with error %s: %s' % [login_response.code, login_response.body])
+          response[:error_description] = I18n.t(:VBV_system_error)
+          response[:error_code] = false
+        end        
+      end
+      # explicit return just for clarity
+      return response
+    end
+    
+    # translate active merchant errors and display them nicely
+    error_description = ''
+    i = 0
+    credit_card.errors.each do |key, value|
+      if value.empty?
+        next
+      end
+      br = i > 0 ? '<br />' : ''
+      error_description = error_description + br + I18n.t("active_merchant_#{key}")
+      i += 1
+    end
+    
+    # emulate gestpay response
+    return { :transaction_result => 'KO', :error_description => error_description, :error_code => false }
+  end
+  
+  def gestpay_s2s_verified_by_visa(pares, ip_address)
+    webservice_url = Configuration.get('gestpay_webservice_url')
+    amount = Configuration.get('credit_card_verification_cost', '1')
+    currency = Configuration.get('gestpay_currency')
+    # retrieve data from DB
+    credit_card_info = JSON::load(self.credit_card_info)
+    # prepare SOAP params
+    params = {
+      :shopLogin => Configuration.get('gestpay_shoplogin'),
+      :uicCode => currency,
+      :amount => amount,
+      :shopTransactionId => credit_card_info['shop_transaction'],
+      :transKey => credit_card_info['transaction_key'],
+      "PARes" => pares
+    }
+    # init SOAP client
+    client = Savon.client(webservice_url)
+    # execute a SOAP request to call the "callPagamS2S" action
+    response = client.request(:call_pagam_s2_s) do
+      soap.body = params
+    end
+    # convert response to hash
+    response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
+    
+    if response[:transaction_result] == 'OK':
+      response[:datetime] = credit_card_info['datetime']
+      response[:transaction_key] = credit_card_info['transaction_key']
+      response[:VbVRisp] = credit_card_info['VbVRisp']
+      self.set_credit_card_info(response)
+      # log out user from captive portal because he's using a temporary login
+      self.captive_portal_logout(ip_address)
+      # this method will login the user again if the default configuration has not been changed (config.yml)
+      self.credit_card_identity_verify!
+    end
+    return response
+  end
 
   private
 
   def set_username_if_required
-    if Configuration.get('use_mobile_phone_as_username')
-      Rails.logger.warn "Deprecation warning: 'use_mobile_phone_as_username' configuration key will be soon removed. Please use 'use_automatic_username' instead"
-    end
-
-    # Retro-compatibility...  "use_mobile_phone_as_username" is deprecated
-    if Configuration.get('use_automatic_username') == "true" or Configuration.get('use_mobile_phone_as_username') == "true"
+    if Configuration.get('use_mobile_phone_as_username') == "true"
       if verify_with_mobile_phone?
         self.username = mobile_phone
-      else
-        self.username = email
       end
     end
-
   end
 
   def prepare_paypal_payment(return_url, notify_url)
     values = {
-        :business => Configuration.get("credit_card_business_account"),
-        :cmd => '_cart',
-        :upload => 1,
-        :return => return_url,
-        :invoice => self.id,
-        :notify_url => notify_url,
-        :currency_code => "EUR",
-        :lc => I18n.locale.to_s.upcase
+      :business => Configuration.get("paypal_business_account"),
+      :cmd => '_cart',
+      :upload => 1,
+      :return => return_url,
+      :invoice => self.id,
+      :notify_url => notify_url,
+      :currency_code => Configuration.get("paypal_currency", "EUR"),
+      :lc => I18n.locale.to_s.upcase
     }
 
     values.merge!({
-                      "amount_1" => Configuration.get("credit_card_verification_cost"),
-                      "item_name_1" => I18n.t(:credit_card_item_name),
-                      "item_number_1" => self.id,
-                      "quantity_1" => 1
-                  })
+      "amount_1" => Configuration.get("credit_card_verification_cost"),
+      "item_name_1" => I18n.t(:credit_card_item_name),
+      "item_number_1" => self.id,
+      "quantity_1" => 1
+    })
 
     if Rails.env.production?
       paypal_base_url = Configuration.get("ipn_url")

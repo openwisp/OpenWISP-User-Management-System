@@ -1,0 +1,24 @@
+defaults: &defaults
+  # registration form
+  birth_date: true
+  address: true
+  zip: true
+  city: true
+  state: true
+  # other stuff
+  send_email_notification_to_users: true
+  automatic_captive_portal_login: true
+  mac_address_authentication: false
+  # additional languages
+  english: true
+  italian: true
+  spanish: true
+
+production:
+  <<: *defaults
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults

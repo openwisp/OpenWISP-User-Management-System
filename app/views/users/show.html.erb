@@ -28,7 +28,7 @@
 <div class="grid_12">
   <div class="box">
     <h2><%= t :User_information %></h2>
-    <ul class="nav main">
+    <ul class="nav main nomargin">
       <li><%= link_to t(:Refresh_data), "" %></li>
       <% if current_operator.has_role? 'users_manager' %>
           <li><%= link_to t(:Edit), edit_user_path(@user) %></li>
@@ -89,7 +89,7 @@
           <td><%= l(@user.created_at, :format => :short) %></td>
           <td>
             <% if @user.verified %>
-                <%= l(@user.verified_at, :format => :short) %>
+                <%= l(@user.verified_at, :format => :short) rescue @user.created_at %>
             <% else %>
                 <span style="color: red; "><%= t :Not_verified %></span>
             <% end %>
@@ -117,7 +117,6 @@
   <% if current_operator.has_role? 'users_manager' %>
       <div id="radius_groups" class="box">
         <h2><%= t :Radius_groups %></h2>
-        <br/>
         <table>
           <thead>
           <tr>
@@ -142,7 +141,6 @@
   <% if auth? :radius_checks_viewer %>
       <div id="user_radius_checks" class="box">
         <h2><%= t :Radius_checks %></h2>
-        <br/>
         <table>
           <thead>
           <tr>
@@ -175,7 +173,7 @@
           <% if auth? :radius_checks_creator %>
               <tr>
                 <td colspan="4">
-                  <p><%= link_to t(:Add_radius_check), new_user_radius_check_url(@user) %></p>
+                  <p><%= link_to t(:Add_radius_check), new_user_radius_check_url(@user), :class => 'button nomargin' %></p>
                 </td>
               </tr>
           <% end %>
@@ -187,7 +185,6 @@
   <% if auth? :radius_replies_viewer %>
       <div id="user_radius_replies" class="box">
         <h2><%= t :Radius_replies %></h2>
-        <br/>
         <table>
           <thead>
           <tr>
@@ -220,7 +217,7 @@
           <% if auth? :radius_replies_creator %>
               <tr>
                 <td colspan="4">
-                  <p><%= link_to t(:Add_radius_reply), new_user_radius_reply_url(@user) %></p>
+                  <p><%= link_to t(:Add_radius_reply), new_user_radius_reply_url(@user), :class => 'button nomargin' %></p>
                 </td>
               </tr>
           <% end %>

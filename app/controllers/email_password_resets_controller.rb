@@ -67,8 +67,8 @@ class EmailPasswordResetsController < ApplicationController
       flash[:notice] = I18n.t(password_changed ? :Password_successfully_updated : :Password_not_successfully_updated)
 
       respond_to do |format|
-        format.html { redirect_to account_url }
-        format.mobile { redirect_to account_url }
+        format.html { redirect_to root_url }
+        format.mobile { redirect_to root_url }
         format.xml { render_if_xml_restful_enabled :nothing => true, :status => :accepted }
       end
     else

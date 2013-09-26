@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>OpenWISP</title>
@@ -31,7 +31,7 @@
   <%= javascript_include_tag 'fluid16' %>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="<%= image_path 'openwisp.ico' %>" />
+  <link rel="shortcut icon" href="<%= image_path 'favicon.png' %>" />
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -59,18 +59,21 @@
   <div data-role="content">
     <% if on_root? %>
         <ul data-role="listview" data-inset="true">
-          <% if !current_account %>
               <li><%= link_to t(:How_to_use_service), account_instructions_path %></li>
               <li><%= link_to t(:Manage_your_account), account_login_path %></li>
-              <li><%= link_to t(:Register), account_registration_path %></li>
-              <li><%= link_to t(:Forgot_password), password_reset_path %></li>
-          <% end %>
+              <% if !current_account %>
+								<li><%= link_to t(:Register).html_safe, account_registration_path %></li>
+								<li><%= link_to t(:Forgot_password), password_reset_path %></li>
+							<% end %>
         </ul>
 
-	<p>&nbsp;</p>
+				<p>&nbsp;</p>
         <fieldset class="ui-grid-a">
           <div class="ui-block-a">
             <%= link_to_locale 'it', 'data-role' => 'button', 'data-transition' => 'flip' %>
+            </div>
+          <div class="ui-block-b">
+            <%= link_to_locale 'es', 'data-role' => 'button', 'data-transition' => 'flip' %>
           </div>
           <div class="ui-block-b">
             <%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %>

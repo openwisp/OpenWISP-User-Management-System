@@ -39,10 +39,11 @@ class User < AccountCommon
 
   has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
+  has_one :invoice
 
   attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
                   :email, :email_confirmation, :password, :password_confirmation,
-                  :mobile_prefix, :mobile_suffix, :verified, :verification_method,
+                  :mobile_prefix, :mobile_suffix, :verified, :active, :verification_method,
                   :notes, :eula_acceptance, :privacy_acceptance,
                   :username, :image_file_temp, :image_file, :image_file_data, :radius_group_ids
 
@@ -91,23 +92,39 @@ class User < AccountCommon
   def self.find_all_by_user_phone_or_mail(query)
     where(["username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?"] + [query]*3)
   end
-
-  def self.registered_each_day(from, to)
+  
+  def self.registered_each_day(from, to, verification_method=nil)
     (from..to).map { |that_day|
-      on_that_day = User.registered_on(that_day)
+      on_that_day = User.registered_on(that_day, verification_method)
       [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
     }.compact
   end
   
-  def self.registered_daily(from, to)
+  def self.registered_daily(from, to, verification_method=nil)
     (from..to).map { |that_day|
-      on_that_day = User.count :conditions => ["DATE(verified_at) = ?", that_day.to_s] 
+      on_that_day = User.registered_exactly_on(that_day, verification_method) 
       [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
     }.compact
   end
 
-  def self.registered_on(date)
-    count :conditions => ["DATE(verified_at) <= ?", date.to_s]
+  def self.registered_on(date, verification_method=nil)
+    conditions = ["verified = 1 AND DATE(verified_at) <= ?", date.to_s]
+    if verification_method
+      conditions[0] << " AND verification_method = ?"
+      conditions.push(verification_method)
+    end
+    
+    count :conditions => conditions
+  end
+  
+  def self.registered_exactly_on(date, verification_method=nil)
+    conditions = ["verified = 1 AND DATE(verified_at) = ?", date.to_s]
+    if verification_method
+      conditions[0] << " AND verification_method = ?"
+      conditions.push(verification_method)
+    end
+    
+    count :conditions => conditions
   end
 
   def self.registered_yesterday
@@ -158,24 +175,6 @@ class User < AccountCommon
     if self.verify_with_mobile_phone?
       self.mobile_prefix = value[0..2]
       self.mobile_suffix = value[3, -1]
-    else
-      Rails.logger.error("Verification method is not 'mobile_phone'!")
-    end
-  end
-
-  def credit_card_identity_verify!
-    if self.verify_with_credit_card?
-      self.verified = true
-      self.save!
-    else
-      Rails.logger.error("Verification method is not 'credit_card'!")
-    end
-  end
-
-  def mobile_phone_identity_verify!
-    if self.verify_with_mobile_phone?
-      self.verified = true
-      self.save!
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end

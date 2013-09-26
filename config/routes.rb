@@ -23,8 +23,11 @@ Owums::Application.routes.draw do
   match '/account/instructions' => 'accounts#instructions', :as => :account_instructions
   match '/account/reset' => 'password_resets#new', :as => :password_reset
   match '/account/verification' => 'accounts#verification', :as => :verification
-  match '/account/verify_credit_card' => 'accounts#verify_credit_card', :as => :verify_credit_card, :via => 'post'
-  match '/account/secure_verify_credit_card' => 'accounts#secure_verify_credit_card', :as => :secure_verify_credit_card, :via => 'post'
+  match '/account/status.json' => 'accounts#status_json', :as => :account_status
+  match '/account/verify_paypal' => 'accounts#verify_paypal', :as => :verify_paypal, :via => 'post'
+  match '/account/secure_verify_paypal' => 'accounts#secure_verify_paypal', :as => :secure_verify_paypal, :via => 'post'
+  match '/account/gestpay_verify_credit_card' => 'accounts#gestpay_verify_credit_card', :as => :gestpay_verify_credit_card, :via => 'post'
+  match '/account/gestpay_verified_by_visa' => 'accounts#gestpay_verified_by_visa', :as => :gestpay_verified_by_visa, :via => 'post'
 
   match '/users/browse' => 'users#index', :as => :users_browse
   match '/users/search' => 'users#search', :as => :users_search
@@ -52,13 +55,14 @@ Owums::Application.routes.draw do
     resources :stats, :only => :show
     resources :radius_checks
     resources :radius_replies
-    resources :radius_accountings, :only => :index
+    resources :radius_accountings, :only => :index # API method
   end
   resources :radius_groups do
     resources :radius_checks
     resources :radius_replies
   end
-  resources :online_users, :only => :index
+  resources :online_users, :only => :index # API method
+  resources :radius_accountings, :only => :index # API method
   resources :operators
   resources :password_resets
   resources :email_password_resets

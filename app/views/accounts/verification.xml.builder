@@ -10,7 +10,7 @@ xml.account do
             xml.number number
           end
         end
-      elsif @account.verification_method == Account::VERIFY_BY_CREDIT_CARD
+      elsif @account.verification_method == Account::VERIFY_BY_PAYPAL
         xml.paypal do
           xml << link_to_paypal(image_tag("paypal.png"), :bill_to                      => @account)
           # xml << encrypted_submit_to_paypal(image_submit_tag("paypal.png"), :bill_to => @account)
