@@ -305,7 +305,7 @@ Users are notified / emailed in two occasions:
 1. <b>New account notification</b>: when they register and verify their new account
 2. <b>Password reset</b>: when they reset their password
 
-This means that the rails SMTP server must be configured correctly otherwise the owums will not work properly.
+This means that the SMTP server must be configured correctly otherwise the owums will not work properly.
 
 === Experimental features configurable in config/config.yml
 
