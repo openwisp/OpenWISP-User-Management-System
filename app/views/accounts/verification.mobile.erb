@@ -17,17 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<% unless @account.verify_with_gestpay? %>
-    <% content_for :after_defaults do %>
-        <%= javascript_tag "$(function(){
-            owums.periodicallyCheckVerification({
-                frequency: 2,
-                url: '#{ url_for(:action => 'verification') }',
-                update: '#verification'
-            });
-        }); " %>
-    <% end %>
-    
+<%= render :partial => 'verification_periodic_check.html.erb' %>
+
+<% unless @account.verify_with_gestpay? %>    
     <% content_for :header do %>
         <h1><%=t :Verification %></h1>
     <% end %>
@@ -42,9 +34,9 @@
         </div>
     </div>
     <script type="text/javascript">
-    i18n = {
-        verification_message_first_step: "<%= I18n.t :verification_message_first_step %>",
-        verification_message_second_step: "<%= I18n.t :verification_message_second_step %>"
-    }
+        i18n = {
+            verification_message_first_step: "<%= I18n.t :verification_message_first_step %>",
+            verification_message_second_step: "<%= I18n.t :verification_message_second_step %>"
+        }
     </script>
 <% end %>

@@ -27,6 +27,7 @@ class AccountCommon < ActiveRecord::Base
   VERIFY_BY_PAYPAL = "paypal_credit_card"
   VERIFY_BY_GESTPAY = "gestpay_credit_card"
   VERIFY_BY_NOTHING = "no_identity_verification"
+  VERIFY_BY_MACADDRESS = "mac_address"
 
   # Authlogic
   acts_as_authentic do |c|
@@ -121,7 +122,6 @@ class AccountCommon < ActiveRecord::Base
               :format => {:with => /[a-z0-9]/, :message => :zip_format, :allow_blank => true}
   end
 
-
   if CONFIG['birth_date']:
     validates_presence_of :birth_date
     validate :birth_date_present_and_valid
@@ -155,6 +155,7 @@ class AccountCommon < ActiveRecord::Base
       methods.push VERIFY_BY_NOTHING  if OperatorSession.find.operator.has_role?('registrant_by_nothing')
       methods.push VERIFY_BY_DOCUMENT if OperatorSession.find.operator.has_role?('registrant_by_id_card')
       # Add your methods here ...
+      methods.push VERIFY_BY_MACADDRESS if CONFIG['mac_address_authentication']
     end
 
     methods
@@ -275,6 +276,11 @@ class AccountCommon < ActiveRecord::Base
   end
   
   def generate_invoice!
+    # do not generate invoice for verification operations
+    if Configuration.get('gestpay_webservice_method') == 'verification'
+      return false
+    end
+    
     invoice = Invoice.create_for_user(User.find(self.id))
     
     # generate PDF with an asynchronous job with sidekiq
@@ -350,10 +356,12 @@ class AccountCommon < ActiveRecord::Base
     if not CONFIG['automatic_captive_portal_login'] and config_check
       return false
     end
+    
     # determine ip address
     ip_address = ip_address ? ip_address : self.retrieve_ip()
     # automatically log in an user in the captive portal to allow the user to surf
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    
     if cp_base_url
       params = {
         :username => self.username,
@@ -364,6 +372,7 @@ class AccountCommon < ActiveRecord::Base
       if timeout
         params[:timeout] = Configuration.get('gestpay_vbv_session', '300').to_i
       end
+      
       uri = URI::parse "#{cp_base_url}/api/v1/account/login"
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true

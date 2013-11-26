@@ -258,6 +258,11 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   key: "gestpay_webservice_url"
   value: "https://testecomm.sella.it/gestpay/gestpayws/WSs2s.asmx?WSDL"
 
+76:
+  system_key: f
+  key: "gestpay_webservice_method"
+  value: "verification"
+
 77:
   system_key: f
   key: "gestpay_vbv_session"
@@ -361,27 +366,27 @@ Staff"
   value: "[OWUMS] Nuova Ricevuta Generata"
 
 98:
-    system_key: f
-    key: "password_reset_subject_es"
-    value: "Instrucciones para recuperación de la contraseña"
+  system_key: f
+  key: "password_reset_subject_es"
+  value: "Instrucciones para recuperación de la contraseña"
 
 99:
-    system_key: f
-    key: "password_reset_instructions_before_reset_url_es"
-    value: "Ha sido solicitado un reseteo de la contraseña para su cuenta.
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_es"
+  value: "Ha sido solicitado un reseteo de la contraseña para su cuenta.
 Si usted no solicitó el reseteo, por favor ignore este mensaje.
 Si fue usted quien lo solicitó, haga click en el siguiente URL."
 
 100:
-    system_key: f
-    key: "password_reset_instructions_after_reset_url_es"
-    value: "Si hacer click en el URL no funciona, por favor intente copiar y pegar el URL en su navegador.
+  system_key: f
+  key: "password_reset_instructions_after_reset_url_es"
+  value: "Si hacer click en el URL no funciona, por favor intente copiar y pegar el URL en su navegador.
 Si an tiene problemas , por favor contactenos."
 
 101:
-    system_key: f
-    key: "account_notification_message_es"
-    value: "{first_name} {last_name},
+  system_key: f
+  key: "account_notification_message_es"
+  value: "{first_name} {last_name},
 Has creado tu cuenta de manera exitosa.
 
 Puede ingresar para disfrutar del servicio Wifi con el usuario \"{username}\" y la contraseña que usted selecciono durante la fase de registro.
@@ -391,12 +396,15 @@ Usted puede verificar la cantidad de triàfico disponible en la página gestión
 
 Si alguna vez pierde su contraseña, siga el siguiente procedimiento para recuperarla:
 {password_reset_url}
+{invoice_message}
 
+Saludos cordiales
 Staff"
+
 102:
-    system_key: f
-    key: "account_notification_subject_es"
-    value: "Ha sido creada una nueva cuenta [OpenWISP User Management System]"
+  system_key: f
+  key: "account_notification_subject_es"
+  value: "Ha sido creada una nueva cuenta [OpenWISP User Management System]"
 
 103:
   system_key: f
@@ -406,9 +414,21 @@ Staff"
 104:
   system_key: f
   key: "verification_explain_creditcard_es"
-  value: "<p>In order to <strong>prevent any abuse of service</strong>, we have to <strong>verify the identity of all the users</strong> who use this wifi service.</p><p>If you own an <strong>Italian mobile phone SIM card</strong> select <strong>\"Mobile Phone Number\"</strong> from the following menu, otherwise you can select the method <strong>\"Credit Card\"</strong>.</p>"
+  value: "<p>Con el fin de evitar cualquier <strong>abuso del servicio</strong>, tenemos que <strong>verificar la identidad de todos los usuarios</strong> que utilizan este servicio wifi.</p><p>Si usted es dueño de <strong>una tarjeta SIM italiana de telefono movìl</strong> selecione <strong>\"Número de teléfono móvil\"</strong> en el menú, de lo contrario se puede seleccionar el método <strong>\"tarjeta de crédito\"</strong>.</p>"
   
 105:
   system_key: f
   key: "verification_explain_mobile_es"
-  value: "<p>Al fine di <strong>prevenire abusi del servizio</strong>, siamo costretti a <strong>verificare l'identità</strong> degli utenti che utilizzano il servizio wifi.</p><p>Sei sei in possesso di una <strong>SIM italiana</strong> seleziona il metodo di verifica dell'identità <strong>\"Numero di cellulare\"</strong> dal seguente menu.</p>"
+  value: "<p>Con el fin de evitar cualquier <strong>abuso del servicio</strong>, tenemos que <strong>verificar la identidad de todos los usuarios</strong> que utilizan este servicio wifi.</p><p>Si usted es dueño de <strong>una tarjeta SIM italiana de telefono movìl</strong> selecione <strong>\"Número de teléfono móvil\"</strong> en el menú.</p>"
+
+106:
+  key: "invoice_owner_es"
+  value: "Cambiame"
+
+107:
+  key: "invoice_description_es"
+  value: "Verificación de la identidad para el servicio wifi."
+
+108:
+  key: "invoice_admin_notification_subject_es"
+  value: "[OWUMS] Nuevo recibo generado"

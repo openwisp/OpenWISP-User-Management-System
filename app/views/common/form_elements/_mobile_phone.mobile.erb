@@ -20,7 +20,7 @@
 <% if owner.can_signup_via? AccountCommon::VERIFY_BY_MOBILE %>
 
     <% if owner.new_record? %>
-        <li data-role="fieldcontain" class="verification-block mobile-phone">
+        <li data-role="fieldcontain" class="verification-block mobile-phone ignore-toggle">
           <%= form.label :mobile_phone %>
           <p>&nbsp;</p>
 

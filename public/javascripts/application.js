@@ -105,7 +105,12 @@ var owums = {
         var _update = opts.update;
 
         setInterval(function(){
-            $(_update).load(_url);
+            if(typeof _update === "function"){
+                _update();
+            }
+            else{
+                $(_update).load(_url);
+            }
         }, _freq);
     },
 
@@ -128,12 +133,12 @@ var owums = {
       }
     },
 
-    //Change verification methods on signup
+    // Change verification methods on signup
     toggleVerificationMethod: function() {
-        var verification_method = $('#account_verification_method');
+        var verification_method = $('#account_verification_method').length ? $('#account_verification_method') : $('#user_verification_method');
         verification_method.change(function(){
             var val = verification_method.val(),
-                mobile_phone_elements = $('#verify-mobile-phone, li.verification-block.mobile-phone:first'),
+                mobile_phone_elements = $('#verify-mobile-phone, li.verification-block.mobile-phone'),
                 credit_card_elements = $('#verify-credit-card'),
                 registration_form = $('#registration-second-step').length ? $('#registration-second-step') : $('#mobile-registration li:not(.ignore-toggle)');
             if(val == 'gestpay_credit_card'){
@@ -193,7 +198,8 @@ var owums = {
             mobile_suffix = $('#account_mobile_suffix'),
             email = $('#account_email'),
             password = $('#account_password'),
-            is_mobile = $('#mobile-registration').length || false;
+            is_mobile = $('#mobile-registration').length || false,
+            is_error = $('#errorExplanation').length || false;
         
         if(is_mobile){
             email_confirmation = email_confirmation.parent().parent();
@@ -204,35 +210,41 @@ var owums = {
             password_confirmation = password_confirmation.parent();
         }
         
-        mobile_confirmation.hide();
-        email_confirmation.hide();
-        password_confirmation.hide();
+        if(!is_error){
+            mobile_confirmation.hide();
+            email_confirmation.hide();
+            password_confirmation.hide();   
         
-        mobile_suffix.focusin(function(e){
-            if(!mobile_confirmation.is(':visible')){
-                mobile_confirmation.slideToggle(250);
+            mobile_suffix.focusin(function(e){
+                if(!mobile_confirmation.is(':visible')){
+                    mobile_confirmation.slideToggle(250);
+                }
+            });
+            if(mobile_suffix.val()!=''){
+                mobile_confirmation.show();
             }
-        });
-        if(mobile_suffix.val()!=''){
-            mobile_confirmation.show();
+            
+            email.focusin(function(e){
+                if(!email_confirmation.is(':visible')){
+                    email_confirmation.slideToggle(250);
+                }
+            });
+            if(email.val()!=''){
+                email_confirmation.show();
+            }
+            
+            password.focusin(function(e){
+                if(!password_confirmation.is(':visible')){
+                    password_confirmation.slideToggle(250);
+                }
+            });
+            if(password.val()!=''){
+                password_confirmation.show();
+            }
         }
-        
-        email.focusin(function(e){
-            if(!email_confirmation.is(':visible')){
-                email_confirmation.slideToggle(250);
-            }
-        });
-        if(email.val()!=''){
-            email_confirmation.show();
-        }
-        
-        password.focusin(function(e){
-            if(!password_confirmation.is(':visible')){
-                password_confirmation.slideToggle(250);
-            }
-        });
-        if(password.val()!=''){
-            password_confirmation.show();
+        // fix for mobile interface
+        else{
+            $('#account_email_confirmation, #account_password_confirmation').parent().parent().show()
         }
         
         $('#account_email, #account_email_confirmation, #account_password, #account_password_confirmation').bind('contextmenu cut copy paste', function(e){
@@ -311,7 +323,7 @@ var owums = {
         if(bank_gateway.length && !bank_gateway.hasClass('mobile')){
             var overlay = $('.overlay'),
                 loading = $('#loading-overlay');
-            loading.togglePop();    
+            loading.togglePop();
             owums.enhanceCreditCardForm();
             $(window).resize(function(e){
               overlay.centerElement();

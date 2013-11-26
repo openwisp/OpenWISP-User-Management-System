@@ -98,6 +98,18 @@ class Account < AccountCommon
   def expire_time
     (self.verification_expire_timeout - (Time.now - self.created_at).to_i + 60) / 60
   end
+  
+  def expire_seconds
+    (self.verification_expire_timeout - (Time.now - self.created_at).to_i)
+  end
+  
+  def verification_time_remaining
+    if not self.verified? and self.expire_seconds > 0
+      Time.at(self.expire_seconds).gmtime.strftime('%M:%S')
+    else
+      return 0
+    end
+  end
 
   def ask_for_mobile_phone_password_recovery!
     if self.verify_with_mobile_phone?
@@ -214,12 +226,30 @@ class Account < AccountCommon
       }
       # init SOAP client
       client = Savon.client(webservice_url)
+      
+      if Configuration.get('gestpay_webservice_method') == 'verification'
+        method = :call_verifycard_s2_s
+        params[:expMonth] = params[:expiryMonth]
+        params[:expYear] = params[:expiryYear]
+        params.delete(:amount)
+        params.delete(:expiryMonth)
+        params.delete(:expiryYear)
+      else
+        method = :call_pagam_s2_s
+      end
+      
       # execute a SOAP request to call the "callPagamS2S" action
-      response = client.request(:call_pagam_s2_s) do
+      response = client.request(method) do
         soap.body = params
       end
+      
       # convert response to hash
-      response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
+      begin
+        response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
+      rescue NoMethodError
+        response = response.to_hash[:call_verifycard_s2_s_response][:call_verifycard_s2_s_result][:gest_pay_s2_s]
+      end
+      
       response[:datetime] = time
       # if verification and payment succeded
       if response[:transaction_result] == 'OK':
@@ -258,6 +288,7 @@ class Account < AccountCommon
       # explicit return just for clarity
       return response
     end
+    
     # translate active merchant errors and display them nicely
     error_description = ''
     i = 0
@@ -269,6 +300,7 @@ class Account < AccountCommon
       error_description = error_description + br + I18n.t("active_merchant_#{key}")
       i += 1
     end
+    
     # emulate gestpay response
     return { :transaction_result => 'KO', :error_description => error_description, :error_code => false }
   end

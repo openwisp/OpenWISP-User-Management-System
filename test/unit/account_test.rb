@@ -32,6 +32,9 @@ class AccountTest < ActiveSupport::TestCase
   end
   
   test "generate_invoice!" do
+    # set correct webservice method
+    Configuration.set('gestpay_webservice_method', 'payment')
+    
     assert ActionMailer::Base.deliveries.empty?
     
     user = users(:creditcard)

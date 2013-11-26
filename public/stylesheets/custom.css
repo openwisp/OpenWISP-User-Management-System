@@ -4,10 +4,9 @@ select {
     width:99%;
 }
 
-/*div.field_with_errors .lbl, div.field_with_errors .error, p.error {
-    padding: 2px;
+#bank-gateway p.error {
     background-color: #ff6666;
-}*/
+}
 
 div.field_with_errors span.error{ color: #ce0006 }
 
@@ -443,7 +442,7 @@ input.error{ border: 2px solid red }
 #visa_mastercard{
     position: absolute;
     right: 33px;
-    bottom: 65px;
+    bottom: 20px;
 }
 
 table.selectable td{ cursor: pointer }
@@ -479,7 +478,7 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 #stats input{ width: auto }
 #ui-datepicker-div select{ padding: 0; height: auto }
 
-#users{ margin-top: 20px }
+#users{ margin-top: 20px; clear: both }
 #users tbody td{ font-size: 12px }
 
 .pagination{ float: left; margin: 4px 10px 15px 0 }
@@ -499,3 +498,9 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 .pagination .current a{ background: #d3d3d3 !important; color: #333; cursor: default  }
 
 ul.nomargin,.button.nomargin{ margin-bottom: 0 !important }
+
+#go-to-mobile a{ color: #333 }
+
+.ui-buttonset label{ width: auto !important; min-width: 60px }
+
+#verified-radio, #enabled-radio{ float: left; margin-right: 20px }

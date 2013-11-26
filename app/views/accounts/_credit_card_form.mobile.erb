@@ -1,12 +1,17 @@
 <% unless @verified_by_visa %>
-<h3><%= t :Verify_your_credit_card %></h3>
+  <h3><%= t :Verify_your_credit_card %></h3>
 <% if @credit_card_verification_cost > 0 and not flash[:notice] %>
-<p><%= t(:Credit_card_verification_cost, :cost => number_to_currency_custom(@credit_card_verification_cost, @currency_code)).html_safe %></p>
+  <p><%= t(:Credit_card_verification_cost, :cost => number_to_currency_custom(@credit_card_verification_cost)).html_safe %></p>
 <% elsif not flash[:notice] %>
-<p><%= t :Credit_card_verification_cost0 %></p>
+  <p><%= t(:Credit_card_verification_cost0).html_safe %></p>
 <% end %>
-<p><strong><%= t :Credit_card_secure_operation %></strong></p>
+
+<% if not flash[:notice] %>
+  <p><strong><%= t(:Credit_card_secure_operation).html_safe %></strong></p>
+<% end %>
+
 <p id="visa-mastercard-logo"><%= image_tag('visa-mastercard.png') %></p>
+
 <form id="cc_form" action="<%= gestpay_verify_credit_card_path %>" method="post" data-remote="true">
   <ul data-role="listview" data-inset="true" id="credit-card-verification">
     <% unless flash[:notice] %>
@@ -31,9 +36,9 @@
         <% ((Date.today.strftime "%y").to_i..(Date.today.strftime "%y").to_i+8).each do |i| %><option value="<%= i %>"<% if i == params[:expiration_year].to_i %> selected="selected"<% end %>><%= i %></option><% end %>
       </select>
     </li>
-    <li data-role="fieldcontain">
+    <li data-role="fieldcontain"<% if Configuration.get('gestpay_webservice_method') == 'verification' %> class="hidden"<% end %>>
       <label for="credit_card_cvv"><%= t :Security_code %></label>
-      <input type="text" pattern="[0-9]*" maxlength="4" id="id_credit_card_cvv" name="cvv" maxlength="4" value="<%= params[:cvv] %>" />
+      <input type="text" pattern="[0-9]*" maxlength="4" id="id_credit_card_cvv" name="cvv" maxlength="4" value="<%= Configuration.get('gestpay_webservice_method') == 'verification' ? '000' : params[:cvv] %>" />
     </li>
     <li>
       <input class="button" name="commit" type="submit" value="<%= t :Verify_card %>" />
@@ -44,6 +49,15 @@
   </ul>
   <input type="hidden" name="mobile" value="true">
 </form>
+<% unless @account.already_verified_once? %>
+  <p id="verification-expire-time">
+    <% if @account.expire_time > 0 %>
+      <%= t(:Verification_expire_time_remaining) %>: <strong id="expire-in"><%= @account.verification_time_remaining %></strong>
+    <% else %>
+      <%= t(:Verification_expire_time_less_than_a_minute) %>
+    <% end %>
+  </p>
+<% end %>
 <p id="gestpaylogo"><%= image_tag('gestpay_new.png') %></p>
 <% else %>
   <h3><%= t :Verified_by_visa_heading %></h3>
