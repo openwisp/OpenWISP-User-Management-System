@@ -50,7 +50,16 @@ module Owums
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password, :password_confirmation, :crypted_password]
+    config.filter_parameters += [
+        :password,
+        :password_confirmation,
+        :crypted_password,
+        :number1,
+        :number2,
+        :number3,
+        :number4,
+        :cvv
+    ]
 
     # Force all environments to use the same logger level
     # (by default production uses :info, the others :debug)
