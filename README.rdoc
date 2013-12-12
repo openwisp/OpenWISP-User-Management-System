@@ -290,7 +290,7 @@ By default, all the fields of the user profile are mandatory, however, in order 
 * state
 
 To do that proceed by copying the file *config/config.default.yml* and rename it to *config/config.yml*, then set to *false* the fields you want to disable and hide.
-This change requires OWUMS to be restarted, either by reloading the webserver or, if you use passenger, by reloading rails with the *tmp/restart.txt* trick: http://www.modrails.com/documentation/Users%20guide%20Nginx.html#_redeploying_restarting_the_rack_application (for more info follow the link).
+This change requires OWUMS to be restarted by reloading the web server and backgroundrb.
 
 If the file *config/config.yml* does not exist, OWUMS will read the default values from *config/config.default.yml* (so do not delete it).
 
