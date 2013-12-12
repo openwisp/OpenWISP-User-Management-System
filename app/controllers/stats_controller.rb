@@ -95,6 +95,9 @@ class StatsController < ApplicationController
   end
 
   def operator_stat_data(id)
+    # intercept mac address and convert it to called-station-id format
+    called_station_id = params["called-station-id"].upcase.gsub(':', '-') rescue nil
+    
     case id
       when 'user_logins' then User.find(params[:user_id]).session_times_from(@from)
       when 'user_traffic' then User.find(params[:user_id]).traffic_sessions_from(@from)
@@ -113,8 +116,8 @@ class StatsController < ApplicationController
           data['credit_card'] = User.registered_daily(@from, @to, 'gestpay_credit_card')
         end
         return data
-      when 'traffic' then RadiusAccounting.traffic_each_day(@from, @to)
-      when 'logins' then RadiusAccounting.logins_each_day(@from, @to)
+      when 'traffic' then RadiusAccounting.traffic_each_day(@from, @to, called_station_id)
+      when 'logins' then RadiusAccounting.logins_each_day(@from, @to, called_station_id)
 
       when 'top_traffic_users' then User.top_traffic(@number)
       when 'last_logins' then RadiusAccounting.last_logins(@number)
