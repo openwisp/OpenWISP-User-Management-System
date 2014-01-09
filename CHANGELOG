@@ -15,6 +15,10 @@ For a detailed changelog of each commits use the "git log" command.
  
 * Log
 
+January 2014 - Version 1.3.2
+
+ * [F] Possibility to filter radius statistics by called-station-id (mac address AP)
+
 December 11th, 2013 - Version 1.3.1
 
  * [B] send new account notification to user before attempting to automatically logging him into the system - this way we avoid the notification to not be sent if anything goes wrong
