@@ -9,7 +9,7 @@ ul.nav,
 ul.nav * { margin:0;padding:0;}
 ul.nav {
   position:relative;
-  background:#666;
+  background:#C00418;
   max-width:100%;
   height:2.5em;
   }
@@ -40,7 +40,7 @@ ul.nav li ul li {
 }
 ul.nav li a {
 	color:#fff;
-	background:#666;
+	background:#C00418;
 	font-weight:bold;
 	text-decoration:none;
 	display:block;
@@ -63,11 +63,11 @@ ul.nav li ul li a {
 
 ul.nav li:hover a,
 ul.nav li a:hover,
-ul.nav li a:focus {color:#000; background:#ccc;}
+ul.nav li a:focus {color:#000; background:#dd0016;}
 ul.nav li a:active {color:#666; background:#fff;}
 ul.nav li:hover ul {left:0;z-index:10}
 ul.nav li ul,
-ul.nav li {background:#ccc !important}
+ul.nav li {background:#C00418 !important}
 ul.nav li:hover ul li a {color:#444;}
 ul.nav li:hover ul li a:hover {color:#000; background:#fff;}
 ul.nav li:hover ul li a:active {color:#666; background:#fff;}
@@ -75,19 +75,19 @@ ul.nav li:hover ul li a:active {color:#666; background:#fff;}
 ul.nav li.current a {color:#666; background:#fff; cursor:default; font-weight:bold;}
 ul.nav li.current ul {left:0;z-index:5}
 ul.nav li.current ul,
-ul.nav li.current {background:#ccc !important}
+ul.nav li.current {background:#C00418 !important}
 ul.nav li.current ul li a {color:#444; background:#ccc; font-weight:normal;}
 ul.nav li.current ul li a:hover {color:#000; background:#fff;}
 ul.nav li ul li.current a,
 ul.nav li ul li.current a:hover,
 ul.nav li.current:hover ul li a:active {color:#666; background:#fff;}
 
-ul.main.nav ul a:hover{ background-color: #4A4344 !important }
+ul.main.nav ul a:hover{ background-color: #a70012 !important }
 
 /* navigation (vertical subnavigation)
 ----------------------------------------------- */
 ul.nav {
-  background:#666;
+  background:#C00418;
 }
 ul.main li {
   position:relative;
@@ -105,7 +105,7 @@ ul.main li a {
 	line-height:2.5em;
 	border:0;
 	color:#fff;
-	background:#666;
+	background:#C00418;
 }
 ul.main li ul li a {
   width:12em;
@@ -113,22 +113,22 @@ ul.main li ul li a {
   height:2em;
   text-align:left;
   color:#fff;
-  border-top:1px solid #444;
-  background:#444;
+  border-top:1px solid #C00418;
+  background:#d4172b;
 }
-ul.main li a:focus {color:#fff; background:#666;}
+ul.main li a:focus {color:#fff; background:#C00418;}
 ul.main li ul li a:hover {
   color:#fff;
-  background:#555;
+  background:#C00418;
 }
 ul.main li:hover a {
   color:#fff;
-  background:#555;
+  background:#d4172b;
 }
 ul.main li:hover ul li a {color:#fff;}
-ul.main li:hover ul li a:hover {color:#fff; background:#444;}
-ul.main li:hover a:active {background:#444;}
-ul.main li:hover ul li a:active {color:#fff; background:#222;}
+ul.main li:hover ul li a:hover {color:#fff; background:#a70012;}
+ul.main li:hover a:active {background:#a70012;}
+ul.main li:hover ul li a:active {color:#fff; background:#a70012;}
 
 
 /* secondary list
