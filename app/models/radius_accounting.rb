@@ -192,7 +192,10 @@ class RadiusAccounting < ActiveRecord::Base
     # returns radius accounting records which do not have the format
     # <mac_address_of_ap_from_where_user_accessed>:<captive_portal_interface>
     # and are still connected
-    where("CHAR_LENGTH(CalledStationId) <= 17 AND AcctStopTime IS NULL")
+    # ignore records older than 2 days
+    where("CHAR_LENGTH(CalledStationId) <= 17 AND\
+          ( AcctStopTime IS NULL OR AcctStopTime = '0000-00-00 00:00:00') AND\
+          AcctStartTime >= (NOW() - INTERVAL 2 DAY) ")
   end
   
   def self.convert_radius_accountings_to_aware
