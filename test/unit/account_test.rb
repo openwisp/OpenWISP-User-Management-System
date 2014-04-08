@@ -35,11 +35,20 @@ class AccountTest < ActiveSupport::TestCase
     # set correct webservice method
     Configuration.set('gestpay_webservice_method', 'payment')
     
+    # esnure no emails sent yet
     assert ActionMailer::Base.deliveries.empty?
     
     user = users(:creditcard)
-    filepath = user.generate_invoice!
     
+    # try disabling invoicing
+    Configuration.set('gestpay_invoicing_enabled', 'false')
+    # ensure result is false
+    assert !user.generate_invoice!
+    # re-enable invoicing
+    Configuration.set('gestpay_invoicing_enabled', 'true')
+    
+    # ensure invoice is generated
+    filepath = user.generate_invoice!
     assert File.exist?(filepath)
     assert !ActionMailer::Base.deliveries.empty?
   end

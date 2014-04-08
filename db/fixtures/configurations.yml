@@ -432,3 +432,8 @@ Staff"
 108:
   key: "invoice_admin_notification_subject_es"
   value: "[OWUMS] Nuevo recibo generado"
+
+109:
+  system_key: f
+  key: "gestpay_invoicing_enabled"
+  value: "true"

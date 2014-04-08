@@ -286,3 +286,8 @@ Staff"
   system_key: f
   key: "invoice_admin_notification_subject_it"
   value: "[OWUMS] Nuova Ricevuta Generata"
+
+109:
+  system_key: f
+  key: "gestpay_invoicing_enabled"
+  value: "true"

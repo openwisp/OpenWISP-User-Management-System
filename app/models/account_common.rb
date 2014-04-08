@@ -276,8 +276,11 @@ class AccountCommon < ActiveRecord::Base
   end
   
   def generate_invoice!
+    verification_method = Configuration.get('gestpay_webservice_method')
+    invoicing_enabled = Configuration.get('gestpay_invoicing_enabled', 'true')
     # do not generate invoice for verification operations
-    if Configuration.get('gestpay_webservice_method') == 'verification'
+    # or if invoicing is explicitly disabled
+    if verification_method == 'verification' or invoicing_enabled != 'true'
       return false
     end
     
