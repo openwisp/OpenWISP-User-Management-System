@@ -437,3 +437,76 @@ Staff"
   system_key: f
   key: "gestpay_invoicing_enabled"
   value: "true"
+
+
+120:
+  system_key: f
+  key: "password_reset_subject_fur"
+  value: "Istruzions par tornâ a vê la password"
+
+121:
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_fur"
+  value: "A je stade fate une domande par netâ vie la password par il to account.
+  Se no tu sês stât tu a fale, fâs finte di no vê let chest messaç.
+  Se tu as fât tu la domande, clicê su la URL ca ven."
+
+122:
+  system_key: t
+  key: "password_reset_instructions_after_reset_url_fur"
+  value: " Se la URL di prime no lave, prove a copiâ e incolâ la direzion in tal to program par là in rêt.
+  Se tu tornis a vê problemis par netâ vie la password, par plasê disinus."
+
+123:
+  system_key: f
+  key: "custom_account_instructions_fur"
+  value: ""
+
+124:
+  system_key: f
+  key: "verification_explain_mobile_fur"
+  value: "<p>Al fine di <strong>prevignî la int ca aprofite dal servizi</strong>, nô o sin obleâts a <strong>verificâ la identitât</strong> dai utents ca doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç ce mût verificâ la to identitât <strong>\"Numar di telefonin\"</strong> da la liste ca ven.</p>"
+
+125:
+  system_key: f
+  key: "verification_explain_creditcard_fur"
+  value: "<p>Al fine di <strong>prevignî la int ca aprofite dal servizi</strong>, nô o sin obleâts a <strong>verificâ la identitât</strong> dai utents ca doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç ce mût verificâ la to identitât <strong>\"Numar di telefonin\"</strong> da la liste ca ven, o se no sielç il metodo <strong>\"Cjarte di Credit\"</strong>.</p>"
+
+126:
+  system_key: f
+  key: "account_notification_message_fur"
+  value: "Mandi {first_name} {last_name},
+  
+  Tu âs apene creât e verificât cun sucès il to account par jentrâ cun la wifi.
+  
+  Cumò tu podis meti i dâts par jentrâ e doprâ il servizi Wi-Fi, il to username al è \"{username}\" e la password ae che sielte cuante ca tu ti sês regjistrât.
+  
+  Tu podis tignî sot voli il servizi da la pagjine di gjestion dal to account:
+  {account_url}
+  
+  Se tu vessis dismenteât la password, tu podis doprâ la procedure par netâ vie; ca tu cjatis a la direzion ca ven:
+  {password_reset_url}
+  {invoice_message}
+  
+  Preseât
+  Staff"
+
+127:
+  system_key: f
+  key: "account_notification_subject_fur"
+  value: "Gnûf account creât su [OpenWISP User Management System]"
+
+128:
+  system_key: f
+  key: "invoice_owner_fur"
+  value: "Cambimi"
+
+129:
+  system_key: f
+  key: "invoice_description_fur"
+  value: "Verifiche Identitât par il servizi Wi-Fi."
+
+130:
+  system_key: f
+  key: "invoice_admin_notification_subject_fur"
+  value: "[OWUMS] Fate Gnove Ricevude"
