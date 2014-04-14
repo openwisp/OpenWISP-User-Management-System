@@ -14,6 +14,13 @@ defaults: &defaults
   italian: true
   spanish: true
   furlan: false
+  
+  # check called station id
+  check_called_station_id:
+    # filter radius accounting sessions older than between_min
+    between_min: 10
+    # filter radius accounting sessions newer than between_max
+    between_max: 60
 
 production:
   <<: *defaults

@@ -19,6 +19,9 @@ CONFIG['italian'] = CONFIG['italian'].nil? ? true : CONFIG['italian']
 CONFIG['spanish'] = CONFIG['spanish'].nil? ? true : CONFIG['spanish']
 CONFIG['furlan'] = CONFIG['furlan'].nil? ? true : CONFIG['furlan']
 
+# checks
+CONFIG['check_called_station_id'] = CONFIG['check_called_station_id'].nil? ? { 'between_min' => 10, 'between_max' => 60} : CONFIG['check_called_station_id']
+
 
 module Owums
   class Application < Rails::Application
