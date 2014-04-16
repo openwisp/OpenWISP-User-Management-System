@@ -438,6 +438,25 @@ Staff"
   key: "gestpay_invoicing_enabled"
   value: "true"
 
+110:
+  system_key: f
+  key: "credit_card_max_yearly_transactions"
+  value: 10000
+
+111:
+  system_key: f
+  key: "credit_card_year_start"
+  value: "01-01"
+
+112:
+  system_key: f
+  key: "credit_card_max_transaction_warning_threshold"
+  value: 100
+
+113:
+  system_key: f
+  key: "credit_card_max_daily_user_transactions"
+  value: 10
 
 120:
   system_key: f

@@ -397,3 +397,5 @@ If you still have problems resetting the password, try repeating the procedure"
   Enabled: Enabled
   "Yes": 'Yes'
   "No": 'No'
+  max_daily_transaction_limit_reached: "max daily transaction limit reached"
+  max_yearly_transaction_limit_reached: "max yearly transaction limit reached"
