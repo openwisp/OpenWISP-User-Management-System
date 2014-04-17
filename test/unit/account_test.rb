@@ -29,6 +29,27 @@ class AccountTest < ActiveSupport::TestCase
     assert !a.save, '@ sign should not be allowed in the username in order to support federation of networks'
     assert a.errors.length <= 1, 'more than 1 errors'
     assert a.errors.has_key?(:username), 'there should be an errror related to the username'
+    
+    a = Account.new(
+      :given_name => 'Foo',
+      :surname => 'Bar',
+      :email => 'foo2@bar.com',
+      :username => 'FOOBAR',
+      :password => 'foobarpassword0',
+      :mobile_prefix => '334',
+      :mobile_suffix => '4352703',
+      :verification_method => 'mobile_phone',
+      :birth_date => '1980-10-10',
+      :address => 'Via dei Tizii 6',
+      :city => 'Rome',
+      :zip => '00185',
+      :state => 'Italy',
+      :eula_acceptance => true,
+      :privacy_acceptance => true
+    )
+    assert !a.valid?
+    assert_equal 1, a.errors.length
+    assert a.errors.has_key?(:username)
   end
   
   test "generate_invoice!" do

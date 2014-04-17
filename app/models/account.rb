@@ -33,6 +33,7 @@ class Account < AccountCommon
   # Validations
   validates_inclusion_of :verification_method, :in => User.self_verification_methods, :if => Proc.new{|account| account.new_record? }
   validate :valid_captcha?, :message => 'dummy', :on => :create, :if => Proc.new{|account| account.validate_captcha? }
+  validates :username, :uniqueness => { :case_sensitive => false }
 
   # Security and cleanup
   attr_readonly  :given_name, :surname, :birth_date
