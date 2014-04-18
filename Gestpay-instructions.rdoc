@@ -18,9 +18,14 @@ Ensure the following configuration keys are available in */configurations* and c
 * *captive_portal_baseurl*: URL of the OWCPM (OpenWISP Captive Portal Manager) instance, if any
 * *gestpay_vbv_session*: duration in seconds of the time in which users can insert their card password if needed; explained in detail in the "Verified By Visa" Section
 * *gestpay_vbv_url*: url of which users will be redirected to insert their credit card password if "verified by visa" is active; should be https://testecomm.sella.it/gestpay/pagamvisa3d.asp for the DEMO or https://ecomm.sella.it/gestpay/pagamvisa3d.asp for the real environment
+* *credit_card_max_yearly_transactions*: maximum number of credit card transactions that can be done in a year. It's a security measure to avoid spam or frauds. Defaults to 10000.
+* *credit_card_max_daily_user_transactions*: maximum number of credit card transactions a user can do in a day, defaults to 10.
+* *credit_card_year_start*: month from which the yearly limit is calculated in the form of MM-DD (month-day), defaults to 01-01 (first of jan).
+* *credit_card_max_transaction_warning_threshold*: when the remaining available yearly transactions reach this threshold a notification will be sent to admins to warn them. Defaults to 100 remaining transactions.
 
 Ensure the following keys are customized according to your needs:
 
+* *gestpay_invoicing_enabled*: whether invoices should be sent each time a user registers, enabled by default, works only with "payment" *gestpay_webservice_method*
 * *invoice_description_en*: description that will be included in the invoice (english)
 * *invoice_description_it*: description that will be included in the invoice (italian)
 * *invoice_logo*: logo that will be inserted in the invoice

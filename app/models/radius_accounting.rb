@@ -58,24 +58,47 @@ class RadiusAccounting < ActiveRecord::Base
     count('UserName', :distinct => true, :conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
-  def self.logins_from(from, to)
+  def self.logins_from(from, to, called_station_id=nil)
+    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
+    condition_params = [from, to]
+    
+    if called_station_id
+      condition_string << " AND CalledStationId LIKE ?"
+      condition_params.push("#{called_station_id}:%")
+    end
+    
+    conditions = [condition_string] + condition_params
+    
     count('UserName',
           :select => 'AcctStartTime',
-          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
+          :conditions => conditions,
           :group => "DATE(AcctStartTime)"
     ).map { |on_date, count| [ on_date.to_datetime.to_i * 1000, count.to_i ] }
   end
 
-  def self.unique_logins_from(from, to)
+  def self.unique_logins_from(from, to, called_station_id=nil)
+    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
+    condition_params = [from, to]
+    
+    if called_station_id
+      condition_string << " AND CalledStationId LIKE ?"
+      condition_params.push("#{called_station_id}:%")
+    end
+    
+    conditions = [condition_string] + condition_params
+    
     count('UserName',
-          :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
+          :conditions => conditions,
           :group => "DATE(AcctStartTime)",
           :distinct => true
     ).map { |on_date, count| [ on_date.to_datetime.to_i * 1000, count.to_i ] }
   end
 
-  def self.logins_each_day(from, to)
-    [ logins_from(from, to), unique_logins_from(from, to) ]
+  def self.logins_each_day(from, to, called_station_id=nil)
+    [
+      logins_from(from, to, called_station_id),
+      unique_logins_from(from, to, called_station_id)
+    ]
   end
 
   def self.traffic_in_on(date)
@@ -90,29 +113,63 @@ class RadiusAccounting < ActiveRecord::Base
     traffic_in_on(date) + traffic_out_on(date)
   end
 
-  def self.traffic_in(from, to)
+  def self.traffic_in(from, to, called_station_id=nil)
+    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
+    condition_params = [from, to]
+    
+    if called_station_id
+      condition_string << " AND CalledStationId LIKE ?"
+      condition_params.push("#{called_station_id}:%")
+    end
+    
+    conditions = [condition_string] + condition_params
+    
     sum('AcctInputOctets',
-        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
+        :conditions => conditions,
         :group => "DATE(AcctStartTime)"
     ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
-  def self.traffic_out(from, to)
+  def self.traffic_out(from, to, called_station_id=nil)
+    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
+    condition_params = [from, to]
+    
+    if called_station_id
+      condition_string << " AND CalledStationId LIKE ?"
+      condition_params.push("#{called_station_id}:%")
+    end
+    
+    conditions = [condition_string] + condition_params
+    
     sum('AcctOutputOctets',
-        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
+        :conditions => conditions,
         :group => "DATE(AcctStartTime)"
     ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
-  def self.traffic(from, to)
+  def self.traffic(from, to, called_station_id=nil)
+    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
+    condition_params = [from, to]
+    
+    if called_station_id
+      condition_string << " AND CalledStationId LIKE ?"
+      condition_params.push("#{called_station_id}:%")
+    end
+    
+    conditions = [condition_string] + condition_params
+    
     sum('AcctInputOctets + AcctOutputOctets',
-        :conditions => [ "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?", from, to ],
+        :conditions => conditions,
         :group => "DATE(AcctStartTime)"
     ).map { |on_date, traffic| [ on_date.to_datetime.to_i * 1000, traffic.to_i ] }
   end
 
-  def self.traffic_each_day(from, to)
-    [ traffic(from, to), traffic_in(from, to), traffic_out(from, to) ]
+  def self.traffic_each_day(from, to, called_station_id=nil)
+    [
+      traffic(from, to, called_station_id),
+      traffic_in(from, to, called_station_id),
+      traffic_out(from, to, called_station_id)
+    ]
   end
 
   def self.still_open
@@ -135,7 +192,10 @@ class RadiusAccounting < ActiveRecord::Base
     # returns radius accounting records which do not have the format
     # <mac_address_of_ap_from_where_user_accessed>:<captive_portal_interface>
     # and are still connected
-    where("CHAR_LENGTH(CalledStationId) <= 17 AND ( AcctStopTime IS NULL OR AcctStopTime = '0000-00-00 00:00:00') AND AcctStartTime >= (NOW() - INTERVAL 2 DAY) ")
+    # ignore records older than 2 days
+    where("CHAR_LENGTH(CalledStationId) <= 17 AND\
+          ( AcctStopTime IS NULL OR AcctStopTime = '0000-00-00 00:00:00') AND\
+          AcctStartTime >= (NOW() - INTERVAL 2 DAY) ")
   end
   
   def self.convert_radius_accountings_to_aware

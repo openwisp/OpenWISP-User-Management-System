@@ -276,8 +276,11 @@ class AccountCommon < ActiveRecord::Base
   end
   
   def generate_invoice!
+    verification_method = Configuration.get('gestpay_webservice_method')
+    invoicing_enabled = Configuration.get('gestpay_invoicing_enabled', 'true')
     # do not generate invoice for verification operations
-    if Configuration.get('gestpay_webservice_method') == 'verification'
+    # or if invoicing is explicitly disabled
+    if verification_method == 'verification' or invoicing_enabled != 'true'
       return false
     end
     
@@ -298,11 +301,13 @@ class AccountCommon < ActiveRecord::Base
     if self.verify_with_paypal? or verify_with_gestpay?
       self.verified = true
       self.save!
-      self.captive_portal_login!
-      self.clear_ip!
+      
       filename = self.generate_invoice!
       # pass filename to new_account_notification
       self.new_account_notification!(filename)
+      
+      self.captive_portal_login!
+      self.clear_ip!
     else
       Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
     end
@@ -312,9 +317,9 @@ class AccountCommon < ActiveRecord::Base
     if self.verify_with_mobile_phone?
       self.verified = true
       self.save!
+      self.new_account_notification!
       self.captive_portal_login!
       self.clear_ip!
-      self.new_account_notification!
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end

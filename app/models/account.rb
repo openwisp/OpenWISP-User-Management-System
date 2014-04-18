@@ -33,6 +33,7 @@ class Account < AccountCommon
   # Validations
   validates_inclusion_of :verification_method, :in => User.self_verification_methods, :if => Proc.new{|account| account.new_record? }
   validate :valid_captcha?, :message => 'dummy', :on => :create, :if => Proc.new{|account| account.validate_captcha? }
+  validates :username, :uniqueness => { :case_sensitive => false }
 
   # Security and cleanup
   attr_readonly  :given_name, :surname, :birth_date
@@ -204,8 +205,17 @@ class Account < AccountCommon
       :last_name  => self.surname,
       :verification_value  => cc['cvv']
     )
+    
+    transaction = CreditCardTransaction.new(
+      :user_id => self.id,
+      :ip_address => request.remote_ip,
+      :amount => amount
+    )
+    
+    transaction_valid = transaction.valid?
+    
     # if credit card looks valid proceed to bank gateway
-    if credit_card.valid?
+    if credit_card.valid? and transaction_valid
       webservice_url = Configuration.get('gestpay_webservice_url')
       time = DateTime.now
       shop_transaction_id = Digest::MD5.hexdigest("#{number}#{time}")
@@ -256,9 +266,8 @@ class Account < AccountCommon
         # save bank response (shop_transaction, authorization_code) and verify user
         self.set_credit_card_info(response)
         self.credit_card_identity_verify!
-      end
       # verified by visa case
-      if response[:error_code] == '8006'
+      elsif response[:error_code] == '8006'
         response[:shop_transaction_id] = shop_transaction_id
         # save shop_transaction_id, transaction_key and vbv_risp in DB
         self.set_credit_card_info(response)
@@ -283,8 +292,19 @@ class Account < AccountCommon
           Rails.logger.error('captive portal login failed for verified_by_visa credit card user with error %s: %s' % [login_response.code, login_response.body])
           response[:error_description] = I18n.t(:VBV_system_error)
           response[:error_code] = false
-        end        
+        end
+      else
+        response[:shop_transaction_id] = shop_transaction_id
+        self.set_credit_card_info(response)
       end
+      
+      begin
+        transaction.credit_card_info = self.credit_card_info
+        transaction.save!
+      rescue => e
+        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+      end
+      
       # explicit return just for clarity
       return response
     end
@@ -299,6 +319,10 @@ class Account < AccountCommon
       br = i > 0 ? '<br />' : ''
       error_description = error_description + br + I18n.t("active_merchant_#{key}")
       i += 1
+    end
+    
+    if error_description == '' and !transaction_valid
+      error_description = transaction.errors[:id][0]
     end
     
     # emulate gestpay response
@@ -329,7 +353,7 @@ class Account < AccountCommon
     # convert response to hash
     response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
     
-    if response[:transaction_result] == 'OK':
+    if response[:transaction_result] == 'OK'
       response[:datetime] = credit_card_info['datetime']
       response[:transaction_key] = credit_card_info['transaction_key']
       response[:VbVRisp] = credit_card_info['VbVRisp']

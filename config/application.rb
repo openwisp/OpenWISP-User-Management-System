@@ -17,6 +17,10 @@ CONFIG['mac_address_authentication'] = CONFIG['mac_address_authentication'].nil?
 CONFIG['english'] = CONFIG['english'].nil? ? true : CONFIG['english']
 CONFIG['italian'] = CONFIG['italian'].nil? ? true : CONFIG['italian']
 CONFIG['spanish'] = CONFIG['spanish'].nil? ? true : CONFIG['spanish']
+CONFIG['furlan'] = CONFIG['furlan'].nil? ? true : CONFIG['furlan']
+
+# checks
+CONFIG['check_called_station_id'] = CONFIG['check_called_station_id'].nil? ? { 'between_min' => 10, 'between_max' => 60} : CONFIG['check_called_station_id']
 
 
 module Owums
@@ -50,7 +54,16 @@ module Owums
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password, :password_confirmation, :crypted_password]
+    config.filter_parameters += [
+        :password,
+        :password_confirmation,
+        :crypted_password,
+        :number1,
+        :number2,
+        :number3,
+        :number4,
+        :cvv
+    ]
 
     # Force all environments to use the same logger level
     # (by default production uses :info, the others :debug)

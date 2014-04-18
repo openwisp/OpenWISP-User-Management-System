@@ -39,7 +39,6 @@ class InvoiceTest < ActiveSupport::TestCase
     invoice.amount = 1
     invoice.tax = 20
     invoice.total = 1.2
-    #assert !invoice.save
   end
   
   test "create according to configuration" do

@@ -396,3 +396,5 @@ Se continui ad avere problemi, ripeti la procedura di recupero password"
   Enabled: Abilitato
   "Yes": 'Sì'
   "No": 'No'
+  max_daily_transaction_limit_reached: "limite massimo di transazioni giornaliere raggiunto"
+  max_yearly_transaction_limit_reached: "limite massimo di transazioni annuali raggiunto"
