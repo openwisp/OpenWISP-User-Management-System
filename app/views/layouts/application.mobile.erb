@@ -69,19 +69,27 @@
 
 				<p>&nbsp;</p>
         <fieldset class="ui-grid-a">
-          <div class="ui-block-a">
-            <%= link_to_locale 'it', 'data-role' => 'button', 'data-transition' => 'flip' %>
-            </div>
-          <div class="ui-block-b">
-            <%= link_to_locale 'es', 'data-role' => 'button', 'data-transition' => 'flip' %>
-          </div>
-          <div class="ui-block-b">
-            <%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %>
-            </div>
-          <div class="ui-block-a">
-            <%= link_to_locale 'es', 'data-role' => 'button', 'data-transition' => 'flip' %>
-          </div>
-          <p>&nbsp;</p>
+					<% if CONFIG['italian'] %>
+					<div class="ui-block-a">
+						<%= link_to_locale 'it', 'data-role' => 'button', 'data-transition' => 'flip' %>
+					</div>
+					<% end %>
+					<% if CONFIG['english'] %>
+					<div class="ui-block-b">
+						<%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %>
+					</div>
+					<% end %>
+					<% if CONFIG['spanish'] %>
+					<div class="ui-block-a">
+						<%= link_to_locale 'es', 'data-role' => 'button', 'data-transition' => 'flip' %>
+					</div>
+					<% end %>
+					<% if CONFIG['furlan'] %>
+					<div class="ui-block-b">
+						<%= link_to_locale 'fur', 'data-role' => 'button', 'data-transition' => 'flip' %>
+					</div>
+					<% end %>
+					<p>&nbsp;</p>
         </fieldset>
     <% end %>
 
