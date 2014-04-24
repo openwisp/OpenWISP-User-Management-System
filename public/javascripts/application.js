@@ -148,8 +148,8 @@ var owums = {
             }
             else if(val == 'mobile_phone'){
                 mobile_phone_elements.show();
-                credit_card_elements.hide();
                 registration_form.fadeIn(250);
+                credit_card_elements.hide();
             }
             else{
                 mobile_phone_elements.hide();
