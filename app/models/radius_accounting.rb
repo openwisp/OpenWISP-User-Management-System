@@ -206,7 +206,13 @@ class RadiusAccounting < ActiveRecord::Base
     
     ra.each do |accounting|
       user_mac = accounting.calling_station_id
-      ap_mac = AssociatedUser.access_point_mac_address_by_user_mac_address(user_mac) rescue next
+      begin
+        ap_mac = AssociatedUser.access_point_mac_address_by_user_mac_address(user_mac)
+      rescue ActiveResource::ResourceNotFound
+        next
+      rescue Exception => e
+        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+      end
       
       new_called_station_id = "%s:%s" % [
         ap_mac.upcase.gsub(':', '-'),
