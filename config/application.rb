@@ -17,6 +17,7 @@ CONFIG['mac_address_authentication'] = CONFIG['mac_address_authentication'].nil?
 CONFIG['english'] = CONFIG['english'].nil? ? true : CONFIG['english']
 CONFIG['italian'] = CONFIG['italian'].nil? ? true : CONFIG['italian']
 CONFIG['spanish'] = CONFIG['spanish'].nil? ? true : CONFIG['spanish']
+CONFIG['slovenian'] = CONFIG['slovenian'].nil? ? false : CONFIG['slovenian']
 CONFIG['furlan'] = CONFIG['furlan'].nil? ? false : CONFIG['furlan']
 
 # checks

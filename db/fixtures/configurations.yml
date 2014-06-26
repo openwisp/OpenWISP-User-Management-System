@@ -529,3 +529,75 @@ Staff"
   system_key: f
   key: "invoice_admin_notification_subject_fur"
   value: "[OWUMS] Fate Gnove Ricevude"
+
+131:
+  system_key: f
+  key: "password_reset_subject_si"
+  value: "Navodila za obnovitev gesla"
+
+132:
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_si"
+  value: "Poslana je bila zahteva za ponastavitev gesla tvojega računa.
+  Če nisi ti poslal te zahteve, prezri to sporočilo.
+  Če si ti poslal to zahtevo, klikni na spodnji URL."
+
+133:
+  system_key: t
+  key: "password_reset_instructions_after_reset_url_si"
+  value: "V primeru, da zgornji URL ne deluje, poskusi kopirati in prilepiti naslov v tvoj iskalnik.
+  Če se težave v zvezi s ponastavitvijo gesla nadaljujejo, te prosimo, da nas kontaktiraš."
+
+134:
+  system_key: f
+  key: "custom_account_instructions_si"
+  value: ""
+
+135:
+  system_key: f
+  key: "verification_explain_mobile_si"
+  value: "<p>Z namenom <strong>preprečevanja zlorab storitve</strong>, moramo <strong>preveriti identiteto</strong> uporabnikov storitve wifi.</p><p>Če si lastnik <strong>italijanske SIM </strong> izberi postopek preverjanja identitete <strong>\"Številka mobilnega telefona\"</strong> s sledečega menija.</p>"
+
+136:
+  system_key: f
+  key: "verification_explain_creditcard_si"
+  value: "<p>Z namenom <strong> preprečevanja zlorab storitve</strong>, moramo <strong> preveriti identiteto </strong> uporabnikov storitve Wi-Fi.</p><p> Če si lastnik <strong> italijanske SIM </strong> izberi postopek preverjanja identitete <strong>\" Številka mobilnega telefona \"</strong> s sledečega menija, ali pa izberi postopek <strong>\"Kreditna kartica\"</strong>.</p>"
+
+137:
+  system_key: f
+  key: "account_notification_message_si"
+  value: "Živijo {first_name} {last_name},
+
+Pravkar si uspešno ustvaril in preveril tvoj račun za dostop do wifi-ja.
+
+Zdaj se lahko prijaviš in uporabljaš storitev Wi-Fi, tvoje uporabniško ime je \"{username}\" ,geslo je pa tisto, ki si ga vpisal v fazi registracije.
+
+Uporabo storitve lahko nadzoruješ s strani za upravljanje tvojega računa:
+{account_url}
+
+V primeru pozabljenega gela, lahko uporabiš postopek za ponastavitev gesla na sledečem naslovu:
+{password_reset_url}
+{invoice_message}
+
+Lep pozdrav
+Ekipa"
+
+138:
+  system_key: f
+  key: "account_notification_subject_si"
+  value: "Novi račun ustvarjen na [OpenWISP User Management System]"
+
+139:
+  system_key: f
+  key: "invoice_owner_si"
+  value: "Zamenjaj me"
+
+140:
+  system_key: f
+  key: "invoice_description_si"
+  value: "Preverjanje identitete za storitev Wi-Fi."
+
+141:
+  system_key: f
+  key: "invoice_admin_notification_subject_si"
+  value: "[OWUMS] Ustvarjena nova prejemnica "

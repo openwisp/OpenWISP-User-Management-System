@@ -1,0 +1,321 @@
+si:
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 3
+
+    currency:
+      format:
+        format: "%n %u"
+        unit: "€"
+        separator: "."
+        delimiter: ","
+        precision: 2
+
+    percentage:
+      format:
+        delimiter: ""
+        # precision:
+
+    precision:
+      format:
+        # separator:
+        delimiter: ""
+        # precision:
+
+    human:
+      format:
+        # separator:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Byte"
+          kb: "Kb"
+          mb: "Mb"
+          gb: "Gb"
+          tb: "Tb"
+
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+
+    day_names: [Nedelja, Ponedeljek, Torek, Sreda, Četrtek, Petek, Sobota]
+    abbr_day_names: [Ned, Pon, Tor, Sre, Čet, Pet, Sob]
+
+    month_names: [~, Januar, Februar, Marec, April, Maj, Junij, Julij, Avgust, September, Oktober, November, December]
+    abbr_month_names: [~,Jan, Feb, Mar, Apr, Maj, Jun, Jul, Avg, Sep, Okt, Nov, Dec]
+    order: [ :day, :month, :year ]
+
+  time:
+    formats:
+      default: "%d/%m/%y - %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y %H:%M"
+
+    am: "am"
+    pm: "pm"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "pol minute"
+      less_than_x_seconds:
+        one:  "manj kot sekunda"
+        other: " manj kot %{count} sekund"
+      x_seconds:
+        one:  "1 sekunda"
+        other: "%{count} sekund"
+      less_than_x_minutes:
+        one:  " manj kot ena minuta"
+        other: " manj kot %{count} minut"
+      x_minutes:
+        one:  "1 minuta"
+        other: "%{count} minut"
+      about_x_hours:
+        one:  "približno ena ura"
+        other: " približno %{count} ur"
+      x_days:
+        one:  "1 dan"
+        other: "%{count} dni"
+      about_x_months:
+        one:  " približno en mesec"
+        other: " približno %{count} mescev"
+      x_months:
+        one:  "1 mesec "
+        other: "%{count} mescev "
+      about_x_years:
+        one:  " približno eno leto"
+        other: " približno %{count} let"
+      over_x_years:
+        one:  "več kot eno leto"
+        other: " več kot %{count} let"
+
+    prompts:
+      year:   "Leto"
+      month:  "Mesec"
+      day:    "Dan"
+      hour:   "Ura"
+      minute: "Minuta"
+      second: "Sekunda"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " in "
+      last_word_connector: ", in "
+
+  errors:
+    template:
+      header:
+        one: "Prišlo je do napake"
+        other: "Prišlo je do %{count} napak"
+      body: "Prosimo vas, da popravite sledeče napake:"
+
+  helpers:
+    submit:
+      account:
+        create: "Registriraj se"
+        update: "Posodobi"
+      account_session:
+        create: "Vstopi"
+      operator_session:
+        create: "Vstopi"
+      user:
+        create: "Dodaj"
+        update: "Posodobi"
+
+  activerecord:
+    errors:
+      messages:
+        inclusion: "ni veljavna vrednost"
+        exclusion: "je zaupno"
+        invalid: "ni veljavno"
+        invalid_captcha: "besedilo in slika nista bila enaka"
+        confirmation: "ne ujema se s potrditvijo"
+        accepted: "biti mora sprejeta"
+        email_invalid: "ne zgleda e-mail naslov"
+        empty: "ne sme ostati prazno"
+        blank: "potrebna je specifikacija"
+        too_long: "je predolgo (največ %{count} črk)"
+        too_short: "je prekratko (najmanj %{count} črk)"
+        wrong_length: "napačna dolžina (imeti mora %{count} črk)"
+        taken: "je že bil uporabljen"
+        not_a_number: "ni številka"
+        greater_than: "mora biti višje kot %{count}"
+        greater_than_or_equal_to: " mora biti višje ali enako %{count}"
+        equal_to: "biti mora enako %{count}"
+        less_than: "biti mora manjše kot %{count}"
+        less_than_or_equal_to: " biti mora manjše ali enako %{count}"
+        odd: "biti mora liho"
+        even: " biti mora sodo"
+        not_valid_f: "neveljavna"
+        not_valid_m: "neveljaven"
+        record_invalid: " neveljaven zapis"
+        missing_image: "manjkajoča"
+        invalid_image: "neveljavna"
+        image_too_small: "je premajhna (biti mora >= %{minimum})"
+        password_format: "biti mora sestavljeno samo iz abecednih znakov, presledkov, številk in znaka '_' ter mora vsebovati vsaj eno črko in eno število"
+        mobile_phone_format: "vsebovati mora samo števila"
+        mobile_prefix_format: "vsebovati mora samo števila"
+        mobile_suffix_format: "vsebovati mora samo števila"
+        name_format: "lahko vsebuje samo črke in znake ''', '.' in ','"
+        address_format: " lahko vsebuje samo števila, črke  in znake ''', '.' in ','"
+        zip_format: "nepravilen"
+        eula_must_be_accepted: "morajo biti sprejeti"
+        privacy_must_be_accepted: "mora biti sprejeta"
+
+    # Translate model names. Used in Model.human_name().
+    models:
+      operator_session: "seja operaterja"
+      user_session: "seja uporabnika"
+      user: "uporabnik"
+
+    # Translate model attribute names. Used in Model.human_attribute_name(attribute).
+    attributes:
+      user:
+        mobile_phone: "Številka mobilnega telefona"
+        mobile_phone_confirmation: "Potrdi številko mobilnega telefona"
+        mobile_prefix: "Klicna številka mobilnega telefona"
+        mobile_prefix_confirmation: "Potrdi klicno številko mobilnega telefona"
+        mobile_suffix: "Številka mobilnega telefona brez klicne številke"
+        mobile_suffix_confirmation: "Potrdi številko mobilnega telefona brez klicne številke"
+        image_file: "Fotokopija dokumenta"
+        email: "E-mail"
+        username: "uporabniško ime"
+        password: "Geslo"
+        change_password: "Novo geslo"
+        password_confirmation: "Potrdi geslo"
+        email_confirmation: "Potrdi e-mail"
+        birth_date: "Datum rojstva"
+        given_name: "Ime"
+        surname: "Priimek"
+        state: "Država"
+        city: "Mesto"
+        address: "Naslov"
+        zip: "Poštna številka"
+        verification_method: "Način preverjanja identitete"
+        verified: "Preverjeno"
+        active: "Usposobljeno"
+        radius_groups: "Skupine RADIUS"
+        eula_acceptance: "Pogoji uporabe storitve"
+        privacy_acceptance: "Informacije o obdelavi osebnih podatkov"
+        document_photo: "Fotokopija osebnega dokumenta"
+      account:
+        mobile_phone: "Številka mobilnega telefona"
+        mobile_phone_confirmation: "Potrditev številke mobilnega telefona"
+        mobile_prefix: "Klicna številka mobilnega telefona"
+        mobile_prefix_confirmation: "Potrditev klicne številke mobilnega telefona"
+        mobile_suffix: "Številka mobilnega telefona brez klicne številke"
+        mobile_suffix_confirmation: "Potrditev številke mobilnega telefona brez klicne številke"
+        image_file: "Fotokopija dokumenta"
+        email: "E-mail"
+        username: "Ime uporabnika"
+        password: "Geslo"
+        change_password: "Novo geslo"
+        password_confirmation: "Potrditev gesla"
+        email_confirmation: "Potrditev e-mail naslova"
+        birth_date: "Datum rojstva"
+        given name: "ime"
+        surname: "Priimek"
+        state: "Država"
+        city: "Mesto"
+        address: "Naslov"
+        zip: "Poštna številka"
+        verification_method: "Način preverjanja identitete"
+        verified: "Preverjeno"
+        active: "Usposobljeno"
+        radius_groups: "Skupine RADIUS"
+        eula_acceptance: "Pogoji uporabe storitve"
+        privacy_acceptance: "Informacije o obdelavi osebnih podatkov"
+        document_photo: "Fotokopija osebnega dokumenta"
+
+  authlogic:
+    error_messages:
+      login_blank: "potrebna je specifikacija"
+      login_not_found: "Neveljavno"
+      login_invalid: "Uporabiti samo črke, števila, presledke in .-_@"
+      consecutive_failed_logins_limit_exceeded: "Prekoračena meja zgrešenih poskusov, izklopljen račun"
+      email_invalid: "ne zgleda e-mail naslov"
+      password_blank: " potrebna je specifikacija "
+      password_invalid: "Neveljavno"
+      not_active: "Račun ni aktiven"
+      not_confirmed: "Račun ni potrjen"
+      not_approved: "Račun ni odobren"
+      no_authentication_details: "Nisi posredoval nikakršnega podatka za potrditev"
+      is_not_valid: "Neveljavno"
+    models:
+      operator_session: "Seja operaterja"
+      user_session: "Seja uporabnika"
+    attributes:
+      account_session:
+        mobile_phone: "Telefonska številka"
+        login: "Uporabniško ime"
+        username: "Uporabniško ime"
+        email: "e-mail"
+        password: "Geslo"
+        remember_me: "Zapomni si prijavo"
+      operator_session:
+        mobile_phone: "Telefonska številka"
+        login: "Ime uporabnika"
+        email: "e-mail"
+        password: "Geslo"
+        remember_me: "Zapomni si prijavo"
+
+  simple_form:
+    "yes": 'Da'
+    "no": 'Ne'
+    required:
+      text: 'obvezen'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Pojavile so se nekatere težave:"
+
+    # Labels and hints examples
+    labels:
+      account:
+        eula_acceptance: "Z obkljukanjem sledečega kvadratka, izjavljam, da sprejemam pogoje uporabe storitve"
+        privacy_acceptance: "Z obkljukanjem sledečega kvadratka, izjavljam, da sem prebral informacije o obdelavi osebnih podatkov"
+        new:
+          password: 'Geslo'
+        edit:
+          password: 'Novo geslo'
+      user:
+        eula_acceptance: "Z obkljukanjem sledečega kvadratka, uporabnik izjavlja, da sprejema pogoje uporabe storitve"
+        privacy_acceptance: "Z obkljukanjem sledečega kvadratka, uporabnik izjavlja, da je prebral informacije o obdelavi osebnih podatkov"
+        new:
+          password: 'Geslo'
+        edit:
+          password: 'Novo geslo'
+
+    hints:
+      mobile_phone: "Opraviti boš moral telefonski klic s te številke. Uporabljaš lahko samo telefonske številke italijanskih operaterjev"
+      account:
+        captcha: "Tukaj spodaj napiši besedilo, ki se nahaja v sliki"
+        email: "E-mail bo lahko uporabljen za ponastavitev tvojega gesla v primeru pozabe le-tega"
+        password: "Moralo bo vsebovati vsaj eno črko in eno številko ter bo moralo obsegati vsaj 8 znakov"
+        username: "Za dostop do te storitve boš moral uporabiti tvoje uporabniško ime in geslo"
+      user:
+        active: "Uporabnik z razveljavljenim računom ima popolno prepoved uporabe storitve ter ne bo je mogel izkoriščati. Uporabniku bo lahko ponovno dodelil veljaven račun samo operater. Na splošno je bolje  izklopiti preverjanje, kar omogoča uporabniku, da se sam samodejno preveri."
+        email: "Uporabnik bo lahko uporabil e-mail za ponastavitev gesla v primeru, da ga pozabi"
+        username: "Uporabnik bo uporabil to uporabniško ime (navadno telefonska številka) za dostop do storitve"
+        verified: "Nepreverjen uporabnik ima prepoved uporabe storitve, ampak lahko ponovi proces preverjanja (samo če se je samostojno prijavil) v primeru, če še želi uporabljati storitev. Po določenem obdobju neaktivnosti (navadno
+ 6 mesecev), nepreverjeni uporabnik bo odstranjen iz sistema.
+        "
+
+  views:
+    pagination:
+      first: "Začetek"
+      last: "Zadnji"
+      previous: "&laquo; prejšnji"
+      next: "naslednji &raquo;"
+      truncate: "..."
+
