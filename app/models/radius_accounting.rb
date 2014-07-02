@@ -50,16 +50,21 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.logins_on(date)
+    # no sensible performance gains after trying to optimize
     count(:conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.unique_logins_on(date)
+    # no sensible performance gains after trying to optimize
     count('UserName', :distinct => true, :conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.logins_from(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      from.to_s,
+      (to+1.day).to_s
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -68,7 +73,7 @@ class RadiusAccounting < ActiveRecord::Base
     
     conditions = [condition_string] + condition_params
     
-    count('UserName',
+    RadiusAccounting.count('UserName',
           :select => 'AcctStartTime',
           :conditions => conditions,
           :group => "DATE(AcctStartTime)"
@@ -76,8 +81,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.unique_logins_from(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      from.to_s,
+      (to+1.day).to_s
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -101,11 +109,23 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic_in_on(date)
-    sum('AcctInputOctets', :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      date.to_s,
+      (date+1.days).to_s
+    ]
+    conditions = [condition_string] + condition_params
+    sum('AcctInputOctets', :conditions => conditions)
   end
 
   def self.traffic_out_on(date)
-    sum('AcctOutputOctets', :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      date.to_s,
+      (date+1.days).to_s
+    ]
+    conditions = [condition_string] + condition_params
+    sum('AcctOutputOctets', :conditions => conditions)
   end
 
   def self.traffic_on(date)
@@ -113,8 +133,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic_in(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      from.to_s,
+      (to+1.day).to_s
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -130,8 +153,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic_out(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      from.to_s,
+      (to+1.day).to_s
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -147,8 +173,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      from.to_s,
+      (to+1.day).to_s
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -176,7 +205,7 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.on_day(day)
-    where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL OR DATE(AcctStopTime) >= ?", day.strftime(RADIUS_DATE_FORMAT)).where("DATE(AcctStartTime) <= ?", day.strftime(RADIUS_DATE_FORMAT))
+    where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL OR AcctStopTime >= ?", day.strftime(RADIUS_DATE_FORMAT)).where("AcctStartTime < ?", (day+1.day).strftime(RADIUS_DATE_FORMAT))
   end
 
   def self.find_by_username(username)
