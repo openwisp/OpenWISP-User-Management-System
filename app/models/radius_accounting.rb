@@ -62,8 +62,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.logins_from(from, to, called_station_id=nil)
     condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
     condition_params = [
-      from.to_date.to_s,
-      (to+1.day).to_date.to_s
+      (from+1.day).to_date,
+      (to+1.day).to_date
     ]
     
     if called_station_id
@@ -83,8 +83,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.unique_logins_from(from, to, called_station_id=nil)
     condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
     condition_params = [
-      from.to_date.to_s,
-      (to+1.day).to_date.to_s
+      (from+1.day).to_date,
+      (to+1.day).to_date
     ]
     
     if called_station_id
@@ -111,8 +111,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.traffic_in_on(date)
     condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
     condition_params = [
-      date.to_date.to_s,
-      (date+1.days).to_date.to_s
+      date.to_date,
+      (date+1.days).to_date
     ]
     conditions = [condition_string] + condition_params
     sum('AcctInputOctets', :conditions => conditions)
@@ -121,8 +121,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.traffic_out_on(date)
     condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
     condition_params = [
-      date.to_date.to_s,
-      (date+1.days).to_date.to_s
+      date.to_date,
+      (date+1.days).to_date
     ]
     conditions = [condition_string] + condition_params
     sum('AcctOutputOctets', :conditions => conditions)
@@ -135,8 +135,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.traffic_in(from, to, called_station_id=nil)
     condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
     condition_params = [
-      from.to_date.to_s,
-      (to+1.day).to_date.to_s
+      (from+1.day).to_date,
+      (to+1.day).to_date
     ]
     
     if called_station_id
@@ -155,8 +155,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.traffic_out(from, to, called_station_id=nil)
     condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
     condition_params = [
-      from.to_date.to_s,
-      (to+1.day).to_date.to_s
+      (from+1.day).to_date,
+      (to+1.day).to_date
     ]
     
     if called_station_id
@@ -175,8 +175,8 @@ class RadiusAccounting < ActiveRecord::Base
   def self.traffic(from, to, called_station_id=nil)
     condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
     condition_params = [
-      from.to_date.to_s,
-      (to+1.day).to_date.to_s
+      (from+1.day).to_date,
+      (to+1.day).to_date
     ]
     
     if called_station_id
