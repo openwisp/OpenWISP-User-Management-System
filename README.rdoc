@@ -412,6 +412,25 @@ file *config/backgroundrb.yml*::
 This functionality is used in OpenWISP Geographic Monitoring to show
 the 10 latest logins of each access point.
 
+==== Rake task radius_accountings:cleanup_stale
+
+In some extreme cases you might need to cleanup stale radius sessions which do not have an AcctStopTime set.
+
+invoke this rake task this way:
+
+    radius_accountings:cleanup_stale
+
+or:
+
+    RAILS_ENV=production bundle exec rake radius_accountings:cleanup_stale
+
+==== What does this task do?
+
+* it will try to recalculate the AcctStopTime for those sessions which have an AcctSessionTime greater than 0, in this case the AcctTerminateCause will be set to *OWUMS-Stale-Recalculated*
+* if AcctSessionTime is 0 it will set AcctStopTime to the same value as AcctStartTime and will set AcctTerminateCause to *OWUMS-Stale-Invalid*
+
+At the end of the operation the task will output the results indicating how many sessions have been recalculated and how many have been marked as invalid.
+
 === Languages
 
 By default, english, italian and spanish are active.
