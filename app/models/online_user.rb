@@ -17,7 +17,9 @@
 
 class OnlineUser < AccountCommon
   scope :with_accountings, joins(:radius_accountings)
-  scope :session_opened, where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL")
+  # select radius sessions which are still open but not older than 3 days (because some sessions might be stale)
+  # TODO: "AND AcctStartTime >= (NOW() - INTERVAL 3 DAY)" might be removed in the future
+  scope :session_opened, where("(AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL) AND AcctStartTime >= (NOW() - INTERVAL 3 DAY)")
 
   # Should never be assigned... (see Account and User classes)
   attr_accessible
