@@ -384,11 +384,11 @@ OWMW might be used to retrieve the mac address of the access point from which us
 
 To enable OWMW, copy and rename the file *config/owmw.yml.example* in *config/owmw.yml*, then set the correct values for "url", "username" and "password".
 
-==== Rake task radius_accountings:convert
+=== Rake task radius_accountings:convert
 
 A rake task is available to convert called station id values which are not aware from which the users connected.
 
-<b>This task depends from OWMW 0.0.7</b>.
+<b>This task depends on OWMW 0.0.7</b>.
 
     rake radius_accountings:convert
 
@@ -412,7 +412,7 @@ file *config/backgroundrb.yml*::
 This functionality is used in OpenWISP Geographic Monitoring to show
 the 10 latest logins of each access point.
 
-==== Rake task radius_accountings:cleanup_stale
+=== Rake task radius_accountings:cleanup_stale
 
 In some extreme cases you might need to cleanup stale radius sessions which do not have an AcctStopTime set.
 
