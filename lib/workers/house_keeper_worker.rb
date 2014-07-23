@@ -32,6 +32,14 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
       puts "Exception raised while converting radius sessions: #{exception.message}"
     end
   end
+  
+  def cleanup_stale_radius_accountings
+    begin
+      RadiusAccounting.cleanup_stale_radius_accountings
+    rescue Exception => exception
+      puts "Exception raised while cleaning up radius sessions: #{exception.message}"
+    end
+  end
 
   def remove_unverified_users
     User.unverified.each do |user|
