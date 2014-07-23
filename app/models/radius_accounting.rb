@@ -254,6 +254,37 @@ class RadiusAccounting < ActiveRecord::Base
     
     return modified_records
   end
+  
+  def self.cleanup_stale_radius_accountings
+    # retrieve stale sessions
+    sessions = RadiusAccounting.where("(AcctStopTime IS NULL OR AcctStopTime = '0000-00-00 00:00:00') AND AcctStartTime <= (NOW() - INTERVAL 3 DAY)")
+    
+    recalculated = 0
+    invalid = 0
+    
+    sessions.each do |ra|
+      # cool, we have the session time
+      if ra.AcctSessionTime > 0
+        # let's recalculate the stop time
+        ra.AcctStopTime = ra.acct_start_time + ra.AcctSessionTime
+        # leave a mark so it's recognized
+        ra.AcctTerminateCause = 'OWUMS-Stale-Recalculated'
+        # increment
+        recalculated += 1
+      # not cool
+      else
+        # this is invalid, we mark it as closed but we do so in a way that we can clearly see that the session is invalid
+        ra.AcctStopTime = ra.AcctStartTime
+        ra.AcctTerminateCause = 'OWUMS-Stale-Invalid'
+        invalid += 1
+      end
+      ra.save
+    end
+    
+    puts "[#{Date.today}]"
+    puts "OWUMS-Stale-Recalculated #{recalculated}"
+    puts "OWUMS-Stale-Invalid #{invalid}\n\n"
+  end
 
   # Accessors
 
