@@ -236,6 +236,9 @@ class RadiusAccounting < ActiveRecord::Base
       user_mac = accounting.calling_station_id
       begin
         ap_mac = AssociatedUser.access_point_mac_address_by_user_mac_address(user_mac)
+      rescue ActiveResource::UnauthorizedAccess
+        puts "could not authenticate to OWMW, please check the credentials in config/owmw.yml"
+        break
       rescue ActiveResource::ResourceNotFound
         next
       rescue Exception => e
