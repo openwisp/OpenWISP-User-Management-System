@@ -30,10 +30,9 @@ class RadiusAccounting < ActiveRecord::Base
   alias_attribute :framed_ip_address, :FramedIPAddress
   alias_attribute :acct_session_time, :AcctSessionTime
 
-  # RadiusAccountings shouldn't be created/modified by Rails
-  attr_accessible
-
-  def self.table_name() "radacct" end
+  def self.table_name
+    "radacct"
+  end
 
   with_options :foreign_key => :UserName, :primary_key => :username do |assoc|
     assoc.belongs_to :account_common
@@ -51,16 +50,21 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.logins_on(date)
+    # no sensible performance gains after trying to optimize
     count(:conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.unique_logins_on(date)
+    # no sensible performance gains after trying to optimize
     count('UserName', :distinct => true, :conditions => ["DATE(AcctStartTime) = ?", date.to_s])
   end
 
   def self.logins_from(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      (from+1.day).to_date,
+      (to+1.day).to_date
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -69,7 +73,7 @@ class RadiusAccounting < ActiveRecord::Base
     
     conditions = [condition_string] + condition_params
     
-    count('UserName',
+    RadiusAccounting.count('UserName',
           :select => 'AcctStartTime',
           :conditions => conditions,
           :group => "DATE(AcctStartTime)"
@@ -77,8 +81,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.unique_logins_from(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      (from+1.day).to_date,
+      (to+1.day).to_date
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -102,11 +109,23 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic_in_on(date)
-    sum('AcctInputOctets', :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      date.to_date,
+      (date+1.days).to_date
+    ]
+    conditions = [condition_string] + condition_params
+    sum('AcctInputOctets', :conditions => conditions)
   end
 
   def self.traffic_out_on(date)
-    sum('AcctOutputOctets', :conditions => "DATE(AcctStartTime) = '#{date.to_s}'")
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      date.to_date,
+      (date+1.days).to_date
+    ]
+    conditions = [condition_string] + condition_params
+    sum('AcctOutputOctets', :conditions => conditions)
   end
 
   def self.traffic_on(date)
@@ -114,8 +133,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic_in(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      (from+1.day).to_date,
+      (to+1.day).to_date
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -131,8 +153,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic_out(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      (from+1.day).to_date,
+      (to+1.day).to_date
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -148,8 +173,11 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.traffic(from, to, called_station_id=nil)
-    condition_string = "DATE(AcctStartTime) >= ? AND DATE(AcctStartTime) <= ?"
-    condition_params = [from, to]
+    condition_string = "AcctStartTime >= ? AND AcctStartTime < ?"
+    condition_params = [
+      (from+1.day).to_date,
+      (to+1.day).to_date
+    ]
     
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
@@ -177,7 +205,7 @@ class RadiusAccounting < ActiveRecord::Base
   end
 
   def self.on_day(day)
-    where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL OR DATE(AcctStopTime) >= ?", day.strftime(RADIUS_DATE_FORMAT)).where("DATE(AcctStartTime) <= ?", day.strftime(RADIUS_DATE_FORMAT))
+    where("AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime is NULL OR AcctStopTime >= ?", day.strftime(RADIUS_DATE_FORMAT)).where("AcctStartTime < ?", (day+1.day).strftime(RADIUS_DATE_FORMAT))
   end
 
   def self.find_by_username(username)
@@ -208,10 +236,17 @@ class RadiusAccounting < ActiveRecord::Base
       user_mac = accounting.calling_station_id
       begin
         ap_mac = AssociatedUser.access_point_mac_address_by_user_mac_address(user_mac)
+      rescue ActiveResource::UnauthorizedAccess
+        puts "could not authenticate to OWMW, please check the credentials in config/owmw.yml"
+        break
+      rescue ActiveResource::ServerError
+        puts "got 500 error, probably OWMW cannot connect to the VPN management"
+        break
       rescue ActiveResource::ResourceNotFound
         next
       rescue Exception => e
         ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+        next
       end
       
       new_called_station_id = "%s:%s" % [
@@ -225,6 +260,37 @@ class RadiusAccounting < ActiveRecord::Base
     end
     
     return modified_records
+  end
+  
+  def self.cleanup_stale_radius_accountings
+    # retrieve stale sessions
+    sessions = RadiusAccounting.where("(AcctStopTime IS NULL OR AcctStopTime = '0000-00-00 00:00:00') AND AcctStartTime <= (NOW() - INTERVAL 3 DAY)")
+    
+    recalculated = 0
+    invalid = 0
+    
+    sessions.each do |ra|
+      # cool, we have the session time
+      if ra.AcctSessionTime > 0
+        # let's recalculate the stop time
+        ra.AcctStopTime = ra.acct_start_time + ra.AcctSessionTime
+        # leave a mark so it's recognized
+        ra.AcctTerminateCause = 'OWUMS-Stale-Recalculated'
+        # increment
+        recalculated += 1
+      # not cool
+      else
+        # this is invalid, we mark it as closed but we do so in a way that we can clearly see that the session is invalid
+        ra.AcctStopTime = ra.AcctStartTime
+        ra.AcctTerminateCause = 'OWUMS-Stale-Invalid'
+        invalid += 1
+      end
+      ra.save
+    end
+    
+    puts "[#{Date.today}]"
+    puts "OWUMS-Stale-Recalculated #{recalculated}"
+    puts "OWUMS-Stale-Invalid #{invalid}\n\n"
   end
 
   # Accessors

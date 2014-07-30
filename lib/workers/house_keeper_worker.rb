@@ -32,30 +32,30 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
       puts "Exception raised while converting radius sessions: #{exception.message}"
     end
   end
+  
+  def cleanup_stale_radius_accountings
+    begin
+      RadiusAccounting.cleanup_stale_radius_accountings
+    rescue Exception => exception
+      puts "Exception raised while cleaning up radius sessions: #{exception.message}"
+    end
+  end
 
   def remove_unverified_users
-    User.unverified.each do |user|
+    User.unverified_destroyable.each do |user|
       if user.verification_expired?
-        # if verified by visa user just disable
-        if user.verify_with_gestpay? and user.active and Configuration.get('gestpay_webservice_method') != 'verification' and !user.credit_card_info.nil? and !user.credit_card_info.empty?
-          puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account but it's a verified by visa attempt. Disabling it..."
-          user.active = false
-          user.save!
-        # else delete
-        else
-          puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account. I'm going to remove him/her..."
-          user.destroy
-        end
+        puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account. I'm going to remove him/her..."
+        user.destroy if not user.verify_with_gestpay?  # extra paranoia
       end
     end
   end
 
   def remove_disabled_users
-    User.disabled.each do |user|
+    User.disabled_destroyable.each do |user|
       # do not remove verified by visa disabled users
-      if user.registration_expired? and not (user.verify_with_gestpay? and !user.credit_card_info.nil? and !user.credit_card_info.empty?)
+      if user.registration_expired?
         puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) was disabled for a long time. I'm going to remove him/her..."
-        user.destroy
+        user.destroy if not user.verify_with_gestpay?  # extra paranoia
       end
     end
   end

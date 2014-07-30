@@ -16,6 +16,9 @@
       :trigger_args: 0  0  2 * * 0 *
     :remove_stale_bdrbs:
       :trigger_args: 0  30 2 * * 0 *
+    # cleanup stale radius sessions once a day
+    :cleanup_stale_radius_accountings:
+      :trigger_args: 0 0 0 */1 * *
     # uncomment the following lines if you do not use OpenWISP Captive Portal Manager 0.9.2
     # but you still want to be able to trace from which Access Point users connected
     # this feature depends on OpenWISP MiddleWare 0.0.7
