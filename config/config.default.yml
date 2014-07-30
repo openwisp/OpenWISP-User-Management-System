@@ -13,6 +13,7 @@ defaults: &defaults
   english: true
   italian: true
   spanish: true
+  slovenian: false
   furlan: false
   
   # check called station id
