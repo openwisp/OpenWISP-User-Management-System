@@ -134,12 +134,21 @@ class User < AccountCommon
   def self.unverified
     where("verified_at is NULL AND NOT verified")
   end
+  
+  # unverified users that can be cleaned up by house keeper worker
+  def self.unverified_destroyable
+    where("verified_at is NULL AND NOT verified AND NOT verification_method = 'gestpay_credit_card'")
+  end
 
   def self.disabled
     # This method uses verified_at and verified instead
     # of active, to let the user disable (and subsequent remove)
     # itself autonomously
     where("verified_at is NOT NULL AND NOT verified")
+  end
+  
+  def self.disabled_destroyable
+    where("verified_at is NOT NULL AND NOT verified AND NOT verification_method = 'gestpay_credit_card'")
   end
 
   # Instance Methods
