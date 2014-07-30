@@ -240,7 +240,7 @@ class RadiusAccounting < ActiveRecord::Base
         puts "could not authenticate to OWMW, please check the credentials in config/owmw.yml"
         break
       rescue ActiveResource::ServerError
-        puts "got 500 error, probably OWMW cannot connect to VPN"
+        puts "got 500 error, probably OWMW cannot connect to the VPN management"
         break
       rescue ActiveResource::ResourceNotFound
         next
