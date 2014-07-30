@@ -17,8 +17,8 @@
 
 class AddMoreIndexes < ActiveRecord::Migration
   def self.up
-    add_index :mobile_prefixes, :disabled
-    add_index :mobile_prefixes, :prefix
+    #add_index :mobile_prefixes, :disabled
+    #add_index :mobile_prefixes, :prefix
     add_index :countries, :disabled
     add_index :users, :email
     add_index :users, :single_access_token
