@@ -239,10 +239,14 @@ class RadiusAccounting < ActiveRecord::Base
       rescue ActiveResource::UnauthorizedAccess
         puts "could not authenticate to OWMW, please check the credentials in config/owmw.yml"
         break
+      rescue ActiveResource::ServerError
+        puts "got 500 error, probably OWMW cannot connect to VPN"
+        break
       rescue ActiveResource::ResourceNotFound
         next
       rescue Exception => e
         ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+        next
       end
       
       new_called_station_id = "%s:%s" % [
