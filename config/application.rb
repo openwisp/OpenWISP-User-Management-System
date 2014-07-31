@@ -63,7 +63,9 @@ module Owums
         :number2,
         :number3,
         :number4,
-        :cvv
+        :cvv,
+        :expiration_month,
+        :expiration_year
     ]
 
     # Force all environments to use the same logger level
