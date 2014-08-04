@@ -113,4 +113,49 @@ class UserTest < ActiveSupport::TestCase
     u.save!
     assert_equal 0, User.disabled_deactivable.count
   end
+  
+  def _create_fake_users
+    User.destroy_all
+    (0..10).each do |i|
+      account = Account.new(
+        :given_name => "Foo #{i}",
+        :surname => "Bar #{i}",
+        :email => "foo#{i}@bar.com",
+        :username => "foobar_#{i}",
+        :password => "foobarpassword#{i}",
+        :mobile_prefix => '334',
+        :mobile_suffix => "435270#{i}",
+        :verification_method => 'mobile_phone',
+        :birth_date => '1980-10-10',
+        :address => 'Via dei Tizii 6',
+        :city => 'Rome',
+        :zip => '00185',
+        :state => 'Italy',
+        :eula_acceptance => true,
+        :privacy_acceptance => true
+      )
+      account.save!
+      user = User.last
+      user.verified = true
+      user.verified_at = i.days.ago.change({:hour => 12})
+      user.created_at = user.verified_at
+      user.save!
+    end
+  end
+  
+  test "registered_exactly_on" do
+    self._create_fake_users()
+    
+    (0..10).each do |i|
+      assert_equal 1, User.registered_exactly_on(i.days.ago.to_date)
+    end
+  end
+  
+  test "registered_on" do
+    self._create_fake_users()
+    
+    (0..10).each do |i|
+      assert_equal 11-i, User.registered_on(i.days.ago.to_date)
+    end
+  end
 end
