@@ -118,7 +118,7 @@ class User < AccountCommon
   end
   
   def self.registered_exactly_on(date, verification_method=nil)
-    conditions = ["verified = 1 AND DATE(verified_at) = ?", date.to_s]
+    conditions = ["verified = 1 AND verified_at >= ? AND verified_at < ?", date.to_date, date.to_date+1]
     if verification_method
       conditions[0] << " AND verification_method = ?"
       conditions.push(verification_method)
