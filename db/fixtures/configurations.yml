@@ -386,7 +386,7 @@ Si an tiene problemas , por favor contactenos."
 101:
   system_key: f
   key: "account_notification_message_es"
-  value: "{first_name} {last_name},
+  value: "Hola {first_name} {last_name},
 Has creado tu cuenta de manera exitosa.
 
 Puede ingresar para disfrutar del servicio Wifi con el usuario \"{username}\" y la contraseña que usted selecciono durante la fase de registro.
@@ -404,7 +404,7 @@ Staff"
 102:
   system_key: f
   key: "account_notification_subject_es"
-  value: "Ha sido creada una nueva cuenta [OpenWISP User Management System]"
+  value: "Ha sido creada una nueva cuenta en [OpenWISP User Management System]"
 
 103:
   system_key: f
