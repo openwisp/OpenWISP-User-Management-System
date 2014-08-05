@@ -282,38 +282,27 @@ Se continui ad avere problemi per il reset della password, per piacere contattac
   system_key: f
   key: "account_notification_message_en"
   value: "Hi {first_name} {last_name},
-You just created and verified successfully your account for wifi access.
-
-You can now login and use the wifi service with username \"{username}\" and the password you chose during the registration phase.
-
-You can monitor your use of the available traffic at the account management page:
-{account_url}
-
-If you ever forget your password, you can use the password reset procedure available at the following web address:
-{password_reset_url}
-{invoice_message}
-
-Best regards
-Staff"
+\n\nYou just created and verified successfully your account for wifi access.
+\n\nYou can now login and use the wifi service with username \"{username}\" and the password you chose during the registration phase.
+\n\nYou can monitor your use of the available traffic at the account management page:
+\n{account_url}
+\n\nIf you ever forget your password, you can use the password reset procedure available at the following web address:
+\n{password_reset_url}{invoice_message}
+\n\nBest regards
+\nStaff"
 
 81:
   system_key: f
   key: "account_notification_message_it"
   value: "Ciao {first_name} {last_name},
-
-Hai appena creato e verificato con successo il tuo account per l'accesso al wifi.
-
-Ora puoi effettuare il login e usare il servizio wifi, il tuo username è \"{username}\" e la password è quella che hai scelto in fase di registrazione.
-
-Puoi monitorare l'utilizzo del servizio dalla pagina di gestione del tuo account:
-{account_url}
-
-Se dovessi dimenticare la password, potrai utilizzare la procedura di reset disponibile al seguente indirizzo:
-{password_reset_url}
-{invoice_message}
-
-Cordiali Saluti
-Staff"
+\n\nHai appena creato e verificato con successo il tuo account per l'accesso al wifi.
+\n\nOra puoi effettuare il login e usare il servizio wifi, il tuo username è \"{username}\" e la password è quella che hai scelto in fase di registrazione.
+\n\nPuoi monitorare l'utilizzo del servizio dalla pagina di gestione del tuo account:
+\n{account_url}
+\n\nSe dovessi dimenticare la password, potrai utilizzare la procedura di reset disponibile al seguente indirizzo:
+\n{password_reset_url}{invoice_message}
+\n\nCordiali Saluti
+\nStaff"
 
 82:
   system_key: f
@@ -387,19 +376,14 @@ Si an tiene problemas , por favor contactenos."
   system_key: f
   key: "account_notification_message_es"
   value: "Hola {first_name} {last_name},
-Has creado tu cuenta de manera exitosa.
-
-Puede ingresar para disfrutar del servicio Wifi con el usuario \"{username}\" y la contraseña que usted selecciono durante la fase de registro.
-
-Usted puede verificar la cantidad de triàfico disponible en la página gestión:
-{account_url}
-
-Si alguna vez pierde su contraseña, siga el siguiente procedimiento para recuperarla:
-{password_reset_url}
-{invoice_message}
-
-Saludos cordiales
-Staff"
+\n\nUsted ha creado su cuenta de manera exitosa.
+\n\nPuede ingresar para disfrutar del servicio Wifi con el usuario \"{username}\" y la contraseña que usted selecciono durante la fase de registro.
+\n\nUsted puede verificar la cantidad de triàfico disponible en la página gestión:
+\n{account_url}
+\n\nSi alguna vez pierde su contraseña, siga el siguiente procedimiento para recuperarla:
+\n{password_reset_url}{invoice_message}
+\n\nSaludos cordiales
+\nStaff"
 
 102:
   system_key: f
@@ -495,20 +479,14 @@ Staff"
   system_key: f
   key: "account_notification_message_fur"
   value: "Mandi {first_name} {last_name},
-  
-  Tu âs apene creât e verificât cun sucès il to account par jentrâ cun la wifi.
-  
-  Cumò tu podis meti i dâts par jentrâ e doprâ il servizi Wi-Fi, il to username al è \"{username}\" e la password ae che sielte cuante ca tu ti sês regjistrât.
-  
-  Tu podis tignî sot voli il servizi da la pagjine di gjestion dal to account:
-  {account_url}
-  
-  Se tu vessis dismenteât la password, tu podis doprâ la procedure par netâ vie; ca tu cjatis a la direzion ca ven:
-  {password_reset_url}
-  {invoice_message}
-  
-  Preseât
-  Staff"
+\n\nTu âs apene creât e verificât cun sucès il to account par jentrâ cun la wifi.
+\n\nCumò tu podis meti i dâts par jentrâ e doprâ il servizi Wi-Fi, il to username al è \"{username}\" e la password ae che sielte cuante ca tu ti sês regjistrât.
+\n\nTu podis tignî sot voli il servizi da la pagjine di gjestion dal to account:
+\n{account_url}
+\n\nSe tu vessis dismenteât la password, tu podis doprâ la procedure par netâ vie; ca tu cjatis a la direzion ca ven:
+\n{password_reset_url}{invoice_message}
+\n\nPreseât
+\nStaff"
 
 127:
   system_key: f
@@ -567,20 +545,14 @@ Staff"
   system_key: f
   key: "account_notification_message_si"
   value: "Živijo {first_name} {last_name},
-
-Pravkar si uspešno ustvaril in preveril tvoj račun za dostop do wifi-ja.
-
-Zdaj se lahko prijaviš in uporabljaš storitev Wi-Fi, tvoje uporabniško ime je \"{username}\" ,geslo je pa tisto, ki si ga vpisal v fazi registracije.
-
-Uporabo storitve lahko nadzoruješ s strani za upravljanje tvojega računa:
-{account_url}
-
-V primeru pozabljenega gela, lahko uporabiš postopek za ponastavitev gesla na sledečem naslovu:
-{password_reset_url}
-{invoice_message}
-
-Lep pozdrav
-Ekipa"
+\n\nPravkar si uspešno ustvaril in preveril tvoj račun za dostop do wifi-ja.
+\n\nZdaj se lahko prijaviš in uporabljaš storitev Wi-Fi, tvoje uporabniško ime je \"{username}\" ,geslo je pa tisto, ki si ga vpisal v fazi registracije.
+\n\nUporabo storitve lahko nadzoruješ s strani za upravljanje tvojega računa:
+\n{account_url}
+\n\nV primeru pozabljenega gela, lahko uporabiš postopek za ponastavitev gesla na sledečem naslovu:
+\n{password_reset_url}{invoice_message}
+\n\nLep pozdrav
+\nEkipa"
 
 138:
   system_key: f
