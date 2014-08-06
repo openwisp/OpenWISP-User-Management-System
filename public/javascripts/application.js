@@ -260,10 +260,12 @@ var owums = {
             var updateUsername = function(){
                 username.val(prefix.val()+suffix.val());
             }
-            suffix.bind('keyup', function(e){
+            $('#account_mobile_prefix, #account_mobile_prefix_confirmation')
+            .bind('focusin focusout change', function(e){
                 updateUsername();
             });
-            prefix.change(function(e){
+            $('#account_mobile_suffix, #account_mobile_suffix_confirmation, #account_given_name')
+            .bind('keyup focusin focusout', function(e){
                 updateUsername();
             });
         }
