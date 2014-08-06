@@ -25,6 +25,13 @@ module ApplicationHelper
   end
 
   def document_path(source)
+    i18n_source = "#{I18n.locale}-#{source}"
+    
+    # support internationalized documents
+    if Pathname.new("#{Rails.public_path}/documents/#{i18n_source}").exist?
+      source = i18n_source
+    end
+    
     compute_public_path(source, 'documents')
   end
 
