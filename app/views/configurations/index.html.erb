@@ -33,7 +33,7 @@
         <% @configurations.each do |configuration| %>
           <tr class="hover">
             <td class="first key"><strong><%= configuration.key %></strong></td>
-            <td class="value"><%= truncate h(strip_tags(configuration.value)), :length => 50 %></td>
+            <td class="value"><%= truncate strip_tags(configuration.value.html_safe), :length => 50 %></td>
             <td class="operations"><%= link_to t(:Edit), edit_configuration_path(configuration) %></td>
           </tr>
         <% end %>
