@@ -78,4 +78,9 @@ class AccountsControllerTest < ActionController::TestCase
     assert_equal true, data['is_expired']
     assert_equal false, data['is_verified']
   end
+  
+  test "empty locale string regression test" do
+    get :instructions, { :locale => '' }
+    assert_response :success
+  end
 end
