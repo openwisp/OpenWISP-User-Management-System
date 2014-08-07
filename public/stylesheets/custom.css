@@ -455,8 +455,9 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 #configuration_keys .key{ width: 37% }
 #configuration_keys .value{ width: 43% }
 #configuration_keys .operations{ width: 20% }
-#configuration_keys td{ font-size: 12px; cursor: pointer }
+#configuration_keys td{ font-size: 12px; cursor: pointer; padding-top: 10px !important; padding-bottom: 10px !important }
 #configuration_keys td.value{ font-style: italic }
+#container #configuration_keys td p{ margin: 5px 0 !important }
 
 #errorExplanation{
 	margin: 10px 5px 20px;
