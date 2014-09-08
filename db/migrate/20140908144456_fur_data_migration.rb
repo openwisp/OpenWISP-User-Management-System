@@ -17,7 +17,12 @@ class FurDataMigration < ActiveRecord::Migration
 
   def self.up
     @configurations.each do |config|
-      Configuration.set(config['key'], config['value'])
+      begin
+        Configuration.set(config['key'], config['value'])
+      rescue
+        Configuration.find_by_key(config['key']).destroy()
+        Configuration.set(config['key'], config['value'])
+      end
     end
   end
 
