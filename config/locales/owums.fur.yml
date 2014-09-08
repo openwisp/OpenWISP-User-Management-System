@@ -58,9 +58,9 @@ fur:
   Dunno_how_to_register_click_here: "Âstu problemas a regjistrati? Clicê a chi"
   Edit: "Modifiche"
   Edit_user: "Modifiche utent"
-  Edit_account: "Modifiche l’account"
+  Edit_account: "Modifiche laccount"
   Edit_configuration_key: "Modifiche la configurazion"
-  Edit_operator: "Modifiche l’operadôr"
+  Edit_operator: "Modifiche loperadôr"
   Edit_radius_check: "Modifiche il control dal RADIUS"
   Edit_radius_group: "Modifiche il grup RADIUS"
   Edit_radius_reply: "Modifiche il RADIUS reply"
@@ -196,18 +196,13 @@ fur:
   Recover: "Torne met"
   Refresh_data: "Inzorne dâts"
   Register: "Regjistriti"
-  Register_howto_1: "
-  Se no tu as un account, tu puedis fâ la procedure di regjistrazion fasint '<strong>%{registration}</strong>' da liste principâl.<br />
-  La procedure di regjistrazion a je fâte di dôs fasis:
-    "
-  Register_howto_2: "
-  In ta prime fase tu scugnîs meti i tiei dâts anagrafics, stant atent a lis indicazions ca rivin da '<strong>%{registration}</strong>'.<br />
+  Register_howto_1: "Se no tu as un account, tu puedis fâ la procedure di regjistrazion fasint '<strong>%{registration}</strong>' da liste principâl.<br />La procedure di regjistrazion a je fâte di dôs fasis:"
+  Register_howto_2: "In ta prime fase tu scugnîs meti i tiei dâts anagrafics, stant atent a lis indicazions ca rivin da '<strong>%{registration}</strong>'.<br />
   Une volte metût i tiei dâts, par doprâ il servizi tu as di procedi cun la seconde fase, ven a stâi la verifiche dai tiei dâts. Scuasit simpri par la plui part dai câs la verifiche a ven fâte cun une clamade cence cost al numar indicât cun il<strong>telefonin metût in fase di regjistrazion</strong>,
   vint cure di<strong>no platà il numar di clamadis</strong>. In tal câs la telefonade a ven fate platânt il to numar, l'account nol vignarà
       verificât e, partant, al sarà impussibil doprâ il servizi.<br />
   Dopo vê verificât i tiei dâts, l'utent a si cjatarà su la proprie pagjine personâl. Par doprâ il servizi al bastarà vierzi une gnove pagjine (par esempli www.google.com)
-      par scomençâ la navigazion.
-    "
+      par scomençâ la navigazion."
   Register_subheading: "Ce aio di fâ e ce mi servial par regjistrami?"
   Registered_users: "Regjistrazion cumulatîve"
   Registered_users_daily: "Regjistrazion di dut al dì"
@@ -302,8 +297,8 @@ fur:
   credit_card: "Cjarte di credit"
   paypal_credit_card: "Paypal o cjarte di credit"
   gestpay_credit_card: "Cjarte di credit"
-  credit_card_instructions: "A fin da procedure di regjistrazion ti vignarà domandât di verificâ la to cjarte di credit.<br /><br /><strong>La operazion e à un cost di %{count}</strong> e a ven fate cun une <strong>conession sigure</strong>.<br /><br /><strong>Il to numar di cjarte di credit al NOL vignarà tignût di cont in tai nestris database ma su chel de bancje ca fasarà la verifiche.</strong>"
-  credit_card_instructions_free: " A fin da procedure di regjistrazion ti vignarà domandât di verificâ la to cjarte di credit.<br /><br /><strong>La operazion a no coste nuie</strong> e à ven fate cun une <strong>conession sicura</strong>.<br /><br /><strong> Il to numar di cjarte di credit NOL vignarà tignût di cont in tai nestris database ma su chel de bancje ca fasarà la verifiche.</strong>"
+  credit_card_instructions: "A fin da procedure di regjistrazion ti vignarà domandât di verificâ la to cjarte di credit.<br /><br /><strong>La operazion e à un cost di %{count}</strong>e a ven fate cun une<strong>conession sigure</strong>.<br /><br /><strong>Il to numar di cjarte di credit al NOL vignarà tignût di cont in tai nestris database ma su chel de bancje ca fasarà la verifiche.</strong>"
+  credit_card_instructions_free: " A fin da procedure di regjistrazion ti vignarà domandât di verificâ la to cjarte di credit.<br /><br /><strong> La operazion a no coste nuie </strong> e à ven fate cun une<strong>conession sicura</strong>.<br /><br /><strong> Il to numar di cjarte di credit NOL vignarà tignût di cont in tai nestris database ma su chel de bancje ca fasarà la verifiche.</strong>"
   credit_card_item_name: "Regjistrazion cun cjarte di credit"
   disable_account: "disabilitâ account"
   document_photo: "fotocopie dal document"
@@ -355,8 +350,8 @@ fur:
   will_be_your_username: "sarâ il to non utent"
   zip: "cap"
   Verified_by_visa_heading: "Finîs la procedure sul sît da to bancje"
-  Verified_by_visa_text: "<p>Jentre in tal sît da to bancje par meti il <strong>PIN di sigurece</strong> da to cjarte di credit <strong>Verified By Visa</strong> e finîs daspò la procedure di verifiche da to identitât.</p>
-  <p>Tu as ancjemò <strong>%{minutes} minuts</strong> par finî il procediment, daspò la to session a scjât.</p>"
+  Verified_by_visa_text: "<p>Jentre in tal sît da to bancje par meti il<strong>PIN di sigurece</strong>da to cjarte di credit<strong>Verified By Visa</strong>e finîs daspò la procedure di verifiche da to identitât.</p>
+  <p>Tu as ancjemò <strong>%{minutes} minuts</strong>par finî il procediment, daspò la to session a scjât.</p>"
   Proceed: "Vâ indenant"
   Gestpay_verified_by_visa_error_heading: "Erôr verifiche Verified by Visa"
   Gestpay_verified_by_visa_error_text: "Al è stât un erôr cun la procedure di verifiche da la to cjarte verified by visa"

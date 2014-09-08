@@ -8,7 +8,7 @@ fur:
     currency:
       format:
         format: "%n %u"
-        unit: "€"
+        unit: "€"
         separator: "."
         delimiter: ","
         precision: 2
@@ -39,7 +39,7 @@ fur:
           mb: "Mb"
           gb: "Gb"
           tb: "Tb"
-  
+
   date:
     formats:
       default: "%d/%m/%Y"
@@ -58,7 +58,7 @@ fur:
       default: "%d/%m/%y - %H:%M"
       short: "%d %b %H:%M"
       long: "%d %B %Y %H:%M"
-    
+  
     am: "am"
     pm: "pm"
   
@@ -95,7 +95,7 @@ fur:
       over_x_years:
         one:  "plui di un an"
         other: "plui %{count} ains"
-    
+  
     prompts:
       year:   "An"
       month:  "Mês"
@@ -153,7 +153,7 @@ fur:
         less_than: "A scugne jessi almancul di %{count}"
         less_than_or_equal_to: "A scugne jessi mancul o compagn a %{count}"
         odd: "A scugne jessi dispar"
-        even: "A scugne jessi pari "
+        even: "A scugne jessi pari"
         not_valid_f: "no valide"
         not_valid_m: "no valit"
         record_invalid: "record no valit"
@@ -175,7 +175,7 @@ fur:
       operator_session: "session operadore"
       user_session: "session utent"
       user: "utent"
-    
+  
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     attributes:
       user:
@@ -209,7 +209,7 @@ fur:
       account:
         mobile_phone: "Numar di telefonin"
         mobile_phone_confirmation: "Conferme numar di telefonin"
-        mobile_prefix: "Prefìs dal telefonin "
+        mobile_prefix: "Prefìs dal telefonin"
         mobile_prefix_confirmation: "Conferme prefìs dal telefonin "
         mobile_suffix: "Numar di telefonin cence prefìs"
         mobile_suffix_confirmation: "Conferme il numar di telefonin cence prefìs"
@@ -219,7 +219,7 @@ fur:
         password: "Password"
         change_password: "Gnove password"
         password_confirmation: "Conferme password"
-        email_confirmation: "Conferme direzion di pueste eletroniche "
+        email_confirmation: "Conferme direzion di pueste eletroniche"
         birth_date: "Date di nassite"
         given_name: "Non"
         surname: "Cognon"
@@ -309,8 +309,8 @@ fur:
         email: "La direzion di pueste eletroniche a podarà jessi usade dal utent par tornâ a meti la password in câs al à dismenteis"
         username: "L'utent doprarà chest username (di solit il numar di telefono) par jentrâ in tal servizi"
         verified: "Un utent ca nol è stât verificât al è interdet a doprâ il servizi ma al po tornà a fâ la procedure di verifiche
-              (dome se si è regjistrât in maniere autonome) in câs cal voli continuâ a doprâ il servizi. Se par un poc di timp no tu jentris (di solit 
-              6 mês), l'utent ca nol ven verificât al vignarà gjavât dal sisteme."
+                  (dome se si è regjistrât in maniere autonome) in câs cal voli continuâ a doprâ il servizi. Se par un poc di timp no tu jentris (di solit 
+                  6 mês), l'utent ca nol ven verificât al vignarà gjavât dal sisteme."
   
   views:
     pagination:

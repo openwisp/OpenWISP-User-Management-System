@@ -450,15 +450,15 @@ Si an tiene problemas , por favor contactenos."
 121:
   system_key: f
   key: "password_reset_instructions_before_reset_url_fur"
-  value: "A je stade fate une domande par netâ vie la password par il to account.
-  Se no tu sês stât tu a fale, fâs finte di no vê let chest messaç.
-  Se tu as fât tu la domande, clicê su la URL ca ven."
+  value: "E je stade fate une domande par netâ vie la password pal to account.
+  Se no tu sês stât tu a fâle, fâs fente di no vê let chest messaç.
+  Se tu âs fâte tu la domande, cliche su cheste URL."
 
 122:
   system_key: t
   key: "password_reset_instructions_after_reset_url_fur"
-  value: " Se la URL di prime no lave, prove a copiâ e incolâ la direzion in tal to program par là in rêt.
-  Se tu tornis a vê problemis par netâ vie la password, par plasê disinus."
+  value: "Se la URL di prime no leve, prove a copiâ e incolâ la direzion tal to browser.
+  Se tu tornis a vê problemis par netâ vie la password, par plasê contatinus."
 
 123:
   system_key: f
@@ -468,24 +468,24 @@ Si an tiene problemas , por favor contactenos."
 124:
   system_key: f
   key: "verification_explain_mobile_fur"
-  value: "<p>Al fine di <strong>prevignî la int ca aprofite dal servizi</strong>, nô o sin obleâts a <strong>verificâ la identitât</strong> dai utents ca doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç ce mût verificâ la to identitât <strong>\"Numar di telefonin\"</strong> da la liste ca ven.</p>"
+  value: "<p>Cul fin di<strong>prevignî la int che e aprofite dal servizi</strong>, o sin obleâts a<strong>verificâ la identitât</strong>dai utents che a doprin il servizi wifi.</p><p>Se tu âs une<strong>schede taliane</strong>sielç cemût verificâ la tô identitât <strong>\"Numar di telefonin\"</strong> de liste culì sot.</p>"
 
 125:
   system_key: f
   key: "verification_explain_creditcard_fur"
-  value: "<p>Al fine di <strong>prevignî la int ca aprofite dal servizi</strong>, nô o sin obleâts a <strong>verificâ la identitât</strong> dai utents ca doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç ce mût verificâ la to identitât <strong>\"Numar di telefonin\"</strong> da la liste ca ven, o se no sielç il metodo <strong>\"Cjarte di Credit\"</strong>.</p>"
+  value: "<p>Cul fin di<strong>prevignî la int che e aprofite dal servizi</strong>, o sin obleâts a<strong>verificâ la identitât</strong>dai utents che a doprin il servizi wifi.</p><p>Se tu âs une<strong>schede taliane</strong>sielç cemût verificâ la to identitât<strong>\"Numar di telefonin\"</strong>de liste culì sot, o ben sielç il metodi <strong>\"Cjarte di Credit\"</strong>.</p>"
 
 126:
   system_key: f
   key: "account_notification_message_fur"
   value: "Mandi {first_name} {last_name},
-\n\nTu âs apene creât e verificât cun sucès il to account par jentrâ cun la wifi.
-\n\nCumò tu podis meti i dâts par jentrâ e doprâ il servizi Wi-Fi, il to username al è \"{username}\" e la password ae che sielte cuante ca tu ti sês regjistrât.
-\n\nTu podis tignî sot voli il servizi da la pagjine di gjestion dal to account:
+\n\nTu âs a pene creât e verificât cun sucès il to account par jentrâ cu la wifi.
+\n\nCumò tu puedis meti i dâts par jentrâ e doprâ il servizi Wi-Fi, il to username al è \"{username}\" e la password e je chê che tu âs sielzude cuant che tu ti sês regjistrât.
+\n\nTu puedis tignî sot voli il servizi de pagjine di gjestion dal to account:
 \n{account_url}
-\n\nSe tu vessis dismenteât la password, tu podis doprâ la procedure par netâ vie; ca tu cjatis a la direzion ca ven:
+\n\nSe tu vessis dismenteade la password, tu puedis doprâ la procedure par netâ vie, che tu le cjatis a cheste direzion:
 \n{password_reset_url}{invoice_message}
-\n\nPreseât
+\n\nMandi
 \nStaff"
 
 127:
@@ -501,7 +501,7 @@ Si an tiene problemas , por favor contactenos."
 129:
   system_key: f
   key: "invoice_description_fur"
-  value: "Verifiche Identitât par il servizi Wi-Fi."
+  value: "Verifiche Identitât pal servizi Wi-Fi."
 
 130:
   system_key: f
