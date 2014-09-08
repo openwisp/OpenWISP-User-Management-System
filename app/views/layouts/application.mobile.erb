@@ -36,25 +36,25 @@
 </head>
 <body>
   <div data-role="page" data-url="<%= on_root? ? '' : content_for(:data_url) %>">
-  
+
 	<div data-role="header" data-position="inline" data-backbtn="false">
 	  <% if on_root? %>
 		  <h1>OpenWISP.org</h1><br />
 	  <% else %>
 		  <%= content_for :header %> <%= content_for :back %>
 	  <% end %>
-  
+
 	  <% if current_account %>
 		  <%= mobile_link_to_logout %>
 	  <% end %>
 	</div>
-  
+
 	<% if flash[:notice] %>
 		<ul id="notice" data-role="listview" data-theme="g">
 		  <li><%= flash[:notice] %></li>
 		</ul>
 	<% end %>
-  
+
 	<div data-role="content">
 	  <% if on_root? %>
 		<ul data-role="listview" data-inset="true">
@@ -65,7 +65,7 @@
 			<li><%= link_to t(:Forgot_password), password_reset_path %></li>
 		  <% end %>
 		</ul>
-  
+
 		<p>&nbsp;</p>
 		<fieldset class="ui-grid-a">
 		  <% if CONFIG['italian'] %>
@@ -80,7 +80,7 @@
 		  <% end %>
 		  <% if CONFIG['slovenian'] %>
 		  <div class="ui-block-a">
-			  <%= link_to_locale 'si', 'data-role' => 'button', 'data-transition' => 'flip' %>
+			  <%= link_to_locale 'sl', 'data-role' => 'button', 'data-transition' => 'flip' %>
 		  </div>
 		  <% end %>
 		  <% if CONFIG['furlan'] %>
@@ -96,12 +96,12 @@
 		  <p>&nbsp;</p>
 		</fieldset>
 	  <% end %>
-  
+
 	  <%= yield unless on_root? %>
 	</div>
-  
+
 	<p>&nbsp;</p>
-  
+
 	<div id="footer" data-role="footer">
 	  <p>Copyright (C) <%= Date.today.year %> <a href="http://openwisp.org/" target="_blank">OpenWISP.org</a></p>
 	  <p><%= link_to_toggle_mobile 'data-ajax' => false %></p>

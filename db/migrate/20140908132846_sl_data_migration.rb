@@ -1,6 +1,6 @@
-class AddSiLanguageConfigKeys < ActiveRecord::Migration
+class SlDataMigration < ActiveRecord::Migration
   keys = YAML::load(File.open("db/fixtures/configurations.yml"))
-  
+
   @configurations = [
     keys[131],
     keys[132],
@@ -14,8 +14,12 @@ class AddSiLanguageConfigKeys < ActiveRecord::Migration
     keys[140],
     keys[141],
   ]
-  
+
   def self.up
+    Configuration.where("configurations.key LIKE ?", "%_si").each do |c|
+      c.destroy
+    end
+
     @configurations.each do |config|
       if Configuration.find_by_key(config['key']).nil?
         Configuration.set(config['key'], config['value'])
@@ -24,11 +28,5 @@ class AddSiLanguageConfigKeys < ActiveRecord::Migration
   end
 
   def self.down
-    @configurations.each do |config|
-      c = Configuration.find_by_key(config['key'])
-      unless c.nil?
-        c.destroy
-      end
-    end
   end
 end
