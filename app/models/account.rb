@@ -6,12 +6,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -23,7 +23,7 @@ class Account < AccountCommon
   acts_as_authentic do |c|
     c.maintain_sessions = true
   end
-  
+
   # After save
   #after_save :prepare_gestpay_payment
 
@@ -40,7 +40,7 @@ class Account < AccountCommon
   # :verified should never be set with mass-assignment!
   attr_accessible :username, :given_name, :surname, :birth_date, :state, :city, :address, :zip,
                   :email, :email_confirmation, :password, :password_confirmation,
-                  :mobile_prefix, :mobile_prefix_confirmation, :mobile_suffix, 
+                  :mobile_prefix, :mobile_prefix_confirmation, :mobile_suffix,
                   :mobile_suffix_confirmation, :verification_method,
                   :eula_acceptance, :privacy_acceptance, :captcha
 
@@ -99,11 +99,11 @@ class Account < AccountCommon
   def expire_time
     (self.verification_expire_timeout - (Time.now - self.created_at).to_i + 60) / 60
   end
-  
+
   def expire_seconds
     (self.verification_expire_timeout - (Time.now - self.created_at).to_i)
   end
-  
+
   def verification_time_remaining
     if not self.verified? and self.expire_seconds > 0
       Time.at(self.expire_seconds).gmtime.strftime('%M:%S')
@@ -192,7 +192,7 @@ class Account < AccountCommon
       ).to_s.gsub("\n", "")
     ]
   end
-  
+
   def gestpay_s2s_verify_credit_card(request, cc, amount, currency)
     # build credit card number
     number = cc['number1'] + cc['number2'] + cc['number3'] + cc['number4']
@@ -205,15 +205,15 @@ class Account < AccountCommon
       :last_name  => self.surname,
       :verification_value  => cc['cvv']
     )
-    
+
     transaction = CreditCardTransaction.new(
       :user_id => self.id,
       :ip_address => request.remote_ip,
       :amount => amount
     )
-    
+
     transaction_valid = transaction.valid?
-    
+
     # if credit card looks valid proceed to bank gateway
     if credit_card.valid? and transaction_valid
       webservice_url = Configuration.get('gestpay_webservice_url')
@@ -236,7 +236,7 @@ class Account < AccountCommon
       }
       # init SOAP client
       client = Savon.client(webservice_url)
-      
+
       if Configuration.get('gestpay_webservice_method') == 'verification'
         method = :call_verifycard_s2_s
         params[:expMonth] = params[:expiryMonth]
@@ -247,20 +247,21 @@ class Account < AccountCommon
       else
         method = :call_pagam_s2_s
       end
-      
+
       # execute a SOAP request to call the "callPagamS2S" action
       response = client.request(method) do
         soap.body = params
       end
-      
+
       # convert response to hash
       begin
         response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
       rescue NoMethodError
         response = response.to_hash[:call_verifycard_s2_s_response][:call_verifycard_s2_s_result][:gest_pay_s2_s]
       end
-      
+
       response[:datetime] = time
+      response[:shop_transaction_id] = shop_transaction_id
       # if verification and payment succeded
       if response[:transaction_result] == 'OK':
         # save bank response (shop_transaction, authorization_code) and verify user
@@ -268,7 +269,6 @@ class Account < AccountCommon
         self.credit_card_identity_verify!
       # verified by visa case
       elsif response[:error_code] == '8006'
-        response[:shop_transaction_id] = shop_transaction_id
         # save shop_transaction_id, transaction_key and vbv_risp in DB
         self.set_credit_card_info(response)
         # prolong account validity so it won't expire while the user is verifying
@@ -294,21 +294,20 @@ class Account < AccountCommon
           response[:error_code] = false
         end
       else
-        response[:shop_transaction_id] = shop_transaction_id
         self.set_credit_card_info(response)
       end
-      
+
       begin
         transaction.credit_card_info = self.credit_card_info
         transaction.save!
       rescue => e
         ExceptionNotifier::Notifier.background_exception_notification(e).deliver
       end
-      
+
       # explicit return just for clarity
       return response
     end
-    
+
     # translate active merchant errors and display them nicely
     error_description = ''
     i = 0
@@ -320,15 +319,15 @@ class Account < AccountCommon
       error_description = error_description + br + I18n.t("active_merchant_#{key}")
       i += 1
     end
-    
+
     if error_description == '' and !transaction_valid
       error_description = transaction.errors[:id][0]
     end
-    
+
     # emulate gestpay response
     return { :transaction_result => 'KO', :error_description => error_description, :error_code => false }
   end
-  
+
   def gestpay_s2s_verified_by_visa(pares, ip_address)
     webservice_url = Configuration.get('gestpay_webservice_url')
     amount = Configuration.get('credit_card_verification_cost', '1')
@@ -352,7 +351,7 @@ class Account < AccountCommon
     end
     # convert response to hash
     response = response.to_hash[:call_pagam_s2_s_response][:call_pagam_s2_s_result][:gest_pay_s2_s]
-    
+
     if response[:transaction_result] == 'OK'
       response[:datetime] = credit_card_info['datetime']
       response[:transaction_key] = credit_card_info['transaction_key']
