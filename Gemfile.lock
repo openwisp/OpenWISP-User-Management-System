@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/dguerri/packet.git
-  revision: f4630410bfe4552607a5747bb11f6ee4740d9870
+  remote: git://github.com/openwisp/packet-legacy
+  revision: e62fa6f3534e9111b4d878f25c68c7cc32617239
   specs:
     packet (0.1.15)
 
