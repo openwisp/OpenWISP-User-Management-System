@@ -1,6 +1,6 @@
 # OpenWISP User Management System
 
-![Build Status](https://ci.publicwifi.it/job/OpenWISP-User-Management-System/badge/icon)
+![Build Status](https://ci.publicwifi.it/buildStatus/icon?job=OpenWISP-User-Management-System)
 
 ## What is it?
 
@@ -291,14 +291,14 @@ By default, all the fields of the user profile are mandatory, however, in order 
 * postal code
 * state
 
-To do that proceed by copying the file *config/config.default.yml* and rename it to *config/config.yml*, then set to *false* the fields you want to disable and hide.
+To do that proceed by copying the file **config/config.default.yml** and rename it to **config/config.yml**, then set to **false** the fields you want to disable and hide.
 This change requires OWUMS to be restarted by reloading the web server and backgroundrb.
 
-If the file *config/config.yml* does not exist, OWUMS will read the default values from *config/config.default.yml* (so do not delete it).
+If the file **config/config.yml** does not exist, OWUMS will read the default values from **config/config.default.yml** (so do not delete it).
 
 ### Disable Captcha in the Registration Form
 
-If you need to disable the Captcha field in the registration form you can do it by going into OWUMS's admin web interface to *configurations/*, look for *captcha_enabled* and set it to *false* .
+If you need to disable the Captcha field in the registration form you can do it by going into OWUMS's admin web interface to **configurations/**, look for **captcha_enabled** and set it to **false**.
 
 ### User notifications
 
@@ -311,22 +311,22 @@ This means that the SMTP server must be configured correctly otherwise the owums
 
 ### Experimental features configurable in config/config.yml
 
-*automatic_captive_portal_login*
+**automatic_captive_portal_login**
 
-*default*: true
+**default**: true
 
 Attempts to login users automatically after they confirm their account. Depends on OWCPM auth_api branch.
 Configuration key (found in the web interface at /configurations) "captive_portal_baseurl" must be filled correctly (base url of the OWCPM instance).
 
-*mac_address_authentication*
+**mac_address_authentication**
 
-*default*: false
+**default**: false
 
 Enable mac address authentication as "verification_method" for users.
 
 ### New account notification
 
-This feature might be disabled by setting *send_email_notification_to_users* to "false" in *config/config.yml*.
+This feature might be disabled by setting **send_email_notification_to_users** to "false" in **config/config.yml**.
 
 If you want to customize this behaviour the configuration keys to look for are:
 
@@ -342,7 +342,7 @@ If you want to customize this behaviour the configuration keys to look for are:
 * password_reset_from
 * password_reset_instructions_custom
 
-TODO: change *password_reset_from* into *email_from*
+TODO: change **password_reset_from** into **email_from**
 
 ### Radius Accounting API Usage
 
@@ -354,27 +354,27 @@ Retrieve information about radius sessions through a simple HTTP API.
 
 Retrieve information of all latest sessions.
 
-<b>HTTP method</b>:: GET
+<b>HTTP method</b>: GET
 
-*XML*:: /radius_accountings.xml
+**XML**: /radius_accountings.xml
 
-*JSON*:: /radius_accountings.json
+**JSON**: /radius_accountings.json
 
 <b>Accepted querystring parameters (filters)</b>:
 
-* *day*: filter records of specified date (string in "YYYY-MM-DD" format)
-* *last*: limit records to specified number
-* *ap*: filter records which contain mac address of specified AP in CalledStationId column
+* **day**: filter records of specified date (string in "YYYY-MM-DD" format)
+* **last**: limit records to specified number
+* **ap**: filter records which contain mac address of specified AP in CalledStationId column
 
 #### User related sessions:
 
 Retrieve information of latest sessions of a specified user.
 
-<b>HTTP method</b>:: GET
+<b>HTTP method</b>: GET
 
-*XML*:: /users/:user_id/radius_accountings.xml
+**XML**: /users/:user_id/radius_accountings.xml
 
-*JSON*:: /users/:user_id/radius_accountings.json
+**JSON**: /users/:user_id/radius_accountings.json
 
 <b>Accepted querystring parameters (filters)</b>:
 
@@ -384,7 +384,7 @@ Same filters of "All sessions".
 
 OWMW might be used to retrieve the mac address of the access point from which users connected.
 
-To enable OWMW, copy and rename the file *config/owmw.yml.example* in *config/owmw.yml*, then set the correct values for "url", "username" and "password".
+To enable OWMW, copy and rename the file **config/owmw.yml.example** in **config/owmw.yml**, then set the correct values for "url", "username" and "password".
 
 ### Rake task radius_accountings:convert
 
@@ -399,14 +399,14 @@ contain the mac address of the access point from which they connected to the fol
 
     <uppercase_dashed_access_point_mac_address>:<original_called_station_id>
 
-eg::
+eg:
 
     10-40-F3-7E-56-B8:pfsense
 
 This rake task can be run periodically or can be triggered by radius each time a user authenticates.
 
 If you need to run it periodically you can uncomment the following lines in the
-file *config/backgroundrb.yml*::
+file **config/backgroundrb.yml**:
 
     #:convert_radius_accountings:
     #  :trigger_args: 0  *  * * * * *
@@ -428,8 +428,8 @@ or:
 
 #### What does this task do?
 
-* it will try to recalculate the AcctStopTime for those sessions which have an AcctSessionTime greater than 0, in this case the AcctTerminateCause will be set to *OWUMS-Stale-Recalculated*
-* if AcctSessionTime is 0 it will set AcctStopTime to the same value as AcctStartTime and will set AcctTerminateCause to *OWUMS-Stale-Invalid*
+* it will try to recalculate the AcctStopTime for those sessions which have an AcctSessionTime greater than 0, in this case the AcctTerminateCause will be set to **OWUMS-Stale-Recalculated**
+* if AcctSessionTime is 0 it will set AcctStopTime to the same value as AcctStartTime and will set AcctTerminateCause to **OWUMS-Stale-Invalid**
 
 At the end of the operation the task will output the results indicating how many sessions have been recalculated and how many have been marked as invalid.
 
@@ -437,7 +437,7 @@ At the end of the operation the task will output the results indicating how many
 
 By default, english, italian and spanish are active.
 
-You can disable them by editing: *config/config.yml*.
+You can disable them by editing: **config/config.yml**.
 
     english: true
     italian: false
@@ -445,7 +445,7 @@ You can disable them by editing: *config/config.yml*.
 
 ### Credit Card verification method for new accounts
 
-For this subject see the file *Gestpay-instructions.rdoc*.
+For this subject see the file **Gestpay-instructions.rdoc**.
 
 ## Notice
 
