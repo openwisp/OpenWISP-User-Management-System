@@ -1,8 +1,10 @@
-= OpenWISP User Management System
+# OpenWISP User Management System
 
-== What is it?
+![Build Status](https://ci.publicwifi.it/job/OpenWISP-User-Management-System/badge/icon)
 
-OpenWISP User Management System (OWUMS) is a Ruby on Rails application, capable of managing a wISP's user base. 
+## What is it?
+
+OpenWISP User Management System (OWUMS) is a Ruby on Rails application, capable of managing a wISP's user base.
 
 OWUMS supports the following functionalities:
 * user registration via mobile phone, ID card, credit card -Banca Sella Gestpay- fully compliant with the Italian Laws.
@@ -14,17 +16,17 @@ OWUMS supports the following functionalities:
 * via the admin interface an operator can add new users, modify users' information, enable/disable users, monitor traffic/user nationality/logins/registrations
 * english/italian translation
 
-Even though the application can be used as standalone, such use will result in a pretty useless application. OpenWISP User Management System is in fact made to be integrated with RADIUS authentication, authorization and accounting features. 
+Even though the application can be used as standalone, such use will result in a pretty useless application. OpenWISP User Management System is in fact made to be integrated with RADIUS authentication, authorization and accounting features.
 
 When working together a RADIUS implementation, OWUMS becomes a natural back-end to a WISP's user-related functionalities. Users who successfully register  and verify themselves via OWUMS are also considered valid RADIUS users (support for RADIUS user groups is on its way).
 OWUMS is being developed to use FreeRADIUS 2.1 (http://freeradius.org/), so other RADIUS implementations are currently not supported.
 
-== How to install
+## How to install
 
-=== Prerequisites
+### Prerequisites
 
-The OpenWISP User Management System is currently being developed with Ruby on Rails 3.0.20. Being a RoR application, it can be 
-deployed using any of the methods Rails supports. 
+The OpenWISP User Management System is currently being developed with Ruby on Rails 3.0.20. Being a RoR application, it can be
+deployed using any of the methods Rails supports.
 Even so, what we are currently using (and find quite stable) is the following environment:
 
 * Ruby Enterprise Edition 1.8 (http://www.rubyenterpriseedition.com/index.html)
@@ -32,20 +34,20 @@ Even so, what we are currently using (and find quite stable) is the following en
 * Phusion Passenger 2.2 or 3.0 (http://www.modrails.com/index.html)
 * MySQL 5.1 (http://dev.mysql.com/downloads/mysql/)
 * FreeRADIUS 2.1 (http://freeradius.org/download.html)
-* festival (http://www.cstr.ed.ac.uk/projects/festival/) and festival italian 'localization' packages (http://www.pd.istc.cnr.it/TTS/ItalianFESTIVAL) (for captcha accessibility) 
+* festival (http://www.cstr.ed.ac.uk/projects/festival/) and festival italian 'localization' packages (http://www.pd.istc.cnr.it/TTS/ItalianFESTIVAL) (for captcha accessibility)
 * A SIP capable media-gateway like Asterisk (http://www.asterisk.org/) or the Patton Smart Node with or without a sip proxy/router (like OpenSIPs)
 
-=== Installation
+### Installation
 
-Once deployed using your favourite environment, you need to configure two deamons OpenWISP User Management System needs to perform its usual activities (mainly managing incoming phone calls and deleting users when the registration procedure times out). 
+Once deployed using your favourite environment, you need to configure two deamons OpenWISP User Management System needs to perform its usual activities (mainly managing incoming phone calls and deleting users when the registration procedure times out).
 
-To do this, you can use the following init.d script (customization may be needed, this script was coded for Ubuntu 10.04). 
+To do this, you can use the following init.d script (customization may be needed, this script was coded for Ubuntu 10.04).
 
 Be sure the cache folder is writable:
 
     chown -R www-data:www-data tmp/cache/
 
-==== Startup script
+#### Startup script
 
 The following script (Ubuntu/Debian style) should be named owums-daemons. It assumes OpenWISP User Management Systemis running on ruby enterprise and that the application was deployed to /var/rails/owums.
 Of course you can change any of that to whatever fits your needs.
@@ -54,8 +56,8 @@ Of course you can change any of that to whatever fits your needs.
     #!/bin/sh
     ### BEGIN INIT INFO
     # Provides:          owums-daemons
-    # Required-Start:    $local_fs $network  
-    # Required-Stop:     $local_fs $network 
+    # Required-Start:    $local_fs $network
+    # Required-Stop:     $local_fs $network
     # Default-Start:     2 3 4 5
     # Default-Stop:      0 1 6
     # Short-Description: Starting owums-daemons
@@ -71,11 +73,11 @@ Of course you can change any of that to whatever fits your needs.
 
     # The daemon you wish to start with this script
     # (it must have already been deployed of course).
-    OPENWISP_APP="owums" 
+    OPENWISP_APP="owums"
 
     # The Rails environment in which the script must be run.
     # It will almost always be set to production.
-    RAILS_ENV="production" 
+    RAILS_ENV="production"
 
     ####################################################
 
@@ -108,29 +110,29 @@ Of course you can change any of that to whatever fits your needs.
 
     case "$1" in
       start)
-        log_daemon_msg "Starting OpenWISP daemon" "$NAME" 
+        log_daemon_msg "Starting OpenWISP daemon" "$NAME"
         openwisp_daemons_start
-        RET="$?" 
+        RET="$?"
         log_end_msg $RET
         return $RET
         ;;
       stop)
-        log_daemon_msg "Stopping OpenWISP daemon" "$NAME" 
+        log_daemon_msg "Stopping OpenWISP daemon" "$NAME"
         openwisp_daemons_stop
-        RET="$?" 
+        RET="$?"
         log_end_msg $RET
         return $RET
         ;;
       restart)
-        log_daemon_msg "Restarting OpenWISP daemon" "$NAME" 
+        log_daemon_msg "Restarting OpenWISP daemon" "$NAME"
         openwisp_daemons_restart
-        RET="$?" 
+        RET="$?"
         log_end_msg $RET
         return $RET
         ;;
       status)
         openwisp_daemons_status
-        RET="$?" 
+        RET="$?"
         return $RET
         ;;
       *)
@@ -148,7 +150,7 @@ As usual, you need to
 
 and enable the script to be run at boot (_e.g._: with the @update-rc.d@ command).
 
-==== Logs rotation
+#### Logs rotation
 
 To enable the rotation of logs it is possible to use following @logrotate@ script (it could be saved as /etc/logrotate.d/rails).
 
@@ -171,7 +173,7 @@ To enable the rotation of logs it is possible to use following @logrotate@ scrip
     #  endscript
     }
 
-==== Media gateway OR SIP proxy/router configuration
+#### Media gateway OR SIP proxy/router configuration
 
 The final step is to configure the telephone number your users will use to register themselves.
 You'll have to create a "static routing" between a PSTN number and OpenWISP User Management Systemvoip client (which is called "sip busy machine").
@@ -191,7 +193,7 @@ Then restart OpenWISP User Management Systemsip busy machine (for instance with 
 Now a media gateway or a SIP proxy/router should be properly configured.
 There are many different softwares or appliances that will do the job. Here follows some examples:
 
-===== Configuring a Patton Smart Node
+##### Configuring a Patton Smart Node
 
 A configuration example for the Patton Smart Node is the following:
 
@@ -217,7 +219,7 @@ A configuration example for the Patton Smart Node is the following:
 
     [...]
 
-===== Configuring OpenSIPs
+##### Configuring OpenSIPs
 
 If you have a working sip proxy/router like Opensips, it's sufficient to add a permanent _user location_ like so:
 
@@ -227,7 +229,7 @@ For instance, assuming owums is running on the host with IP address 192.168.100.
 
     opensipctl ul add 123 sip:123@192.168.100.100
 
-===== Configuring SipX
+##### Configuring SipX
 
 Another sip proxy/router could be SipX. In this case you have to configure something more. We'll use an ITSP phone number, so (i'm assuming you're running a working installation of Sipx) in Devices -> Gateway add a new Sip Trunk and fill:
 
@@ -236,13 +238,13 @@ In ITSP Account -> Username and Password
 
 Now Send Profile and restart the related Services, check the registration status in Diagnostic -> Internal SBC Statistics. Create a New User with the ITSP phone number as User ID (to enable DID) and add a new rule in Call Forwarding to forward after 1 second all incoming calls to "ITSPnum@owumsIP". Uncheck the Voice Mail box in Permissions.
 
-===== Configuring Audiocodes Mediant 1000
+##### Configuring Audiocodes Mediant 1000
 
 Using the GUI:
 * Go to "Configuration" -> "Protocol Configuration" -> "Routing Table"  and select "Tel to IP routing"
 * Insert a new route with appropriate values (destination phone prefix, destination IP address, etc.)
 
-=== Configure FreeRADIUS to work with OWUMS
+### Configure FreeRADIUS to work with OWUMS
 
 Create the freeradius DBMS users and set the appropriate privileges. For instance, if you're using MySQL:
 
@@ -257,7 +259,7 @@ Create the freeradius DBMS users and set the appropriate privileges. For instanc
     GRANT SELECT ON `<OWUMS DB name>`.`nas` TO 'radius'@'localhost'
 
 where:
-* <MyPasswordIsBetterThanYours> is the radius user password. Should be different from the one used for the RoR application 
+* <MyPasswordIsBetterThanYours> is the radius user password. Should be different from the one used for the RoR application
 * <OWUMS DB name> is the DB name used for the RoR application
 
 Configure freeradius to use the OpenWISP User Management System DB, editing the sql.conf file as described here: http://wiki.freeradius.org/SQL_HOWTO
@@ -275,11 +277,11 @@ For instance, if you're using MySQL:
         radius_db = "<DBMS name>"
     [...]
 
-== Rails App Configuration
+## Rails App Configuration
 
 The behaviour of some features can be tweaked, some instructions on the most important features follows.
 
-=== Simplify the Registration Form
+### Simplify the Registration Form
 
 By default, all the fields of the user profile are mandatory, however, in order to simplify and speed up the user registration procedure it is possible to change this behaviour and hide the following fields:
 
@@ -294,11 +296,11 @@ This change requires OWUMS to be restarted by reloading the web server and backg
 
 If the file *config/config.yml* does not exist, OWUMS will read the default values from *config/config.default.yml* (so do not delete it).
 
-=== Disable Captcha in the Registration Form
+### Disable Captcha in the Registration Form
 
 If you need to disable the Captcha field in the registration form you can do it by going into OWUMS's admin web interface to *configurations/*, look for *captcha_enabled* and set it to *false* .
 
-=== User notifications
+### User notifications
 
 Users are notified / emailed in two occasions:
 
@@ -307,7 +309,7 @@ Users are notified / emailed in two occasions:
 
 This means that the SMTP server must be configured correctly otherwise the owums will not work properly.
 
-=== Experimental features configurable in config/config.yml
+### Experimental features configurable in config/config.yml
 
 *automatic_captive_portal_login*
 
@@ -322,7 +324,7 @@ Configuration key (found in the web interface at /configurations) "captive_porta
 
 Enable mac address authentication as "verification_method" for users.
 
-=== New account notification
+### New account notification
 
 This feature might be disabled by setting *send_email_notification_to_users* to "false" in *config/config.yml*.
 
@@ -333,7 +335,7 @@ If you want to customize this behaviour the configuration keys to look for are:
 * account_notification_subject_en
 * account_notification_subject_it
 
-=== Password reset
+### Password reset
 
 If you want to customize this behaviour the configuration keys to look for are:
 
@@ -342,13 +344,13 @@ If you want to customize this behaviour the configuration keys to look for are:
 
 TODO: change *password_reset_from* into *email_from*
 
-=== Radius Accounting API Usage
+### Radius Accounting API Usage
 
 Retrieve information about radius sessions through a simple HTTP API.
 
 <b>Requires authentication as an operator</b> (HTTP Basic auth or Session Based, it is highly suggested to use over SSL).
 
-==== All sessions:
+#### All sessions:
 
 Retrieve information of all latest sessions.
 
@@ -364,7 +366,7 @@ Retrieve information of all latest sessions.
 * *last*: limit records to specified number
 * *ap*: filter records which contain mac address of specified AP in CalledStationId column
 
-==== User related sessions:
+#### User related sessions:
 
 Retrieve information of latest sessions of a specified user.
 
@@ -378,13 +380,13 @@ Retrieve information of latest sessions of a specified user.
 
 Same filters of "All sessions".
 
-=== OWMW Integration
+### OWMW Integration
 
 OWMW might be used to retrieve the mac address of the access point from which users connected.
 
 To enable OWMW, copy and rename the file *config/owmw.yml.example* in *config/owmw.yml*, then set the correct values for "url", "username" and "password".
 
-=== Rake task radius_accountings:convert
+### Rake task radius_accountings:convert
 
 A rake task is available to convert called station id values which are not aware from which the users connected.
 
@@ -412,7 +414,7 @@ file *config/backgroundrb.yml*::
 This functionality is used in OpenWISP Geographic Monitoring to show
 the 10 latest logins of each access point.
 
-=== Rake task radius_accountings:cleanup_stale
+### Rake task radius_accountings:cleanup_stale
 
 In some extreme cases you might need to cleanup stale radius sessions which do not have an AcctStopTime set.
 
@@ -424,14 +426,14 @@ or:
 
     RAILS_ENV=production bundle exec rake radius_accountings:cleanup_stale
 
-==== What does this task do?
+#### What does this task do?
 
 * it will try to recalculate the AcctStopTime for those sessions which have an AcctSessionTime greater than 0, in this case the AcctTerminateCause will be set to *OWUMS-Stale-Recalculated*
 * if AcctSessionTime is 0 it will set AcctStopTime to the same value as AcctStartTime and will set AcctTerminateCause to *OWUMS-Stale-Invalid*
 
 At the end of the operation the task will output the results indicating how many sessions have been recalculated and how many have been marked as invalid.
 
-=== Languages
+### Languages
 
 By default, english, italian and spanish are active.
 
@@ -441,13 +443,13 @@ You can disable them by editing: *config/config.yml*.
     italian: false
     spanish: true
 
-=== Credit Card verification method for new accounts
+### Credit Card verification method for new accounts
 
 For this subject see the file *Gestpay-instructions.rdoc*.
 
-== Notice
+## Notice
 
-The OWUMS uses the Highcharts library. 
+The OWUMS uses the Highcharts library.
 This library is released under a Creative Commons Attribution-NonCommercial 3.0 License (http://creativecommons.org/licenses/by-nc/3.0/)
 
 For further informations, please refer to the Highsoft Solutions AS website (http://www.highcharts.com/license)
@@ -455,9 +457,9 @@ For further informations, please refer to the Highsoft Solutions AS website (htt
 Public Administrations or other no-profit organizations that use this software to give a free WiFi Network service to their users should refer to the "Non-commercial - Free" section.
 Other entities must refer to the "Commercial" section.
 
-== Copyright
+## Copyright
 
-Copyright (C) 2012 OpenWISP.org
+Copyright (C) 2015 OpenWISP.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
