@@ -23,6 +23,10 @@ CONFIG['furlan'] = CONFIG['furlan'].nil? ? false : CONFIG['furlan']
 # checks
 CONFIG['check_called_station_id'] = CONFIG['check_called_station_id'].nil? ? { 'between_min' => 10, 'between_max' => 60} : CONFIG['check_called_station_id']
 
+# app root dir and static assets host
+CONFIG['root_dir'] = CONFIG['root_dir'].nil? ? '/' : CONFIG['root_dir']
+CONFIG['asset_host'] = CONFIG['asset_host'].nil? ? false : CONFIG['asset_host']
+
 
 module Owums
   class Application < Rails::Application
@@ -70,6 +74,6 @@ module Owums
 
     # Force all environments to use the same logger level
     # (by default production uses :info, the others :debug)
-    # config.log_level = :debug    
+    # config.log_level = :debug
   end
 end

@@ -16,6 +16,11 @@ defaults: &defaults
   slovenian: false
   furlan: false
   
+  # uncomment these if you deploy your app in a sub directory
+  # app root dir and static assets host
+  #root_dir: '/app'
+  #asset_host: 'domain.com/app'
+  
   # check called station id
   check_called_station_id:
     # filter radius accounting sessions older than between_min
