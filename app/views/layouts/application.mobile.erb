@@ -73,23 +73,28 @@
 			  <%= link_to_locale 'it', 'data-role' => 'button', 'data-transition' => 'flip' %>
 		  </div>
 		  <% end %>
-		  <% if CONFIG['english'] %>
-		  <div class="ui-block-b">
-			  <%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %>
-		  </div>
-		  <% end %>
 		  <% if CONFIG['slovenian'] %>
-		  <div class="ui-block-a">
+		  <div class="ui-block-b">
 			  <%= link_to_locale 'sl', 'data-role' => 'button', 'data-transition' => 'flip' %>
 		  </div>
 		  <% end %>
 		  <% if CONFIG['furlan'] %>
-		  <div class="ui-block-b">
+		  <div class="ui-block-a">
 			  <%= link_to_locale 'fur', 'data-role' => 'button', 'data-transition' => 'flip' %>
 		  </div>
 		  <% end %>
-		  <% if CONFIG['spanish'] %>
+		  <% if CONFIG['german'] %>
+		  <div class="ui-block-b">
+			  <%= link_to_locale 'de', 'data-role' => 'button', 'data-transition' => 'flip' %>
+		  </div>
+		  <% end %>
+		  <% if CONFIG['english'] %>
 		  <div class="ui-block-a">
+			  <%= link_to_locale 'en', 'data-role' => 'button', 'data-transition' => 'flip' %>
+		  </div>
+		  <% end %>
+		  <% if CONFIG['spanish'] %>
+		  <div class="ui-block-b">
 			  <%= link_to_locale 'es', 'data-role' => 'button', 'data-transition' => 'flip' %>
 		  </div>
 		  <% end %>

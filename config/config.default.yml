@@ -13,6 +13,7 @@ defaults: &defaults
   english: true
   italian: true
   spanish: true
+  german: true
   slovenian: false
   furlan: false
   

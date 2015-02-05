@@ -573,3 +573,75 @@ Si an tiene problemas , por favor contactenos."
   system_key: f
   key: "invoice_admin_notification_subject_sl"
   value: "[OWUMS] Ustvarjena nova prejemnica "
+
+142:
+  system_key: f
+  key: "password_reset_subject_de"
+  value: "Anleitungen zur Wiederherstellung des Passwortes"
+
+143:
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_de"
+  value: "Es wurde eine Anfrage für die Wiederherstellung des Passwortes für Ihr Benutzerkonto erfordert. 
+  Wenn Sie diese Anfrage nicht erfordert haben, reagieren Sie bitte nicht auf diese Meldung. 
+  Wenn Sie die Anfrage erfordert haben, klicken Sie bitte auf die folgende URL."
+
+144:
+  system_key: t
+  key: "password_reset_instructions_after_reset_url_de"
+  value: "Falls die vorangehende URL nicht funktionieren sollte, probieren Sie bitte, die Adresse zu kopieren und  in Ihren Browser  einfügen.
+  Wenn sich noch Probleme bei der Wiederherstellung des Passwortes ergeben sollten, wenden Sie sich bitte an uns." 
+
+145:
+  system_key: f
+  key: "custom_account_instructions_de"
+  value: ""
+
+146:
+  system_key: f
+  key: "verification_explain_mobile_de"
+  value: "<p>Um <strong>Misshandlungen an der Serviceleistung zu vermeiden</strong>, sind wir gezwungen <strong>die Identität</strong> der Benutzer zu überprüfen, die vom WiFi Anschluss Gebrauch machen.</p><p>Wenn Sie eine <strong>italienische SIM Karte besitzen</strong> wählen Sie die Überprüfungsmethode für die Identität  <strong>\"Handynummer\"</strong> aus dem folgenden Menü. .</p>"
+
+147:
+  system_key: f
+  key: "verification_explain_creditcard_de"
+  value: "<p>Um <strong> Misshandlungen an der Serviceleistung zu vermeiden </strong>, sind wir gezwungen <strong> die Identität </strong> der Benutzer zu überprüfen, die vom WiFi Anschluss Gebrauch machen.</p><p> Wenn Sie eine <strong>italienische SIM Karte</strong> wählen Sie die Überprüfungsmethode für die Identität  <strong>\"Handynummer\"</strong> aus dem folgenden Menü oder wählen Sie die Methode <strong>\"Kreditkarte\"</strong>.</p>"
+
+148:
+  system_key: f
+  key: "account_notification_message_de"
+  value: "Hallo {first_name} {last_name},
+
+Sie haben gerade Ihr Benutzerkonto für den WiFi Zugang erfolgreich gestante und überprüft. 
+
+Nun können Sie sich einloggen und die WiFi-Serviceleistung benutzen. Ihr Benutzername ist  \"{username}\" und Ihr Passwort ist das, was Sie bei der Anmeldung angebenen haben.  
+
+Sie können die  Benutzung der Serviceleistung auf der Verwaltungsseite Ihres Benutzerkontos überwachen: 
+{account_url}
+
+Wenn Sie Ihr Passwort vergessen haben, können Sie die  Wiederherstellungsprozedur benutzen, die bei der folgenden Adresse verfügbar ist: 
+{password_reset_url}
+{invoice_message}
+
+Mit freundlichen Grüßen
+Staff"
+
+149:
+  system_key: f
+  key: "account_notification_subject_de"
+  value: "Neues Benutzerkonto gestaltet bei [OpenWISP User Management System]"
+
+150:
+  system_key: f
+  key: "invoice_owner_de"
+  value: "ÄNDERN"
+
+151:
+  system_key: f
+  key: "invoice_description_de"
+  value: "Überprüfung der Identität für die Serviceleistung Wi-Fi."
+
+152:
+  system_key: f
+  key: "invoice_admin_notification_subject_de"
+  value: "[OWUMS] Neuer Beleg generiert"
