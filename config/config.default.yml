@@ -16,6 +16,9 @@ defaults: &defaults
   german: true
   slovenian: false
   furlan: false
+
+  #piwik_site_id: idsite
+  #piwik_url: //piwiki-url.com
   
   # uncomment these if you deploy your app in a sub directory
   # app root dir and static assets host

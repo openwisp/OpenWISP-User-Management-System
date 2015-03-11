@@ -23,5 +23,5 @@
     # but you still want to be able to trace from which Access Point users connected
     # this feature depends on OpenWISP MiddleWare 0.0.7
     # OWMW must be enabled how described in the README file
-    #:convert_radius_accountings:
-    #  :trigger_args: 0 */5 * * * *
+    :convert_radius_accountings:
+      :trigger_args: 0 */5 * * * *
