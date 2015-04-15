@@ -12,12 +12,19 @@ For a detailed changelog of each commits use the "git log" command.
 [D] Documentation
 [M] Misc
 [N] Note
- 
+
 * Log
 
-January 2014 - Version 1.3.2
+April 15th, 2015 - Version 1.3.2
 
  * [F] Possibility to filter radius statistics by called-station-id (mac address AP)
+ * [F] German language
+ * [F] Slovenian language
+ * [F] Improved configuration interface readability
+ * [B] Fixed bug that caused exception if supplying ?locale=
+ * [F] Added support for i18n eula & privacy documents
+ * [B] Fixed several MySQL performance issues
+ * [F] Piwik Analytics integration
 
 December 11th, 2013 - Version 1.3.1
 
@@ -32,7 +39,7 @@ November 26th, 2013 - Version 1.3
  * [F] Radius accountings API (JSON and XML)
  * [F] Nicer web interface
  * [F] Configurable registration form
- * [M] Various other minor improvements and fixes 
+ * [M] Various other minor improvements and fixes
  * [D] Updated readme
  * [D] Added gestpay specific docs in "Gestpay-instructions.rdoc"
 
