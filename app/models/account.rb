@@ -29,6 +29,7 @@ class Account < AccountCommon
 
   # If the configuration key use_mobile_phone_as_username is set to true, the username is automatically set
   before_validation :set_username_if_required, :on => :create
+  before_validation :clean_fields
 
   # Validations
   validates_inclusion_of :verification_method, :in => User.self_verification_methods, :if => Proc.new{|account| account.new_record? }
@@ -372,6 +373,15 @@ class Account < AccountCommon
       if verify_with_mobile_phone?
         self.username = mobile_phone
       end
+    end
+  end
+
+  def clean_fields
+    if not self.verify_with_mobile_phone?
+      self.mobile_prefix = nil
+      self.mobile_suffix = nil
+    elsif not self.verify_with_document?
+      self.image_file_data = nil
     end
   end
 
