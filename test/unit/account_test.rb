@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class AccountTest < ActiveSupport::TestCase
-  test "save new account and username checks" do
-    a = Account.new(
+  def _init_account()
+    Account.new(
       :given_name => 'Foo',
       :surname => 'Bar',
       :email => 'foo@bar.com',
@@ -19,6 +19,10 @@ class AccountTest < ActiveSupport::TestCase
       :eula_acceptance => true,
       :privacy_acceptance => true
     )
+  end
+
+  test "save new account and username checks" do
+    a = _init_account()
     assert a.save, 'could not save new account'
     a.username = ''
     # ensure it doesn't get saved
@@ -75,23 +79,7 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   test "duplicate mobile phones" do
-    a = Account.new(
-      :given_name => 'Foo',
-      :surname => 'Bar',
-      :email => 'foo@bar.com',
-      :username => 'foobar',
-      :password => 'foobarpassword0',
-      :mobile_prefix => '334',
-      :mobile_suffix => '4352702',
-      :verification_method => 'mobile_phone',
-      :birth_date => '1980-10-10',
-      :address => 'Via dei Tizii 6',
-      :city => 'Rome',
-      :zip => '00185',
-      :state => 'Italy',
-      :eula_acceptance => true,
-      :privacy_acceptance => true
-    )
+    a = _init_account()
     a.save!
 
     a = Account.new(
