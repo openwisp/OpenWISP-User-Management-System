@@ -54,6 +54,18 @@ class Account < AccountCommon
     save
   end
 
+  def duplicate?
+    if not self.errors
+      return false
+    else
+      taken = I18n.t("activerecord.errors.messages.taken")
+      # if username, mobile_suffix or email already taken return true, otherwise return false
+      [:username, :mobile_suffix, :email].any? do |key|
+        self.errors.key?(key) and self.errors[key.to_sym].include?(taken)
+      end
+    end
+  end
+
   # Class methods
 
   def self.total_traffic

@@ -110,4 +110,29 @@ class AccountTest < ActiveSupport::TestCase
     assert a.mobile_prefix == nil
     assert a.mobile_suffix == nil
   end
+
+  test "duplicate?" do
+    a = _init_account()
+    a.save!
+
+    a2 = _init_account()
+    a2.valid?
+    assert a2.duplicate?
+
+    a2.username = 'new'
+    a2.valid?
+    assert a2.duplicate?
+
+    a2.email = 'new@new.com'
+    a2.valid?
+    assert a2.duplicate?
+
+    a2.mobile_suffix = '4352333'
+    a2.valid?
+    assert !a2.duplicate?
+
+    a2.mobile_suffix = '4352702'
+    a2.valid?
+    assert a2.duplicate?
+  end
 end
