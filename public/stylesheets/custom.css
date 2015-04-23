@@ -368,6 +368,7 @@ select{
     cursor: pointer;
 }
 .button.nomargin{ margin-bottom: 0 }
+a.button{ text-decoration: none !important }
 
 #registration #account_submit, #bank-gateway .button{
     width: 40%; margin: 30px auto;
@@ -459,7 +460,8 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 #configuration_keys td.value{ font-style: italic }
 #container #configuration_keys td p{ margin: 5px 0 !important }
 
-#errorExplanation{
+#errorExplanation,
+.warning{
 	margin: 10px 5px 20px;
 	padding: 20px 25px 5px 25px;
 	background: #ff6666;
@@ -467,11 +469,16 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 	font: normal 14px/25px "Arial", sans-serif;
 	border-radius: 3px
 }
-#errorExplanation h2{
+#errorExplanation h2,
+.warning h2{
 	width: auto; margin: 0; padding: 0; background: transparent; text-transform: none;
 	font-size: 16px; font-weight: bold; margin-bottom: 10px;
 }
-#errorExplanation li{ font-weight: bold }
+#errorExplanation li,
+.warning li{ font-weight: bold }
+
+.warning{ background-color: #ff8000 }
+
 .field_with_errors input[type=text], .field_with_errors input[type=password]{ border: 1px solid red }
 
 .block.stats{ margin-top: -5px; padding: 0 }

@@ -22,7 +22,7 @@
     <%= simple_form_for @account, :url => account_path do |f| %>
         <fieldset>
           <legend><%=t :Edit_account %></legend>
-          <p><%= f.error_messages %></p>
+          <%= f.error_messages %>
 
           <%= render 'form', :f => f, :account => @account, :countries => @countries, :mobile_prefixes => @mobile_prefixes %>
         </fieldset>

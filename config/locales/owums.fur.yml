@@ -389,3 +389,5 @@ fur:
   "No": 'No'
   max_daily_transaction_limit_reached: "tocjât il limit massim di transazions te zornade"
   max_yearly_transaction_limit_reached: "tocjât il limit massim di transazions tal an"
+  Already_registered_password_forgotten: "It seems you already have an account, password forgotten?"
+  Reset_your_password: "Reset your password"

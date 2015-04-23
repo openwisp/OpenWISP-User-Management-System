@@ -21,12 +21,17 @@
   <div class="box">
     <div class="block" id="registration">
       <%= simple_form_for @account, :url => account_path do |f| %>
-          <fieldset>
-            <legend><%=t(:Register).html_safe %></legend>
-            <p><%= f.error_messages %></p>
-
-            <%= render 'form', :f => f, :account => @account, :countries => @countries, :mobile_prefixes => @mobile_prefixes %>
-          </fieldset>
+        <fieldset>
+          <legend><%= t(:Register).html_safe %></legend>
+          <% if @account.duplicate? %>
+            <div class="warning">
+              <h2 class="center"><%= t(:Already_registered_password_forgotten) %></h2>
+              <p><a class="button nomargin" href="<%= url_for(:password_reset) %>"><%= t(:Reset_your_password) %></a></p>
+            </div>
+          <% end %>
+          <%= f.error_messages %>
+          <%= render 'form', :f => f, :account => @account, :countries => @countries, :mobile_prefixes => @mobile_prefixes %>
+        </fieldset>
       <% end %>
     </div>
   </div>

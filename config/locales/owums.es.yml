@@ -420,3 +420,5 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
   "No": 'No'
   max_daily_transaction_limit_reached: "límite máximo de transacciones diarias alcanzado"
   max_yearly_transaction_limit_reached: "límite máximo de transacciones anual alcanzado"
+  Already_registered_password_forgotten: "Parece què ya tiene una cuenta, se olvidó su contraseña?"
+  Reset_your_password: "Recuperar contraseña"
