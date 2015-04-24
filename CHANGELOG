@@ -15,7 +15,7 @@ For a detailed changelog of each commits use the "git log" command.
 
 * Log
 
-[Unreleased] - Version 1.3.3
+April 24th, 2015 - Version 1.3.3
 
  * [B] Set mobile phone / image data to nil if not used
  * [F] Reset password suggestion in signup form
