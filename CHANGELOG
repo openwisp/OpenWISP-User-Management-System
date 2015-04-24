@@ -19,6 +19,7 @@ For a detailed changelog of each commits use the "git log" command.
 
  * [B] Set mobile phone / image data to nil if not used
  * [F] Reset password suggestion in signup form
+ * [B] Avoid sending duplicate requests in signup form
 
 April 15th, 2015 - Version 1.3.2
 
