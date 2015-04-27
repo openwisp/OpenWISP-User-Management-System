@@ -143,6 +143,26 @@
   international_prefix:
   disabled: f
 37:
+  prefix: 350
+  international_prefix:
+  disabled: f
+38:
   prefix: 324
+  international_prefix:
+  disabled: f
+39:
+  prefix: 351
+  international_prefix:
+  disabled: f
+40:
+  prefix: 344
+  international_prefix:
+  disabled: f
+41:
+  prefix: 384
+  international_prefix:
+  disabled: f
+42:
+  prefix: 385
   international_prefix:
   disabled: f

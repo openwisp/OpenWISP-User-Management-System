@@ -1,0 +1,322 @@
+de:
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 3
+
+    currency:
+      format:
+        format: "%n %u"
+        unit: ""
+        separator: "."
+        delimiter: ","
+        precision: 2
+
+    percentage:
+      format:
+        delimiter: ""
+        # precision:
+
+    precision:
+      format:
+        # separator:
+        delimiter: ""
+        # precision:
+
+    human:
+      format:
+        # separator:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Byte"
+          kb: "Kb"
+          mb: "Mb"
+          gb: "Gb"
+          tb: "Tb"
+
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+
+    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    abbr_day_names: [So., Mo., Di., Mi., Do., Fr., Sa.]
+
+    month_names: [~, Januar, Februar, März, April, Mai, Juni, Julio, August, September, Oktober, November, Dezember]
+    abbr_month_names: [~, Jan., Feb., Mär., Apr., Mai, Juni, Juli, Aug., Sep., Okt., Nov., Dez.]
+    order: [ :day, :month, :year ]
+
+  time:
+    formats:
+      default: "%d/%m/%y - %H:%M"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y %H:%M"
+
+    am: "am"
+    pm: "pm"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "halbe Minute"
+      less_than_x_seconds:
+        one:  "weniger als eine Sekunde"
+        other: "weniger als %{count} Sekunden"
+      x_seconds:
+        one:  "1 Sekunde"
+        other: "%{count} Sekunden"
+      less_than_x_minutes:
+        one:  "weniger als eine Minute"
+        other: "weniger als %{count} Minuten"
+      x_minutes:
+        one:  "1 Minute"
+        other: "%{count} Minuten"
+      about_x_hours:
+        one:  "zirka eine Stunde"
+        other: "zirka %{count} Stunden"
+      x_days:
+        one:  "1 Tag"
+        other: "%{count} Tage"
+      about_x_months:
+        one:  "zirka ein Monat"
+        other: "zirka %{count} Monate"
+      x_months:
+        one:  "1 Monat"
+        other: "%{count} Monate"
+      about_x_years:
+        one:  "zirka ein Jahr"
+        other: "zirka %{count} Jahre"
+      over_x_years:
+        one:  "über ein Jahr"
+        other: "über %{count} Jahre"
+
+    prompts:
+      year:   "Jahr"
+      month:  "Monat"
+      day:    "Tag"
+      hour:   "Stunde"
+      minute: "Minute"
+      second: "Sekunden"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: ", e "
+
+  errors:
+    template:
+      header:
+        one: "Es hat sich in Fehler ergeben"
+        other: "Es haben sich %{count} Fehler ergeben"
+      body: "Bitte korrigieren Sie die folgenden Fehler:"
+
+  helpers:
+    submit:
+      account:
+        create: "Melden Sie sich an"
+        update: "Aktualisieren"
+      account_session:
+        create: "Login"
+      operator_session:
+        create: "Login"
+      user:
+        create: "Hinzufügen"
+        update: "Aktualisieren"
+
+  activerecord:
+    errors:
+      messages:
+        inclusion: "Es ist ein ungültiger Wert"
+        exclusion: "ist vertraulich"
+        invalid: "ungültig"
+        invalid_captcha: "Text und Bild waren nicht gleich"
+        confirmation: "Stimmt nicht mit der Bestätigung überein"
+        accepted: "muss akzeptiert werden"
+        email_invalid: "Es scheint keine E-Mail zu sein"
+        empty: "darf nicht leer sein"
+        blank: "muss spezifiziert sein"
+        too_long: "es ist zu lang (höchstens %{count} Buchstaben)"
+        too_short: "es ist zu kurz (mindestens %{count} Buchstaben)"
+        wrong_length: "falsche Länge (muss  %{count} Buchstaben sein)"
+        taken: "wurde schon benutzt"
+        not_a_number: "es ist keine Nummer"
+        greater_than: "muss höher sein als %{count}"
+        greater_than_or_equal_to: "muss höher oder gleich sein als %{count}"
+        equal_to: "muss gleich sein wie %{count}"
+        less_than: "muss niedriger sein als %{count}"
+        less_than_or_equal_to: "muss niedriger oder gleich sein als %{count}"
+        odd: "muss ungerade sein"
+        even: "muss gerade sein"
+        not_valid_f: "ungültig"
+        not_valid_m: "ungültig"
+        record_invalid: "Record ungültig"
+        missing_image: "fehlend"
+        invalid_image: "ungültig"
+        image_too_small: "zu klein (muss  >= %{minimum})sein"
+        password_format: "darf nur aus alphabetischen Buchstaben, Leerzeichen. Ziffern und Zeichen bestehen '_' und muss mindestens ein Zeichen und eine Ziffer enthalten"
+        mobile_phone_format: "darf nur Ziffern enthalten"
+        mobile_prefix_format: "darf nur Ziffern enthalten"
+        mobile_suffix_format: "darf nur Ziffern enthalten"
+        name_format: "darf nur alphabetische Buchstaben und die folgenden Zeichen enthalten ''', '.' und ','"
+        address_format: "darf nur Ziffern, Buchstaben und die folgenden Zeichen enthalten ''', '.'und ','"
+        zip_format: "falsch"
+        eula_must_be_accepted: "müssen akzeptiert werden"
+        privacy_must_be_accepted: "muss akzeptiert werden"
+
+    # Translate model names. Used in Model.human_name().
+    models:
+      operator_session: "Bediener Session"
+      user_session: "Benutzer Session"
+      user: "Benutzer"
+
+    # Translate model attribute names. Used in Model.human_attribute_name(attribute).
+    attributes:
+      user:
+        mobile_phone: "Handynummer"
+        mobile_phone_confirmation: "Bestätigung Handynummer "
+        mobile_prefix: "Vorwahl Handynummer"
+        mobile_prefix_confirmation: "Bestätigung Handynummer"
+        mobile_suffix: "Handynummer ohne Vorwahl"
+        mobile_suffix_confirmation: "Bestätigung Handynummer ohne"
+        image_file: "Fotokopie des Dokuments"
+        email: "E-Mail"
+        username: "Benutzername"
+        password: "Passwort"
+        change_password: "Neues Passwort"
+        password_confirmation: "Bestätigung Passwort"
+        email_confirmation: "Bestätigung E-Mail"
+        birth_date: "Geburtsdatum"
+        given_name: "Name"
+        surname: "Nachname"
+        state: "Staat"
+        city: "Stadt"
+        address: "Adresse"
+        zip: "PLZ"
+        verification_method: "Überprüfungsprozedur der Identität"
+        verified: "Überprüft"
+        active: "Befähigt"
+        radius_groups: "RADIUS Gruppen"
+        eula_acceptance: "Bedingungen und Benutzungsregeln für die Bereitstellung der Serviceleistung "
+        privacy_acceptance: "Informationsblatt über die Behandlung von personenbezogenen Daten"
+        document_photo: "Fotokopie des Personalausweises"
+      account:
+        mobile_phone: "Handynummer"
+        mobile_phone_confirmation: "Bestätigung Handynummer"
+        mobile_prefix: "Vorwahl Handynummer"
+        mobile_prefix_confirmation: "Bestätigung Handynummer"
+        mobile_suffix: "Handytelefonnummer ohne Vorwahl"
+        mobile_suffix_confirmation: "Bestätigung Handynummer ohne Vorwahl"
+        image_file: "Fotokopie des Dokuments"
+        email: "E-Mail"
+        username: "Benutzername"
+        password: "Passwort"
+        change_password: "Neues passwort"
+        password_confirmation: "Bestätigung Passwort"
+        email_confirmation: "Bestätigung E-Mail"
+        birth_date: "Geburtsdatum"
+        given_name: "Name"
+        surname: "Nachname"
+        state: "Staat"
+        city: "Stadt"
+        address: "Adresse"
+        zip: "PLZ"
+        verification_method: "Überprüfungsprozedur der Identität"
+        verified: "Überprüft"
+        active: "Befähigt"
+        radius_groups: "RADIUS Gruppe"
+        eula_acceptance: "Bedingungen und Benutzungsregeln fuer die Bereitstellung der Serviceleistung"
+        privacy_acceptance: "Informationsblatt über die Behandlung von personenbezogenen Daten"
+        document_photo: "Fotokopie des Personalausweises"
+
+  authlogic:
+    error_messages:
+      login_blank: "muss spezifiziert sein"
+      login_not_found: "ungültig"
+      login_invalid: "nur Buchstaben, Ziffern, Leerzeichen und .-_@ benutzen"
+      consecutive_failed_logins_limit_exceeded: " Höchstlimit des falsch eingegebenen Logins überschritten, Benutzerkonto wurde deaktiviert"
+      email_invalid: "es scheint keine E-Mail zu sein"
+      password_blank: "muss spezifiziert sein"
+      password_invalid: "ungültig"
+      not_active: "Das Benutzerkonto ist nicht aktiv"
+      not_confirmed: "Das Benutzerkonto wurde nicht bestätigt"
+      not_approved: "Das Benutzerkonto wurde nicht genehmigt"
+      no_authentication_details: "Sie haben keine Details zur Validierung angegeben."
+      is_not_valid: "ungültig"
+    models:
+      operator_session: "Bediener Session"
+      user_session: "Benutzer Session"
+    attributes:
+      account_session:
+        mobile_phone: "Telefonnummer"
+        login: "Benutzername"
+        username: "Benutzername"
+        email: "E-Mail"
+        password: "Passwort"
+        remember_me: "Das Login merken "
+      operator_session:
+        mobile_phone: "Telefonnummer"
+        login: "Benutzername"
+        email: "E-Mail"
+        password: "Passwort"
+        remember_me: " Das Login merken "
+
+  simple_form:
+    "yes": 'Ja'
+    "no": 'Nein'
+    required:
+      text: 'pflichtig'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Es haben sich einige Fehler ergeben:"
+
+    # Labels and hints examples
+    labels:
+      account:
+        eula_acceptance: "Durch Abhaken des folgenden Feldes erkläre ich, die Bedingungen und die  Benutzungsregeln für die Bereitstellung der Serviceleistung zu akzeptieren"
+        privacy_acceptance: "Durch Abhaken des folgenden Feldes erkläre ich, das Informationsblatt über die Behandlung der personenbezogenen Daten gelesen zu haben."
+        new:
+          password: 'Passwort'
+        edit:
+          password: 'Neues Passwort'
+      user:
+        eula_acceptance: " Durch Abhaken des folgenden Feldes erklärt der Benutzer, die Bedingungen und die  Benutzungsregeln für die Bereitstellung der Serviceleistung zu akzeptieren"
+        privacy_acceptance: " Durch Abhaken des folgenden Feldes erklärt der Benutzer, das Informationsblatt über die Behandlung der personenbezogenen Daten gelesen zu haben."
+        new:
+          password: 'Passwort'
+        edit:
+          password: 'Neues Passwort'
+
+    hints:
+      mobile_phone: "Sie müssen einen Anruf von dieser Nummer aus durchführen. Sie dürfen nur eine Telefonnummer eines italienischen Betreibers benutzen"
+      account:
+        captcha: "Schreiben Sie hier den unten im Bild visualisierten Text"
+        email: "Die E-Mail Adresse kann zur Wiedereinstellung des Passwortes bei Verlust benutzt werden."
+        password: "Es müssen mindestens ein Buchstabe und eine Ziffer mit mindestens 8 Zeichen enthalten"
+        username: "Sie müssen den Benutzername und das Passwort für die Benutzung der Serviceleistung benutzen."
+      user:
+        active: "Ein deaktivierter Benutzer hat keinen Zugang zur Serviceleistung und kann sie nicht benutzen. Der Benutzer kann nur von einem Bediener wieder aktiviert werden. Im Allgemeinen ist es vorteilhafter die Überprüfung zu deaktivieren, da sich der Benutzer selbst wieder überprüfen kann.
+        "
+        email: "Die E-Mail Adresse kann vom Benutzer benutzt werden, um das Passwort bei Verlust wiederherzustellen."
+        username: "Der Benutzer wird den Benutzernamen benutzen (normalerweise die Telefonnummer), um Zugang zur Serviceleistung zu haben."
+        verified: "Ein nicht überprüfter Benutzer hat keinen Zugang zur Serviceleistung, aber er kann die Überprüfungsprozedur wiederholen 
+          (nur wenn man sich selbst angemeldet hat, wenn er die Serviceleistung weiterhin benutzen möchte. Nach einer gewissen inaktiven Zeitspanne (normalerweise 6 Monate) wird er nicht überprüfte Benutzer vom System gelöscht. 
+        "
+
+  views:
+    pagination:
+      first: "Beginn"
+      last: "Letzter"
+      previous: "&laquo; vorangehend"
+      next: "darauffolgend &raquo;"
+      truncate: "..."
+

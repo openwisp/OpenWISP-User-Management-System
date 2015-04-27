@@ -28,10 +28,22 @@
 <% end %>
 
 <%= simple_form_for @account, :url => account_path do |f| %>
+    <% if @account.duplicate? %>
+        <div class="warning">
+            <h2><%= t(:Already_registered_password_forgotten) %></h2>
+            <p>
+                <a href="/" data-role="button" class="ui-btn-left ui-btn ui-btn-corner-all ui-shadow ui-btn-down-a ui-btn-up-a" style="width:80%;margin:0 auto">
+                    <span class="ui-btn-inner ui-btn-corner-all">
+                        <span class="ui-btn-text"><%= t(:Reset_your_password) %></span>
+                    </span>
+                </a>
+            </p>
+        </div>
+    <% end %>
     <% if @account.errors.any? %>
         <div data-role="collapsible" id="errors-container">
           <h3><%=t :header, :count => @account.errors.count, :scope => [ :errors, :template ] %></h3>
-          <p><%= f.error_messages %></p>
+          <%= f.error_messages %>
         </div>
     <% end %>
 

@@ -450,15 +450,15 @@ Si an tiene problemas , por favor contactenos."
 121:
   system_key: f
   key: "password_reset_instructions_before_reset_url_fur"
-  value: "A je stade fate une domande par netâ vie la password par il to account.
-  Se no tu sês stât tu a fale, fâs finte di no vê let chest messaç.
-  Se tu as fât tu la domande, clicê su la URL ca ven."
+  value: "E je stade fate une domande par netâ vie la password pal to account.
+  Se no tu sês stât tu a fâle, fâs fente di no vê let chest messaç.
+  Se tu âs fâte tu la domande, cliche su cheste URL."
 
 122:
   system_key: t
   key: "password_reset_instructions_after_reset_url_fur"
-  value: " Se la URL di prime no lave, prove a copiâ e incolâ la direzion in tal to program par là in rêt.
-  Se tu tornis a vê problemis par netâ vie la password, par plasê disinus."
+  value: "Se la URL di prime no leve, prove a copiâ e incolâ la direzion tal to browser.
+  Se tu tornis a vê problemis par netâ vie la password, par plasê contatinus."
 
 123:
   system_key: f
@@ -468,24 +468,24 @@ Si an tiene problemas , por favor contactenos."
 124:
   system_key: f
   key: "verification_explain_mobile_fur"
-  value: "<p>Al fine di <strong>prevignî la int ca aprofite dal servizi</strong>, nô o sin obleâts a <strong>verificâ la identitât</strong> dai utents ca doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç ce mût verificâ la to identitât <strong>\"Numar di telefonin\"</strong> da la liste ca ven.</p>"
+  value: "<p>Cul fin di <strong>prevignî la int che e aprofite dal servizi</strong>, o sin obleâts a <strong>verificâ la identitât</strong> dai utents che a doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç cemût verificâ la tô identitât <strong>\"Numar di telefonin\"</strong> de liste culì sot.</p>"
 
 125:
   system_key: f
   key: "verification_explain_creditcard_fur"
-  value: "<p>Al fine di <strong>prevignî la int ca aprofite dal servizi</strong>, nô o sin obleâts a <strong>verificâ la identitât</strong> dai utents ca doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç ce mût verificâ la to identitât <strong>\"Numar di telefonin\"</strong> da la liste ca ven, o se no sielç il metodo <strong>\"Cjarte di Credit\"</strong>.</p>"
+  value: "<p>Cul fin di <strong>prevignî la int che e aprofite dal servizi</strong>, o sin obleâts a <strong>verificâ la identitât</strong> dai utents che a doprin il servizi wifi.</p><p>Se tu âs une <strong>schede taliane</strong> sielç cemût verificâ la to identitât <strong>\"Numar di telefonin\"</strong> de liste culì sot, o ben sielç il metodi <strong>\"Cjarte di Credit\"</strong>.</p>"
 
 126:
   system_key: f
   key: "account_notification_message_fur"
   value: "Mandi {first_name} {last_name},
-\n\nTu âs apene creât e verificât cun sucès il to account par jentrâ cun la wifi.
-\n\nCumò tu podis meti i dâts par jentrâ e doprâ il servizi Wi-Fi, il to username al è \"{username}\" e la password ae che sielte cuante ca tu ti sês regjistrât.
-\n\nTu podis tignî sot voli il servizi da la pagjine di gjestion dal to account:
+\n\nTu âs a pene creât e verificât cun sucès il to account par jentrâ cu la wifi.
+\n\nCumò tu puedis meti i dâts par jentrâ e doprâ il servizi Wi-Fi, il to username al è \"{username}\" e la password e je chê che tu âs sielzude cuant che tu ti sês regjistrât.
+\n\nTu puedis tignî sot voli il servizi de pagjine di gjestion dal to account:
 \n{account_url}
-\n\nSe tu vessis dismenteât la password, tu podis doprâ la procedure par netâ vie; ca tu cjatis a la direzion ca ven:
+\n\nSe tu vessis dismenteade la password, tu puedis doprâ la procedure par netâ vie, che tu le cjatis a cheste direzion:
 \n{password_reset_url}{invoice_message}
-\n\nPreseât
+\n\nMandi
 \nStaff"
 
 127:
@@ -501,7 +501,7 @@ Si an tiene problemas , por favor contactenos."
 129:
   system_key: f
   key: "invoice_description_fur"
-  value: "Verifiche Identitât par il servizi Wi-Fi."
+  value: "Verifiche Identitât pal servizi Wi-Fi."
 
 130:
   system_key: f
@@ -510,40 +510,40 @@ Si an tiene problemas , por favor contactenos."
 
 131:
   system_key: f
-  key: "password_reset_subject_si"
+  key: "password_reset_subject_sl"
   value: "Navodila za obnovitev gesla"
 
 132:
   system_key: f
-  key: "password_reset_instructions_before_reset_url_si"
+  key: "password_reset_instructions_before_reset_url_sl"
   value: "Poslana je bila zahteva za ponastavitev gesla tvojega računa.
   Če nisi ti poslal te zahteve, prezri to sporočilo.
   Če si ti poslal to zahtevo, klikni na spodnji URL."
 
 133:
   system_key: t
-  key: "password_reset_instructions_after_reset_url_si"
+  key: "password_reset_instructions_after_reset_url_sl"
   value: "V primeru, da zgornji URL ne deluje, poskusi kopirati in prilepiti naslov v tvoj iskalnik.
   Če se težave v zvezi s ponastavitvijo gesla nadaljujejo, te prosimo, da nas kontaktiraš."
 
 134:
   system_key: f
-  key: "custom_account_instructions_si"
+  key: "custom_account_instructions_sl"
   value: ""
 
 135:
   system_key: f
-  key: "verification_explain_mobile_si"
+  key: "verification_explain_mobile_sl"
   value: "<p>Z namenom <strong>preprečevanja zlorab storitve</strong>, moramo <strong>preveriti identiteto</strong> uporabnikov storitve wifi.</p><p>Če si lastnik <strong>italijanske SIM </strong> izberi postopek preverjanja identitete <strong>\"Številka mobilnega telefona\"</strong> s sledečega menija.</p>"
 
 136:
   system_key: f
-  key: "verification_explain_creditcard_si"
+  key: "verification_explain_creditcard_sl"
   value: "<p>Z namenom <strong> preprečevanja zlorab storitve</strong>, moramo <strong> preveriti identiteto </strong> uporabnikov storitve Wi-Fi.</p><p> Če si lastnik <strong> italijanske SIM </strong> izberi postopek preverjanja identitete <strong>\" Številka mobilnega telefona \"</strong> s sledečega menija, ali pa izberi postopek <strong>\"Kreditna kartica\"</strong>.</p>"
 
 137:
   system_key: f
-  key: "account_notification_message_si"
+  key: "account_notification_message_sl"
   value: "Živijo {first_name} {last_name},
 \n\nPravkar si uspešno ustvaril in preveril tvoj račun za dostop do wifi-ja.
 \n\nZdaj se lahko prijaviš in uporabljaš storitev Wi-Fi, tvoje uporabniško ime je \"{username}\" ,geslo je pa tisto, ki si ga vpisal v fazi registracije.
@@ -556,20 +556,92 @@ Si an tiene problemas , por favor contactenos."
 
 138:
   system_key: f
-  key: "account_notification_subject_si"
+  key: "account_notification_subject_sl"
   value: "Novi račun ustvarjen na [OpenWISP User Management System]"
 
 139:
   system_key: f
-  key: "invoice_owner_si"
+  key: "invoice_owner_sl"
   value: "Zamenjaj me"
 
 140:
   system_key: f
-  key: "invoice_description_si"
+  key: "invoice_description_sl"
   value: "Preverjanje identitete za storitev Wi-Fi."
 
 141:
   system_key: f
-  key: "invoice_admin_notification_subject_si"
+  key: "invoice_admin_notification_subject_sl"
   value: "[OWUMS] Ustvarjena nova prejemnica "
+
+142:
+  system_key: f
+  key: "password_reset_subject_de"
+  value: "Anleitungen zur Wiederherstellung des Passwortes"
+
+143:
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_de"
+  value: "Es wurde eine Anfrage für die Wiederherstellung des Passwortes für Ihr Benutzerkonto erfordert. 
+  Wenn Sie diese Anfrage nicht erfordert haben, reagieren Sie bitte nicht auf diese Meldung. 
+  Wenn Sie die Anfrage erfordert haben, klicken Sie bitte auf die folgende URL."
+
+144:
+  system_key: t
+  key: "password_reset_instructions_after_reset_url_de"
+  value: "Falls die vorangehende URL nicht funktionieren sollte, probieren Sie bitte, die Adresse zu kopieren und  in Ihren Browser  einfügen.
+  Wenn sich noch Probleme bei der Wiederherstellung des Passwortes ergeben sollten, wenden Sie sich bitte an uns." 
+
+145:
+  system_key: f
+  key: "custom_account_instructions_de"
+  value: ""
+
+146:
+  system_key: f
+  key: "verification_explain_mobile_de"
+  value: "<p>Um <strong>Misshandlungen an der Serviceleistung zu vermeiden</strong>, sind wir gezwungen <strong>die Identität</strong> der Benutzer zu überprüfen, die vom WiFi Anschluss Gebrauch machen.</p><p>Wenn Sie eine <strong>italienische SIM Karte besitzen</strong> wählen Sie die Überprüfungsmethode für die Identität  <strong>\"Handynummer\"</strong> aus dem folgenden Menü. .</p>"
+
+147:
+  system_key: f
+  key: "verification_explain_creditcard_de"
+  value: "<p>Um <strong> Misshandlungen an der Serviceleistung zu vermeiden </strong>, sind wir gezwungen <strong> die Identität </strong> der Benutzer zu überprüfen, die vom WiFi Anschluss Gebrauch machen.</p><p> Wenn Sie eine <strong>italienische SIM Karte</strong> wählen Sie die Überprüfungsmethode für die Identität  <strong>\"Handynummer\"</strong> aus dem folgenden Menü oder wählen Sie die Methode <strong>\"Kreditkarte\"</strong>.</p>"
+
+148:
+  system_key: f
+  key: "account_notification_message_de"
+  value: "Hallo {first_name} {last_name},
+
+Sie haben gerade Ihr Benutzerkonto für den WiFi Zugang erfolgreich gestante und überprüft. 
+
+Nun können Sie sich einloggen und die WiFi-Serviceleistung benutzen. Ihr Benutzername ist  \"{username}\" und Ihr Passwort ist das, was Sie bei der Anmeldung angebenen haben.  
+
+Sie können die  Benutzung der Serviceleistung auf der Verwaltungsseite Ihres Benutzerkontos überwachen: 
+{account_url}
+
+Wenn Sie Ihr Passwort vergessen haben, können Sie die  Wiederherstellungsprozedur benutzen, die bei der folgenden Adresse verfügbar ist: 
+{password_reset_url}
+{invoice_message}
+
+Mit freundlichen Grüßen
+Staff"
+
+149:
+  system_key: f
+  key: "account_notification_subject_de"
+  value: "Neues Benutzerkonto gestaltet bei [OpenWISP User Management System]"
+
+150:
+  system_key: f
+  key: "invoice_owner_de"
+  value: "ÄNDERN"
+
+151:
+  system_key: f
+  key: "invoice_description_de"
+  value: "Überprüfung der Identität für die Serviceleistung Wi-Fi."
+
+152:
+  system_key: f
+  key: "invoice_admin_notification_subject_de"
+  value: "[OWUMS] Neuer Beleg generiert"

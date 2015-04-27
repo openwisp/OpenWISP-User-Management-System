@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
       locale = set_locale_from_preference
     end
 
-    if I18n.available_locales.include? locale.to_sym
+    if locale.present? and I18n.available_locales.include? locale.to_sym
       I18n.locale = session[:locale] = locale
     end
   end

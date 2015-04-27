@@ -61,7 +61,7 @@ var owums = {
     exists: function(selector) {
         return ($(selector).length > 0);
     },
-    
+
     initMenuAdjustments: function(){
         $('ul.nav.main ul a').each(function(i, el){
             var $el = $(el);
@@ -161,7 +161,7 @@ var owums = {
         // trigger once on page load
         verification_method.trigger('change');
     },
-    
+
     initRegistration: function(){
         if($('#new_account').length){
             owums.toggleVerificationMethod();
@@ -169,7 +169,7 @@ var owums = {
             owums.enhanceRegistration();
         }
     },
-    
+
     initUserForm: function(){
         var id_document = $('#identity-document');
         if(id_document.length){
@@ -186,12 +186,12 @@ var owums = {
             verification_method.trigger('change');
         }
     },
-    
+
     enhanceRegistration: function(){
         if(!owums.enhance_registration_form){
             return;
         }
-        
+
         var mobile_confirmation = $('#confirm_mobile_phone_number'),
             email_confirmation = $('#account_email_confirmation'),
             password_confirmation = $('#account_password_confirmation'),
@@ -200,7 +200,7 @@ var owums = {
             password = $('#account_password'),
             is_mobile = $('#mobile-registration').length || false,
             is_error = $('#errorExplanation').length || false;
-        
+
         if(is_mobile){
             email_confirmation = email_confirmation.parent().parent();
             password_confirmation = password_confirmation.parent().parent();
@@ -209,12 +209,12 @@ var owums = {
             email_confirmation = email_confirmation.parent();
             password_confirmation = password_confirmation.parent();
         }
-        
+
         if(!is_error){
             mobile_confirmation.hide();
             email_confirmation.hide();
-            password_confirmation.hide();   
-        
+            password_confirmation.hide();
+
             mobile_suffix.focusin(function(e){
                 if(!mobile_confirmation.is(':visible')){
                     mobile_confirmation.slideToggle(250);
@@ -223,7 +223,7 @@ var owums = {
             if(mobile_suffix.val()!=''){
                 mobile_confirmation.show();
             }
-            
+
             email.focusin(function(e){
                 if(!email_confirmation.is(':visible')){
                     email_confirmation.slideToggle(250);
@@ -232,7 +232,7 @@ var owums = {
             if(email.val()!=''){
                 email_confirmation.show();
             }
-            
+
             password.focusin(function(e){
                 if(!password_confirmation.is(':visible')){
                     password_confirmation.slideToggle(250);
@@ -244,14 +244,27 @@ var owums = {
         }
         // fix for mobile interface
         else{
-            $('#account_email_confirmation, #account_password_confirmation').parent().parent().show()
+            $('#account_email_confirmation, #account_password_confirmation').parent().parent().show();
         }
-        
+
         $('#account_email, #account_email_confirmation, #account_password, #account_password_confirmation').bind('contextmenu cut copy paste', function(e){
             e.preventDefault();
         });
+
+        // prevent duplicate requests
+        $('#new_account').bind('submit', function(e){
+            // if form already submitted do not resubmit
+            if ($('#mask').length) {
+                e.preventDefault();
+                return;
+            }
+            // show loading mask and overlay
+            $('body').append('<div id="mask"></div><div id="loading-overlay"></div>');
+            $('#mask').css('opacity','0').show().fadeTo(250, 0.5);
+            $('#loading-overlay').togglePop();
+        });
     },
-    
+
     initMobile2Username: function(){
         if(owums.use_mobile_phone_as_username){
             var username = $('#account_username'),
@@ -270,7 +283,7 @@ var owums = {
             });
         }
     },
-    
+
     toggleReadonlyUsername: function(){
         if(owums.use_mobile_phone_as_username){
             var username = $('#account_username');
@@ -288,12 +301,12 @@ var owums = {
             }
         }
     },
-    
+
     toggleOverlay: function(closeCallback){
         var mask = $('#mask'),
             close = $('.close'),
             overlay = $('.overlay');
-            
+
         var closeOverlay = function(){
             if(close.attr('data-confirm-message') !== undefined && !window.confirm(close.attr('data-confirm-message'))){
                return false;
@@ -305,7 +318,7 @@ var owums = {
             }
             return true;
         }
-        
+
         if(!overlay.is(':visible')){
             mask.css('opacity','0').show().fadeTo(250, 0.7);
             overlay.centerElement().fadeIn(250);
@@ -319,7 +332,7 @@ var owums = {
             });
         }
     },
-    
+
     initCreditCardOverlay: function(){
         var bank_gateway = $('#bank-gateway');
         if(bank_gateway.length && !bank_gateway.hasClass('mobile')){
@@ -342,7 +355,7 @@ var owums = {
             owums.enhanceCreditCardFormMobile();
         }
     },
-    
+
     enhanceCreditCardForm: function(){
         $('#credit_card_number input').bind('keyup', function(e){
             var $this = $(this);
@@ -365,11 +378,11 @@ var owums = {
         $('#bank-gateway input[type=text]').keydown(function(e) {
             var $this = $(this);
             // Allow: backspace, delete, tab, escape, and enter
-            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
+            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 ||
                  // Allow: Ctrl+A
-                (e.keyCode == 65 && e.ctrlKey === true) || 
+                (e.keyCode == 65 && e.ctrlKey === true) ||
                  // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {                    
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
                     // let it happen, don't do anything
                     return
             }
@@ -409,7 +422,7 @@ var owums = {
             }
         });
     },
-    
+
     enhanceCreditCardFormMobile: function(){
         $('#credit_card_number input').bind('keyup', function(e){
             var $this = $(this);
@@ -434,11 +447,11 @@ var owums = {
         $('form#cc_form input[type=text]').keydown(function(e) {
             var $this = $(this);
             // Allow: backspace, delete, tab, escape, and enter
-            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 || 
+            if (e.keyCode == 46 || e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 27 || e.keyCode == 13 ||
                  // Allow: Ctrl+A
-                (e.keyCode == 65 && e.ctrlKey === true) || 
+                (e.keyCode == 65 && e.ctrlKey === true) ||
                  // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {                    
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
                     // let it happen, don't do anything
                     return
             }
@@ -472,7 +485,7 @@ var owums = {
             }
             else{
                 if(!$('#mask').length){
-                    $('#verification').after('<div id="mask"></div><div id="loading-overlay"></div><div id="loading-message"></div>');    
+                    $('#verification').after('<div id="mask"></div><div id="loading-overlay"></div><div id="loading-message"></div>');
                 }
                 $('#mask').css('opacity','0').show().fadeTo(250, 0.5);
                 owums.initCreditCardLoading();
@@ -480,7 +493,7 @@ var owums = {
             }
         });
     },
-    
+
     toggleLockOverlay: function(){
         var mask = $('#mask'),
             z = 10,
@@ -494,7 +507,7 @@ var owums = {
             opacity: o
         });
     },
-    
+
     initCreditCardLoading: function(){
         $('#loading-overlay').togglePop();
         owums.timeouts = [];
@@ -502,10 +515,10 @@ var owums = {
             $('#loading-message').toggleMessage(i18n.verification_message_first_step);
         }, 1500);
         owums.timeouts[1] = setTimeout(function(){
-            $('#loading-message').html(i18n.verification_message_second_step);    
+            $('#loading-message').html(i18n.verification_message_second_step);
         }, 4000);
     },
-    
+
     clearTimeouts: function(){
         if(owums.timeouts){
             for(i in owums.timeouts){
@@ -513,7 +526,7 @@ var owums = {
             }
         }
     },
-    
+
     initNotice: function(){
         $('#notice .close').click(function(e){
             e.preventDefault();
@@ -551,7 +564,7 @@ var owums = {
             return _curr+'/'+path+_params;
         }
     },
-    
+
     initSelectable: function(){
         $('#operator_roles').customSelectable();
         $("#radius_groups-table").customSelectable();
@@ -575,8 +588,8 @@ $.fn.customSelectable = function(options){
         el.toggleClass('selected');
         if(opts.afterSelect){ opts.afterSelect.apply($(this)) }
     });
-    
+
     table.find('input[checked=checked]').parents('tr').addClass('selected');
-    
+
     return table;
 }

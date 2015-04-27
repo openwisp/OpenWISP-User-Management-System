@@ -1,4 +1,4 @@
-si:
+sl:
   Account_disabled: "Izklopljen račun"
   Account_disable_confirmation: "Z izklopom računa ne boš več mogel dostopati do storitve. Račun lahko ponovno vklopiš, tako da ponoviš postopek preverjanja."
   Account_registered: "Pravilno registriran račun "
@@ -388,3 +388,5 @@ si:
   "No": 'Ne'
   max_daily_transaction_limit_reached: "max daily transaction limit reached"
   max_yearly_transaction_limit_reached: "max yearly transaction limit reached"
+  Already_registered_password_forgotten: "It seems you already have an account, password forgotten?"
+  Reset_your_password: "Reset your password"

@@ -8,7 +8,7 @@ fur:
     currency:
       format:
         format: "%n %u"
-        unit: "€"
+        unit: "€"
         separator: "."
         delimiter: ","
         precision: 2
@@ -39,7 +39,7 @@ fur:
           mb: "Mb"
           gb: "Gb"
           tb: "Tb"
-  
+
   date:
     formats:
       default: "%d/%m/%Y"
@@ -58,7 +58,7 @@ fur:
       default: "%d/%m/%y - %H:%M"
       short: "%d %b %H:%M"
       long: "%d %B %Y %H:%M"
-    
+  
     am: "am"
     pm: "pm"
   
@@ -72,8 +72,8 @@ fur:
         one:  "1 secont"
         other: "%{count} seconts"
       less_than_x_minutes:
-        one:  "mancul di un minût"
-        other: "mancul di%{count} minûts"
+        one:  " mancul di un minût"
+        other: " mancul di%{count} minûts"
       x_minutes:
         one:  "1 minût"
         other: "%{count} minûts"
@@ -91,18 +91,18 @@ fur:
         other: "%{count} mês"
       about_x_years:
         one:  "cirche un an"
-        other: "cirche %{count} ains"
+        other: "cirche %{count} agns"
       over_x_years:
         one:  "plui di un an"
-        other: "plui %{count} ains"
-    
+        other: "plui di %{count} agns"
+  
     prompts:
       year:   "An"
       month:  "Mês"
       day:    "Dì"
       hour:   "Ore"
-      minute: "Minûts"
-      second: "Seconts"
+      minute: "Minût"
+      second: "Secont"
   
   support:
     array:
@@ -115,7 +115,7 @@ fur:
       header:
         one: "Si è verificât un erôr"
         other: "Si son verificâts %{count} erôrs"
-      body: "Par plasè met a puest chei erôrs ca vegnin:"
+      body: "Par plasê met a puest chescj erôrs:"
   
   helpers:
     submit:
@@ -125,64 +125,64 @@ fur:
       account_session:
         create: "Jentre"
       operator_session:
-        create: "Jentre"
+        create: " Jentre"
       user:
         create: "Zonte"
-        update: "Inzorne"
+        update: " Inzorne "
   
   activerecord:
     errors:
       messages:
-        inclusion: "A nol è un valôr valit"
-        exclusion: "Al è riservât"
-        invalid: "A nol è valit"
-        invalid_captcha: "test e imagjin a no jerin compains"
-        confirmation: "A nol è compagn cun la conferme"
-        accepted: "A scugne jessi acetade"
-        email_invalid: "A no samee une direzione di pueste eletroniche"
-        empty: "A nol po jessi vueit"
-        blank: "Al scugne jessi specificât"
-        too_long: "Al è masse lunc (il massim al è %{count} letare)"
-        too_short: "Al è masse curt (il minim al è %{count} letare)"
-        wrong_length: "Al è da lungjece sbaliade (scugne jessi di%{count} letare)"
-        taken: "Al è belzà stât doprât "
-        not_a_number: "A nol è un numar"
-        greater_than: "A scugne jessi superiôr a %{count}"
-        greater_than_or_equal_to: "A scugne jessi superiôr o compagn a %{count}"
-        equal_to: "A scugne jessi compagn a %{count}"
-        less_than: "A scugne jessi almancul di %{count}"
-        less_than_or_equal_to: "A scugne jessi mancul o compagn a %{count}"
-        odd: "A scugne jessi dispar"
-        even: "A scugne jessi pari "
+        inclusion: "Nol è un valôr valit"
+        exclusion: "Al è risiervât"
+        invalid: "Nol è valit"
+        invalid_captcha: "Test e imagjin no jerin compagns"
+        confirmation: "Nol è compagn de conferme"
+        accepted: "E scugne jessi acetade"
+        email_invalid: "No somee une direzion di pueste eletroniche"
+        empty: "Nol pues jessi vueit "
+        blank: " Al scugne jessi specificât"
+        too_long: "Al è masse lunc (il massim al è %{count} letaris)"
+        too_short: " Al è masse curt (il minim al è %{count} letaris)"
+        wrong_length: "Al è de lungjece sbaliade (al scugne jessi di%{count} letaris)"
+        taken: " Al è bielzà stât doprât"
+        not_a_number: "Nol è un numar"
+        greater_than: "Al scugne jessi superiôr di %{count}"
+        greater_than_or_equal_to: " Al scugne jessi superiôr o compagn di %{count}"
+        equal_to: " Al scugne jessi compagn di %{count}"
+        less_than: " Al scugne jessi almancul di %{count}"
+        less_than_or_equal_to: " Al scugne jessi mancul o compagn di %{count}"
+        odd: " Al scugne jessi dispar"
+        even: " Al scugne jessi pâr "
         not_valid_f: "no valide"
         not_valid_m: "no valit"
-        record_invalid: "record no valit"
-        missing_image: "mancjâ"
-        invalid_image: "A no je valide"
-        image_too_small: "A je masse piçule (a scugne jessi >= %{minimum})"
-        password_format: "Al scugne jessi fât dome di caratars alfabetics, spazi, numars e il caratar '_' e al scugne contignî almancul un caratar e un numar"
-        mobile_phone_format: "al scugne contignî dome numars"
-        mobile_prefix_format: "al scugne contignî dome numars"
-        mobile_suffix_format: "al scugne contignî dome numars"
-        name_format: "Al po contignî dome caratars alfabetics e i caratars ''', '.' e ','"
-        address_format: "Al po contignî dome numars, letaris  e i caratars ''', '.' e ','"
-        zip_format: "A nol è coret"
-        eula_must_be_accepted: "Al scugne jessi acetât"
-        privacy_must_be_accepted: "A scugne jessi acetade"
+        record_invalid: "record no valit "
+        missing_image: "e mancje"
+        invalid_image: " No je valide"
+        image_too_small: "E je masse piçule (e scugne jessi >= %{minimum})"
+        password_format: "E scugne jessi fate dome di caratars alfabetics, spazis, numars e il caratar '_' e e scugne vê dentri almancul un caratar e un numar"
+        mobile_phone_format: " al scugne vê dentri dome numars "
+        mobile_prefix_format: " al scugne vê dentri dome numars "
+        mobile_suffix_format: " al scugne vê dentri dome numars "
+        name_format: " Al pues vê dentri dome caratars alfabetics e i caratars ''', '.' e ','"
+        address_format: " Al pues vê dentri dome numars, letaris e i caratars ''', '.' e ','"
+        zip_format: " Nol è coret"
+        eula_must_be_accepted: " A scugnin jessi acetâts"
+        privacy_must_be_accepted: " E scugne jessi acetade "
   
     # Translate model names. Used in Model.human_name().
     models:
-      operator_session: "session operadore"
-      user_session: "session utent"
+      operator_session: "session dal operadôr"
+      user_session: "session dal utent"
       user: "utent"
-    
+  
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     attributes:
       user:
         mobile_phone: "Numar di telefonin"
-        mobile_phone_confirmation: "Conferme numar di telefonin"
-        mobile_prefix: "Prefìs dal telefonin"
-        mobile_prefix_confirmation: "Conferme prefìs dal telefonin"
+        mobile_phone_confirmation: "Conferme il numar di telefonin"
+        mobile_prefix: "Prefìs dal telefonin "
+        mobile_prefix_confirmation: "Conferme il prefìs dal telefonin "
         mobile_suffix: "Numar di telefonin cence prefìs"
         mobile_suffix_confirmation: "Conferme il numar dal telefonin cence prefìs"
         image_file: "Fotocopie dal document"
@@ -191,7 +191,7 @@ fur:
         password: "Password"
         change_password: "Gnove password"
         password_confirmation: "Conferme password"
-        email_confirmation: "Conferme direzion di pueste eletroniche"
+        email_confirmation: "Conferme direzion di pueste eletroniche "
         birth_date: "Date di nassite"
         given_name: "Non"
         surname: "Cognon"
@@ -199,18 +199,18 @@ fur:
         city: "Citât"
         address: "Direzion"
         zip: "CAP"
-        verification_method: "Come verificâ la identitât"
+        verification_method: "Cemût verificâ la identitât"
         verified: "Verificât"
         active: "Abilitât"
         radius_groups: "Grups RADIUS"
         eula_acceptance: "Condizions e tiermins par doprâ il servizi"
-        privacy_acceptance: "Informative sul tratament dai dâts personai "
+        privacy_acceptance: " Informative sul tratament dai dâts personâi "
         document_photo: "Fotocopie dal document di identitât"
       account:
         mobile_phone: "Numar di telefonin"
-        mobile_phone_confirmation: "Conferme numar di telefonin"
+        mobile_phone_confirmation: "Conferme il numar di telefonin"
         mobile_prefix: "Prefìs dal telefonin "
-        mobile_prefix_confirmation: "Conferme prefìs dal telefonin "
+        mobile_prefix_confirmation: "Conferme il prefìs dal telefonin "
         mobile_suffix: "Numar di telefonin cence prefìs"
         mobile_suffix_confirmation: "Conferme il numar di telefonin cence prefìs"
         image_file: "Fotocopie dal document"
@@ -227,45 +227,45 @@ fur:
         city: "Citât"
         address: "Direzion"
         zip: "CAP"
-        verification_method: "Modalitât di verifiche da identitât"
+        verification_method: "Modalitât di verifiche de identitât"
         verified: "Verificât"
         active: "Abilitât"
         radius_groups: "Grups RADIUS"
         eula_acceptance: "Condizions e tiermins par doprâ il servizi"
-        privacy_acceptance: "Informative sul tratament dai dâts personai "
+        privacy_acceptance: " Informative sul tratament dai dâts personâi "
         document_photo: "Fotocopie dal document di identitât"
   
   authlogic:
     error_messages:
       login_blank: "Al scugne jessi specificât"
-      login_not_found: "A nol è valit "
-      login_invalid: "Dopre dome letaris numars, spazi e .-_@"
-      consecutive_failed_logins_limit_exceeded: "Tu as superât il limit di tentatîfs sbaliâts, account disabilitât"
-      email_invalid: "Al nol samee une direzion di pueste eletroniche"
-      password_blank: "A scugne jessi specificade"
-      password_invalid: "A no je valide"
+      login_not_found: "Nol è valit "
+      login_invalid: "Dopre dome letaris numars, spazis e .-_@"
+      consecutive_failed_logins_limit_exceeded: "Tu âs superât il limit di tentatîfs sbaliâts, account disabilitât"
+      email_invalid: "No somee une direzion di pueste eletroniche "
+      password_blank: "E scugne jessi specificade "
+      password_invalid: "No je valide"
       not_active: "L'account nol è atîf"
       not_confirmed: "L'account nol è confermât"
       not_approved: "L'account nol è stât aprovât"
       no_authentication_details: "No tu âs dât nissun detai pe autenticazion"
-      is_not_valid: "A no je valide"
+      is_not_valid: " No je valide "
     models:
-      operator_session: "session operadore"
-      user_session: "session utent"
+      operator_session: "session dal operadôr"
+      user_session: "session dal utent"
     attributes:
       account_session:
-        mobile_phone: "Numar di telefono"
-        login: "non utent"
+        mobile_phone: "Numar di telefonin"
+        login: "Non utent"
         username: "Non utent"
-        email: "pueste eletroniche"
+        email: "Pueste eletroniche"
         password: "Password"
         remember_me: "Visiti i dâts par jentrâ"
       operator_session:
-        mobile_phone: "Numar di telefono"
+        mobile_phone: "Numar di telefonin"
         login: "Non utent"
-        email: "pueste eletroniche"
+        email: "Pueste eletroniche"
         password: "Password"
-        remember_me: "Visiti i dâts par jentrâ"
+        remember_me: " Visiti i dâts par jentrâ "
   
   simple_form:
     "yes": 'Sì'
@@ -277,45 +277,45 @@ fur:
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: "Al è verificât cualchi erôr:"
+      default_message: "Si è verificât cualchi erôr:"
   
     # Labels and hints examples
     labels:
       account:
-        eula_acceptance: "Dispontant la casele ca ven, tu disis di acetà i tiermins e lis condizions par doprâ il servizi"
-        privacy_acceptance: "Dispontant la casele ca ven, tu disis di cjapâ vision da informative sui trataments dai dâts personâi"
+        eula_acceptance: "Marcant la casele culì sot, o confermi di acetà i tiermins e lis condizions par doprâ il servizi"
+        privacy_acceptance: " Marcant la casele culì sot, o confermi di vê cjapade vision de informative sui trataments dai dâts personâi"
         new:
           password: 'Password'
         edit:
           password: 'Gnove password'
       user:
-        eula_acceptance: "Dispontant la casele ca ven, tu disis di acetà i tiermins e lis condizions par doprâ il servizi"
-        privacy_acceptance: "Dispontant la casele ca ven, tu disis di cjapâ vision da informative sui trataments dai dâts personâi"
+        eula_acceptance: " Marcant la casele culì sot, tu confermis di acetà i tiermins e lis condizions par doprâ il servizi"
+        privacy_acceptance: " Marcant la casele culì sot, tu confermis di vê cjapade vision de informative sui trataments dai dâts personâi"
         new:
           password: 'Password'
         edit:
           password: 'Gnove password'
   
     hints:
-      mobile_phone: "Tu varâs di fâ une clamade da chest numar. Tu podis doprâ dome numars di operadôrs talians"
+      mobile_phone: "Tu varâs di fâ une clamade di chest numar. Tu puedis doprâ dome numars di operadôrs talians"
       account:
-        captcha: "Scrîf chi il test contignût in te imagjine chi sot"
-        email: "La direzion di pueste eletroniche a podarâ jessi doprade par podê tornâ a meti la to password in câs tu la dismenteassis"
-        password: "A varà di contignî une letare e un numar e cun almancul 8 caratars"
-        username: "Tu varâs di doprâ chest username e la to password par podè jentrâ in tal servizi"
+        captcha: "Scrîf achì il test contignût inte imagjin culì sot"
+        email: "La direzion di pueste eletroniche e podarâ jessi doprade par podê tornâ a meti la to password tal câs che tu le dismenteassis"
+        password: "E varà di vê dentri almancul une letare e un numar e e varà di jessi almancul di 8 caratars"
+        username: "Tu varâs di doprâ chest username e la tô password par podê jentrâ tal servizi"
       user:
-        active: "Un utent disabilitât al è dal dut interdet a doprâ il servizi e nol podarà gjoldilu. L'utent al podarà jessi riabilitât
-                dome di un operadôr. Di solit a si use disabilitâ la verifiche, parcè che cussì tu podis lassai al utent di tornâ a verificâ di besôl."
-        email: "La direzion di pueste eletroniche a podarà jessi usade dal utent par tornâ a meti la password in câs al à dismenteis"
-        username: "L'utent doprarà chest username (di solit il numar di telefono) par jentrâ in tal servizi"
-        verified: "Un utent ca nol è stât verificât al è interdet a doprâ il servizi ma al po tornà a fâ la procedure di verifiche
-              (dome se si è regjistrât in maniere autonome) in câs cal voli continuâ a doprâ il servizi. Se par un poc di timp no tu jentris (di solit 
-              6 mês), l'utent ca nol ven verificât al vignarà gjavât dal sisteme."
+        active: "Un utent disabilitât al è dal dut interdet a doprâ il servizi e nol podarà gjoldilu. L'utent al podarà tornâ a jessi abilitât
+          dome di un operadôr. Par solit al è miôr disabilitâ la verifiche, parcè che cussì si permet al utent di tornâ a verificâsi di bessôl."
+        email: "La direzion di pueste eletroniche e podarà jessi doprade dal utent par tornâ a meti la password tal câs che al ves di dismenteâle"
+        username: "L'utent al doprarà chest username (di solit il numar di telefonin) par jentrâ tal servizi"
+        verified: "Un utent che nol è stât verificât al è interdet a doprâ il servizi ma al pues tornà a fâ la procedure di verifiche
+          (dome se si è regjistrât in maniere autonome) tal câs che al vueli continuâ a doprâ il servizi. Se par un ciert timp no si jentre (par solit 
+          6 mês), l'utent che nol è verificât al vignarà gjavât dal sisteme."
   
   views:
     pagination:
-      first: "Tacâ"
-      last: "Ultim"
+      first: "Inprin"
+      last: "Finiment"
       previous: "&laquo; precedent"
       next: "sucessîf&raquo;"
       truncate: "..."
