@@ -135,6 +135,7 @@ tbody tr:hover td {
 #errors-container .ui-collapsible-content{ padding: 0 }
 
 #errorExplanation,
+.error,
 .warning{
 	margin: 10px 0 10px;
 	padding: 20px 25px 5px 25px;
@@ -145,14 +146,17 @@ tbody tr:hover td {
     text-shadow: 0 0 0 transparent;
 }
 #errorExplanation h2,
+.error h2,
 .warning h2{
 	width: auto; margin: 0; padding: 0; background: transparent; text-transform: none;
 	font-size: 16px; font-weight: bold; margin-bottom: 10px;
 }
 #errorExplanation li,
+.error li,
 .warning li{ font-weight: bold }
 
 .warning{ background-color: #ff8000 }
+#notice.error { background-color: #ff6666 !important; margin: 0; padding: 0 }
 
 #mobile-registration.has-more-verification-methods li{ display: none }
 #verification-methods-container{ display: block !important }
