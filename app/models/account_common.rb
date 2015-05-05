@@ -6,12 +6,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -28,6 +28,7 @@ class AccountCommon < ActiveRecord::Base
   VERIFY_BY_GESTPAY = "gestpay_credit_card"
   VERIFY_BY_NOTHING = "no_identity_verification"
   VERIFY_BY_MACADDRESS = "mac_address"
+  VERIFY_BY_SOCIAL = "social_network"
 
   # Authlogic
   acts_as_authentic do |c|
@@ -69,7 +70,7 @@ class AccountCommon < ActiveRecord::Base
                 :allow_blank => true
             }
 
-  validates :password, :if => :new_or_password_not_blank?,
+  validates :password, :if => :password_required?,
             :presence => true,
             :confirmation => {:allow_blank => true},
             :length => {:minimum => 8, :allow_blank => true},
@@ -126,7 +127,7 @@ class AccountCommon < ActiveRecord::Base
     validates_presence_of :birth_date
     validate :birth_date_present_and_valid
   end
-  
+
   validates_presence_of :eula_acceptance, :message => :eula_must_be_accepted
   validates_presence_of :privacy_acceptance, :message => :privacy_must_be_accepted
 
@@ -163,15 +164,19 @@ class AccountCommon < ActiveRecord::Base
 
   def self.self_verification_methods
     methods = [VERIFY_BY_MOBILE]
-    
+
     if Configuration.get("paypal_enabled", "false") == "true"
       methods.push(VERIFY_BY_PAYPAL)
     end
-    
+
     if Configuration.get("gestpay_enabled", "false") == "true"
       methods.push(VERIFY_BY_GESTPAY)
     end
-    
+
+    if Configuration.get("social_login_enabled", "false") == "true"
+      methods.push(VERIFY_BY_SOCIAL)
+    end
+
     methods
   end
 
@@ -192,7 +197,7 @@ class AccountCommon < ActiveRecord::Base
   def verify_with_paypal?
     self.verification_method == VERIFY_BY_PAYPAL
   end
-  
+
   def verify_with_gestpay?
     self.verification_method == VERIFY_BY_GESTPAY
   end
@@ -203,6 +208,10 @@ class AccountCommon < ActiveRecord::Base
 
   def verify_with_document?
     self.verification_method == VERIFY_BY_DOCUMENT
+  end
+
+  def verify_with_social?
+    self.verification_method == VERIFY_BY_SOCIAL
   end
 
   def verified=(value)
@@ -253,7 +262,7 @@ class AccountCommon < ActiveRecord::Base
   def email_confirmation
     read_attribute(:email_confirmation) ? read_attribute(:email_confirmation) : self.email
   end
-  
+
   def set_credit_card_info(data)
     values = {}
     if data.has_key?(:shop_transaction_id) && !data[:shop_transaction_id].nil?
@@ -274,7 +283,7 @@ class AccountCommon < ActiveRecord::Base
     end
     self.credit_card_info = values.to_json
   end
-  
+
   def generate_invoice!
     verification_method = Configuration.get('gestpay_webservice_method')
     invoicing_enabled = Configuration.get('gestpay_invoicing_enabled', 'true')
@@ -283,29 +292,29 @@ class AccountCommon < ActiveRecord::Base
     if verification_method == 'verification' or invoicing_enabled != 'true'
       return false
     end
-    
+
     invoice = Invoice.create_for_user(User.find(self.id))
-    
+
     # generate PDF with an asynchronous job with sidekiq
     # unfortunately sidekiq needs ruby 1.9.3
     # send PDF via email to both user and admin
     filename = invoice.generate_pdf()
-    
+
     # send invoice to admin
     Notifier.send_invoice_to_admin(filename).deliver
-    
+
     return filename
   end
-  
+
   def credit_card_identity_verify!
     if self.verify_with_paypal? or verify_with_gestpay?
       self.verified = true
       self.save!
-      
+
       filename = self.generate_invoice!
       # pass filename to new_account_notification
       self.new_account_notification!(filename)
-      
+
       self.captive_portal_login!
       self.clear_ip!
     else
@@ -329,18 +338,18 @@ class AccountCommon < ActiveRecord::Base
     reset_perishable_token!
     Notifier.password_reset_instructions(self).deliver
   end
-  
+
   def new_account_notification!(filename=false)
     if CONFIG['send_email_notification_to_users']
       Notifier.new_account_notification(self, filename).deliver
     end
   end
-  
+
   def store_ip(ip)
     # temporary store IP address, it must be called from the controller
     self.notes = "<ip>#{ip}</ip>"
   end
-  
+
   def retrieve_ip()
     # retrieves ip from notes
     matches = /<ip>(.*)<\/ip>/i.match(self.notes)
@@ -349,24 +358,24 @@ class AccountCommon < ActiveRecord::Base
       matches[1]
     end
   end
-  
+
   def clear_ip!
     # clear ip address from notes when finished
     self.notes = self.notes.gsub(/<ip>(.*)<\/ip>/i, '')
     self.save!
   end
-  
+
   def captive_portal_login(ip_address=false, timeout=false, config_check=true)
     # to use indipendently from configuration supply :config_check => false
     if not CONFIG['automatic_captive_portal_login'] and config_check
       return false
     end
-    
+
     # determine ip address
     ip_address = ip_address ? ip_address : self.retrieve_ip()
     # automatically log in an user in the captive portal to allow the user to surf
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
-    
+
     if cp_base_url
       params = {
         :username => self.username,
@@ -377,7 +386,7 @@ class AccountCommon < ActiveRecord::Base
       if timeout
         params[:timeout] = Configuration.get('gestpay_vbv_session', '300').to_i
       end
-      
+
       uri = URI::parse "#{cp_base_url}/api/v1/account/login"
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -389,9 +398,9 @@ class AccountCommon < ActiveRecord::Base
       raise 'key captive_portal_baseurl not present in the database'
     end
   end
-  
+
   alias captive_portal_login! captive_portal_login
-  
+
   def captive_portal_logout(ip_address=false)
     # determine ip address
     ip_address = ip_address ? ip_address : self.retrieve_ip()
@@ -412,7 +421,7 @@ class AccountCommon < ActiveRecord::Base
       raise 'key captive_portal_baseurl not present in the database'
     end
   end
-  
+
   # determine if a login attempt is ok for verified by visa users
   def captive_portal_login_ok_for_vbv?(login_response)
     # successfully logged in
@@ -492,11 +501,15 @@ class AccountCommon < ActiveRecord::Base
   def traffic_sessions_from(date)
     [traffic_out_sessions_from(date), traffic_in_sessions_from(date)]
   end
-  
+
   private
 
-  def new_or_password_not_blank?
-    self.new_record? || !self.password.blank?
+  def password_required?
+    if self.verify_with_social?
+      false
+    else
+      self.new_record? || !self.password.blank?
+    end
   end
 
   # Custom validation methods

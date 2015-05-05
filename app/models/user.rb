@@ -6,12 +6,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -21,7 +21,6 @@ class User < AccountCommon
   acts_as_authentic do |c|
     c.maintain_sessions = false
   end
-
 
   self.before_validation do |record|
     # Cleaning up unused fields... just in case..
@@ -33,12 +32,12 @@ class User < AccountCommon
     end
   end
 
-
   # Validations
   validate :verification_method_inclusion
 
   has_many :radius_checks, :as => :radius_entity, :dependent => :destroy
   has_many :radius_replies, :as => :radius_entity, :dependent => :destroy
+  has_many :authorizations, :dependent => :destroy
   has_one :invoice
 
   attr_accessible :given_name, :surname, :birth_date, :state, :city, :address, :zip,
@@ -92,17 +91,17 @@ class User < AccountCommon
   def self.find_all_by_user_phone_or_mail(query)
     where(["username = ? OR CONCAT(mobile_prefix,mobile_suffix) = ? OR email = ?"] + [query]*3)
   end
-  
+
   def self.registered_each_day(from, to, verification_method=nil)
     (from..to).map { |that_day|
       on_that_day = User.registered_on(that_day, verification_method)
       [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
     }.compact
   end
-  
+
   def self.registered_daily(from, to, verification_method=nil)
     (from..to).map { |that_day|
-      on_that_day = User.registered_exactly_on(that_day, verification_method) 
+      on_that_day = User.registered_exactly_on(that_day, verification_method)
       [that_day.to_datetime.to_i * 1000, on_that_day] if on_that_day > 0
     }.compact
   end
@@ -113,17 +112,17 @@ class User < AccountCommon
       conditions[0] << " AND verification_method = ?"
       conditions.push(verification_method)
     end
-    
+
     count :conditions => conditions
   end
-  
+
   def self.registered_exactly_on(date, verification_method=nil)
     conditions = ["verified = 1 AND verified_at >= ? AND verified_at < ?", date.to_date, date.to_date+1]
     if verification_method
       conditions[0] << " AND verification_method = ?"
       conditions.push(verification_method)
     end
-    
+
     count :conditions => conditions
   end
 
@@ -134,12 +133,12 @@ class User < AccountCommon
   def self.unverified
     where("verified_at is NULL AND NOT verified")
   end
-  
+
   # unverified users that can be cleaned up by house keeper worker
   def self.unverified_destroyable
     where("verified_at is NULL AND NOT verified AND NOT verification_method = 'gestpay_credit_card'")
   end
-  
+
   # unverified users that can be deactivated by house keeper worker
   def self.unverified_deactivable
     where("verified_at is NULL AND NOT verified AND active AND verification_method = 'gestpay_credit_card'")
@@ -151,11 +150,11 @@ class User < AccountCommon
     # itself autonomously
     where("verified_at is NOT NULL AND NOT verified")
   end
-  
+
   def self.disabled_destroyable
     where("verified_at is NOT NULL AND NOT verified AND NOT verification_method = 'gestpay_credit_card'")
   end
-  
+
   def self.disabled_deactivable
     where("verified_at is NOT NULL AND NOT verified AND active AND verification_method = 'gestpay_credit_card'")
   end

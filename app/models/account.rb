@@ -103,6 +103,68 @@ class Account < AccountCommon
   end
 
 
+  def self.find_or_create_from_oauth(auth_hash)
+    authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
+
+    if authorization
+      account = Account.find(authorization.user_id)
+    else
+      if auth_hash["info"]["birthday"]
+        birth_date = auth_hash["info"]["birthday"].gsub("/", "-")
+      end
+
+      if auth_hash["info"]["location"]
+        city, state = auth_hash["info"]["location"].split(", ")
+      end
+
+      first_name = auth_hash["info"]["first_name"]
+      last_name = auth_hash["info"]["last_name"]
+
+      account = Account.new(
+        :given_name => first_name,
+        :surname => last_name,
+        :email => auth_hash["info"]["email"],
+        :username => "#{first_name}.#{last_name}",
+        :password => '',
+        :password_confirmation => '',
+        :verification_method => 'social_network',
+        :birth_date => birth_date || '',
+        :address => '',
+        :city => city || '',
+        :zip => '',
+        :state => state || '',
+        :eula_acceptance => true,
+        :privacy_acceptance => true,
+        :active => true
+      )
+      # username lowercase withouth dashes
+      account.username = account.username.downcase.gsub(' ', '-')
+      # find available username
+      original_username = account.username
+      counter = 1
+      while Account.where(:username => account.username).count > 0
+        counter += 1
+        account.username = "#{original_username}#{counter}"
+      end
+      account.crypted_password = ''
+      account.password_salt = Authlogic::Random.friendly_token
+      account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
+      account.verified = true
+
+      if account.save
+        auth = Authorization.new(
+          :user_id => account.id,
+          :provider => auth_hash["provider"],
+          :uid => auth_hash["uid"]
+        )
+        auth.save!
+        account.new_account_notification!
+      end
+
+      return account
+    end
+  end
+
   # Utilities
 
   def can_signup_via?(verification_method)
