@@ -483,6 +483,9 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 .warning{ background-color: #ff8000 }
 #notice.error { background-color: #ff6666 !important }
 
+#notice li{ text-align: left }
+#notice ul{ margin: 0 }
+
 .field_with_errors input[type=text], .field_with_errors input[type=password]{ border: 1px solid red }
 
 .block.stats{ margin-top: -5px; padding: 0 }
