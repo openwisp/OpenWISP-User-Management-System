@@ -645,3 +645,28 @@ Staff"
   system_key: f
   key: "invoice_admin_notification_subject_de"
   value: "[OWUMS] Neuer Beleg generiert"
+
+153:
+  system_key: t
+  key: "social_login_enabled"
+  value: "false"
+
+154:
+  system_key: f
+  key: "social_login_facebook_id"
+  value: ""
+
+155:
+  system_key: f
+  key: "social_login_facebook_secret"
+  value: ""
+
+156:
+  system_key: f
+  key: "social_login_google_id"
+  value: ""
+
+157:
+  system_key: f
+  key: "social_login_google_secret"
+  value: ""
