@@ -1,11 +1,6 @@
 class AuthorizationController < ApplicationController
   def create
-    if not auth_hash["info"]["verified"]
-      redirect_to root_url, :flash => {
-        :error => "Your #{auth_hash["provider"]} account is not flagged as verified. You need to have a verified phone number in order to proceed."
-      }
-      return nil
-    elsif auth_hash["info"]["email"].nil?
+    if auth_hash["info"]["email"].nil?
       redirect_to root_url, :flash => {
         :error => "Your #{auth_hash["provider"]} account does not have a verified email address. You need to have a verified email address in order to proceed."
       }

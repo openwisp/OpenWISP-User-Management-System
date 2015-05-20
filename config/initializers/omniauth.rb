@@ -13,7 +13,7 @@ if Configuration.get("social_login_enabled", "false") == "true"
 
     if google_id and google_secret
       provider :google_oauth2, google_id, google_secret,
-               :scope => 'plus.login'
+               :scope => 'plus.me,userinfo.email'
     end
   end
 end
