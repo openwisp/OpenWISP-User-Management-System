@@ -80,12 +80,12 @@ class AccountCommon < ActiveRecord::Base
                 :allow_blank => true
             }
 
-  validates :mobile_prefix, :if => :verify_with_mobile_phone?,
+  validates :mobile_prefix, :if => :validate_mobile_phone?,
             :presence => true,
             :confirmation => true,
             :format => {:with => /\A[0-9]+\Z/, :message => :mobile_prefix_format, :allow_blank => true}
 
-  validates :mobile_suffix, :if => :verify_with_mobile_phone?,
+  validates :mobile_suffix, :if => :validate_mobile_phone?,
             :presence => true,
             :confirmation => true,
             :uniqueness => {:scope => :mobile_prefix, :allow_blank => true},
@@ -99,31 +99,31 @@ class AccountCommon < ActiveRecord::Base
             :presence => true,
             :format => {:with => /\A(\w|[\s'àèéìòù])+\Z/i, :message => :name_format, :allow_blank => true}
 
-  if CONFIG['state']:
+  if CONFIG['state']
     validates :state,
               :presence => true,
               :format => {:with => /\A[a-z\s'\.,]+\Z/i, :message => :address_format}
   end
 
-  if CONFIG['city']:
+  if CONFIG['city']
     validates :city,
               :presence => true,
               :format => {:with => /\A(\w|[\s'\.,\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
   end
 
-  if CONFIG['address']:
+  if CONFIG['address']
     validates :address,
               :presence => true,
               :format => {:with => /\A(\w|[\s'\.,\/\-àèéìòù])+\Z/i, :message => :address_format, :allow_blank => true}
   end
 
-  if CONFIG['zip']:
+  if CONFIG['zip']
     validates :zip,
               :presence => true,
               :format => {:with => /[a-z0-9]/, :message => :zip_format, :allow_blank => true}
   end
 
-  if CONFIG['birth_date']:
+  if CONFIG['birth_date']
     validates_presence_of :birth_date
     validate :birth_date_present_and_valid
   end
@@ -212,6 +212,19 @@ class AccountCommon < ActiveRecord::Base
 
   def verify_with_social?
     self.verification_method == VERIFY_BY_SOCIAL
+  end
+
+  def verify_with_social_and_mobile?
+    # allow creation of new users with empty mobile
+    if self.verify_with_social? and CONFIG['social_login_ask_mobile_phone'] != 'never' and self.id
+      return true
+    else
+      return false
+    end
+  end
+
+  def validate_mobile_phone?
+    self.verify_with_mobile_phone? or self.verify_with_social_and_mobile?
   end
 
   def verified=(value)

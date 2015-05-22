@@ -526,24 +526,24 @@ Staff"
 153:
   system_key: t
   key: "social_login_enabled"
-  value: "false"
+  value: "true"
 
 154:
   system_key: f
   key: "social_login_facebook_id"
-  value: ""
+  value: "711000305676839"
 
 155:
   system_key: f
   key: "social_login_facebook_secret"
-  value: ""
+  value: "0c144b89806e4c66a2b2bc8130449599"
 
 156:
   system_key: f
   key: "social_login_google_id"
-  value: ""
+  value: "289387779652-phme5uq7q5moob185kru9bnbfhlflacf.apps.googleusercontent.com"
 
 157:
   system_key: f
   key: "social_login_google_secret"
-  value: ""
+  value: "dEbzyABj-9fjniEU6UhVPrXd"

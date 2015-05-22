@@ -149,7 +149,11 @@ class Account < AccountCommon
       account.crypted_password = ''
       account.password_salt = Authlogic::Random.friendly_token
       account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
-      account.verified = true
+
+      if CONFIG['social_login_ask_mobile_phone'] == 'never' or (CONFIG['social_login_ask_mobile_phone'] == 'unverified' and\
+                                                                auth_hash["info"]["verified"] == true)
+        account.verified = true
+      end
 
       if account.save
         auth = Authorization.new(
@@ -451,7 +455,8 @@ class Account < AccountCommon
   end
 
   def clean_fields
-    if not self.verify_with_mobile_phone?
+    # regular cases
+    if not self.validate_mobile_phone?
       self.mobile_prefix = nil
       self.mobile_suffix = nil
     elsif not self.verify_with_document?

@@ -56,6 +56,23 @@ class AccountTest < ActiveSupport::TestCase
     assert a.errors.has_key?(:username)
   end
 
+  test "empty mobile validation error" do
+    a = _init_account()
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    assert !a.valid?
+    assert a.errors.length <= 2
+    assert a.errors.has_key?(:mobile_prefix)
+    assert a.errors.has_key?(:mobile_suffix)
+    # same with nil
+    a.mobile_prefix = nil
+    a.mobile_suffix = nil
+    assert !a.valid?
+    assert a.errors.length <= 2
+    assert a.errors.has_key?(:mobile_prefix)
+    assert a.errors.has_key?(:mobile_suffix)
+  end
+
   test "generate_invoice!" do
     # set correct webservice method
     Configuration.set('gestpay_webservice_method', 'payment')
@@ -134,5 +151,81 @@ class AccountTest < ActiveSupport::TestCase
     a2.mobile_suffix = '4352702'
     a2.valid?
     assert a2.duplicate?
+  end
+
+  test "validate_mobile_phone always" do
+    CONFIG['social_login_ask_mobile_phone'] = 'always'
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    a.mobile_prefix = 'wrong'
+    a.mobile_suffix = 'wrong'
+    assert !a.valid?
+
+    a.mobile_prefix = '355'
+    a.mobile_suffix = '4253801'
+    a.mobile_prefix_confirmation = '000'
+    a.mobile_suffix_confirmation = '4253801'
+    assert !a.valid?
+
+    a.mobile_prefix_confirmation = '355'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
+  end
+
+  test "validate_mobile_phone unverified" do
+    CONFIG['social_login_ask_mobile_phone'] = 'unverified'
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    a.mobile_prefix = 'wrong'
+    a.mobile_suffix = 'wrong'
+    assert !a.valid?
+
+    a.mobile_prefix = '355'
+    a.mobile_suffix = '4253801'
+    a.mobile_prefix_confirmation = '000'
+    a.mobile_suffix_confirmation = '4253801'
+    assert !a.valid?
+
+    a.mobile_prefix_confirmation = '355'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
+    a.destroy
+  end
+
+  test "validate_mobile_phone never" do
+    CONFIG['social_login_ask_mobile_phone'] = 'never'
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    a.mobile_prefix = 'wrong'
+    a.mobile_suffix = 'wrong'
+    assert a.valid?
+
+    a.mobile_prefix = '355'
+    a.mobile_suffix = '4253801'
+    a.mobile_prefix_confirmation = '000'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
+
+    a.mobile_prefix_confirmation = '355'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
   end
 end
