@@ -102,12 +102,19 @@ class Account < AccountCommon
     sprintf "%.2f", total_out_megabytes
   end
 
-
   def self.find_or_create_from_oauth(auth_hash)
     authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
 
     if authorization
       account = Account.find(authorization.user_id)
+      # this block is entered when the user disabled her account
+      # in this case we'll re-enable it, because doing the social login again
+      # is equivalent to verifying the phone number again
+      if !account.verified and account.mobile_suffix and account.mobile_prefix
+        account.verified = true
+        account.save
+      end
+      return account
     else
       if auth_hash["info"]["birthday"]
         birth_date = auth_hash["info"]["birthday"].gsub("/", "-")
