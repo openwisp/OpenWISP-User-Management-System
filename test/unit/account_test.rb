@@ -228,4 +228,28 @@ class AccountTest < ActiveSupport::TestCase
     a.mobile_suffix_confirmation = '4253801'
     assert a.valid?
   end
+
+  test "authorization is destroyed" do
+    CONFIG['social_login_ask_mobile_phone'] = 'never'
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    # crete associated authorization object
+    assert_equal 0, Authorization.count
+    Authorization.create(
+      :provider => 'facebook',
+      :uid => '10204334257594466',
+      :user_id => a.id
+    )
+    assert_equal 1, Authorization.count
+
+    # destroy account and ensure authorization has been destroyed
+    a.destroy
+    assert_equal 0, Authorization.count
+  end
 end
