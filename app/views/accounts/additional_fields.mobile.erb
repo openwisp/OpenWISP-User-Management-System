@@ -1,0 +1,55 @@
+<%#
+# This file is part of the OpenWISP User Management System
+#
+# Copyright (C) 2012 OpenWISP.org
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#%>
+
+<%= content_for :data_url, edit_account_path %>
+
+<% content_for :header do %>
+  <h1><%=t :Edit %></h1>
+<% end %>
+
+<% content_for :back do %>
+  <%= mobile_link_back_to account_path %>
+<% end %>
+
+<%= simple_form_for @account, :url => additional_fields_path do |form| %>
+  <% if @account.errors.any? %>
+    <div data-role="collapsible">
+      <h3><%=t :header, :count => @account.errors.count, :scope => [ :errors, :template ] %></h3>
+      <p><%= form.error_messages %></p>
+    </div>
+  <% end %>
+
+  <ul data-role="listview" data-inset="true" id="mobile-registration">
+    <li data-role="fieldcontain" class="verification-block mobile-phone ignore-toggle">
+      <%= form.label :mobile_phone %>
+      <p>&nbsp;</p>
+
+      <%= form.input :mobile_prefix, :collection => @mobile_prefixes, :label => t(:Prefix), :prompt => t(:Choose) %>
+      <%= form.input :mobile_suffix, :label => t(:Suffix) %>
+    </li>
+    <li data-role="fieldcontain" class="verification-block mobile-phone ignore-toggle" id="confirm_mobile_phone_number">
+      <%= form.label :mobile_phone_confirmation %>
+      <p>&nbsp;</p>
+
+      <%= form.input :mobile_prefix_confirmation, :collection => @mobile_prefixes, :label => t(:Prefix_confirmation), :prompt => t(:Choose) %>
+      <%= form.input :mobile_suffix_confirmation, :label => t(:Suffix_confirmation) %>
+    </li>
+    <li><%= form.button :submit %></li>
+  </ul>
+<% end %>

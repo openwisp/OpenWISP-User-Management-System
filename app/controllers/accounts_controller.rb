@@ -133,6 +133,30 @@ class AccountsController < ApplicationController
     end
   end
 
+  # additional fields
+  # implemented to ask additional fields after social login
+  def additional_fields
+    if @account.nil?
+      redirect_to :action => :new
+    elsif @account.verified? or !@current_operator.nil?
+      redirect_to :action => :show
+    else
+      if request.method == 'POST' and @account.update_attributes(request.params[:account])
+        # mark as verified
+        @account.verified = true
+        @account.save
+        redirect_to account_url
+        return nil
+      end
+
+      @mobile_prefixes = MobilePrefix.all
+      respond_to do |format|
+        format.html
+        format.mobile
+      end
+    end
+  end
+
   def update
     if !@current_operator.nil? or !@account.verified?
       respond_to do |format|
@@ -197,8 +221,10 @@ class AccountsController < ApplicationController
     elsif @account.verified?
       flash[:notice] = I18n.t(:Account_verified_successfully)
       redirect_to account_path
+    elsif @account.verify_with_social?
+      redirect_to additional_fields_url
     else
-      if Configuration.get('gestpay_enabled') == 'true':
+      if Configuration.get('gestpay_enabled') == 'true'
         # delete any remaining flash message
         unless flash[:error].nil?
           flash.delete(:error)

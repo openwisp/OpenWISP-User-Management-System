@@ -461,8 +461,8 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 #container #configuration_keys td p{ margin: 5px 0 !important }
 
 #errorExplanation,
-.error,
-.warning{
+div.error,
+div.warning{
 	margin: 10px 5px 20px;
 	padding: 20px 25px 5px 25px;
 	background: #ff6666;
@@ -480,7 +480,7 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 .error li,
 .warning li{ font-weight: bold }
 
-.warning{ background-color: #ff8000 }
+div.warning{ background-color: #ff8000 }
 #notice.error { background-color: #ff6666 !important }
 
 #notice li{ text-align: left }
