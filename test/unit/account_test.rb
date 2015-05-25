@@ -73,6 +73,30 @@ class AccountTest < ActiveSupport::TestCase
     assert a.errors.has_key?(:mobile_suffix)
   end
 
+  test "empty password validation error" do
+    a = Account.new(
+      :given_name => 'Foo',
+      :surname => 'Bar',
+      :email => 'foo@bar.com',
+      :username => 'foobar',
+      :password => '',
+      :mobile_prefix => '334',
+      :mobile_suffix => '4352702',
+      :verification_method => 'mobile_phone',
+      :birth_date => '1980-10-10',
+      :address => 'Via dei Tizii 6',
+      :city => 'Rome',
+      :zip => '00185',
+      :state => 'Italy',
+      :eula_acceptance => true,
+      :privacy_acceptance => true
+    )
+    assert_nil a.password
+    assert !a.valid?
+    assert a.errors.length <= 1
+    assert a.errors.has_key?(:password)
+  end
+
   test "generate_invoice!" do
     # set correct webservice method
     Configuration.set('gestpay_webservice_method', 'payment')

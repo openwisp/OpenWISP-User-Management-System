@@ -135,7 +135,6 @@ class AccountCommon < ActiveRecord::Base
   validate :identity_document_is_present, :if => :verify_with_document?
   validate :no_parameter_tampering # For added security
 
-
   # Relations
   has_and_belongs_to_many :radius_groups, :join_table => 'radius_groups_users', :foreign_key => 'user_id'
   has_many :radius_accountings, :foreign_key => :UserName, :primary_key => :username
@@ -519,9 +518,9 @@ class AccountCommon < ActiveRecord::Base
 
   def password_required?
     if self.verify_with_social?
-      false
+      return false
     else
-      self.new_record? || !self.password.blank?
+      return self.new_record? || !self.password.blank?
     end
   end
 
