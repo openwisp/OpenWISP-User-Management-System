@@ -51,8 +51,7 @@
   </script>
 
   <% if account.new_record? %>
-      
-      <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
+    <% if(Configuration.get('captcha_enabled', 'true') == 'true') %>
       <li data-role="fieldcontain">
         <%= f.input :captcha %>
       </li>
@@ -67,42 +66,53 @@
       <li id="listen_captcha" data-role="fieldcontain">
         <%= link_to t(:listen_captcha).capitalize, spoken_captcha_url, 'data-ajax' => false %>
       </li>
-      <% end %>
+    <% end %>
 
-      <li data-role="fieldcontain">
-        <fieldset data-role="controlgroup">
-          <legend>
-            <%=t :Tick_to_agree_to %> <%= link_to t(:eula), document_path('eula.pdf'), :target => '_blank' %>
-          </legend>
+    <li data-role="fieldcontain">
+      <fieldset data-role="controlgroup">
+        <legend>
+          <%=t :Tick_to_agree_to %> <%= link_to t(:eula), document_path('eula.pdf'), :target => '_blank' %>
+        </legend>
 
-          <%= f.error :eula_acceptance %>
-          <%= f.input_field :eula_acceptance %>
-          <%= f.label :eula_acceptance, t(:I_agree) %>
-        </fieldset>
-      </li>
+        <%= f.error :eula_acceptance %>
+        <%= f.input_field :eula_acceptance %>
+        <%= f.label :eula_acceptance, t(:I_agree) %>
+      </fieldset>
+    </li>
 
-      <li data-role="fieldcontain">
-        <fieldset data-role="controlgroup">
-          <legend>
-            <%=t :Tick_to_examine_of %><%= link_to t(:privacy), document_path('privacy.pdf'), :target => '_blank' %>
-          </legend>
+    <li data-role="fieldcontain">
+      <fieldset data-role="controlgroup">
+        <legend>
+          <%=t :Tick_to_examine_of %><%= link_to t(:privacy), document_path('privacy.pdf'), :target => '_blank' %>
+        </legend>
 
-          <%= f.error :privacy_acceptance %>
-          <%= f.input_field :privacy_acceptance %>
-          <%= f.label :privacy_acceptance, t(:I_agree) %>
-        </fieldset>
-      </li>
+        <%= f.error :privacy_acceptance %>
+        <%= f.input_field :privacy_acceptance %>
+        <%= f.label :privacy_acceptance, t(:I_agree) %>
+      </fieldset>
+    </li>
   <% else %>
-      <li data-role="fieldcontain">
-        <fieldset data-role="controlgroup">
-          <%= label_tag 'account_disable_account', t(:disable_account) %>
-          <%= check_box_tag 'account_disable_account', '1', false, 'data-warning' => t(:Account_disable_confirmation), :name => 'account[disable_account]'  %>
+    <li data-role="fieldcontain">
+      <fieldset data-role="controlgroup">
+        <%= label_tag 'account_disable_account', t(:disable_account) %>
+        <%= check_box_tag 'account_disable_account', '1', false, 'data-warning' => t(:Account_disable_confirmation), :name => 'account[disable_account]'  %>
 
-          <p>&nbsp;</p>
-          <span style="color:red"><%=t :Warning %></span> <%=t :Account_disable_confirmation %>
-        </fieldset>
-      </li>
+        <p>&nbsp;</p>
+        <span style="color:red"><%=t :Warning %></span> <%=t :Account_disable_confirmation %>
+      </fieldset>
+    </li>
   <% end %>
 
   <li><%= f.button :submit %></li>
 </ul>
+
+<% if account_verification_methods.include?('social_network') and account.new_record? %>
+  <div id="registration-social-network" class="social-login center ignore-toggle">
+    <% if CONFIG['omniauth_providers'].include?(:facebook) %>
+      <a href="/auth/facebook" class="social-button facebook"><%= t(:Sign_up_with) %> Facebook</a>
+    <% end %>
+    <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
+      <a href="/auth/google_oauth2" class="social-button google"><%= t(:Sign_up_with) %> Google+</a>
+    <% end %>
+  </div>
+<% end %>

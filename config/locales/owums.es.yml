@@ -423,3 +423,5 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
   Already_registered_password_forgotten: "Parece què ya tiene una cuenta, se olvidó su contraseña?"
   Reset_your_password: "Recuperar contraseña"
   close: "cerrar"
+  Sign_up_with: "Sign up with"
+  Sign_in_with: "Sign in with"

@@ -21,25 +21,35 @@
   <div class="box">
     <div class="block" id="login">
       <%= simple_form_for @account_session, :url => account_session_path do |f| %>
-          <fieldset>
-            <legend><%=t :Login %></legend>
-            <p><%= f.error_messages %></p>
+        <fieldset>
+          <legend><%=t :Login %></legend>
+          <p><%= f.error_messages %></p>
 
-            <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
-                <%= f.input :username, :label => t(:Username_or_mobile_or_email) %>
-            <% else %>
-                <%= f.input :username %>
+          <% if Configuration.get('use_mobile_phone_as_username') == "true" %>
+              <%= f.input :username, :label => t(:Username_or_mobile_or_email) %>
+          <% else %>
+              <%= f.input :username %>
+          <% end %>
+
+          <%= f.input :password %>
+
+          <div id="remember_me">
+            <%= f.input :remember_me, :as => :boolean %>
+          </div>
+
+          <%= f.button :submit, :class => 'submit button nomargin' %>
+
+          <% if account_verification_methods.include?('social_network') %>
+          <p class="center social-login">
+            <% if CONFIG['omniauth_providers'].include?(:facebook) %>
+              <a href="/auth/facebook" class="social-button facebook"><%= t(:Sign_in_with) %> Facebook</a>
             <% end %>
-
-            <%= f.input :password %>
-
-            <div id="remember_me">
-              <%= f.input :remember_me, :as => :boolean %>
-            </div>
-
-            <%= f.button :submit, :class => 'submit button nomargin' %>
-            <br>
-          </fieldset>
+            <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
+              <a href="/auth/google_oauth2" class="social-button google"><%= t(:Sign_in_with) %> Google+</a>
+            <% end %>
+          </p>
+          <% end %>
+        </fieldset>
       <% end %>
     </div>
   </div>
