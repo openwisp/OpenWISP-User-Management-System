@@ -178,7 +178,7 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   test "validate_mobile_phone always" do
-    CONFIG['social_login_ask_mobile_phone'] = 'always'
+    Configuration.set('social_login_ask_mobile_phone', 'always')
     a = _init_account()
     a.verification_method = 'social_network'
     a.mobile_prefix = ''
@@ -200,10 +200,11 @@ class AccountTest < ActiveSupport::TestCase
     a.mobile_prefix_confirmation = '355'
     a.mobile_suffix_confirmation = '4253801'
     assert a.valid?
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
   end
 
   test "validate_mobile_phone unverified" do
-    CONFIG['social_login_ask_mobile_phone'] = 'unverified'
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
     a = _init_account()
     a.verification_method = 'social_network'
     a.mobile_prefix = ''
@@ -229,7 +230,7 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   test "validate_mobile_phone never" do
-    CONFIG['social_login_ask_mobile_phone'] = 'never'
+    Configuration.set('social_login_ask_mobile_phone', 'never')
     a = _init_account()
     a.verification_method = 'social_network'
     a.mobile_prefix = ''
@@ -251,10 +252,11 @@ class AccountTest < ActiveSupport::TestCase
     a.mobile_prefix_confirmation = '355'
     a.mobile_suffix_confirmation = '4253801'
     assert a.valid?
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
   end
 
   test "authorization is destroyed" do
-    CONFIG['social_login_ask_mobile_phone'] = 'never'
+    Configuration.set('social_login_ask_mobile_phone', 'never')
     a = _init_account()
     a.verification_method = 'social_network'
     a.mobile_prefix = ''
@@ -275,5 +277,6 @@ class AccountTest < ActiveSupport::TestCase
     # destroy account and ensure authorization has been destroyed
     a.destroy
     assert_equal 0, Authorization.count
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
   end
 end

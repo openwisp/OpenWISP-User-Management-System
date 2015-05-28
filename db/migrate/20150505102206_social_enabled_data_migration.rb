@@ -6,7 +6,8 @@ class SocialEnabledDataMigration < ActiveRecord::Migration
     keys[154],
     keys[155],
     keys[156],
-    keys[157]
+    keys[157],
+    keys[158]
   ]
 
   def self.up

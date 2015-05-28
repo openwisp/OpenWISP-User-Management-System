@@ -652,21 +652,26 @@ Staff"
   value: "false"
 
 154:
-  system_key: f
+  system_key: t
   key: "social_login_facebook_id"
   value: ""
 
 155:
-  system_key: f
+  system_key: t
   key: "social_login_facebook_secret"
   value: ""
 
 156:
-  system_key: f
+  system_key: t
   key: "social_login_google_id"
   value: ""
 
 157:
-  system_key: f
+  system_key: t
   key: "social_login_google_secret"
   value: ""
+
+158:
+  system_key: t
+  key: "social_login_ask_mobile_phone"
+  value: "unverified"

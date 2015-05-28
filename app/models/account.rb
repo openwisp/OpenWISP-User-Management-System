@@ -157,8 +157,8 @@ class Account < AccountCommon
       account.password_salt = Authlogic::Random.friendly_token
       account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
 
-      if CONFIG['social_login_ask_mobile_phone'] == 'never' or (CONFIG['social_login_ask_mobile_phone'] == 'unverified' and\
-                                                                auth_hash["info"]["verified"] == true)
+      ask = Account.social_login_ask_mobile_phone
+      if ask == 'never' or (ask == 'unverified' and auth_hash["info"]["verified"] == true)
         account.verified = true
       end
 
