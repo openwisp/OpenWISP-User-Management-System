@@ -443,9 +443,28 @@ You can disable them by editing: **config/config.yml**.
     italian: false
     spanish: true
 
-### Credit Card verification method for new accounts
+### Credit Card verification method
 
 For this subject see the file **Gestpay-instructions.rdoc**.
+
+### Social login verification method
+
+Two authentication providers supported:
+
+ * Facebook
+ * Google+
+
+The behaviour can be configured by editing the following configuration keys:
+
+* **social_login_enabled**: true or false
+* **social_login_facebook_id**: facebook app id
+* **social_login_facebook_secret**: facebook app secret key
+* **social_login_google_id**: google+ app id
+* **social_login_google_secret**: google+ app secret key
+* **social_login_ask_mobile_phone**: this config key may have 3 possible values (defaults to **unverified**):
+  * **never**: will never ask mobile phone number to users
+  * **unverified**: will ask only to unverified users (valid for facebook only, google+ will always be always treated as unverified)
+  * **always**: will always ask mobile phone number to users
 
 ## Notice
 
