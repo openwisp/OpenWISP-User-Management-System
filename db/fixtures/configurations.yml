@@ -672,6 +672,12 @@ Staff"
   value: ""
 
 158:
+  system_key: f
+  key: "social_login_success_url"
+  value: ""
+
+159:
   system_key: t
   key: "social_login_ask_mobile_phone"
   value: "unverified"
+

@@ -1,5 +1,7 @@
 class AuthorizationController < ApplicationController
   def create
+    # if there is any missing vital information
+    # abort the operation and display a helpful error message
     if auth_hash["provider"] == "facebook" and auth_hash["info"]["email"].nil? or\
        auth_hash["provider"] == "google_oauth2" and auth_hash["extra"]["raw_info"]["email_verified"] != "true"
       redirect_to root_url, :flash => {
@@ -23,8 +25,12 @@ class AuthorizationController < ApplicationController
       @account.captive_portal_login!
       @account.clear_ip!
       flash[:notice] = I18n.t(:Login_successful)
-      redirect_to account_url
+      # determine URL for redirect (defaults to account URL)
+      config_url = Configuration.get('social_login_success_url', '')
+      redirect_url = config_url != '' ? config_url : account_url
+      redirect_to redirect_url
     else
+      # ask mobile phone
       redirect_to additional_fields_url
     end
   end
