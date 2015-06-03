@@ -181,7 +181,7 @@
   <div class="grid_12">
     <% if flash[:notice] %>
     <div id="notice" class="box">
-      <p><%= flash[:notice] %> <a class="close">&times;&nbsp;<%= t :close %></a></p>
+      <p><%= flash[:notice] %> <a class="close">&times;&nbsp;<%= t(:Close).downcase %></a></p>
     </div>
     <% end %>
     <% if flash[:error] %>
@@ -193,7 +193,7 @@
           <% end %>
         </ul>
       <% else %>
-        <p><%= flash[:error] %> <a class="close">&times;&nbsp;<%= t :close %></a></p>
+        <p><%= flash[:error] %> <a class="close">&times;&nbsp;<%= t(:Close).downcase %></a></p>
       <% end %>
     </div>
     <% end %>
@@ -207,7 +207,7 @@
       <p>OpenWISP User Management System - Copyright (C) <%= Date.today.year %> <a href="http://openwisp.org/">OpenWISP.org</a></p>
 
       <% if is_mobile_device? %>
-          <p id="go-to-mobile"><%= link_to_toggle_mobile %></p>
+        <p id="go-to-mobile"><%= link_to_toggle_mobile %></p>
       <% end %>
     </div>
   </div>
