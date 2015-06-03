@@ -219,7 +219,7 @@ class AccountCommon < ActiveRecord::Base
 
   def verify_with_social_and_mobile?
     # allow creation of new users with empty mobile
-    if self.verify_with_social? and Account.social_login_ask_mobile_phone != 'never' and self.id
+    if self.verify_with_social? and Account.social_login_ask_mobile_phone != 'never' and self.id and !self.verified?
       return true
     else
       return false
