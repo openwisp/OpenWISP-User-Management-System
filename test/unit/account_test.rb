@@ -266,17 +266,17 @@ class AccountTest < ActiveSupport::TestCase
     a.save!
 
     # crete associated authorization object
-    assert_equal 0, Authorization.count
-    Authorization.create(
+    assert_equal 0, SocialAuth.count
+    SocialAuth.create(
       :provider => 'facebook',
       :uid => '10204334257594466',
       :user_id => a.id
     )
-    assert_equal 1, Authorization.count
+    assert_equal 1, SocialAuth.count
 
     # destroy account and ensure authorization has been destroyed
     a.destroy
-    assert_equal 0, Authorization.count
+    assert_equal 0, SocialAuth.count
     Configuration.set('social_login_ask_mobile_phone', 'unverified')
   end
 end

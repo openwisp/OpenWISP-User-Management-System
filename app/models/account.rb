@@ -103,7 +103,7 @@ class Account < AccountCommon
   end
 
   def self.find_or_create_from_oauth(auth_hash)
-    authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
+    authorization = SocialAuth.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
 
     if authorization
       account = Account.find(authorization.user_id)
@@ -163,7 +163,7 @@ class Account < AccountCommon
       end
 
       if account.save
-        auth = Authorization.new(
+        auth = SocialAuth.new(
           :user_id => account.id,
           :provider => auth_hash["provider"],
           :uid => auth_hash["uid"]

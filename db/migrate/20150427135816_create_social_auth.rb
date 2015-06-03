@@ -1,6 +1,6 @@
-class CreateAuthorizations < ActiveRecord::Migration
+class CreateSocialAuth < ActiveRecord::Migration
   def self.up
-    create_table :authorizations do |t|
+    create_table :social_auths do |t|
       t.string :provider
       t.string :uid
       t.integer :user_id
@@ -10,6 +10,6 @@ class CreateAuthorizations < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :authorizations
+    drop_table :social_auths
   end
 end

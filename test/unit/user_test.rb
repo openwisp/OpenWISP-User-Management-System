@@ -181,16 +181,16 @@ class UserTest < ActiveSupport::TestCase
     u = User.find(a.id)
 
     # crete associated authorization object
-    assert_equal 0, Authorization.count
-    Authorization.create(
+    assert_equal 0, SocialAuth.count
+    SocialAuth.create(
       :provider => 'facebook',
       :uid => '10204334257594466',
       :user_id => u.id
     )
-    assert_equal 1, Authorization.count
+    assert_equal 1, SocialAuth.count
 
     # destroy account and ensure authorization has been destroyed
     u.destroy
-    assert_equal 0, Authorization.count
+    assert_equal 0, SocialAuth.count
   end
 end

@@ -92,8 +92,8 @@ Owums::Application.routes.draw do
 
     #### Social Auth
     if Configuration.get("social_login_enabled", "false") == "true"
-      match '/auth/:provider/callback' => 'authorization#create', :as => :callback
-      match '/auth/failure' => 'authorization#failure', :as => :failure
+      match '/auth/:provider/callback' => 'social_auth#create', :as => :callback
+      match '/auth/failure' => 'social_auth#failure', :as => :failure
     end
 
     #### Root Route --->

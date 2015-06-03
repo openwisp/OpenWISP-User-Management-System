@@ -1,4 +1,4 @@
-class AuthorizationController < ApplicationController
+class SocialAuthController < ApplicationController
   def create
     # if there is any missing vital information
     # abort the operation and display a helpful error message
