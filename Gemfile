@@ -32,6 +32,11 @@ gem 'savon', '~> 1.2.0'
 gem 'activemerchant'
 gem 'prawn'
 
+# social auth
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+
 group :test do
   gem 'sqlite3'
 end

@@ -181,7 +181,20 @@
   <div class="grid_12">
     <% if flash[:notice] %>
     <div id="notice" class="box">
-      <p><%= flash[:notice] %> <a class="close">&times;&nbsp;chiudi</a></p>
+      <p><%= flash[:notice] %> <a class="close">&times;&nbsp;<%= t :close %></a></p>
+    </div>
+    <% end %>
+    <% if flash[:error] %>
+    <div id="notice" class="box error">
+      <% if flash[:error].is_a?(Hash) %>
+        <ul>
+          <% flash[:error].each do |key, value| %>
+            <li><%= key %>: <%= value %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><%= flash[:error] %> <a class="close">&times;&nbsp;<%= t :close %></a></p>
+      <% end %>
     </div>
     <% end %>
   </div>

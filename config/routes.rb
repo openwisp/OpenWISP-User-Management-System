@@ -41,6 +41,7 @@ Owums::Application.routes.draw do
     match '/account/secure_verify_paypal' => 'accounts#secure_verify_paypal', :as => :secure_verify_paypal, :via => 'post'
     match '/account/gestpay_verify_credit_card' => 'accounts#gestpay_verify_credit_card', :as => :gestpay_verify_credit_card, :via => 'post'
     match '/account/gestpay_verified_by_visa' => 'accounts#gestpay_verified_by_visa', :as => :gestpay_verified_by_visa, :via => 'post'
+    match '/account/additional_fields' => 'accounts#additional_fields', :as => :additional_fields
 
     match '/users/browse' => 'users#index', :as => :users_browse
     match '/users/search' => 'users#search', :as => :users_search
@@ -88,6 +89,12 @@ Owums::Application.routes.draw do
       post :export, :on => :collection
     end
     ###################
+
+    #### Social Auth
+    if Configuration.get("social_login_enabled", "false") == "true"
+      match '/auth/:provider/callback' => 'social_auth#create', :as => :callback
+      match '/auth/failure' => 'social_auth#failure', :as => :failure
+    end
 
     #### Root Route --->
     root :to => "accounts#instructions"

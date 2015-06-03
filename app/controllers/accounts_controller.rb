@@ -6,12 +6,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -23,7 +23,7 @@ class AccountsController < ApplicationController
   before_filter :require_no_account, :only => [
     :new, :create, :verify_paypal, :secure_verify_paypal
   ]
-  
+
   before_filter :get_credit_card_verification_cost, :only => [
     :new, :create, :verification, :gestpay_verify_credit_card
   ]
@@ -56,7 +56,7 @@ class AccountsController < ApplicationController
     @account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
 
     @account.captcha_verification = session[:captcha]
-    
+
     # store IP temporarily, necessary to automatically log in the user in the captive portal
     @account.store_ip(request.remote_ip)
 
@@ -65,7 +65,7 @@ class AccountsController < ApplicationController
     if save_account
       # by default no verification method is selected
       @verification_method = false
-      
+
       respond_to do |format|
         format.html { redirect_to account_path }
         format.mobile { redirect_to account_path }
@@ -74,7 +74,7 @@ class AccountsController < ApplicationController
     else
       # select verification method automatically
       @verification_method = params[:account][:verification_method]
-      
+
       respond_to do |format|
         format.html   { render :action => :new }
         format.mobile { render :action => :new }
@@ -98,7 +98,7 @@ class AccountsController < ApplicationController
       end
     else
       sort_and_paginate_accountings unless request.format.jpg?
-      
+
       respond_to do |format|
         format.html
         format.mobile
@@ -129,6 +129,30 @@ class AccountsController < ApplicationController
         format.html
         format.mobile
         format.xml { render_if_xml_restful_enabled }
+      end
+    end
+  end
+
+  # additional fields
+  # implemented to ask additional fields after social login
+  def additional_fields
+    if @account.nil?
+      redirect_to :action => :new
+    elsif @account.verified? or !@current_operator.nil?
+      redirect_to :action => :show
+    else
+      if request.method == 'POST' and @account.update_attributes(request.params[:account])
+        # mark as verified
+        @account.verified = true
+        @account.save
+        redirect_to account_url
+        return nil
+      end
+
+      @mobile_prefixes = MobilePrefix.all
+      respond_to do |format|
+        format.html
+        format.mobile
       end
     end
   end
@@ -197,8 +221,10 @@ class AccountsController < ApplicationController
     elsif @account.verified?
       flash[:notice] = I18n.t(:Account_verified_successfully)
       redirect_to account_path
+    elsif @account.verify_with_social?
+      redirect_to additional_fields_url
     else
-      if Configuration.get('gestpay_enabled') == 'true':        
+      if Configuration.get('gestpay_enabled') == 'true'
         # delete any remaining flash message
         unless flash[:error].nil?
           flash.delete(:error)
@@ -216,12 +242,12 @@ class AccountsController < ApplicationController
       end
     end
   end
-  
+
   # account status
   def status_json
     unless @account.nil?
       remaining_time = @account.verification_time_remaining rescue 0
-      
+
       data = {
         :is_verified => @account.verified?,
         :is_expired => false,
@@ -234,14 +260,14 @@ class AccountsController < ApplicationController
         :remaining_time => 0
       }
     end
-    
+
     render :json => data
   end
 
   def verify_paypal
     # Method to be called by paypal (IPN) to
     # verify user. Invoice is the account's id.
-    # I know this method is verbose but, since 
+    # I know this method is verbose but, since
     # it is very important for it to be secure,
     # clarity is preferred to geekiness :D
     # TODO: disable and delete this method
@@ -256,7 +282,7 @@ class AccountsController < ApplicationController
   def secure_paypal
     # Method to be called by paypal (IPN) to
     # verify user. Invoice is the account's id.
-    # I know this method is verbose but, since 
+    # I know this method is verbose but, since
     # it is very important for it to be secure,
     # clarity is preferred to geekiness :D
     if params.has_key?(:secret) and params[:secret] == Configuration.get("ipn_shared_secret")
@@ -268,18 +294,18 @@ class AccountsController < ApplicationController
     end
     render :nothing => true
   end
-  
+
   # before_filter: get_credit_card_verification_cost
   def gestpay_verify_credit_card
     gestpay_enabled = Configuration.get('gestpay_enabled') == 'true' ? true : false;
     @currency_code = Configuration.get('gestpay_currency')
     @verified_by_visa = false
-    
+
     unless gestpay_enabled
       render :nothing => true, :status => '403'
       return false
     end
-    
+
     unless @account.nil?
       validation = @account.gestpay_s2s_verify_credit_card(request, params, @credit_card_verification_cost, @currency_code)
     else
@@ -290,7 +316,7 @@ class AccountsController < ApplicationController
       }
       flash[:expired] = true
     end
-    
+
     if validation[:transaction_result] == 'OK'
       unless flash[:error].nil?
         flash.delete(:error)
@@ -309,9 +335,9 @@ class AccountsController < ApplicationController
         flash[:error] = I18n.translate!(('gestpay_error_'+validation[:error_code]).parameterize.underscore.to_sym, :raise => true)
       rescue I18n::MissingTranslationData, TypeError
         flash[:error] = validation[:error_description]
-      end      
+      end
     end
-    
+
     respond_to do |format|
       format.html{ redirect_to verification_path }
       format.js{
@@ -320,7 +346,7 @@ class AccountsController < ApplicationController
       }
     end
   end
-  
+
   def gestpay_verified_by_visa
     if not Configuration.get('gestpay_enabled') == 'true'
       head 404
@@ -354,7 +380,7 @@ class AccountsController < ApplicationController
   def load_account
     @account = current_account
   end
-  
+
   def get_credit_card_verification_cost
     if Configuration.get('gestpay_enabled') != 'true'
       return @credit_card_verification = false

@@ -390,3 +390,6 @@ sl:
   max_yearly_transaction_limit_reached: "max yearly transaction limit reached"
   Already_registered_password_forgotten: "It seems you already have an account, password forgotten?"
   Reset_your_password: "Reset your password"
+  close: "close"
+  Sign_up_with: "Sign up with"
+  Sign_in_with: "Sign in with"

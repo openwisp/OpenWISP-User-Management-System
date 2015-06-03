@@ -102,6 +102,79 @@ class Account < AccountCommon
     sprintf "%.2f", total_out_megabytes
   end
 
+  def self.find_or_create_from_oauth(auth_hash)
+    authorization = SocialAuth.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
+
+    if authorization
+      account = Account.find(authorization.user_id)
+      # this block is entered when the user disabled her account
+      # in this case we'll re-enable it, because doing the social login again
+      # is equivalent to verifying the phone number again
+      if !account.verified and account.mobile_suffix and account.mobile_prefix
+        account.verified = true
+        account.save
+      end
+      return account
+    else
+      if auth_hash["info"]["birthday"]
+        birth_date = auth_hash["info"]["birthday"].gsub("/", "-")
+      end
+
+      if auth_hash["info"]["location"]
+        city, state = auth_hash["info"]["location"].split(", ")
+      end
+
+      first_name = auth_hash["info"]["first_name"]
+      last_name = auth_hash["info"]["last_name"]
+
+      account = Account.new(
+        :given_name => first_name,
+        :surname => last_name,
+        :email => auth_hash["info"]["email"],
+        :username => "#{first_name}.#{last_name}",
+        :password => '',
+        :password_confirmation => '',
+        :verification_method => 'social_network',
+        :birth_date => birth_date || '',
+        :address => '',
+        :city => city || '',
+        :zip => '',
+        :state => state || '',
+        :eula_acceptance => true,
+        :privacy_acceptance => true,
+        :active => true
+      )
+      # username lowercase withouth dashes
+      account.username = account.username.downcase.gsub(' ', '-')
+      # find available username
+      original_username = account.username
+      counter = 1
+      while Account.where(:username => account.username).count > 0
+        counter += 1
+        account.username = "#{original_username}#{counter}"
+      end
+      account.crypted_password = ''
+      account.password_salt = Authlogic::Random.friendly_token
+      account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
+
+      ask = Account.social_login_ask_mobile_phone
+      if ask == 'never' or (ask == 'unverified' and auth_hash["info"]["verified"] == true)
+        account.verified = true
+      end
+
+      if account.save
+        auth = SocialAuth.new(
+          :user_id => account.id,
+          :provider => auth_hash["provider"],
+          :uid => auth_hash["uid"]
+        )
+        auth.save!
+        account.new_account_notification!
+      end
+
+      return account
+    end
+  end
 
   # Utilities
 
@@ -389,7 +462,8 @@ class Account < AccountCommon
   end
 
   def clean_fields
-    if not self.verify_with_mobile_phone?
+    # regular cases
+    if not self.validate_mobile_phone?
       self.mobile_prefix = nil
       self.mobile_suffix = nil
     elsif not self.verify_with_document?
