@@ -7,7 +7,7 @@ if Configuration.get("social_login_enabled", "false") == "true"
     google_id = Configuration.get('social_login_google_id', '')
     google_secret = Configuration.get('social_login_google_secret', '')
 
-    if facebook_id and facebook_secret
+    if facebook_id != '' and facebook_secret != ''
       provider :facebook, facebook_id, facebook_secret,
                :scope => 'email,user_birthday,user_location',
                :display => 'page'
@@ -15,7 +15,7 @@ if Configuration.get("social_login_enabled", "false") == "true"
       CONFIG['omniauth_providers'].push(:facebook)
     end
 
-    if google_id and google_secret
+    if google_id != '' and google_secret != ''
       provider :google_oauth2, google_id, google_secret,
                :scope => 'plus.me,userinfo.email'
 
