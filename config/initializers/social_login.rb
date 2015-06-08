@@ -1,6 +1,11 @@
 CONFIG['omniauth_providers'] = []
 CONFIG['social_login_enabled'] = (Configuration.get("social_login_enabled", "false") == "true") rescue false
 
+# ensure feature enabled during automated tests
+if RAILS_ENV == 'test'
+  CONFIG['social_login_enabled'] = true
+end
+
 if CONFIG['social_login_enabled']
   Rails.application.config.middleware.use OmniAuth::Builder do
     facebook_id = Configuration.get('social_login_facebook_id', '')
