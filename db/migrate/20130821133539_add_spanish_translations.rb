@@ -1,13 +1,15 @@
 class AddSpanishTranslations < ActiveRecord::Migration
   keys = YAML::load(File.open("db/fixtures/configurations.yml"))
-  
+
   # new spanish config keys
   @configurations = (98..108).map { |n| keys[n] }
-  
+
   def self.up
     @configurations.each do |config|
       if Configuration.get(config['key']).nil?
-        Configuration.set(config['key'], config['value'])
+        Configuration.create(:key => config['key'],
+                             :value => config['value'],
+                             :system_key => config['system_key'] == 't')
       end
     end
   end

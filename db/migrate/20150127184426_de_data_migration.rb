@@ -18,10 +18,14 @@ class DeDataMigration < ActiveRecord::Migration
   def self.up
     @configurations.each do |config|
       begin
-        Configuration.set(config['key'], config['value'])
+        Configuration.create(:key => config['key'],
+                             :value => config['value'],
+                             :system_key => config['system_key'] == 't')
       rescue
         Configuration.find_by_key(config['key']).destroy()
-        Configuration.set(config['key'], config['value'])
+        Configuration.create(:key => config['key'],
+                             :value => config['value'],
+                             :system_key => config['system_key'] == 't')
       end
     end
   end

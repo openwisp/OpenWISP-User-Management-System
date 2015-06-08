@@ -1,7 +1,7 @@
 class AddNewConfigurationKeys < ActiveRecord::Migration
-  
+
   keys = YAML::load(File.open("db/fixtures/configurations.yml"))
-  
+
   @configurations = [
     keys[59], # custom_account_instructions_en
     keys[61], # logo
@@ -20,14 +20,16 @@ class AddNewConfigurationKeys < ActiveRecord::Migration
     keys[97], # invoice_admin_notification_subject_it
     keys[29], # tax rate
   ]
-  
+
   def self.up
     @configurations.each do |config|
       if Configuration.get(config['key']).nil?
-        Configuration.set(config['key'], config['value'])
+        Configuration.create(:key => config['key'],
+                             :value => config['value'],
+                             :system_key => config['system_key'] == 't')
       end
     end
-    
+
     # rename "custom_account_instructions" to "custom_account_instructions_it"
     c = Configuration.find_by_key('custom_account_instructions')
     unless c.nil?
@@ -43,7 +45,7 @@ class AddNewConfigurationKeys < ActiveRecord::Migration
         c.destroy
       end
     end
-    
+
     # rename "custom_account_instructions_it" to "custom_account_instructions"
     c = Configuration.find_by_key('custom_account_instructions_it')
     unless c.nil?
