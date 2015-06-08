@@ -42,10 +42,10 @@
           <% if account_verification_methods.include?('social_network') %>
           <p class="center social-login">
             <% if CONFIG['omniauth_providers'].include?(:facebook) %>
-              <a href="/auth/facebook" class="social-button facebook"><%= t(:Sign_in_with) %> Facebook</a>
+              <a href="<%= root_url %>auth/facebook" class="social-button facebook"><%= t(:Sign_in_with) %> Facebook</a>
             <% end %>
             <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
-              <a href="/auth/google_oauth2" class="social-button google"><%= t(:Sign_in_with) %> Google+</a>
+              <a href="<%= root_url %>auth/google_oauth2" class="social-button google"><%= t(:Sign_in_with) %> Google+</a>
             <% end %>
           </p>
           <% end %>
