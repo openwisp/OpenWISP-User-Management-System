@@ -163,7 +163,7 @@ class AccountCommon < ActiveRecord::Base
   def self.self_verification_methods
     methods = [VERIFY_BY_MOBILE]
 
-    if Configuration.get("gestpay_enabled", "false") == "true"
+    if CONFIG['gestpay_enabled']
       methods.push(VERIFY_BY_GESTPAY)
     end
 

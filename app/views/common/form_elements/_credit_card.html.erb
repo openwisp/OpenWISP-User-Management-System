@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #%>
 
-<% if Configuration.get('gestpay_enabled') == "true" && owner.can_signup_via?(AccountCommon::VERIFY_BY_GESTPAY) && owner.new_record? %>
+<% if CONFIG['gestpay_enabled'] && owner.can_signup_via?(AccountCommon::VERIFY_BY_GESTPAY) && owner.new_record? %>
   <div class="verification-block hidden" id="verify-credit-card">
     <table>
       <tr>

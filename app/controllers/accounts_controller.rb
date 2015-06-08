@@ -222,7 +222,7 @@ class AccountsController < ApplicationController
     elsif @account.verify_with_social?
       redirect_to additional_fields_url
     else
-      if Configuration.get('gestpay_enabled') == 'true'
+      if CONFIG['gestpay_enabled']
         # delete any remaining flash message
         unless flash[:error].nil?
           flash.delete(:error)
@@ -264,11 +264,10 @@ class AccountsController < ApplicationController
 
   # before_filter: get_credit_card_verification_cost
   def gestpay_verify_credit_card
-    gestpay_enabled = Configuration.get('gestpay_enabled') == 'true' ? true : false;
     @currency_code = Configuration.get('gestpay_currency')
     @verified_by_visa = false
 
-    unless gestpay_enabled
+    unless CONFIG['gestpay_enabled']
       render :nothing => true, :status => '403'
       return false
     end
@@ -315,7 +314,7 @@ class AccountsController < ApplicationController
   end
 
   def gestpay_verified_by_visa
-    if not Configuration.get('gestpay_enabled') == 'true'
+    if not CONFIG['gestpay_enabled']
       head 404
     # if PaRes param is missing from POST request return 400 Bad Request
     elsif not params[:PaRes]
@@ -349,7 +348,7 @@ class AccountsController < ApplicationController
   end
 
   def get_credit_card_verification_cost
-    if Configuration.get('gestpay_enabled') != 'true'
+    if not CONFIG['gestpay_enabled']
       return @credit_card_verification = false
     end
     # verification cost, 0 if verification web service method us used
