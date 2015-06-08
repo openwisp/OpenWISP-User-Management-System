@@ -1,6 +1,7 @@
 CONFIG['omniauth_providers'] = []
+CONFIG['social_login_enabled'] = (Configuration.get("social_login_enabled", "false") == "true") rescue false
 
-if Configuration.get("social_login_enabled", "false") == "true"
+if CONFIG['social_login_enabled']
   Rails.application.config.middleware.use OmniAuth::Builder do
     facebook_id = Configuration.get('social_login_facebook_id', '')
     facebook_secret = Configuration.get('social_login_facebook_secret', '')

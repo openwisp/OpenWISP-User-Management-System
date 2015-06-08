@@ -167,7 +167,7 @@ class AccountCommon < ActiveRecord::Base
       methods.push(VERIFY_BY_GESTPAY)
     end
 
-    if Configuration.get("social_login_enabled", "false") == "true"
+    if CONFIG['social_login_enabled']
       methods.push(VERIFY_BY_SOCIAL)
     end
 
