@@ -298,7 +298,6 @@ de:
   city: "Stadt"
   click_here: "Hier klicken"
   credit_card: "Kreditkarte"
-  paypal_credit_card: "Paypal oder Kreditkarte"
   gestpay_credit_card: "Kreditkarte"
   credit_card_instructions: "Nach der Registrierung werden Sie gebeten Ihre Kreditkarte zu überprüfen.<br /><br /><strong> Die Bearbeitung kostet %{count}</strong> und wird über eine <strong> gesicherte Verbindung durchgeführt </strong>.<br /><br /><strong> Ihre Kreditkartennummer wird NICHT in unserem Database gespeichert, dafür aber in dem der Bank, die die Daten prüfen wird.</strong>"
   credit_card_instructions_free: "Nach der Registrierung werden Sie gebeten Ihre Kreditkarte zu überprüfen.<br /><br /><strong> Die Bearbeitung ist kostenlos </strong> und wird über eine <strong> gesicherte Verbindung durchgeführt </strong>.<br /><br /><strong> Ihre Kreditkartennummer wird NICHT in unserem Database gespeichert, dafür aber in dem der Bank, die die Daten prüfen wird.</strong>"

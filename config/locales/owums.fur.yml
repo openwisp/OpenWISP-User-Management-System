@@ -295,7 +295,6 @@ fur:
   city: "Citât"
   click_here: "Cliche chi"
   credit_card: "Cjarte di credit"
-  paypal_credit_card: "Paypal o cjarte di credit"
   gestpay_credit_card: "Cjarte di credit"
   credit_card_instructions: "Ae fin da procedure di regjistrazion ti vignarà domandât di verificâ la to cjarte di credit.<br /><br /><strong>La operazion e à un cost di %{count}</strong>e e ven fate cuntune<strong>conession sigure</strong>.<br /><br /><strong>Il to numar di cjarte di credit NOL vignarà tignût di cont tai nestris database ma su chel de bancje che e fasarà la verifiche.</strong>"
   credit_card_instructions_free: " Ae fin da procedure di regjistrazion ti vignarà domandât di verificâ la to cjarte di credit.<br /><br /><strong> La operazion no coste nuie </strong> e e ven fate cuntune<strong>conession sigure</strong>.<br /><br /><strong> Il to numar di cjarte di credit NOL vignarà tignût di cont tai nestris database ma su chel de bancje che e fasarà la verifiche.</strong>"

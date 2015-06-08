@@ -42,21 +42,6 @@
   system_key: f
   key: "default_radius_group"
   value: "Users"
-
-20:
-  system_key: f
-  key: "paypal_enabled"
-  value: "false"
-    
-21:
-  system_key: f
-  key: "ipn_url"
-  value: "https://www.paypal.com/cgi-bin/webscr"
-    
-22:
-  system_key: f
-  key: "sandbox_ipn_url"
-  value: "https://www.sandbox.paypal.com/cgi-bin/webscr"
     
 23:
   system_key: f
@@ -68,11 +53,6 @@
   key: "credit_card_registration_expire"
   value: "600"
 
-25:
-  system_key: f
-  key: "paypal_business_account"
-  value: "mtylty_1277212890_biz@gmail.com"
-
 26:
   system_key: f
   key: "ipn_cert_id"
@@ -82,11 +62,6 @@
   system_key: f
   key: "ipn_shared_secret"
   value: ""
-
-28:
-  system_key: f
-  key: "paypal_currency"
-  value: "EUR"
 
 29:
   system_key: f

@@ -21,7 +21,7 @@ class AccountsController < ApplicationController
   ]
 
   before_filter :require_no_account, :only => [
-    :new, :create, :verify_paypal, :secure_verify_paypal
+    :new, :create
   ]
 
   before_filter :get_credit_card_verification_cost, :only => [
@@ -31,8 +31,6 @@ class AccountsController < ApplicationController
   before_filter :require_no_operator
 
   before_filter :load_account, :except => [ :new, :create ]
-
-  protect_from_forgery :except => [ :verify_paypal, :secure_verify_paypal ]
 
   STATS_PERIOD = 14
 
@@ -262,37 +260,6 @@ class AccountsController < ApplicationController
     end
 
     render :json => data
-  end
-
-  def verify_paypal
-    # Method to be called by paypal (IPN) to
-    # verify user. Invoice is the account's id.
-    # I know this method is verbose but, since
-    # it is very important for it to be secure,
-    # clarity is preferred to geekiness :D
-    # TODO: disable and delete this method
-    if params.has_key? :invoice
-      user = User.find params[:invoice]
-
-      user.credit_card_identity_verify!
-    end
-    render :nothing => true
-  end
-
-  def secure_paypal
-    # Method to be called by paypal (IPN) to
-    # verify user. Invoice is the account's id.
-    # I know this method is verbose but, since
-    # it is very important for it to be secure,
-    # clarity is preferred to geekiness :D
-    if params.has_key?(:secret) and params[:secret] == Configuration.get("ipn_shared_secret")
-      if params.has_key? :invoice
-        user = User.find params[:invoice]
-
-        user.credit_card_identity_verify!
-      end
-    end
-    render :nothing => true
   end
 
   # before_filter: get_credit_card_verification_cost

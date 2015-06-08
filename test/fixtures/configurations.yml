@@ -48,21 +48,6 @@
   key: default_radius_group
   value: "Users"
 
-22:
-  system_key: f
-  key: paypal_enabled
-  value: false
-    
-23:
-  system_key: f
-  key: ipn_url
-  value: https://www.paypal.com/cgi-bin/webscr
-    
-24:
-  system_key: f
-  key: sandbox_ipn_url
-  value: https://www.sandbox.paypal.com/cgi-bin/webscr
-
 # BEGIN: "DO NOT EDIT - NEEDED FOR UNIT TESTING"
 25:
   system_key: f
@@ -79,11 +64,6 @@
   system_key: t
   key: credit_card_registration_expire
   value: 300
-
-27:
-  system_key: f
-  key: paypal_business_account
-  value: mtylty_1277212890_biz@gmail.com
 
 28:
   system_key: f

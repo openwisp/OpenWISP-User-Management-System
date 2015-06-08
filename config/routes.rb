@@ -37,8 +37,6 @@ Owums::Application.routes.draw do
     match '/account/reset' => 'password_resets#new', :as => :password_reset
     match '/account/verification' => 'accounts#verification', :as => :verification
     match '/account/status.json' => 'accounts#status_json', :as => :account_status
-    match '/account/verify_paypal' => 'accounts#verify_paypal', :as => :verify_paypal, :via => 'post'
-    match '/account/secure_verify_paypal' => 'accounts#secure_verify_paypal', :as => :secure_verify_paypal, :via => 'post'
     match '/account/gestpay_verify_credit_card' => 'accounts#gestpay_verify_credit_card', :as => :gestpay_verify_credit_card, :via => 'post'
     match '/account/gestpay_verified_by_visa' => 'accounts#gestpay_verified_by_visa', :as => :gestpay_verified_by_visa, :via => 'post'
     match '/account/additional_fields' => 'accounts#additional_fields', :as => :additional_fields

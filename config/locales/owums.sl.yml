@@ -294,7 +294,6 @@ sl:
   city: "mesto"
   click_here: "klikni tukaj"
   credit_card: "kreditna kartica"
-  paypal_credit_card: "Paypal ali kreditna kartica"
   gestpay_credit_card: "kreditna kartica"
   credit_card_instructions: "Po končani registraciji, boš moral preveriti tudi tvojo kreditno kartico.<br /><br /><strong>Operacija stane %{count}</strong> ter jo je potrebno opraviti preko <strong>varne povezave </strong>.<br /><br /><strong>Številka tvoje kreditne kartice NE bo ostala shranjena v naši bazi podatkov, ampak v bazi banke, ki bo opravila verifikacijo.</strong>"
   credit_card_instructions_free: "Po končani registraciji, boš moral preveriti tudi tvojo kreditno kartico.<br /><br /><strong>operacija je brezplačna</strong> ter jo je potrebno opraviti preko <strong> varne povezave </strong>.<br /><br /><strong> Številka tvoje kreditne kartice NE bo ostala shranjena v naši bazi podatkov, ampak v bazi banke, ki bo opravila verifikacijo.</strong>" 

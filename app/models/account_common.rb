@@ -24,7 +24,6 @@ class AccountCommon < ActiveRecord::Base
 
   VERIFY_BY_MOBILE = "mobile_phone"
   VERIFY_BY_DOCUMENT = "identity_document"
-  VERIFY_BY_PAYPAL = "paypal_credit_card"
   VERIFY_BY_GESTPAY = "gestpay_credit_card"
   VERIFY_BY_NOTHING = "no_identity_verification"
   VERIFY_BY_MACADDRESS = "mac_address"
@@ -164,10 +163,6 @@ class AccountCommon < ActiveRecord::Base
   def self.self_verification_methods
     methods = [VERIFY_BY_MOBILE]
 
-    if Configuration.get("paypal_enabled", "false") == "true"
-      methods.push(VERIFY_BY_PAYPAL)
-    end
-
     if Configuration.get("gestpay_enabled", "false") == "true"
       methods.push(VERIFY_BY_GESTPAY)
     end
@@ -196,10 +191,6 @@ class AccountCommon < ActiveRecord::Base
   end
 
   # Accessors
-
-  def verify_with_paypal?
-    self.verification_method == VERIFY_BY_PAYPAL
-  end
 
   def verify_with_gestpay?
     self.verification_method == VERIFY_BY_GESTPAY
@@ -252,7 +243,7 @@ class AccountCommon < ActiveRecord::Base
     else
       if self.verify_with_mobile_phone?
         Configuration.get('mobile_phone_registration_expire').to_i
-      elsif self.verify_with_paypal? or self.verify_with_gestpay?
+      elsif self.verify_with_gestpay?
         Configuration.get('credit_card_registration_expire').to_i
       else
         Rails.logger.error("Invalid verification method")
@@ -323,7 +314,7 @@ class AccountCommon < ActiveRecord::Base
   end
 
   def credit_card_identity_verify!
-    if self.verify_with_paypal? or verify_with_gestpay?
+    if verify_with_gestpay?
       self.verified = true
       self.save!
 
@@ -334,7 +325,7 @@ class AccountCommon < ActiveRecord::Base
       self.captive_portal_login!
       self.clear_ip!
     else
-      Rails.logger.error("Verification method is not 'paypal_credit_card' nor 'gestpay_credit_card'!")
+      Rails.logger.error("Verification method is not 'gestpay_credit_card'!")
     end
   end
 

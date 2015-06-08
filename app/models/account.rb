@@ -246,39 +246,6 @@ class Account < AccountCommon
     end
   end
 
-  def verify_with_paypal(return_url, notify_url)
-    prepared = prepare_paypal_payment(return_url, notify_url)
-    prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
-  end
-
-  def encrypted_verify_with_paypal(return_url, notify_url)
-    prepared = prepare_paypal_payment(return_url, notify_url)
-
-    prepared[:values].merge!({:cert_id => Configuration.get("ipn_cert_id")})
-    prepared[:values].merge!({:secret => Configuration.get("ipn_shared_secret")})
-
-    paypal_cert = File.read("#{Rails.root}/certs/paypal_cert.pem")
-    owums_cert = File.read("#{Rails.root}/certs/owums_cert.pem")
-    owums_key = File.read("#{Rails.root}/certs/app_key.pem")
-
-    signed = OpenSSL::PKCS7::sign(
-        OpenSSL::X509::Certificate.new(owums_cert),
-        OpenSSL::PKey::RSA.new(owums_key, ''),
-        prepared[:values].map { |k, v| "#{k}=#{v}" }.join("\n"),
-        [],
-        OpenSSL::PKCS7::BINARY
-    )
-
-    [ prepared[:paypal_base_url],
-      OpenSSL::PKCS7::encrypt(
-          [OpenSSL::X509::Certificate.new(paypal_cert)],
-          signed.to_der,
-          OpenSSL::Cipher::Cipher::new("DES3"),
-          OpenSSL::PKCS7::BINARY
-      ).to_s.gsub("\n", "")
-    ]
-  end
-
   def gestpay_s2s_verify_credit_card(request, cc, amount, currency)
     # build credit card number
     number = cc['number1'] + cc['number2'] + cc['number3'] + cc['number4']
@@ -469,34 +436,6 @@ class Account < AccountCommon
     elsif not self.verify_with_document?
       self.image_file_data = nil
     end
-  end
-
-  def prepare_paypal_payment(return_url, notify_url)
-    values = {
-      :business => Configuration.get("paypal_business_account"),
-      :cmd => '_cart',
-      :upload => 1,
-      :return => return_url,
-      :invoice => self.id,
-      :notify_url => notify_url,
-      :currency_code => Configuration.get("paypal_currency", "EUR"),
-      :lc => I18n.locale.to_s.upcase
-    }
-
-    values.merge!({
-      "amount_1" => Configuration.get("credit_card_verification_cost"),
-      "item_name_1" => I18n.t(:credit_card_item_name),
-      "item_number_1" => self.id,
-      "quantity_1" => 1
-    })
-
-    if Rails.env.production?
-      paypal_base_url = Configuration.get("ipn_url")
-    else
-      paypal_base_url = Configuration.get("sandbox_ipn_url")
-    end
-
-    {:paypal_base_url => paypal_base_url, :values => values}
   end
 
   # Validations

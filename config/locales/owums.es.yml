@@ -321,7 +321,6 @@ Mientras recupera su clave secreta, también se le recordará su Nombre de Usuar
   birth_date: "fecha de nacimiento"
   blank: "-"
   change_password: "Nueva clave secreta"
-  paypal_credit_card: "Paypal o tarjeta de credito"
   gestpay_credit_card: "Tarjeta de credito"
   city: "ciudad"
   click_here: "Haga click aquí."

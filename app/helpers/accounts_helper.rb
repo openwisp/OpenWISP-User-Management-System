@@ -16,31 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module AccountsHelper
-  def link_to_paypal(link, args)
-    account = args[:bill_to]
-    args.delete :bill_to
-
-    link_to(link, account.verify_with_paypal(account_url, verify_paypal_url), args) if account
-  end
-
-  def encrypted_submit_to_paypal(submit, args)
-    account = args[:bill_to]
-    args.delete :bill_to
-    paypal_form = ""
-
-    if account
-      paypal_url, enc_data = account.encrypted_verify_with_paypal(account_url, secure_verify_paypal_url)
-
-      paypal_form = form_tag paypal_url, args
-      paypal_form += hidden_field_tag :cmd, "_s-xclick"
-      paypal_form += hidden_field_tag :encrypted, enc_data
-      paypal_form += submit
-      paypal_form += "</form>"
-    end
-
-    paypal_form
-  end
-
   def account_verification_methods
     User.self_verification_methods
   end
