@@ -195,6 +195,8 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 1.1.0)
       wasabi (~> 2.5.0)
+    sentry-raven (0.13.3)
+      faraday (>= 0.7.6)
     simple_form (1.4.2)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -239,5 +241,6 @@ DEPENDENCIES
   rmagick (~> 2.12.2)
   robinboening-fleximage (~> 1.0.6)
   savon (~> 1.2.0)
+  sentry-raven
   simple_form (~> 1.4.1)
   sqlite3
