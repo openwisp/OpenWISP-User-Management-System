@@ -4,8 +4,10 @@ recipients = Configuration.get('exception_notification_recipients').split(',') r
 sender = Configuration.get('exception_notification_sender') rescue 'root@localhost'
 email_subject_prefix = Configuration.get('exception_notification_email_prefix') rescue '[OWUMS] '
 
-Owums::Application.config.middleware.use ExceptionNotifier,
-  :email_prefix => email_subject_prefix,
-  :sender_address => sender,
-  :exception_recipients => recipients,
-  :sections =>  %w(request session authlogic environment backtrace)
+if CONFIG['sentry_dsn'].nil?
+  Owums::Application.config.middleware.use ExceptionNotifier,
+    :email_prefix => email_subject_prefix,
+    :sender_address => sender,
+    :exception_recipients => recipients,
+    :sections =>  %w(request session authlogic environment backtrace)
+end
