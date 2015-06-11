@@ -32,16 +32,7 @@
           <% end %>
           <%=t :Free_call_description %><br />
           <br />
-      <% elsif @account.verify_with_paypal? %>
-          <%=t :Please_verify_credit_card %><br />
-          <%= link_to_paypal image_tag("paypal.png"), :bill_to => @account %>
-          <%# encrypted_submit_to_paypal image_submit_tag("paypal.png"), :bill_to => @account, :target => '_blank' %>
-          <br /><br /><br />
-      <% elsif @account.verify_with_gestpay? %>
-          <!--<%=t :Please_verify_credit_card %><br /><br />
-          <a href="#"><%= image_tag('gestpay_new_mobile.png') %></a>
-          <br /><br /><br />-->
-      <% end %>      
+      <% end %>
       <% unless @account.already_verified_once? or @account.verify_with_gestpay? %>
           <% if @account.expire_time > 0 %>
               <p style="font-size:80%"><%= t(:Verification_expire_time_remaining) %>: <strong id="expire-in"><%= @account.verification_time_remaining %></strong></p>

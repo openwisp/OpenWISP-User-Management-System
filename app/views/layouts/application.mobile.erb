@@ -54,6 +54,17 @@
 		  <li><%= flash[:notice] %></li>
 		</ul>
 	<% end %>
+	<% if flash[:error] %>
+		<ul id="notice" class="error" data-role="listview" data-theme="g">
+          <% if flash[:error].is_a?(Hash) %>
+            <% flash[:error].each do |key, value| %>
+              <li><%= key %>: <%= value %></li>
+            <% end %>
+          <% else %>
+            <li><%= flash[:error] %></li>
+          <% end %>
+		</ul>
+	<% end %>
 
 	<div data-role="content">
 	  <% if on_root? %>

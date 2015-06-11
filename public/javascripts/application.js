@@ -140,9 +140,11 @@ var owums = {
             var val = verification_method.val(),
                 mobile_phone_elements = $('#verify-mobile-phone, li.verification-block.mobile-phone'),
                 credit_card_elements = $('#verify-credit-card'),
-                registration_form = $('#registration-second-step').length ? $('#registration-second-step') : $('#mobile-registration li:not(.ignore-toggle)');
+                registration_form = $('#registration-second-step').length ? $('#registration-second-step') : $('#mobile-registration li:not(.ignore-toggle)'),
+                social_network_elements = $('#registration-social-network');
             if(val == 'gestpay_credit_card'){
                 mobile_phone_elements.hide();
+                social_network_elements.hide();
                 credit_card_elements.show();
                 registration_form.fadeIn(250);
             }
@@ -150,10 +152,18 @@ var owums = {
                 mobile_phone_elements.show();
                 registration_form.fadeIn(250);
                 credit_card_elements.hide();
+                social_network_elements.hide();
+            }
+            else if(val == 'social_network'){
+                mobile_phone_elements.hide();
+                credit_card_elements.hide();
+                registration_form.hide();
+                social_network_elements.fadeIn(250);
             }
             else{
                 mobile_phone_elements.hide();
                 credit_card_elements.hide();
+                social_network_elements.hide();
                 registration_form.fadeOut(250);
             }
             owums.toggleReadonlyUsername();

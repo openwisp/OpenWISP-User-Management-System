@@ -1,7 +1,7 @@
 class AddConfigurationKeys < ActiveRecord::Migration
-  
+
   keys = YAML::load(File.open("db/fixtures/configurations.yml"))
-  
+
   @configurations = [
     keys[44],
     keys[45],
@@ -18,11 +18,13 @@ class AddConfigurationKeys < ActiveRecord::Migration
     keys[82],
     keys[83]
   ]
-  
+
   def self.up
     @configurations.each do |config|
       if Configuration.get(config['key']).nil?
-        Configuration.set(config['key'], config['value'])
+        Configuration.create(:key => config['key'],
+                             :value => config['value'],
+                             :system_key => config['system_key'] == 't')
       end
     end
   end

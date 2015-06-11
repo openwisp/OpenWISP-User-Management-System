@@ -102,6 +102,79 @@ class Account < AccountCommon
     sprintf "%.2f", total_out_megabytes
   end
 
+  def self.find_or_create_from_oauth(auth_hash)
+    authorization = SocialAuth.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
+
+    if authorization
+      account = Account.find(authorization.user_id)
+      # this block is entered when the user disabled her account
+      # in this case we'll re-enable it, because doing the social login again
+      # is equivalent to verifying the phone number again
+      if !account.verified and account.mobile_suffix and account.mobile_prefix
+        account.verified = true
+        account.save
+      end
+      return account
+    else
+      if auth_hash["info"]["birthday"]
+        birth_date = auth_hash["info"]["birthday"].gsub("/", "-")
+      end
+
+      if auth_hash["info"]["location"]
+        city, state = auth_hash["info"]["location"].split(", ")
+      end
+
+      first_name = auth_hash["info"]["first_name"]
+      last_name = auth_hash["info"]["last_name"]
+
+      account = Account.new(
+        :given_name => first_name,
+        :surname => last_name,
+        :email => auth_hash["info"]["email"],
+        :username => "#{first_name}.#{last_name}",
+        :password => '',
+        :password_confirmation => '',
+        :verification_method => 'social_network',
+        :birth_date => birth_date || '',
+        :address => '',
+        :city => city || '',
+        :zip => '',
+        :state => state || '',
+        :eula_acceptance => true,
+        :privacy_acceptance => true,
+        :active => true
+      )
+      # username lowercase withouth dashes
+      account.username = account.username.downcase.gsub(' ', '-')
+      # find available username
+      original_username = account.username
+      counter = 1
+      while Account.where(:username => account.username).count > 0
+        counter += 1
+        account.username = "#{original_username}#{counter}"
+      end
+      account.crypted_password = ''
+      account.password_salt = Authlogic::Random.friendly_token
+      account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
+
+      ask = Account.social_login_ask_mobile_phone
+      if ask == 'never' or (ask == 'unverified' and auth_hash["info"]["verified"] == true)
+        account.verified = true
+      end
+
+      if account.save
+        auth = SocialAuth.new(
+          :user_id => account.id,
+          :provider => auth_hash["provider"],
+          :uid => auth_hash["uid"]
+        )
+        auth.save!
+        account.new_account_notification!
+      end
+
+      return account
+    end
+  end
 
   # Utilities
 
@@ -171,39 +244,6 @@ class Account < AccountCommon
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end
-  end
-
-  def verify_with_paypal(return_url, notify_url)
-    prepared = prepare_paypal_payment(return_url, notify_url)
-    prepared[:paypal_base_url]+ '?' + prepared[:values].map { |k,v| "#{k}=#{v}"  }.join("&")
-  end
-
-  def encrypted_verify_with_paypal(return_url, notify_url)
-    prepared = prepare_paypal_payment(return_url, notify_url)
-
-    prepared[:values].merge!({:cert_id => Configuration.get("ipn_cert_id")})
-    prepared[:values].merge!({:secret => Configuration.get("ipn_shared_secret")})
-
-    paypal_cert = File.read("#{Rails.root}/certs/paypal_cert.pem")
-    owums_cert = File.read("#{Rails.root}/certs/owums_cert.pem")
-    owums_key = File.read("#{Rails.root}/certs/app_key.pem")
-
-    signed = OpenSSL::PKCS7::sign(
-        OpenSSL::X509::Certificate.new(owums_cert),
-        OpenSSL::PKey::RSA.new(owums_key, ''),
-        prepared[:values].map { |k, v| "#{k}=#{v}" }.join("\n"),
-        [],
-        OpenSSL::PKCS7::BINARY
-    )
-
-    [ prepared[:paypal_base_url],
-      OpenSSL::PKCS7::encrypt(
-          [OpenSSL::X509::Certificate.new(paypal_cert)],
-          signed.to_der,
-          OpenSSL::Cipher::Cipher::new("DES3"),
-          OpenSSL::PKCS7::BINARY
-      ).to_s.gsub("\n", "")
-    ]
   end
 
   def gestpay_s2s_verify_credit_card(request, cc, amount, currency)
@@ -389,40 +429,13 @@ class Account < AccountCommon
   end
 
   def clean_fields
-    if not self.verify_with_mobile_phone?
+    # regular cases
+    if not self.validate_mobile_phone?
       self.mobile_prefix = nil
       self.mobile_suffix = nil
     elsif not self.verify_with_document?
       self.image_file_data = nil
     end
-  end
-
-  def prepare_paypal_payment(return_url, notify_url)
-    values = {
-      :business => Configuration.get("paypal_business_account"),
-      :cmd => '_cart',
-      :upload => 1,
-      :return => return_url,
-      :invoice => self.id,
-      :notify_url => notify_url,
-      :currency_code => Configuration.get("paypal_currency", "EUR"),
-      :lc => I18n.locale.to_s.upcase
-    }
-
-    values.merge!({
-      "amount_1" => Configuration.get("credit_card_verification_cost"),
-      "item_name_1" => I18n.t(:credit_card_item_name),
-      "item_number_1" => self.id,
-      "quantity_1" => 1
-    })
-
-    if Rails.env.production?
-      paypal_base_url = Configuration.get("ipn_url")
-    else
-      paypal_base_url = Configuration.get("sandbox_ipn_url")
-    end
-
-    {:paypal_base_url => paypal_base_url, :values => values}
   end
 
   # Validations

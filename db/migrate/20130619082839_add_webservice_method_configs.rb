@@ -1,14 +1,16 @@
 class AddWebserviceMethodConfigs < ActiveRecord::Migration
   keys = YAML::load(File.open("db/fixtures/configurations.yml"))
-  
+
   @configurations = [
     keys[76] # gestpay_webservice_url
   ]
-  
+
   def self.up
     @configurations.each do |config|
       if Configuration.get(config['key']).nil?
-        Configuration.set(config['key'], config['value'])
+        Configuration.create(:key => config['key'],
+                             :value => config['value'],
+                             :system_key => config['system_key'] == 't')
       end
     end
   end

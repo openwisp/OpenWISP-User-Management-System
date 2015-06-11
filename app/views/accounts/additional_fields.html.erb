@@ -1,0 +1,63 @@
+<%#
+# This file is part of the OpenWISP User Management System
+#
+# Copyright (C) 2012 OpenWISP.org
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#%>
+
+<div class="grid_10 prefix_1 suffix_1">
+  <div class="box">
+    <%= simple_form_for @account, :url => additional_fields_path do |form| %>
+      <fieldset>
+        <legend><%=t :Edit_account %></legend>
+        <%= form.error_messages %>
+        <div id="registration-second-step">
+          <div id="verify-mobile-phone">
+            <div class="verification-block">
+              <span><%= form.label :mobile_phone %></span>
+              <% if CONFIG['social_login_verify_mobile_phone'] %>
+                <div><%=t :mobile_phone, :scope => [:simple_form, :hints] %></div>
+              <% end %>
+              <div class="block">
+                <div class="grid_4">
+                  <%= form.input :mobile_prefix, :collection => @mobile_prefixes, :prompt => t(:select_prefix) %>
+                </div>
+
+                <div class="grid_5">
+                  <%= form.input :mobile_suffix %>
+                </div>
+              </div>
+
+              <div id="confirm_mobile_phone_number">
+                <%= form.label :mobile_phone_confirmation %>
+                <div class="block">
+                  <div class="grid_4">
+                    <%= form.input :mobile_prefix_confirmation, :collection => @mobile_prefixes, :prompt => t(:select_prefix) %>
+                  </div>
+
+                  <div class="grid_5">
+                    <%= form.input :mobile_suffix_confirmation %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%= form.button :submit %>
+        </div>
+        <p class="cancel"><%= link_to t(:Undo), :back %></p>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
+<div class="clear"></div>

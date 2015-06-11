@@ -55,5 +55,12 @@
       <li>
         <%= f.button :submit %>
       </li>
+
+      <% if CONFIG['omniauth_providers'].include?(:facebook) %>
+        <li class="facebook"><a href="<%= root_url %>auth/facebook" class="social-button facebook"><%= t(:Sign_in_with) %> Facebook</a></li>
+      <% end %>
+      <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
+        <li class="google"><a href="<%= root_url %>auth/google_oauth2" class="social-button google"><%= t(:Sign_in_with) %> Google+</a></li>
+      <% end %>
     </ul>
 <% end %>

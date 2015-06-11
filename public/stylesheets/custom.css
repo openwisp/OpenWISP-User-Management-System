@@ -461,7 +461,8 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 #container #configuration_keys td p{ margin: 5px 0 !important }
 
 #errorExplanation,
-.warning{
+div.error,
+div.warning{
 	margin: 10px 5px 20px;
 	padding: 20px 25px 5px 25px;
 	background: #ff6666;
@@ -470,14 +471,20 @@ table.selectable tr:hover td{ background-color: #FFFFEE !important }
 	border-radius: 3px
 }
 #errorExplanation h2,
+.error h2,
 .warning h2{
 	width: auto; margin: 0; padding: 0; background: transparent; text-transform: none;
 	font-size: 16px; font-weight: bold; margin-bottom: 10px;
 }
 #errorExplanation li,
+.error li,
 .warning li{ font-weight: bold }
 
-.warning{ background-color: #ff8000 }
+div.warning{ background-color: #ff8000 }
+#notice.error { background-color: #ff6666 !important }
+
+#notice li{ text-align: left }
+#notice ul{ margin: 0 }
 
 .field_with_errors input[type=text], .field_with_errors input[type=password]{ border: 1px solid red }
 
@@ -513,3 +520,34 @@ ul.nomargin,.button.nomargin{ margin-bottom: 0 !important }
 
 #verified-radio, #enabled-radio{ float: left; margin-right: 20px }
 #site_info a:hover{ color: #fff; text-decoration: underline }
+
+.social-login{ margin-top: 23px; line-height:35px }
+#registration-social-network{ margin: 30px 0;  }
+
+.social-button{
+    padding: 10px 16px;
+    margin: 0 5px;
+    border-radius: 5px;
+    text-decoration: none !important;
+    font-size: 13px;
+    color:#fff !important;
+    border-color:rgba(0,0,0,0.2)
+}
+
+.facebook{
+    background-color:#3b5998;
+}
+.facebook:hover,
+.facebook:focus,
+.facebook:active{
+    background-color:#2d4373;
+}
+
+.google{
+    background-color:#dd4b39;
+}
+.google:hover,
+.google:focus,
+.google:active{
+    background-color:#c23321;
+}

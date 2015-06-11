@@ -48,21 +48,6 @@
   key: default_radius_group
   value: "Users"
 
-22:
-  system_key: f
-  key: paypal_enabled
-  value: false
-    
-23:
-  system_key: f
-  key: ipn_url
-  value: https://www.paypal.com/cgi-bin/webscr
-    
-24:
-  system_key: f
-  key: sandbox_ipn_url
-  value: https://www.sandbox.paypal.com/cgi-bin/webscr
-
 # BEGIN: "DO NOT EDIT - NEEDED FOR UNIT TESTING"
 25:
   system_key: f
@@ -79,11 +64,6 @@
   system_key: t
   key: credit_card_registration_expire
   value: 300
-
-27:
-  system_key: f
-  key: paypal_business_account
-  value: mtylty_1277212890_biz@gmail.com
 
 28:
   system_key: f
@@ -383,3 +363,177 @@ Staff"
   system_key: f
   key: "invoice_admin_notification_subject_fur"
   value: "[OWUMS] Fate Gnove Ricevude"
+
+
+131:
+  system_key: f
+  key: "password_reset_subject_sl"
+  value: "Navodila za obnovitev gesla"
+
+132:
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_sl"
+  value: "Poslana je bila zahteva za ponastavitev gesla tvojega računa.
+  Če nisi ti poslal te zahteve, prezri to sporočilo.
+  Če si ti poslal to zahtevo, klikni na spodnji URL."
+
+133:
+  system_key: t
+  key: "password_reset_instructions_after_reset_url_sl"
+  value: "V primeru, da zgornji URL ne deluje, poskusi kopirati in prilepiti naslov v tvoj iskalnik.
+  Če se težave v zvezi s ponastavitvijo gesla nadaljujejo, te prosimo, da nas kontaktiraš."
+
+134:
+  system_key: f
+  key: "custom_account_instructions_sl"
+  value: ""
+
+135:
+  system_key: f
+  key: "verification_explain_mobile_sl"
+  value: "<p>Z namenom <strong>preprečevanja zlorab storitve</strong>, moramo <strong>preveriti identiteto</strong> uporabnikov storitve wifi.</p><p>Če si lastnik <strong>italijanske SIM </strong> izberi postopek preverjanja identitete <strong>\"Številka mobilnega telefona\"</strong> s sledečega menija.</p>"
+
+136:
+  system_key: f
+  key: "verification_explain_creditcard_sl"
+  value: "<p>Z namenom <strong> preprečevanja zlorab storitve</strong>, moramo <strong> preveriti identiteto </strong> uporabnikov storitve Wi-Fi.</p><p> Če si lastnik <strong> italijanske SIM </strong> izberi postopek preverjanja identitete <strong>\" Številka mobilnega telefona \"</strong> s sledečega menija, ali pa izberi postopek <strong>\"Kreditna kartica\"</strong>.</p>"
+
+137:
+  system_key: f
+  key: "account_notification_message_sl"
+  value: "Živijo {first_name} {last_name},
+\n\nPravkar si uspešno ustvaril in preveril tvoj račun za dostop do wifi-ja.
+\n\nZdaj se lahko prijaviš in uporabljaš storitev Wi-Fi, tvoje uporabniško ime je \"{username}\" ,geslo je pa tisto, ki si ga vpisal v fazi registracije.
+\n\nUporabo storitve lahko nadzoruješ s strani za upravljanje tvojega računa:
+\n{account_url}
+\n\nV primeru pozabljenega gela, lahko uporabiš postopek za ponastavitev gesla na sledečem naslovu:
+\n{password_reset_url}{invoice_message}
+\n\nLep pozdrav
+\nEkipa"
+
+138:
+  system_key: f
+  key: "account_notification_subject_sl"
+  value: "Novi račun ustvarjen na [OpenWISP User Management System]"
+
+139:
+  system_key: f
+  key: "invoice_owner_sl"
+  value: "Zamenjaj me"
+
+140:
+  system_key: f
+  key: "invoice_description_sl"
+  value: "Preverjanje identitete za storitev Wi-Fi."
+
+141:
+  system_key: f
+  key: "invoice_admin_notification_subject_sl"
+  value: "[OWUMS] Ustvarjena nova prejemnica "
+
+142:
+  system_key: f
+  key: "password_reset_subject_de"
+  value: "Anleitungen zur Wiederherstellung des Passwortes"
+
+143:
+  system_key: f
+  key: "password_reset_instructions_before_reset_url_de"
+  value: "Es wurde eine Anfrage für die Wiederherstellung des Passwortes für Ihr Benutzerkonto erfordert. 
+  Wenn Sie diese Anfrage nicht erfordert haben, reagieren Sie bitte nicht auf diese Meldung. 
+  Wenn Sie die Anfrage erfordert haben, klicken Sie bitte auf die folgende URL."
+
+144:
+  system_key: t
+  key: "password_reset_instructions_after_reset_url_de"
+  value: "Falls die vorangehende URL nicht funktionieren sollte, probieren Sie bitte, die Adresse zu kopieren und  in Ihren Browser  einfügen.
+  Wenn sich noch Probleme bei der Wiederherstellung des Passwortes ergeben sollten, wenden Sie sich bitte an uns." 
+
+145:
+  system_key: f
+  key: "custom_account_instructions_de"
+  value: ""
+
+146:
+  system_key: f
+  key: "verification_explain_mobile_de"
+  value: "<p>Um <strong>Misshandlungen an der Serviceleistung zu vermeiden</strong>, sind wir gezwungen <strong>die Identität</strong> der Benutzer zu überprüfen, die vom WiFi Anschluss Gebrauch machen.</p><p>Wenn Sie eine <strong>italienische SIM Karte besitzen</strong> wählen Sie die Überprüfungsmethode für die Identität  <strong>\"Handynummer\"</strong> aus dem folgenden Menü. .</p>"
+
+147:
+  system_key: f
+  key: "verification_explain_creditcard_de"
+  value: "<p>Um <strong> Misshandlungen an der Serviceleistung zu vermeiden </strong>, sind wir gezwungen <strong> die Identität </strong> der Benutzer zu überprüfen, die vom WiFi Anschluss Gebrauch machen.</p><p> Wenn Sie eine <strong>italienische SIM Karte</strong> wählen Sie die Überprüfungsmethode für die Identität  <strong>\"Handynummer\"</strong> aus dem folgenden Menü oder wählen Sie die Methode <strong>\"Kreditkarte\"</strong>.</p>"
+
+148:
+  system_key: f
+  key: "account_notification_message_de"
+  value: "Hallo {first_name} {last_name},
+
+Sie haben gerade Ihr Benutzerkonto für den WiFi Zugang erfolgreich gestante und überprüft. 
+
+Nun können Sie sich einloggen und die WiFi-Serviceleistung benutzen. Ihr Benutzername ist  \"{username}\" und Ihr Passwort ist das, was Sie bei der Anmeldung angebenen haben.  
+
+Sie können die  Benutzung der Serviceleistung auf der Verwaltungsseite Ihres Benutzerkontos überwachen: 
+{account_url}
+
+Wenn Sie Ihr Passwort vergessen haben, können Sie die  Wiederherstellungsprozedur benutzen, die bei der folgenden Adresse verfügbar ist: 
+{password_reset_url}
+{invoice_message}
+
+Mit freundlichen Grüßen
+Staff"
+
+149:
+  system_key: f
+  key: "account_notification_subject_de"
+  value: "Neues Benutzerkonto gestaltet bei [OpenWISP User Management System]"
+
+150:
+  system_key: f
+  key: "invoice_owner_de"
+  value: "ÄNDERN"
+
+151:
+  system_key: f
+  key: "invoice_description_de"
+  value: "Überprüfung der Identität für die Serviceleistung Wi-Fi."
+
+152:
+  system_key: f
+  key: "invoice_admin_notification_subject_de"
+  value: "[OWUMS] Neuer Beleg generiert"
+
+153:
+  system_key: t
+  key: "social_login_enabled"
+  value: "true"
+
+154:
+  system_key: t
+  key: "social_login_facebook_id"
+  value: "711000305676839"
+
+155:
+  system_key: t
+  key: "social_login_facebook_secret"
+  value: "0c144b89806e4c66a2b2bc8130449599"
+
+156:
+  system_key: t
+  key: "social_login_google_id"
+  value: "289387779652-phme5uq7q5moob185kru9bnbfhlflacf.apps.googleusercontent.com"
+
+157:
+  system_key: t
+  key: "social_login_google_secret"
+  value: "dEbzyABj-9fjniEU6UhVPrXd"
+
+158:
+  system_key: f
+  key: "social_login_success_url"
+  value: ""
+
+159:
+  system_key: f
+  key: "social_login_ask_mobile_phone"
+  value: "unverified"

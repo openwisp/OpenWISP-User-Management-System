@@ -56,6 +56,47 @@ class AccountTest < ActiveSupport::TestCase
     assert a.errors.has_key?(:username)
   end
 
+  test "empty mobile validation error" do
+    a = _init_account()
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    assert !a.valid?
+    assert a.errors.length <= 2
+    assert a.errors.has_key?(:mobile_prefix)
+    assert a.errors.has_key?(:mobile_suffix)
+    # same with nil
+    a.mobile_prefix = nil
+    a.mobile_suffix = nil
+    assert !a.valid?
+    assert a.errors.length <= 2
+    assert a.errors.has_key?(:mobile_prefix)
+    assert a.errors.has_key?(:mobile_suffix)
+  end
+
+  test "empty password validation error" do
+    a = Account.new(
+      :given_name => 'Foo',
+      :surname => 'Bar',
+      :email => 'foo@bar.com',
+      :username => 'foobar',
+      :password => '',
+      :mobile_prefix => '334',
+      :mobile_suffix => '4352702',
+      :verification_method => 'mobile_phone',
+      :birth_date => '1980-10-10',
+      :address => 'Via dei Tizii 6',
+      :city => 'Rome',
+      :zip => '00185',
+      :state => 'Italy',
+      :eula_acceptance => true,
+      :privacy_acceptance => true
+    )
+    assert_nil a.password
+    assert !a.valid?
+    assert a.errors.length <= 1
+    assert a.errors.has_key?(:password)
+  end
+
   test "generate_invoice!" do
     # set correct webservice method
     Configuration.set('gestpay_webservice_method', 'payment')
@@ -134,5 +175,108 @@ class AccountTest < ActiveSupport::TestCase
     a2.mobile_suffix = '4352702'
     a2.valid?
     assert a2.duplicate?
+  end
+
+  test "validate_mobile_phone always" do
+    Configuration.set('social_login_ask_mobile_phone', 'always')
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    a.mobile_prefix = 'wrong'
+    a.mobile_suffix = 'wrong'
+    assert !a.valid?
+
+    a.mobile_prefix = '355'
+    a.mobile_suffix = '4253801'
+    a.mobile_prefix_confirmation = '000'
+    a.mobile_suffix_confirmation = '4253801'
+    assert !a.valid?
+
+    a.mobile_prefix_confirmation = '355'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
+  end
+
+  test "validate_mobile_phone unverified" do
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    a.mobile_prefix = 'wrong'
+    a.mobile_suffix = 'wrong'
+    assert !a.valid?
+
+    a.mobile_prefix = '355'
+    a.mobile_suffix = '4253801'
+    a.mobile_prefix_confirmation = '000'
+    a.mobile_suffix_confirmation = '4253801'
+    assert !a.valid?
+
+    a.mobile_prefix_confirmation = '355'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
+    a.destroy
+  end
+
+  test "validate_mobile_phone never" do
+    Configuration.set('social_login_ask_mobile_phone', 'never')
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    a.mobile_prefix = 'wrong'
+    a.mobile_suffix = 'wrong'
+    assert a.valid?
+
+    a.mobile_prefix = '355'
+    a.mobile_suffix = '4253801'
+    a.mobile_prefix_confirmation = '000'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
+
+    a.mobile_prefix_confirmation = '355'
+    a.mobile_suffix_confirmation = '4253801'
+    assert a.valid?
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
+  end
+
+  test "authorization is destroyed" do
+    Configuration.set('social_login_ask_mobile_phone', 'never')
+    a = _init_account()
+    a.verification_method = 'social_network'
+    a.mobile_prefix = ''
+    a.mobile_suffix = ''
+    a.verified = false
+    assert a.valid?
+    a.save!
+
+    # crete associated authorization object
+    assert_equal 0, SocialAuth.count
+    SocialAuth.create(
+      :provider => 'facebook',
+      :uid => '10204334257594466',
+      :user_id => a.id
+    )
+    assert_equal 1, SocialAuth.count
+
+    # destroy account and ensure authorization has been destroyed
+    a.destroy
+    assert_equal 0, SocialAuth.count
+    Configuration.set('social_login_ask_mobile_phone', 'unverified')
   end
 end

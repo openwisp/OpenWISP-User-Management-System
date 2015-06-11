@@ -24,6 +24,8 @@ defaults: &defaults
   # app root dir and static assets host
   #root_dir: '/app'
   #asset_host: 'domain.com/app'
+
+  #sentry_dsn: 'http://public:secret@example.com/project-id'
   
   # check called station id
   check_called_station_id:

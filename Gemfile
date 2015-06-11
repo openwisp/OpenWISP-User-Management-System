@@ -4,6 +4,7 @@ gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-0-stable'
 gem 'mysql2', '~> 0.2.7'
 
 gem 'exception_notification', :require => 'exception_notifier'
+gem 'sentry-raven'
 
 gem 'authlogic', '~> 3.0.3'
 gem 'acl9', '~> 0.12.0'
@@ -31,6 +32,11 @@ gem 'capistrano_colors', '~> 0.5.4', :require => false
 gem 'savon', '~> 1.2.0'
 gem 'activemerchant'
 gem 'prawn'
+
+# social auth
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 
 group :test do
   gem 'sqlite3'

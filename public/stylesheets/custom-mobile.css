@@ -135,7 +135,8 @@ tbody tr:hover td {
 #errors-container .ui-collapsible-content{ padding: 0 }
 
 #errorExplanation,
-.warning{
+ul.error,
+ul.warning{
 	margin: 10px 0 10px;
 	padding: 20px 25px 5px 25px;
 	background: #ff6666;
@@ -145,15 +146,81 @@ tbody tr:hover td {
     text-shadow: 0 0 0 transparent;
 }
 #errorExplanation h2,
+.error h2,
 .warning h2{
 	width: auto; margin: 0; padding: 0; background: transparent; text-transform: none;
 	font-size: 16px; font-weight: bold; margin-bottom: 10px;
 }
 #errorExplanation li,
+.error li,
 .warning li{ font-weight: bold }
 
-.warning{ background-color: #ff8000 }
+ul.warning{ background-color: #ff8000 }
+#notice.error { background-color: #ff6666 !important; margin: 0; padding: 0 }
 
 #mobile-registration.has-more-verification-methods li{ display: none }
 #verification-methods-container{ display: block !important }
 input[disabled=disabled], select[disabled=disabled]{ background-color: #DDD; color: #AAA }
+
+li.facebook .ui-btn-inner{
+    background-color:#3b5998;
+    border: 0 none;
+}
+li.facebook .ui-btn-inner:hover,
+li.facebook .ui-btn-inner:focus,
+li.facebook .ui-btn-inner:active{
+    background-color:#2d4373;
+}
+
+li.google .ui-btn-inner{
+    background-color:#dd4b39;
+    border: 0 none;
+}
+li.google .ui-btn-inner:hover,
+li.google .ui-btn-inner:focus,
+li.google .ui-btn-inner:active{
+    background-color:#c23321;
+}
+
+li.facebook, li.google{
+    color:#fff !important;
+    text-shadow: none;
+    border: 0 none;
+}
+
+.social-login{ line-height:35px }
+#registration-social-network{ margin: 30px 0 }
+
+a.social-button{
+    padding: 10px 16px;
+    margin: 0 5px;
+    border-radius: 5px;
+    text-decoration: none !important;
+    font-size: 13px;
+    color:#fff !important;
+    text-shadow: none;
+}
+
+a.facebook{
+    background-color:#3b5998;
+    border-color:rgba(0,0,0,0.2)
+}
+a.facebook:hover,
+a.facebook:focus,
+a.facebook:active{
+    background-color:#2d4373;
+    border-color:rgba(0,0,0,0.2)
+}
+
+a.google{
+    background-color:#dd4b39;
+    border-color:rgba(0,0,0,0.2)
+}
+a.google:hover,
+a.google:focus,
+a.google:active{
+    background-color:#c23321;
+    border-color:rgba(0,0,0,0.2)
+}
+
+.center{ text-align: center }
