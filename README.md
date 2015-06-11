@@ -467,6 +467,10 @@ The behaviour can be configured by editing the following configuration keys:
   * `unverified`: will ask only to unverified users (valid for facebook only, google+ will always be always treated as unverified)
   * `always`: will always ask mobile phone number to users
 
+If when logging in you get the following error: `failed_to_connect`, you will have to adjust the `ssl_ca_path` setting in your `config/config.yml` file.
+
+Find out where ssl certificates are stored with `openssl version -a | grep OPENSSLDIR`.
+
 ### Sentry exception notification
 
 **Available since OWUMS 1.4.**

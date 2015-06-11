@@ -20,10 +20,10 @@ class SocialAuthController < ApplicationController
     end
 
     if @account.verified?
-      @account.store_ip(request.remote_ip)
       @account_session = AccountSession.create(@account, true)
+      @account.current_login_ip = request.remote_ip
+      @account.save!
       @account.captive_portal_login!
-      @account.clear_ip!
       flash[:notice] = I18n.t(:Login_successful)
       # determine URL for redirect (defaults to account URL)
       config_url = Configuration.get('social_login_success_url', '')

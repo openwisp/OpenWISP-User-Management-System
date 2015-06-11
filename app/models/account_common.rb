@@ -323,7 +323,6 @@ class AccountCommon < ActiveRecord::Base
       self.new_account_notification!(filename)
 
       self.captive_portal_login!
-      self.clear_ip!
     else
       Rails.logger.error("Verification method is not 'gestpay_credit_card'!")
     end
@@ -335,7 +334,6 @@ class AccountCommon < ActiveRecord::Base
       self.save!
       self.new_account_notification!
       self.captive_portal_login!
-      self.clear_ip!
     else
       Rails.logger.error("Verification method is not 'mobile_phone'!")
     end
@@ -352,26 +350,6 @@ class AccountCommon < ActiveRecord::Base
     end
   end
 
-  def store_ip(ip)
-    # temporary store IP address, it must be called from the controller
-    self.notes = "<ip>#{ip}</ip>"
-  end
-
-  def retrieve_ip()
-    # retrieves ip from notes
-    matches = /<ip>(.*)<\/ip>/i.match(self.notes)
-    # return match or nil
-    unless matches.nil?
-      matches[1]
-    end
-  end
-
-  def clear_ip!
-    # clear ip address from notes when finished
-    self.notes = self.notes.gsub(/<ip>(.*)<\/ip>/i, '')
-    self.save!
-  end
-
   def captive_portal_login(ip_address=false, timeout=false, config_check=true)
     # to use indipendently from configuration supply :config_check => false
     if not CONFIG['automatic_captive_portal_login'] and config_check
@@ -379,7 +357,7 @@ class AccountCommon < ActiveRecord::Base
     end
 
     # determine ip address
-    ip_address = ip_address ? ip_address : self.retrieve_ip()
+    ip_address = ip_address ? ip_address : self.current_login_ip
     # automatically log in an user in the captive portal to allow the user to surf
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
 
@@ -400,7 +378,7 @@ class AccountCommon < ActiveRecord::Base
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data(params)
-      response = http.request(request)
+      http.request(request)
     else
       raise 'key captive_portal_baseurl not present in the database'
     end
@@ -410,7 +388,7 @@ class AccountCommon < ActiveRecord::Base
 
   def captive_portal_logout(ip_address=false)
     # determine ip address
-    ip_address = ip_address ? ip_address : self.retrieve_ip()
+    ip_address = ip_address ? ip_address : self.last_login_ip
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
     if cp_base_url
       params = {
@@ -423,7 +401,7 @@ class AccountCommon < ActiveRecord::Base
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data(params)
-      response = http.request(request)
+      http.request(request)
     else
       raise 'key captive_portal_baseurl not present in the database'
     end
@@ -512,11 +490,7 @@ class AccountCommon < ActiveRecord::Base
   private
 
   def password_required?
-    if self.verify_with_social?
-      return false
-    else
-      return self.new_record? || !self.password.blank?
-    end
+    self.new_record? || !self.password.blank?
   end
 
   # Custom validation methods
