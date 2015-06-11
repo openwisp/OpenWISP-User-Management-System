@@ -490,11 +490,7 @@ class AccountCommon < ActiveRecord::Base
   private
 
   def password_required?
-    if self.verify_with_social?
-      return false
-    else
-      return self.new_record? || !self.password.blank?
-    end
+    self.new_record? || !self.password.blank?
   end
 
   # Custom validation methods

@@ -126,14 +126,16 @@ class Account < AccountCommon
 
       first_name = auth_hash["info"]["first_name"]
       last_name = auth_hash["info"]["last_name"]
+      # password is needed for captive portal login
+      password = SecureRandom.hex
 
       account = Account.new(
         :given_name => first_name,
         :surname => last_name,
         :email => auth_hash["info"]["email"],
         :username => "#{first_name}.#{last_name}",
-        :password => '',
-        :password_confirmation => '',
+        :password => password,
+        :password_confirmation => password,
         :verification_method => 'social_network',
         :birth_date => birth_date || '',
         :address => '',
@@ -153,8 +155,6 @@ class Account < AccountCommon
         counter += 1
         account.username = "#{original_username}#{counter}"
       end
-      account.crypted_password = ''
-      account.password_salt = Authlogic::Random.friendly_token
       account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
 
       ask = Account.social_login_ask_mobile_phone
