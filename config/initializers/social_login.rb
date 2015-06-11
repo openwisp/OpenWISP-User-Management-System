@@ -1,5 +1,6 @@
 CONFIG['omniauth_providers'] = []
 CONFIG['social_login_enabled'] = (Configuration.get("social_login_enabled", "false") == "true") rescue false
+CONFIG['ssl_ca_path'] = CONFIG['ssl_ca_path'].nil? ? '/usr/lib/ssl/certs' : CONFIG['ssl_ca_path']
 
 # ensure feature enabled during automated tests
 if RAILS_ENV == 'test'
@@ -16,14 +17,16 @@ if CONFIG['social_login_enabled']
     if facebook_id != '' and facebook_secret != ''
       provider :facebook, facebook_id, facebook_secret,
                :scope => 'email,user_birthday,user_location',
-               :display => 'page'
+               :display => 'page',
+               :client_options => { :ssl => { :ca_path => CONFIG['ssl_ca_path'] }}
 
       CONFIG['omniauth_providers'].push(:facebook)
     end
 
     if google_id != '' and google_secret != ''
       provider :google_oauth2, google_id, google_secret,
-               :scope => 'plus.me,userinfo.email'
+               :scope => 'plus.me,userinfo.email',
+               :client_options => { :ssl => { :ca_path => CONFIG['ssl_ca_path'] }}
 
       CONFIG['omniauth_providers'].push(:google_oauth2)
     end
