@@ -467,6 +467,16 @@ The behaviour can be configured by editing the following configuration keys:
   * `unverified`: will ask only to unverified users (valid for facebook only, google+ will always be always treated as unverified)
   * `always`: will always ask mobile phone number to users
 
+### Sentry exception notification
+
+**Available since OWUMS 1.4.**
+
+Just add to your configuration file in `config/config.yml` the following line:
+
+    sentry_dsn: 'http://public:secret@example.com/project-id'
+
+To obtain a new `dsn` setting key, create a new project in your sentry account, add the domain of the OWUMS instance on to the allowed domains, then get the dsn setting by going to the "installation & setup" page on the project.
+
 ## Notice
 
 The OWUMS uses the Highcharts library.
