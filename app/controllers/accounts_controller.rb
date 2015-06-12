@@ -137,10 +137,15 @@ class AccountsController < ApplicationController
       redirect_to :action => :show
     else
       if request.method == 'POST' and @account.update_attributes(request.params[:account])
-        # mark as verified
+        # mark as verified and log in
         @account.verified = true
+        @account.current_login_ip = request.remote_ip
         @account.save
-        redirect_to account_url
+        @account.captive_portal_login!
+        # determine URL for redirect (defaults to account URL)
+        config_url = Configuration.get('social_login_success_url', '')
+        redirect_url = config_url != '' ? config_url : account_url
+        redirect_to redirect_url
         return nil
       end
 
