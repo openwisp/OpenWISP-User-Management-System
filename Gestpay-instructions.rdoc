@@ -87,4 +87,3 @@ Users of "verified by visa" or "master card security code" cards will be redirec
 
 For this mecchanism to work OWUMS needs to be able to communicate with OWCPM's API in order to temporary login the user so he can be redirected to the website of his bank.
 
-TODO: write unit tests that verify that OWUMS can talk to OWCPM's API
