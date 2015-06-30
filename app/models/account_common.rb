@@ -149,12 +149,12 @@ class AccountCommon < ActiveRecord::Base
 
   def self.verification_methods
     operator = defined?(OperatorSession.find.operator) ? OperatorSession.find.operator : false
-    is_server = !!defined?(Rails::Server)
+    is_console = !!defined?(Rails::Console)
     methods = []
 
-    if not is_server or operator
-      methods.push VERIFY_BY_NOTHING  if not is_server or operator.has_role?('registrant_by_nothing')
-      methods.push VERIFY_BY_DOCUMENT if not is_server or operator.has_role?('registrant_by_id_card')
+    if is_console or operator
+      methods.push VERIFY_BY_NOTHING  if is_console or operator.has_role?('registrant_by_nothing')
+      methods.push VERIFY_BY_DOCUMENT if is_console or operator.has_role?('registrant_by_id_card')
     end
     methods.push VERIFY_BY_MACADDRESS if CONFIG['mac_address_authentication']
 
@@ -167,7 +167,7 @@ class AccountCommon < ActiveRecord::Base
     methods.push(VERIFY_BY_GESTPAY) if CONFIG['gestpay_enabled']
     methods.push(VERIFY_BY_SOCIAL) if CONFIG['social_login_enabled']
 
-    if not !!defined?(Rails::Server)
+    if !!defined?(Rails::Console)
       methods.push VERIFY_BY_NOTHING
       methods.push VERIFY_BY_DOCUMENT
     end
@@ -186,8 +186,7 @@ class AccountCommon < ActiveRecord::Base
                                :crypted_password,
                                :password_salt,
                                :persistence_token,
-                               :perishable_token]
-    )
+                               :perishable_token])
     super(options)
   end
 
