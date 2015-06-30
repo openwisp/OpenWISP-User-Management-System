@@ -448,10 +448,10 @@ input.search.button {
 	color: #DDD;
 	background: #333;
 	margin-bottom: 22px;
-	height: 60px;
-	line-height: 60px;
-	margin-top: 0;
-	padding-top: 0;
+	height: 80px;
+	line-height: 30px;
+	margin-top: 0px;
+	padding-top: 15px;
 }
 #site_info a {
 	color:#fff;
