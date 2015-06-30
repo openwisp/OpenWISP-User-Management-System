@@ -118,7 +118,13 @@
   <p>&nbsp;</p>
 
   <div id="footer" data-role="footer">
-    <p>Copyright (C) <%= Date.today.year %> <a href="http://openwisp.org/" target="_blank">OpenWISP.org</a></p>
+    <p>
+      Copyright (C) <%= Date.today.year %> <a href="http://openwisp.org/" target="_blank">OpenWISP.org</a>
+    </p>
+    <p>
+      <%= t(:Cookie_law) %>
+      <%= link_to t(:Click_for_cookie), document_path('cookie.pdf'), :target => '_blank' %>.
+    </p>
     <p><%= link_to_toggle_mobile 'data-ajax' => false %></p>
   </div>
 </div>

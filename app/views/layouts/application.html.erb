@@ -204,14 +204,14 @@
 
   <div class="grid_12" id="site_info">
     <div class="box" style="text-align:center">
-      <p>OpenWISP User Management System - Copyright (C) <%= Date.today.year %> <a href="http://openwisp.org/">OpenWISP.org</a></br>
-       <%= t(:Cookie_law) %>
-       <%= link_to t(:Click_for_cookie), document_path('cookie.pdf'), :target => '_blank' %>.
-
-      <% if is_mobile_device? %>
-        <p id="go-to-mobile"><%= link_to_toggle_mobile %></p>
-      <% end %>
-     </p>
+      <p>
+        OpenWISP User Management System - Copyright (C) <%= Date.today.year %> <a href="http://openwisp.org/">OpenWISP.org</a></br>
+        <%= t(:Cookie_law) %>
+        <%= link_to t(:Click_for_cookie), document_path('cookie.pdf'), :target => '_blank' %>.
+        <% if is_mobile_device? %>
+          <p id="go-to-mobile"><%= link_to_toggle_mobile %></p>
+        <% end %>
+      </p>
     </div>
   </div>
   <div class="clear"></div>
