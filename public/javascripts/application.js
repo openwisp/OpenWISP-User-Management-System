@@ -562,11 +562,14 @@ var owums = {
     },
 
     path: function(path) {
-        var _curr = window.location.pathname;
-        var _params = window.location.search;
+        var _curr = window.location.pathname,
+            _params = window.location.search,
+            // added for backward compatibility
+            _subUri = (owums.subUri === '' && _curr.indexOf('/owums/') === 0) ? 'owums' : owums.subUri;
         if (path.charAt(0) === '/') {
-            if (_curr.substr(1, owums.subUri.length) === owums.subUri) {
-                return '/'+owums.subUri+path+_params;
+            if (_curr.substr(1, _subUri.length) === _subUri) {
+                var _prefix = _subUri ? '/'+_subUri : '';
+                return _prefix+path+_params;
             } else {
                 return path+_params;
             }
