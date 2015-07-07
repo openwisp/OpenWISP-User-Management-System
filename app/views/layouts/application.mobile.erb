@@ -25,6 +25,7 @@
   <%= stylesheet_link_tag 'jquery.mobile/styles', 'custom-mobile' %>
 
   <%= javascript_include_tag :defaults, 'application-mobile', 'jquery.mobile', 'highcharts', 'owums.graphs' %>
+  <script type="text/javascript">owums.subUri = "<%= CONFIG['root_dir'].gsub('/', '') %>";</script>
 
   <%= content_for :after_defaults %>
 
