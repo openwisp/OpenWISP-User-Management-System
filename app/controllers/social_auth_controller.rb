@@ -19,8 +19,9 @@ class SocialAuthController < ApplicationController
       return nil
     end
 
+    @account_session = AccountSession.create(@account, true)
+
     if @account.verified?
-      @account_session = AccountSession.create(@account, true)
       @account.current_login_ip = request.remote_ip
       @account.save!
       @account.captive_portal_login!

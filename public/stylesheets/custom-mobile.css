@@ -27,6 +27,8 @@ tbody tr:hover td {
     font-size:80%;
     text-align: center;
 }
+/* avoid footer covering content */
+.ui-content { padding-bottom: 60px }
 
 #notice {
     background-color:#90ee90;

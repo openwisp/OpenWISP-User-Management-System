@@ -148,14 +148,15 @@ class AccountCommon < ActiveRecord::Base
   end
 
   def self.verification_methods
+    operator = defined?(OperatorSession.find.operator) ? OperatorSession.find.operator : false
+    is_console = !!defined?(Rails::Console)
     methods = []
 
-    if defined? OperatorSession.find.operator
-      methods.push VERIFY_BY_NOTHING  if OperatorSession.find.operator.has_role?('registrant_by_nothing')
-      methods.push VERIFY_BY_DOCUMENT if OperatorSession.find.operator.has_role?('registrant_by_id_card')
-      # Add your methods here ...
-      methods.push VERIFY_BY_MACADDRESS if CONFIG['mac_address_authentication']
+    if is_console or operator
+      methods.push VERIFY_BY_NOTHING  if is_console or operator.has_role?('registrant_by_nothing')
+      methods.push VERIFY_BY_DOCUMENT if is_console or operator.has_role?('registrant_by_id_card')
     end
+    methods.push VERIFY_BY_MACADDRESS if CONFIG['mac_address_authentication']
 
     methods
   end
@@ -163,12 +164,12 @@ class AccountCommon < ActiveRecord::Base
   def self.self_verification_methods
     methods = [VERIFY_BY_MOBILE]
 
-    if CONFIG['gestpay_enabled']
-      methods.push(VERIFY_BY_GESTPAY)
-    end
+    methods.push(VERIFY_BY_GESTPAY) if CONFIG['gestpay_enabled']
+    methods.push(VERIFY_BY_SOCIAL) if CONFIG['social_login_enabled']
 
-    if CONFIG['social_login_enabled']
-      methods.push(VERIFY_BY_SOCIAL)
+    if !!defined?(Rails::Console)
+      methods.push VERIFY_BY_NOTHING
+      methods.push VERIFY_BY_DOCUMENT
     end
 
     methods
@@ -185,8 +186,7 @@ class AccountCommon < ActiveRecord::Base
                                :crypted_password,
                                :password_salt,
                                :persistence_token,
-                               :perishable_token]
-    )
+                               :perishable_token])
     super(options)
   end
 

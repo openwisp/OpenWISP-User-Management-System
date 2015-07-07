@@ -54,7 +54,7 @@ $.fn.toggleMessage = function(message, speed){
 }
 
 var owums = {
-    subUri: 'owums',
+    subUri: 'owums',  // overridden in main layout
     quickSearchDiv: '#quicksearch',
     loadingDiv: '#loading',
 

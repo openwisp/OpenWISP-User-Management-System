@@ -169,6 +169,8 @@ GEM
       ruby-rc4
       ttfunk
     polyglot (0.3.4)
+    pony (1.11)
+      mail (>= 2.0)
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.2)
@@ -235,6 +237,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   packet (= 0.1.15)!
+  pony
   prawn
   rack-mini-profiler
   rails!

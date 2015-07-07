@@ -5,6 +5,7 @@ gem 'mysql2', '~> 0.2.7'
 
 gem 'exception_notification', :require => 'exception_notifier'
 gem 'sentry-raven'
+gem 'pony'
 
 gem 'authlogic', '~> 3.0.3'
 gem 'acl9', '~> 0.12.0'

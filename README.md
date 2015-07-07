@@ -1,6 +1,7 @@
 # OpenWISP User Management System
 
 ![Build Status](https://ci.publicwifi.it/buildStatus/icon?job=OpenWISP-User-Management-System)
+![Build Status](http://img.shields.io/github/release/openwisp/OpenWISP-User-Management-System.svg)
 
 ## What is it?
 
