@@ -35,7 +35,7 @@ namespace :radius_accountings do
       }
     ).count
 
-    if true or count <= 0
+    if count <= 0
       Pony.mail({
         :from => Configuration.get('exception_notification_sender'),
         :to => Configuration.get('exception_notification_recipients'),
