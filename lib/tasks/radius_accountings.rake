@@ -25,17 +25,13 @@ namespace :radius_accountings do
   def check
     min = (CONFIG['check_called_station_id']['between_min']).minutes.ago
     max = (CONFIG['check_called_station_id']['between_max']).minutes.ago
+    options = {:min => min, :max => max}
+    where = 'AcctStartTime <= :min AND AcctStartTime >= :max'
 
-    count = RadiusAccounting.where(
-      'AcctStartTime <= :min AND
-      AcctStartTime >= :max AND
-      CHAR_LENGTH(CalledStationId) > 17', {
-        :min => min,
-        :max => max
-      }
-    ).count
+    session_count = RadiusAccounting.where(where, options).count
+    converted_sessions = RadiusAccounting.where("#{where} AND CHAR_LENGTH(CalledStationId) > 17", options).count
 
-    if count <= 0
+    if session_count > 0 and converted_sessions < 1
       Pony.mail({
         :from => Configuration.get('exception_notification_sender'),
         :to => Configuration.get('exception_notification_recipients'),
