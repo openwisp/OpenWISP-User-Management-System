@@ -122,7 +122,7 @@ class Account < AccountCommon
         if extra["birthday"]
           birth_date = extra["birthday"].gsub("/", "-")
         end
-        if extra["location"]["name"]
+        if extra["location"] and extra["location"]["name"]
           city, state = extra["location"]["name"].split(", ")
         end
       end
