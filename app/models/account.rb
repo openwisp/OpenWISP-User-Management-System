@@ -116,12 +116,15 @@ class Account < AccountCommon
       end
       return account
     else
-      if auth_hash["info"]["birthday"]
-        birth_date = auth_hash["info"]["birthday"].gsub("/", "-")
-      end
-
-      if auth_hash["info"]["location"]
-        city, state = auth_hash["info"]["location"].split(", ")
+      # try to grab birthday, city and state
+      if auth_hash["extra"] and auth_hash["extra"]["raw_info"]
+        extra = auth_hash["extra"]["raw_info"]
+        if extra["birthday"]
+          birth_date = extra["birthday"].gsub("/", "-")
+        end
+        if extra["location"]["name"]
+          city, state = extra["location"]["name"].split(", ")
+        end
       end
 
       first_name = auth_hash["info"]["first_name"]
