@@ -19,7 +19,7 @@
 
 <div style="text-align:center;font-size:120%">
   <% if @account.verified %>
-      <script type="text/javascript">document.location="<%= account_url %>"</script>
+      <script type="text/javascript">document.location="<%= account_path %>"</script>
   <% else %>
       <% if @account.verify_with_mobile_phone? %>
           <%=t :Please_verify_mobile_number %><br /><br />
@@ -45,6 +45,6 @@
       <% end %>
   <% end %>
   <p style="font-size:90%" class="no_js">
-    <%=t :If_problem_with_redirect %> <%= link_to t(:click_here), account_url, :class => 'ui-link', 'data-ajax' => false %>
+    <%=t :If_problem_with_redirect %> <%= link_to t(:click_here), account_path, :class => 'ui-link', 'data-ajax' => false %>
   </p>
 </div>

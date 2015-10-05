@@ -37,15 +37,15 @@
     <% radius_groups.each do |radius_group| %>
         <tr>
           <td><%= radius_group.priority %></td>
-          <td><%= link_to h(radius_group.name), radius_group_url(radius_group) %></td>
+          <td><%= link_to h(radius_group.name), radius_group_path(radius_group) %></td>
           <td><%= truncate(radius_group.notes, :length => 20) %></td>
           <td>
             <% if current_operator.has_role? 'radius_groups_manager' %>
-                <%= link_to t(:Edit), edit_radius_group_url(radius_group) %>
+                <%= link_to t(:Edit), edit_radius_group_path(radius_group) %>
             <% end %>
             &nbsp;
             <% if current_operator.has_role? 'radius_groups_destroyer' %>
-                <%= link_to t(:Destroy), radius_group_url(radius_group),
+                <%= link_to t(:Destroy), radius_group_path(radius_group),
                             :confirm => t(:Are_you_sure), :method => :delete %>
             <% end %>
           </td>
@@ -54,7 +54,7 @@
     </tbody>
     <tfoot>
     <tr>
-      <td colspan="4"><%= link_to t(:New_radius_group), new_radius_group_url, :class => 'button' %></td>
+      <td colspan="4"><%= link_to t(:New_radius_group), new_radius_group_path, :class => 'button' %></td>
     </tr>
     </tfoot>
   </table>

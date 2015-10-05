@@ -25,7 +25,7 @@
 <div class="grid_12">
   <div class="box">
     <h2><%=t :Edit_configuration_key %></h2>
-    
+
     <%= form_for @configuration do |f| %>
       <fieldset>
         <legend><strong><%=t :Key %>:</strong> <%= @configuration.key %></legend>
@@ -44,7 +44,7 @@
 <% if @html %>
   <script type="text/javascript">
     $('textarea').htmlarea({
-      css: '<%= root_url %>stylesheets/jHtmlArea/jHtmlArea.Editor.css'
+      css: '<%= root_path %>stylesheets/jHtmlArea/jHtmlArea.Editor.css'
     });
   </script>
 <% end %>

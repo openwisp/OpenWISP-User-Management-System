@@ -40,7 +40,7 @@
       <% if auth? :radius_groups_manager %>
           <tr>
             <td colspan="2">
-              <p><%= link_to t(:Edit), edit_radius_group_url(@radius_group), :class => 'button nomargin' %></p>
+              <p><%= link_to t(:Edit), edit_radius_group_path(@radius_group), :class => 'button nomargin' %></p>
             </td>
           </tr>
       <% end %>

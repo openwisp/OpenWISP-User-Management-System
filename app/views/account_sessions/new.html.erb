@@ -46,10 +46,10 @@
           </p>
           <p class="center social-login">
             <% if CONFIG['omniauth_providers'].include?(:facebook) %>
-              <a href="<%= root_url %>auth/facebook" class="social-button facebook">Facebook</a>
+              <a href="<%= root_path %>auth/facebook" class="social-button facebook">Facebook</a>
             <% end %>
             <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
-              <a href="<%= root_url %>auth/google_oauth2" class="social-button google">Google+</a>
+              <a href="<%= root_path %>auth/google_oauth2" class="social-button google">Google+</a>
             <% end %>
           </p>
           <% end %>
