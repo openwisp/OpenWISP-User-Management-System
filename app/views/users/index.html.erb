@@ -36,7 +36,7 @@
               </p>
               <% if User.self_verification_methods.length > 1 %>
                 <p id="verification-method-search">
-                  <label><%=t :Verification_method %>: <%= select_tag :verification_method, options_for_select(user_search_verification_methods()) %> </label> 
+                  <label><%=t :Verification_method %>: <%= select_tag :verification_method, options_for_select(user_search_verification_methods()) %> </label>
                 </p>
               <% end %>
               <p id="verified-radio">
@@ -54,7 +54,7 @@
           <% end %>
         </fieldset>
       </div>
-      
+
       <script>
         $(function(){
           $("#verified-radio").buttonset();
@@ -68,8 +68,8 @@
       <div class="block" id="search_block">
         <%= render 'list', :users => @users, :total_users => @total_users %>
       </div>
-      
-      <%= link_to t(:Add_new_user), new_user_url, :class => 'button submit' %>
+
+      <%= link_to t(:Add_new_user), new_user_path, :class => 'button submit' %>
     </div>
   </div>
 </div>

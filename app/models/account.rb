@@ -116,18 +116,27 @@ class Account < AccountCommon
       end
       return account
     else
-      if auth_hash["info"]["birthday"]
-        birth_date = auth_hash["info"]["birthday"].gsub("/", "-")
-      end
-
-      if auth_hash["info"]["location"]
-        city, state = auth_hash["info"]["location"].split(", ")
+      # try to grab birthday, city and state
+      if auth_hash["extra"] and auth_hash["extra"]["raw_info"]
+        extra = auth_hash["extra"]["raw_info"]
+        if extra["birthday"]
+          birth_date = extra["birthday"].gsub("/", "-")
+        end
+        if extra["location"] and extra["location"]["name"]
+          city, state = extra["location"]["name"].split(", ")
+        end
       end
 
       first_name = auth_hash["info"]["first_name"]
       last_name = auth_hash["info"]["last_name"]
       # password is needed for captive portal login
       password = SecureRandom.hex
+      # default values for additional fields
+      default_birth_date = CONFIG['birth_date'] ? '01-01-1970' : ''
+      default_address = CONFIG['address'] ? 'null' : ''
+      default_city = CONFIG['city'] ? 'null' : ''
+      default_state = CONFIG['state'] ? 'null' : ''
+      default_zip = CONFIG['zip'] ? 'null' : ''
 
       account = Account.new(
         :given_name => first_name,
@@ -137,11 +146,11 @@ class Account < AccountCommon
         :password => password,
         :password_confirmation => password,
         :verification_method => 'social_network',
-        :birth_date => birth_date || '',
-        :address => '',
-        :city => city || '',
-        :zip => '',
-        :state => state || '',
+        :birth_date => birth_date || default_birth_date,
+        :address => default_address,
+        :city => city || default_city,
+        :state => state || default_state,
+        :zip => default_zip,
         :eula_acceptance => true,
         :privacy_acceptance => true,
         :active => true

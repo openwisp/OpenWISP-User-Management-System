@@ -62,7 +62,7 @@
 <div class="container_12" id="container">
   <div class="grid_12" id="branding">
     <h1>
-      <a href="<%= root_url %>">
+      <a href="<%= root_path %>">
         <% @logo = Configuration.get('logo')
           unless @logo.nil? or @logo == '' %>
           <%= image_tag(@logo) %>
@@ -101,15 +101,15 @@
   <div class="grid_12">
     <ul class="nav main">
       <% if current_operator %>
-          <li><%= menu_link_to t(:Home), operator_url(current_operator) %></li>
+          <li><%= menu_link_to t(:Home), operator_path(current_operator) %></li>
           <% if current_operator.has_role? 'stats_viewer' %>
               <li>
-                <%= menu_link_to t(:Show_stats), stats_url %>
+                <%= menu_link_to t(:Show_stats), stats_path %>
                 <ul>
-                  <li><%= menu_link_to t(:Registered_users_daily), stat_url('registered_users_daily') %></li>
-                  <li><%= menu_link_to t(:Registered_users), stat_url('registered_users') %></li>
-                  <li><%= menu_link_to t(:Logins), stat_url('logins') %></li>
-                  <li><%= menu_link_to t(:Traffic), stat_url('traffic') %></li>
+                  <li><%= menu_link_to t(:Registered_users_daily), stats_path('registered_users_daily') %></li>
+                  <li><%= menu_link_to t(:Registered_users), stats_path('registered_users') %></li>
+                  <li><%= menu_link_to t(:Logins), stats_path('logins') %></li>
+                  <li><%= menu_link_to t(:Traffic), stats_path('traffic') %></li>
                 </ul>
               </li>
           <% end %>
@@ -118,16 +118,16 @@
                   current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant'
           %>
               <li>
-                <%= menu_link_to(t(:Users), current_operator.has_role?('users_browser') ? users_browse_url : '#') %>
+                <%= menu_link_to(t(:Users), current_operator.has_role?('users_browser') ? users_browse_path : '#') %>
                 <ul>
                   <% if current_operator.has_role? 'users_browser' %>
-                      <li><%= menu_link_to t(:Browse_users), users_browse_url %></li>
+                      <li><%= menu_link_to t(:Browse_users), users_browse_path %></li>
                   <% end %>
                   <% if current_operator.has_role? 'users_finder' %>
-                      <li><%= menu_link_to t(:Search_users), users_search_url %></li>
+                      <li><%= menu_link_to t(:Search_users), users_search_path %></li>
                   <% end %>
                   <% if current_operator.has_role? 'users_manager' or current_operator.has_role? 'users_registrant' %>
-                      <li><%= menu_link_to t(:Add_new_user), new_user_url %></li>
+                      <li><%= menu_link_to t(:Add_new_user), new_user_path %></li>
                   <% end %>
                 </ul>
               </li>
@@ -135,45 +135,45 @@
           <% if current_operator.has_role? 'radius_groups_viewer' or
                   current_operator.has_role? 'radius_groups_creator' %>
               <li>
-                <%= menu_link_to t(:Radius_groups), radius_groups_url %>
+                <%= menu_link_to t(:Radius_groups), radius_groups_path %>
                 <ul>
                   <% if current_operator.has_role? 'radius_groups_viewer' %>
-                      <li><%= menu_link_to t(:Browse_radius_groups), radius_groups_url %></li>
+                      <li><%= menu_link_to t(:Browse_radius_groups), radius_groups_path %></li>
                   <% end %>
                   <% if current_operator.has_role? 'radius_groups_creator' %>
-                      <li><%= menu_link_to t(:Add_new_radius_group), new_radius_group_url %></li>
+                      <li><%= menu_link_to t(:Add_new_radius_group), new_radius_group_path %></li>
                   <% end %>
                 </ul>
               </li>
           <% end %>
           <% if current_operator.has_role? 'operators_manager' %>
               <li>
-                <%= menu_link_to t(:Operators), operators_url %>
+                <%= menu_link_to t(:Operators), operators_path %>
                 <ul>
-                  <li><%= menu_link_to t(:Browse_operators), operators_url %></li>
-                  <li><%= menu_link_to t(:Add_new_operator), new_operator_url %></li>
+                  <li><%= menu_link_to t(:Browse_operators), operators_path %></li>
+                  <li><%= menu_link_to t(:Add_new_operator), new_operator_path %></li>
                 </ul>
               </li>
           <% end %>
           <li>
-            <%= menu_link_to(t(:System_settings), current_operator.has_role?('configurations_manager') ? configurations_url : '#') %>
+            <%= menu_link_to(t(:System_settings), current_operator.has_role?('configurations_manager') ? configurations_path : '#') %>
             <ul>
               <% if current_operator.has_role? 'configurations_manager' %>
-                  <li><%= menu_link_to t(:Configuration_keys), configurations_url %></li>
+                  <li><%= menu_link_to t(:Configuration_keys), configurations_path %></li>
               <% end %>
             </ul>
           </li>
-          <li class="secondary"><%= menu_link_to t(:Logout), operator_logout_url, :method => :delete %></li>
+          <li class="secondary"><%= menu_link_to t(:Logout), operator_logout_path, :method => :delete %></li>
       <% else %>
-          <li><%= menu_link_to t(:How_to_use_service), account_instructions_url, :disable_if => on_root? %></li>
+          <li><%= menu_link_to t(:How_to_use_service), account_instructions_path, :disable_if => on_root? %></li>
           <% if current_account %>
-              <li><%= menu_link_to t(:Show_account_info), account_url %></li>
-              <li><%= menu_link_to t(:Edit_account), edit_account_url %></li>
-              <li class="secondary"><%= link_to t(:Logout), account_logout_url, :method => :delete %></li>
+              <li><%= menu_link_to t(:Show_account_info), account_path %></li>
+              <li><%= menu_link_to t(:Edit_account), edit_account_path %></li>
+              <li class="secondary"><%= link_to t(:Logout), account_logout_path, :method => :delete %></li>
           <% else %>
-              <li><%= menu_link_to t(:Login), account_login_url %></li>
-              <li><%= menu_link_to t(:Register).html_safe, account_registration_url %></li>
-              <li><%= menu_link_to t(:Forgot_password), password_reset_url %></li>
+              <li><%= menu_link_to t(:Login), account_login_path %></li>
+              <li><%= menu_link_to t(:Register).html_safe, account_registration_path %></li>
+              <li><%= menu_link_to t(:Forgot_password), password_reset_path %></li>
           <% end %>
       <% end %>
     </ul>

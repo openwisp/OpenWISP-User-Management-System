@@ -6,7 +6,7 @@
             frequency: 2,
             url: false,
             update: function(){
-                $.get('<%= account_status_url %>', function(response){
+                $.get('<%= account_status_path %>', function(response){
                     // once verified or expired reload the page
                     if(response['is_verified'] === true || response['is_expired'] === true){
                         location.href = location.href;

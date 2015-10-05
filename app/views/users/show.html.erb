@@ -129,7 +129,7 @@
           <% @user.radius_groups.all(:order => :priority).each do |group| %>
               <tr>
                 <td><%= group.priority %></td>
-                <td><%= link_to group.name, radius_group_url(group) %></td>
+                <td><%= link_to group.name, radius_group_path(group) %></td>
                 <td><%= group.notes %></td>
               </tr>
           <% end %>
@@ -158,11 +158,11 @@
                 <td><%= check.value %></td>
                 <td>
                   <% if current_operator.has_role? 'radius_checks_manager' %>
-                      <%= link_to t(:Edit), edit_user_radius_check_url(@user, check) %>
+                      <%= link_to t(:Edit), edit_user_radius_check_path(@user, check) %>
                   <% end %>
                   &nbsp;
                   <% if current_operator.has_role? 'radius_checks_destroyer' %>
-                      <%= link_to t(:Destroy), user_radius_check_url(@user, check),
+                      <%= link_to t(:Destroy), user_radius_check_path(@user, check),
                                   :method => :delete, :confirm => t(:Are_you_sure) %>
                   <% end %>
                 </td>
@@ -173,7 +173,7 @@
           <% if auth? :radius_checks_creator %>
               <tr>
                 <td colspan="4">
-                  <p><%= link_to t(:Add_radius_check), new_user_radius_check_url(@user), :class => 'button nomargin' %></p>
+                  <p><%= link_to t(:Add_radius_check), new_user_radius_check_path(@user), :class => 'button nomargin' %></p>
                 </td>
               </tr>
           <% end %>
@@ -202,11 +202,11 @@
                 <td><%= reply.value %></td>
                 <td>
                   <% if current_operator.has_role? 'radius_replies_manager' %>
-                      <%= link_to t(:Edit), edit_user_radius_reply_url(@user, reply) %>
+                      <%= link_to t(:Edit), edit_user_radius_reply_path(@user, reply) %>
                   <% end %>
                   &nbsp;
                   <% if current_operator.has_role? 'radius_replies_destroyer' %>
-                      <%= link_to t(:Destroy), user_radius_reply_url(@user, reply),
+                      <%= link_to t(:Destroy), user_radius_reply_path(@user, reply),
                                   :method => :delete, :confirm => t(:Are_you_sure) %>
                   <% end %>
                 </td>
@@ -217,7 +217,7 @@
           <% if auth? :radius_replies_creator %>
               <tr>
                 <td colspan="4">
-                  <p><%= link_to t(:Add_radius_reply), new_user_radius_reply_url(@user), :class => 'button nomargin' %></p>
+                  <p><%= link_to t(:Add_radius_reply), new_user_radius_reply_path(@user), :class => 'button nomargin' %></p>
                 </td>
               </tr>
           <% end %>
