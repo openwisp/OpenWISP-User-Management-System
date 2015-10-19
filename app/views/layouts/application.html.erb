@@ -106,10 +106,10 @@
               <li>
                 <%= menu_link_to t(:Show_stats), stats_path %>
                 <ul>
-                  <li><%= menu_link_to t(:Registered_users_daily), stats_path('registered_users_daily') %></li>
-                  <li><%= menu_link_to t(:Registered_users), stats_path('registered_users') %></li>
-                  <li><%= menu_link_to t(:Logins), stats_path('logins') %></li>
-                  <li><%= menu_link_to t(:Traffic), stats_path('traffic') %></li>
+                  <li><%= menu_link_to t(:Registered_users_daily), [stats_path, 'registered_users_daily'].join('/') %></li>
+                  <li><%= menu_link_to t(:Registered_users), [stats_path, 'registered_users'].join('/') %></li>
+                  <li><%= menu_link_to t(:Logins), [stats_path, 'logins'].join('/') %></li>
+                  <li><%= menu_link_to t(:Traffic), [stats_path, 'traffic'].join('/') %></li>
                 </ul>
               </li>
           <% end %>
