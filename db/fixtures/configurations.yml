@@ -656,3 +656,13 @@ Staff"
   key: "social_login_ask_mobile_phone"
   value: "unverified"
 
+160:
+  system_key: t
+  key: "pfsense_zone"
+  value: ""
+
+161:
+  system_key: t
+  key: "captive_portal_api_protocol"
+  value: ""
+
