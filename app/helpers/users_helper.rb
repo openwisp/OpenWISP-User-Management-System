@@ -43,7 +43,6 @@ module UsersHelper
   end
   
   def user_search_verification_methods
-    #options = ['all'] + User.self_verification_methods
     options = ['all'] + User.search_verification_methods
     options.map{ |method| [ t(method.to_sym), method ] }
   end
