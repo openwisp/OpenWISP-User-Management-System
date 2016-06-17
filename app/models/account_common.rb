@@ -175,6 +175,15 @@ class AccountCommon < ActiveRecord::Base
     methods
   end
 
+  def self.search_verification_methods
+    methods = [VERIFY_BY_MOBILE]
+    methods.push(VERIFY_BY_GESTPAY) if CONFIG['gestpay_enabled']
+    methods.push(VERIFY_BY_SOCIAL) if CONFIG['social_login_enabled']
+    
+    methods += self.verification_methods
+    methods
+  end
+
   def self.social_login_ask_mobile_phone
     return Configuration.get('social_login_ask_mobile_phone', 'unverified')
   end

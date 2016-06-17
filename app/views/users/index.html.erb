@@ -34,11 +34,9 @@
               <p>
                 <%= text_field_tag :search %>
               </p>
-              <% if User.self_verification_methods.length > 1 %>
                 <p id="verification-method-search">
                   <label><%=t :Verification_method %>: <%= select_tag :verification_method, options_for_select(user_search_verification_methods()) %> </label>
                 </p>
-              <% end %>
               <p id="verified-radio">
                 <%=t :Verified %>:
                 <input type="radio" name="verified" value="" id="verified-all" checked="checked" /> <label for="verified-all"><%=t :all %></label>
