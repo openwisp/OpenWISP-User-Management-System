@@ -102,6 +102,84 @@ class Account < AccountCommon
     sprintf "%.2f", total_out_megabytes
   end
 
+  def self.find_or_create_from_saml(session, list_attr)
+    #authorization = SocialAuth.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
+    account_id = Account.find_by_sql("SELECT id from users where username='"+session[list_attr["username"]]+"'")
+    account_list = Account.find(account_id)
+    account = account_list.first
+    ##if authorization
+    if account
+      #account = Account.find(authorization.user_id)
+      ## this block is entered when the user disabled her account
+      ## in this case we'll re-enable it, because doing the social login again
+      ## is equivalent to verifying the phone number again
+      if !account.verified
+        account.verified = true
+        account.save
+      end
+      return account
+    else
+    # try to grab birthday, city and state
+    #  if auth_hash["extra"] and auth_hash["extra"]["raw_info"]
+    #    extra = auth_hash["extra"]["raw_info"]
+    #    if extra["birthday"]
+    #      birth_date = extra["birthday"].gsub("/", "-")
+    #    end
+    #    if extra["location"] and extra["location"]["name"]
+    #      city, state = extra["location"]["name"].split(", ")
+    #    end
+    #  end
+    first_name = session[list_attr["given_name"]]
+    last_name = session[list_attr["surname"]]
+    birth_date = session[list_attr["birth_date"]]
+    address = session[list_attr["address"]]
+    city = session[list_attr["city"]]
+    state = session[list_attr["state"]]
+
+    password = SecureRandom.hex
+    default_birth_date = CONFIG['birth_date'] ? '01-01-1970' : ''
+    default_address = CONFIG['address'] ? 'null' : ''
+    default_city = CONFIG['city'] ? 'null' : ''
+    default_state = CONFIG['state'] ? 'null' : ''
+    default_zip = CONFIG['zip'] ? 'null' : ''
+
+    if list_attr
+       account = Account.new(
+        :given_name => first_name,
+        :surname => last_name,
+        :email => session[list_attr["email"]],
+        :username => session[list_attr["username"]],
+        :password => password,
+        :password_confirmation => password,
+        :verification_method => list_attr["auth_method"],
+        :birth_date => birth_date || default_birth_date,
+        :address => default_address,
+        :city => city || default_city,
+        :state => state || default_state,
+        :zip => default_zip,
+        :eula_acceptance => true,
+        :privacy_acceptance => true,
+        :active => true
+      )# username lowercase withouth dashes
+      account.username = account.username.downcase.gsub(' ', '-')
+      # find available username
+      original_username = account.username
+      counter = 1
+      while Account.where(:username => account.username).count > 0
+        counter += 1
+        account.username = "#{original_username}#{counter}"
+      end
+      account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
+      account.verified = true
+
+      if account.save
+        account.new_account_notification!
+      end
+      return account
+    end
+  end
+  end
+
   def self.find_or_create_from_oauth(auth_hash)
     authorization = SocialAuth.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
 
