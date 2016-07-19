@@ -522,7 +522,9 @@ ul.nomargin,.button.nomargin{ margin-bottom: 0 !important }
 #site_info a:hover{ color: #fff; text-decoration: underline }
 
 .social-login{ margin-top: 23px; line-height:35px }
+.spid-login{ margin-top: 23px; line-height:35px }
 #registration-social-network{ margin: 30px 0;  }
+#registration-spid{ margin: 30px 0;  }
 
 p.separator {
     position: relative;
@@ -571,4 +573,12 @@ p.separator .line{
 .google:focus,
 .google:active{
     background-color:#c23321;
+}
+.spid{
+    background-color:#770FD8;
+}
+.spid:hover,
+.spid:focus,
+.spid:active{
+    background-color:#9D3FF4;
 }

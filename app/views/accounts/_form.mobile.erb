@@ -116,3 +116,8 @@
     <% end %>
   </div>
 <% end %>
+<% if account_verification_methods.include?('spid') and account.new_record? %>
+   <div id="registration-spid" class="spid-login center ignore-toggle" style="line-height:45px">
+      <a href="<%= root_path %>auth/spid" class="social-button spid"><%= t(:Sign_up_with) %> Spid</a>
+   </div>
+<% end %>

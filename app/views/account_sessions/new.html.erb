@@ -52,6 +52,11 @@
               <a href="<%= root_path %>auth/google_oauth2" class="social-button google">Google+</a>
             <% end %>
           </p>
+          <p class="center social-login">
+            <% if CONFIG['spid_login_enabled'] == true %>
+              <a href="<%= root_path %>auth/spid" class="social-button spid">SPID</a>
+            <% end %>
+          </p>
           <% end %>
         </fieldset>
       <% end %>
