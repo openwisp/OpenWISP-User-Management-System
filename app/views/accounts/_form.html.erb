@@ -76,10 +76,10 @@
 <% if account_verification_methods.include?('social_network') and account.new_record? %>
 <div id="registration-social-network" class="social-login center hidden">
   <% if CONFIG['omniauth_providers'].include?(:facebook) %>
-    <a href="<%= root_path %>auth/facebook" class="social-button facebook"><%= t(:Sign_up_with) %> Facebook</a>
+    <a href="<%= root_path %>/auth/facebook" class="social-button facebook"><%= t(:Sign_up_with) %> Facebook</a>
   <% end %>
   <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
-    <a href="<%= root_path %>auth/google_oauth2" class="social-button google"><%= t(:Sign_up_with) %> Google+</a>
+    <a href="<%= root_path %>/auth/google_oauth2" class="social-button google"><%= t(:Sign_up_with) %> Google+</a>
   <% end %>
 </div>
 <% end %>
