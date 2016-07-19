@@ -656,3 +656,32 @@ Staff"
   key: "social_login_ask_mobile_phone"
   value: "unverified"
 
+160:
+  system_key: t
+  key: "spid_login_enabled"
+  value: "false"
+
+161:
+  system_key: f
+  key: "spid_idp_sso_target_url"
+  value: "http://mydomain.it/simplesaml/saml2/idp/SSOService.php"
+
+162:
+  system_key: f
+  key: "spid_name_identifier_format"
+  value: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+
+163:
+  system_key: f
+  key: "spid_metadata_file"
+  value: "/path/to/metadata.xml"
+
+164:
+  system_key: f
+  key: "spid_certificate_file"
+  value: "/path/to/cert.pem"
+
+165:
+  system_key: f
+  key: "spid_private_key_file"
+  value: "/path/to/key.pem"
