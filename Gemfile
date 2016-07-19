@@ -40,6 +40,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 
+gem 'ruby-saml', :github => 'onelogin/ruby-saml'
 group :test do
   gem 'sqlite3'
 end
