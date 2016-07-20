@@ -39,8 +39,8 @@ class SamlController < ApplicationController
        if @account.verified?
           @account.current_login_ip = request.remote_ip
           @account.save!
-          #DA METTERE@account.captive_portal_login!
-          flash[:notice] = "I18n.t(:Login_successful): #{session.inspect}"
+          @account.captive_portal_login!
+          flash[:notice] = "#{I18n.t(:Login_successful)}: #{@account.username}"
           # determine URL for redirect (defaults to account URL)
           config_url = Configuration.get('social_login_success_url', '')
           redirect_url = config_url != '' ? config_url : account_url
