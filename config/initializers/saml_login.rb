@@ -1,4 +1,4 @@
-CONFIG['spid_login_enabled'] = (Configuration.get("saml_login_enabled", "false") == "true") rescue false
+CONFIG['spid_login_enabled'] = (Configuration.get("spid_login_enabled", "false") == "true") rescue false
 CONFIG['spid']=Hash.new
 CONFIG['spid']['certificate_file']=Configuration.get("spid_certificate_file")
 CONFIG['spid']['idp_sso_target_url']= Configuration.get("spid_idp_sso_target_url")

@@ -167,7 +167,7 @@ class AccountCommon < ActiveRecord::Base
 
     methods.push(VERIFY_BY_GESTPAY) if CONFIG['gestpay_enabled']
     methods.push(VERIFY_BY_SOCIAL) if CONFIG['social_login_enabled']
-    methods.push(VERIFY_BY_SPID) if Configuration.get('saml_login_enabled')
+    methods.push(VERIFY_BY_SPID) if Configuration.get('spid_login_enabled')
 
     if !!defined?(Rails::Console)
       methods.push VERIFY_BY_NOTHING
@@ -181,7 +181,7 @@ class AccountCommon < ActiveRecord::Base
     methods = [VERIFY_BY_MOBILE]
     methods.push(VERIFY_BY_GESTPAY) if CONFIG['gestpay_enabled']
     methods.push(VERIFY_BY_SOCIAL) if CONFIG['social_login_enabled']
-    methods.push(VERIFY_BY_SPID) if Configuration.get('saml_login_enabled')
+    methods.push(VERIFY_BY_SPID) if Configuration.get('spid_login_enabled')
     
     methods += self.verification_methods
     methods
