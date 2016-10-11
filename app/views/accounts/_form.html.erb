@@ -64,13 +64,16 @@
           <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
         </div>
     <% else %>
+    <% if @verification_method != "spid" %>
         <div id="disable_account">
           <strong><%= label_tag t(:disable_account) %></strong><br/>
           <%= check_box_tag 'account_disable_account', '1', false, 'data-warning' => t(:Account_disable_confirmation), :name => 'account[disable_account]'  %>
         </div>
     <% end %>
-
-    <%= f.button :submit %>
+    <% end %>
+    <% if @verification_method != "spid" %>
+        <%= f.button :submit %>
+    <% end %>
 </div>
 
 <% if account_verification_methods.include?('social_network') and account.new_record? %>
@@ -88,5 +91,4 @@
       <a href="<%= root_path %>auth/spid" class="social-button spid"><%= t(:Sign_up_with) %> Spid</a>
    </div>
 <% end %>
-
 <p class="cancel"><%= link_to t(:Undo), :back %></p>

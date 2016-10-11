@@ -46,12 +46,15 @@
 <div<% unless CONFIG['state'] %> class="hidden"<% end %>>
     <%= form.input :state, :collection => countries, :prompt => false; %>
 </div>
-
 <%= form.input :username, :disabled => !owner.new_record? %>
+<% if @verification_method == "spid" %>
+    <%= form.input :email, :disabled => 'disabled' %>
+    <%= form.input :email_confirmation, :disabled => 'disabled' %>
+<% else %>
+    <%= form.input :email %>
+    <%= form.input :email_confirmation %>
+<% end %>
 
-<%= form.input :email %>
-
-<%= form.input :email_confirmation %>
 
 <% if current_operator %>
     <% content_for :after_defaults do %>
@@ -68,6 +71,8 @@
     <%= form.input :password, :as => :string, :hint => false %>
     <%= form.input :password_confirmation, :as => :string %>
 <% else %>
+   <% if @verification_method != "spid" %>
     <%= form.input :password %>
     <%= form.input :password_confirmation %>
+   <% end %>
 <% end %>

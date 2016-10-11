@@ -120,6 +120,7 @@ class AccountsController < ApplicationController
     else
       @countries = Country.all
       @mobile_prefixes = MobilePrefix.all
+      @verification_method = @account.verification_method
       respond_to do |format|
         format.html
         format.mobile
