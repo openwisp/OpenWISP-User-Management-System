@@ -40,11 +40,18 @@ class MobilePhonePasswordResetsController < ApplicationController
     if @account
       @account.ask_for_mobile_phone_password_recovery!
       @single_access_token = @account.single_access_token
-
-      respond_to do |format|
+      if @account.verification_method == 'spid'
+       flash[:notice] = I18n.t(:No_password_reset_spid)
+       respond_to do |format|
+        format.html { render :action => :new }
+        format.mobile { render :action => :new }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :unprocessable_entity }
+       end
+      else respond_to do |format|
         format.html { render :action => :verification }
         format.mobile { render :action => :verification }
         format.xml { render_if_xml_restful_enabled :action => :verification, :status => :created }
+       end
       end
     else
       @mobile_prefixes = MobilePrefix.all
