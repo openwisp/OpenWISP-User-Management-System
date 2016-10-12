@@ -72,7 +72,7 @@ class SamlController < ApplicationController
     settings = OneLogin::RubySaml::Settings.new
 
     settings.assertion_consumer_service_url = "#{request.protocol}#{request.host}:#{request.port}/consume/"+service
-    settings.issuer                         = "#{request.protocol}#{request.host}:#{request.port}/metadata/"+service
+    settings.issuer                         = CONFIG['spid_issuer']
     settings.idp_sso_target_url             = CONFIG[service]["idp_sso_target_url"]
     settings.name_identifier_format         = CONFIG[service]["name_identifier_format"]
     xml = IO.read(CONFIG[service]["metadata_file"])
