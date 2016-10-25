@@ -94,6 +94,13 @@ Owums::Application.routes.draw do
       match '/auth/failure' => 'social_auth#failure', :as => :failure
     end
 
+    ####SPID Auth
+    if CONFIG['spid_login_enabled']
+      match '/auth/spid' => 'saml#init', :as => :samllogin
+      match '/metadata/spid' => 'saml#metadata', :as => :samlmetadata
+      match '/consume/spid' => 'saml#consume', :as => :samlconsume
+    end
+
     #### Root Route --->
     root :to => "accounts#instructions"
   end

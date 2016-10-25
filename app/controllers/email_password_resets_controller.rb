@@ -30,7 +30,14 @@ class EmailPasswordResetsController < ApplicationController
 
   def create
     @account = Account.find_by_email(params[:email_password_reset][:email]) if params[:email_password_reset]
-    if @account
+    if @account.verification_method == 'spid'
+      flash[:notice] =  I18n.t(:No_password_reset_spid)
+      respond_to do |format|
+        format.html { render :action => :new }
+        format.mobile { render :action => :new }
+        format.xml { render_if_xml_restful_enabled :nothing => true, :status => :unprocessable_entity }
+      end
+    elsif @account
       @account.password_reset_instructions!
       flash[:notice] = I18n.t(:Instruction_reset_has_been_mailed)
 

@@ -62,5 +62,8 @@
       <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
         <li class="google"><a href="<%= root_path %>auth/google_oauth2" class="social-button google"><%= t(:Sign_in_with) %> Google+</a></li>
       <% end %>
+      <% if CONFIG['spid_login_enabled'] == true %>
+        <li class="spid"><a href="<%= root_path %>auth/spid" class="social-button spid"><%= t(:Sign_in_with) %> Spid</a></li>
+      <% end %>
     </ul>
 <% end %>

@@ -64,24 +64,31 @@
           <%= link_to t(:Click_for_privacy), document_path('privacy.pdf'), :target => '_blank' %>
         </div>
     <% else %>
+    <% if @verification_method != "spid" %>
         <div id="disable_account">
           <strong><%= label_tag t(:disable_account) %></strong><br/>
           <%= check_box_tag 'account_disable_account', '1', false, 'data-warning' => t(:Account_disable_confirmation), :name => 'account[disable_account]'  %>
         </div>
     <% end %>
-
-    <%= f.button :submit %>
+    <% end %>
+    <% if @verification_method != "spid" %>
+        <%= f.button :submit %>
+    <% end %>
 </div>
 
 <% if account_verification_methods.include?('social_network') and account.new_record? %>
 <div id="registration-social-network" class="social-login center hidden">
   <% if CONFIG['omniauth_providers'].include?(:facebook) %>
-    <a href="<%= root_path %>auth/facebook" class="social-button facebook"><%= t(:Sign_up_with) %> Facebook</a>
+    <a href="<%= root_path %>/auth/facebook" class="social-button facebook"><%= t(:Sign_up_with) %> Facebook</a>
   <% end %>
   <% if CONFIG['omniauth_providers'].include?(:google_oauth2) %>
-    <a href="<%= root_path %>auth/google_oauth2" class="social-button google"><%= t(:Sign_up_with) %> Google+</a>
+    <a href="<%= root_path %>/auth/google_oauth2" class="social-button google"><%= t(:Sign_up_with) %> Google+</a>
   <% end %>
 </div>
 <% end %>
-
+<% if account_verification_methods.include?('spid') and account.new_record? %>
+   <div id="registration-spid" class="spid-login center hidden">
+      <a href="<%= root_path %>auth/spid" class="social-button spid"><%= t(:Sign_up_with) %> Spid</a>
+   </div>
+<% end %>
 <p class="cancel"><%= link_to t(:Undo), :back %></p>

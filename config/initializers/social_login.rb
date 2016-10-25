@@ -14,9 +14,12 @@ if CONFIG['social_login_enabled']
     google_id = Configuration.get('social_login_google_id', '')
     google_secret = Configuration.get('social_login_google_secret', '')
 
+    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE 
+
     if facebook_id != '' and facebook_secret != ''
       provider :facebook, facebook_id, facebook_secret,
                :scope => 'email,user_birthday,user_location',
+               :info_fields => 'first_name,last_name,email,id,birthday,location,verified',
                :display => 'page',
                :client_options => { :ssl => { :ca_path => CONFIG['ssl_ca_path'] }}
 

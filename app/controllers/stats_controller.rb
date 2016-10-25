@@ -107,6 +107,7 @@ class StatsController < ApplicationController
         if User.self_verification_methods.length > 1
           data['mobile_phone'] = User.registered_each_day(@from, @to, 'mobile_phone')
           data['credit_card'] = User.registered_each_day(@from, @to, 'gestpay_credit_card')
+          data['spid'] = User.registered_each_day(@from, @to, 'spid')
         end
         return data
       when 'registered_users_daily'
@@ -114,6 +115,7 @@ class StatsController < ApplicationController
         if User.self_verification_methods.length > 1
           data['mobile_phone'] = User.registered_daily(@from, @to, 'mobile_phone')
           data['credit_card'] = User.registered_daily(@from, @to, 'gestpay_credit_card')
+          data['spid'] = User.registered_daily(@from, @to, 'spid')
         end
         return data
       when 'traffic' then RadiusAccounting.traffic_each_day(@from, @to, called_station_id)
