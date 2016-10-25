@@ -160,6 +160,7 @@ en:
   New_radius_reply: "New RADIUS reply"
   New_user: "New user"
   Next: "Next"
+  No_password_reset_spid: "This identity belongs to SPID. You can't change your password over here."
   Notes: "Notes"
   No_ajax_verification_success: "Your account has been verified now"
   No_user_found_with_that_email: "No user found with that e-mail address"

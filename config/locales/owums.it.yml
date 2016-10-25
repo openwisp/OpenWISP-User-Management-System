@@ -163,6 +163,7 @@ it:
   Next: "Avanti"
   Notes: "Note"
   No_ajax_verification_success: "Il tuo account e' stato verificato ora"
+  No_password_reset_spid: "Account creato con il sistema SPID. La password non è modificabile su questo sistema"
   No_user_found_with_that_email: "Nessun utente trovato per l'indirizzo e-mail inserito"
   No_user_found_with_that_mobile_phone: "Nessun utente trovato per il numero di telefono cellulare"
   Not_verified: "Non verificato"
