@@ -14,6 +14,7 @@ class SamlController < ApplicationController
   def consume
     options = CONFIG['spid_options'].first
     response = OneLogin::RubySaml::Response.new(params[:SAMLResponse], options)
+    Rails.logger.warn(response.inspect)
     if request.fullpath.ends_with? 'spid'  
 	response.settings = saml_settings('spid')
     else 
@@ -67,11 +68,11 @@ class SamlController < ApplicationController
 
   private
 
-  def saml_settings(service)
+  def saml_settings(service, root_dir="owums")
     #service identifies the federation of the users: maybe spid, idem etc
     settings = OneLogin::RubySaml::Settings.new
 
-    settings.assertion_consumer_service_url = "#{request.protocol}#{request.host}:#{request.port}/consume/"+service
+    settings.assertion_consumer_service_url = "https://signup.fvgwifi.it/owums/consume/spid"
     settings.issuer                         = CONFIG['spid_issuer']
     settings.idp_sso_target_url             = CONFIG[service]["idp_sso_target_url"]
     settings.name_identifier_format         = CONFIG[service]["name_identifier_format"]
