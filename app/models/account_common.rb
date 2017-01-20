@@ -364,6 +364,7 @@ class AccountCommon < ActiveRecord::Base
 
   def captive_portal_login(ip_address=false, timeout=false, config_check=true)
     # to use indipendently from configuration supply :config_check => false
+    Rails.logger.warn("AUTOMATIC LOGIN - "+CONFIG['automatic_captive_portal_login'].to_s)
     if not CONFIG['automatic_captive_portal_login'] and config_check
       return false
     end
@@ -391,6 +392,8 @@ class AccountCommon < ActiveRecord::Base
       uri = URI::parse "#{cp_api_protocol}://#{cp_base_url}/api/v1/account/login"
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = false
+      Rails.logger.warn("URI - "+uri.request_uri)
+      Rails.logger.warn("PARAMS - "+params.inspect)
       if cp_api_protocol == "https" 
           http.use_ssl = true
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE

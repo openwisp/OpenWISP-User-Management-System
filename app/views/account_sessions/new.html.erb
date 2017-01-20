@@ -54,11 +54,9 @@
           </p>
           <% end %>
           <% if CONFIG['spid_login_enabled'] == true %>
-          <p class="center social-login">
-            <% if CONFIG['spid_login_enabled'] == true %>
-              <a href="<%= root_path %>auth/spid" class="social-button spid">SPID</a>
-            <% end %>
-          </p>
+            <p class="center social-login"><a href="<%= root_path %>/auth/spid">
+               <%= image_tag("spid-button-link-link.png", :width => "200", :alt => t(:Spid_alternate)) %>
+            </a></p>
           <% end %>
         </fieldset>
       <% end %>

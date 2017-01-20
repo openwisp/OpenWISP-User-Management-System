@@ -88,7 +88,9 @@
 <% end %>
 <% if account_verification_methods.include?('spid') and account.new_record? %>
    <div id="registration-spid" class="spid-login center hidden">
-      <a href="<%= root_path %>auth/spid" class="social-button spid"><%= t(:Sign_up_with) %> Spid</a>
+      <p><a href="<%= root_path %>/auth/spid">
+      <%= image_tag("spid-button-link-link.png", :width => "200") %>
+      </a></p>
    </div>
 <% end %>
 <p class="cancel"><%= link_to t(:Undo), :back %></p>
