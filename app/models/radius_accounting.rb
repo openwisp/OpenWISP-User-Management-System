@@ -6,12 +6,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -65,14 +65,14 @@ class RadiusAccounting < ActiveRecord::Base
       (from+1.day).to_date,
       (to+1.day).to_date
     ]
-    
+
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
       condition_params.push("#{called_station_id}:%")
     end
-    
+
     conditions = [condition_string] + condition_params
-    
+
     RadiusAccounting.count('UserName',
           :select => 'AcctStartTime',
           :conditions => conditions,
@@ -86,14 +86,14 @@ class RadiusAccounting < ActiveRecord::Base
       (from+1.day).to_date,
       (to+1.day).to_date
     ]
-    
+
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
       condition_params.push("#{called_station_id}:%")
     end
-    
+
     conditions = [condition_string] + condition_params
-    
+
     count('UserName',
           :conditions => conditions,
           :group => "DATE(AcctStartTime)",
@@ -138,14 +138,14 @@ class RadiusAccounting < ActiveRecord::Base
       (from+1.day).to_date,
       (to+1.day).to_date
     ]
-    
+
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
       condition_params.push("#{called_station_id}:%")
     end
-    
+
     conditions = [condition_string] + condition_params
-    
+
     sum('AcctInputOctets',
         :conditions => conditions,
         :group => "DATE(AcctStartTime)"
@@ -158,14 +158,14 @@ class RadiusAccounting < ActiveRecord::Base
       (from+1.day).to_date,
       (to+1.day).to_date
     ]
-    
+
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
       condition_params.push("#{called_station_id}:%")
     end
-    
+
     conditions = [condition_string] + condition_params
-    
+
     sum('AcctOutputOctets',
         :conditions => conditions,
         :group => "DATE(AcctStartTime)"
@@ -178,14 +178,14 @@ class RadiusAccounting < ActiveRecord::Base
       (from+1.day).to_date,
       (to+1.day).to_date
     ]
-    
+
     if called_station_id
       condition_string << " AND CalledStationId LIKE ?"
       condition_params.push("#{called_station_id}:%")
     end
-    
+
     conditions = [condition_string] + condition_params
-    
+
     sum('AcctInputOctets + AcctOutputOctets',
         :conditions => conditions,
         :group => "DATE(AcctStartTime)"
@@ -211,11 +211,11 @@ class RadiusAccounting < ActiveRecord::Base
   def self.find_by_username(username)
     find_by_UserName(username)
   end
-  
+
   def self.with_full_name
     select("radacct.*, users.username, users.given_name, users.surname").joins("LEFT OUTER JOIN users ON radacct.UserName = users.username")
   end
-  
+
   def self.find_unaware_radius_accountings
     # returns radius accounting records which do not have the format
     # <mac_address_of_ap_from_where_user_accessed>:<captive_portal_interface>
@@ -225,13 +225,13 @@ class RadiusAccounting < ActiveRecord::Base
           ( AcctStopTime IS NULL OR AcctStopTime = '0000-00-00 00:00:00') AND\
           AcctStartTime >= (NOW() - INTERVAL 2 DAY) ")
   end
-  
+
   def self.convert_radius_accountings_to_aware
     # convert radius accounting CalledStationId attribute so that it's in the format:
     # <mac_address_of_ap_from_where_user_accessed>:<captive_portal_interface>
     ra = self.find_unaware_radius_accountings()
     modified_records = []
-    
+
     ra.each do |accounting|
       user_mac = accounting.calling_station_id
       begin
@@ -248,27 +248,31 @@ class RadiusAccounting < ActiveRecord::Base
         ExceptionNotifier::Notifier.background_exception_notification(e).deliver
         next
       end
-      
+
+      unless ap_mac
+        next
+      end
+
       new_called_station_id = "%s:%s" % [
         ap_mac.upcase.gsub(':', '-'),
         accounting.called_station_id.gsub(':', '-').gsub(' ', '')
       ]
-      
+
       accounting.called_station_id = new_called_station_id
       accounting.save
       modified_records.push(accounting)
     end
-    
+
     return modified_records
   end
-  
+
   def self.cleanup_stale_radius_accountings
     # retrieve stale sessions
     sessions = RadiusAccounting.where("(AcctStopTime IS NULL OR AcctStopTime = '0000-00-00 00:00:00') AND AcctStartTime <= (NOW() - INTERVAL 3 DAY)")
-    
+
     recalculated = 0
     invalid = 0
-    
+
     sessions.each do |ra|
       # cool, we have the session time
       if ra.AcctSessionTime > 0
@@ -287,7 +291,7 @@ class RadiusAccounting < ActiveRecord::Base
       end
       ra.save
     end
-    
+
     puts "[#{Date.today}]"
     puts "OWUMS-Stale-Recalculated #{recalculated}"
     puts "OWUMS-Stale-Invalid #{invalid}\n\n"
