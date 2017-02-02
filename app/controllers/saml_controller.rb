@@ -14,6 +14,8 @@ class SamlController < ApplicationController
   def consume
     options = CONFIG['spid_options'].first
     response = OneLogin::RubySaml::Response.new(params[:SAMLResponse], options)
+    
+    Rails.logger.warn(response.inspect)
     if request.fullpath.ends_with? 'spid'  
 	response.settings = saml_settings('spid')
     else 

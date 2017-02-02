@@ -249,10 +249,15 @@ class RadiusAccounting < ActiveRecord::Base
         next
       end
       
-      new_called_station_id = "%s:%s" % [
-        ap_mac.upcase.gsub(':', '-'),
-        accounting.called_station_id.gsub(':', '-').gsub(' ', '')
-      ]
+      unless ap_mac.nil?
+       new_called_station_id = "%s:%s" % [
+         ap_mac.upcase.gsub(':', '-'),
+         accounting.called_station_id.gsub(':', '-').gsub(' ', '')
+        ]
+      else
+	next
+      end
+    
       
       accounting.called_station_id = new_called_station_id
       accounting.save
