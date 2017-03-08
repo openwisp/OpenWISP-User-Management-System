@@ -297,6 +297,15 @@ class RadiusAccounting < ActiveRecord::Base
     puts "OWUMS-Stale-Invalid #{invalid}\n\n"
   end
 
+  def self.delete_1y_old_sessions
+    all_sessions=RadiusAccounting.count    
+    sessions=RadiusAccounting.delete_all('AcctStartTime < NOW() - INTERVAL 1 YEAR')
+    remained_sessions=RadiusAccounting.count
+    diff=all_sessions.to_i - remained_sessions.to_i
+    puts "[#{Date.today}] Before: #{all_sessions} Deleted: #{diff} Remaining: #{remained_sessions}\n"
+  
+  end
+    
   # Accessors
 
   ## Read
