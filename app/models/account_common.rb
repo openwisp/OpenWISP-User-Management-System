@@ -64,7 +64,7 @@ class AccountCommon < ActiveRecord::Base
             :uniqueness => {:allow_blank => true},
             :confirmation => {:allow_blank => true},
             :format => {
-                :with => /^[A-Z0-9_\.%\+\-']+@(?:[A-Z0-9\-]+\.)+(?:[A-Z]{2,4}|museum|travel)$/i,
+                :with => /^[A-Z0-9_\.%\+\-']+@(?:[A-Z0-9\-]+\.)+(?:[A-Z]{2,4}|museum|travel|family)$/i,
                 :message => :email_invalid,
                 :allow_blank => true
             }
