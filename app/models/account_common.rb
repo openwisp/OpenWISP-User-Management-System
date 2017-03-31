@@ -28,6 +28,7 @@ class AccountCommon < ActiveRecord::Base
   VERIFY_BY_NOTHING = "no_identity_verification"
   VERIFY_BY_MACADDRESS = "mac_address"
   VERIFY_BY_SOCIAL = "social_network"
+  VERIFY_BY_SPID = "spid"
 
   # Authlogic
   acts_as_authentic do |c|
@@ -166,6 +167,7 @@ class AccountCommon < ActiveRecord::Base
 
     methods.push(VERIFY_BY_GESTPAY) if CONFIG['gestpay_enabled']
     methods.push(VERIFY_BY_SOCIAL) if CONFIG['social_login_enabled']
+    methods.push(VERIFY_BY_SPID) if Configuration.get('spid_login_enabled')
 
     if !!defined?(Rails::Console)
       methods.push VERIFY_BY_NOTHING
@@ -179,6 +181,7 @@ class AccountCommon < ActiveRecord::Base
     methods = [VERIFY_BY_MOBILE]
     methods.push(VERIFY_BY_GESTPAY) if CONFIG['gestpay_enabled']
     methods.push(VERIFY_BY_SOCIAL) if CONFIG['social_login_enabled']
+    methods.push(VERIFY_BY_SPID) if Configuration.get('spid_login_enabled')
     
     methods += self.verification_methods
     methods
@@ -361,30 +364,41 @@ class AccountCommon < ActiveRecord::Base
 
   def captive_portal_login(ip_address=false, timeout=false, config_check=true)
     # to use indipendently from configuration supply :config_check => false
+    Rails.logger.warn("AUTOMATIC LOGIN - "+CONFIG['automatic_captive_portal_login'].to_s)
     if not CONFIG['automatic_captive_portal_login'] and config_check
       return false
     end
 
     # determine ip address
     ip_address = ip_address ? ip_address : self.current_login_ip
+    #ip_address = ip_address ? ip_address : '172.19.235.114'
     # automatically log in an user in the captive portal to allow the user to surf
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    cp_zone = Configuration.get('pfsense_zone', false)
+    cp_api_protocol = Configuration.get('captive_portal_api_protocol', false)
 
     if cp_base_url
       params = {
         :username => self.username,
         :password => self.crypted_password,
-        :ip => ip_address
+        :ip => ip_address,
+	:zone => cp_zone
       }
       # specify session timeout if necessary to achieve a temporary login
       if timeout
         params[:timeout] = Configuration.get('gestpay_vbv_session', '300').to_i
       end
 
-      uri = URI::parse "#{cp_base_url}/api/v1/account/login"
+      uri = URI::parse "#{cp_api_protocol}://#{cp_base_url}/api/v1/account/login"
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      http.use_ssl = false
+      Rails.logger.warn("URI - "+uri.request_uri)
+      Rails.logger.warn("PARAMS - "+params.inspect)
+      if cp_api_protocol == "https" 
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data(params)
       http.request(request)
@@ -399,15 +413,21 @@ class AccountCommon < ActiveRecord::Base
     # determine ip address
     ip_address = ip_address ? ip_address : self.last_login_ip
     cp_base_url = Configuration.get('captive_portal_baseurl', false)
+    cp_api_protocol = Configuration.get('captive_portal_api_protocol', false)
     if cp_base_url
       params = {
         :username => self.username,
-        :ip => ip_address
+        :ip => ip_address,
+        :zone => cp_zone
       }
-      uri = URI::parse "#{cp_base_url}/api/v1/account/logout"
+      uri = URI::parse "#{cp_api_protocol}://#{cp_base_url}/api/v1/account/logout"
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+     
+      http.use_ssl = false
+      if cp_api_protocol == "https"
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data(params)
       http.request(request)

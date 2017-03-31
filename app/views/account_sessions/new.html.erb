@@ -39,11 +39,11 @@
 
           <%= f.button :submit, :class => 'submit button nomargin' %>
 
-          <% if account_verification_methods.include?('social_network') %>
           <p class="center separator">
             <span class="text"><%= t(:or_sign_in_with)%></span>
             <span class="line"></span>
           </p>
+          <% if account_verification_methods.include?('social_network') %>
           <p class="center social-login">
             <% if CONFIG['omniauth_providers'].include?(:facebook) %>
               <a href="<%= root_path %>auth/facebook" class="social-button facebook">Facebook</a>
@@ -52,6 +52,15 @@
               <a href="<%= root_path %>auth/google_oauth2" class="social-button google">Google+</a>
             <% end %>
           </p>
+          <% end %>
+          <% if CONFIG['spid_login_enabled'] == true %>
+           <% if URI.parse(root_path) && %w( http https ).include?(URI.parse(root_path).scheme) %>
+            <p class="center social-login"><%= root_path.inspect%><a href="<%= root_path %>/auth/spid">
+           <%else %>
+            <p class="center social-login"><a href="<%= root_url %>auth/spid">
+           <% end %>
+               <%= image_tag("spid-button-link-link.png", :width => "200", :alt => t(:Spid_alternate)) %>
+            </a></p>
           <% end %>
         </fieldset>
       <% end %>

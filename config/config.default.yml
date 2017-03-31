@@ -36,6 +36,13 @@ defaults: &defaults
     # filter radius accounting sessions newer than between_max
     between_max: 60
 
+  spid_attributes: [
+    {username: "fiscalNumber", given_name: "name", surname: "familyName", email: "email", auth_method: "spid"} ]
+  spid_options: [
+     {:skip_subject_confirmation: false, :allowed_clock_drift: 30} ]
+  spid_skip_errors: 'Invalid Signature on SAML Response'
+  spid_issuer: 'http://idp.domain/entityID'
+
 production:
   <<: *defaults
 

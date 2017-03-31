@@ -116,3 +116,14 @@
     <% end %>
   </div>
 <% end %>
+<% if account_verification_methods.include?('spid') and account.new_record? %>
+   <div id="registration-spid" class="spid-login center ignore-toggle" style="line-height:45px">
+   <% if URI.parse(root_path) && %w( http https ).include?(URI.parse(root_path).scheme) %>
+      <p class="center social-login"><%= root_path.inspect%><a href="<%= root_path %>/auth/spid">
+   <%else %>
+      <p class="center social-login"><a href="<%= root_url %>auth/spid">
+   <% end %>
+      <%= image_tag("spid-button-link-link.png", :width => "200") %>
+   </a></p>
+   </div>
+<% end %>
