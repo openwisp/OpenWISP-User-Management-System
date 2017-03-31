@@ -1,6 +1,4 @@
 class AssociatedUser < ActiveResource::Base
-
-  
   # return access point mac address from user mac address
   # return false if OWMW is not configured
   def self.access_point_mac_address_by_user_mac_address(mac)
