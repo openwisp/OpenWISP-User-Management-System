@@ -4,7 +4,8 @@ defaults: &defaults
   password: "password"
 
 production:
-  <<: *defaults
+  - {url: "http://owmw1.domain.com/url", username: "owmw", password: "password"}
+  - {url: "http://owmw1.domain.com/url", username: "owmw", password: "password"}
 
 development:
   <<: *defaults
