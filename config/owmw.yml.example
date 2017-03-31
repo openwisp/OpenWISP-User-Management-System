@@ -4,6 +4,7 @@ defaults: &defaults
   password: "password"
 
 production:
+#please provide owmw backend in a yml array
   - {url: "http://owmw1.domain.com/url", username: "owmw", password: "password"}
   - {url: "http://owmw1.domain.com/url", username: "owmw", password: "password"}
 

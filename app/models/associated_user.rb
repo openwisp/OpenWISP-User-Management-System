@@ -3,7 +3,6 @@ class AssociatedUser < ActiveResource::Base
   #self.user = OWMW["username"]
   #self.password = OWMW["password"]
   
-  attr_accessor :site, :user, :password
   # return access point mac address from user mac address
   # return false if OWMW is not configured
   def self.access_point_mac_address_by_user_mac_address(mac)
@@ -19,16 +18,18 @@ class AssociatedUser < ActiveResource::Base
          AssociatedUser.site = OWMW[owmw]["url"]
          AssociatedUser.user = OWMW[owmw]["username"]
          AssociatedUser.password = OWMW[owmw]["password"]
-         if AssociatedUser.find(mac).access_point.mac_address
-            return AssociatedUser.find(mac).access_point.mac_address
+         if  AssociatedUser.find(mac).access_point.mac_address
+	     puts "Item **** FOUND **** in "+AssociatedUser.site.to_s
+             return AssociatedUser.find(mac).access_point.mac_address
          end
       rescue Exception => e
-	puts "Error in executing access_point_mac_address_by_user_mac_address "+e.to_s
+	puts "Item NOT FOUND in "+AssociatedUser.site.to_s
 	next
-      end
+       end
      }
     else
       return false
     end
+    return false
   end
 end
