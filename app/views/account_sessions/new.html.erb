@@ -54,7 +54,11 @@
           </p>
           <% end %>
           <% if CONFIG['spid_login_enabled'] == true %>
-            <p class="center social-login"><a href="<%= root_path %>/auth/spid">
+           <% if URI.parse(root_path) && %w( http https ).include?(URI.parse(root_path).scheme) %>
+            <p class="center social-login"><%= root_path.inspect%><a href="<%= root_path %>/auth/spid">
+           <%else %>
+            <p class="center social-login"><a href="<%= root_url %>auth/spid">
+           <% end %>
                <%= image_tag("spid-button-link-link.png", :width => "200", :alt => t(:Spid_alternate)) %>
             </a></p>
           <% end %>

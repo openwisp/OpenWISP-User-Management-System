@@ -12,6 +12,10 @@ namespace :radius_accountings do
     RadiusAccounting.cleanup_stale_radius_accountings
   end
 
+  task :delete_1y_old_sessions => :environment do
+    RadiusAccounting.delete_1y_old_sessions
+  end
+
   # converts the attribute "CalledStationId" of radius accounting records which
   # do not contain the mac address of the access point from where the users connected
   # so that they will include this info

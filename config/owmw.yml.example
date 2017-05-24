@@ -4,7 +4,16 @@ defaults: &defaults
   password: "password"
 
 production:
-  <<: *defaults
+  - {url: "https://test3.inroma.roma.it:8444/associated_users/",
+     username: "owmw1234",
+     password: "owmw1234",
+     use_ssl: true
+    }
+  - {url: "https://test3.inroma.roma.it:8443/associated_users/",
+     username: "owmw1234",
+     password: "owmw1234",
+     use_ssl: true
+    }
 
 development:
   <<: *defaults

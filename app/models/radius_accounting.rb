@@ -233,34 +233,53 @@ class RadiusAccounting < ActiveRecord::Base
     modified_records = []
 
     ra.each do |accounting|
-      user_mac = accounting.calling_station_id
-      begin
-        ap_mac = AssociatedUser.access_point_mac_address_by_user_mac_address(user_mac)
-      rescue ActiveResource::UnauthorizedAccess
-        puts "could not authenticate to OWMW, please check the credentials in config/owmw.yml"
-        break
-      rescue ActiveResource::ServerError
-        puts "got 500 error, probably OWMW cannot connect to the VPN management"
-        break
-      rescue ActiveResource::ResourceNotFound
-        next
-      rescue Exception => e
-        ExceptionNotifier::Notifier.background_exception_notification(e).deliver
-        next
+      if OWMW != {}
+        OWMW.size.times { |owmw|
+          if OWMW[owmw]["password"].nil? or OWMW[owmw]["url"].nil? or OWMW[owmw]["url"].empty?
+            raise "OWMW not configured correctly, check configuration for environment '#{Rails.env}'"
+           end
+           begin
+             #Prepare url
+             user_mac = accounting.calling_station_id
+             owmwurl=OWMW[owmw]["url"].to_s+user_mac.to_s+".xml"
+
+	     #Prepare http
+             uri=URI.parse(owmwurl)
+             http = Net::HTTP.new(uri.host, uri.port)
+             http.use_ssl = OWMW[owmw]["use_ssl"]
+             http.verify_mode = OpenSSL::SSL::VERIFY_NONE if http.use_ssl
+
+	     #Submit request
+             request=Net::HTTP::Get.new(uri.request_uri)
+             request.basic_auth(OWMW[owmw]["username"], OWMW[owmw]["password"])
+             response=http.request(request)
+
+             #Filter reponse
+             body=response.body
+             data = Hash.from_xml(body)
+             ap_mac=data["associated_user"]["access_point"]["mac_address"]
+
+             if ap_mac 
+               new_called_station_id = "%s:%s" % [
+                 ap_mac.upcase.gsub(':', '-'),
+                 accounting.called_station_id.gsub(':', '-').gsub(' ', '')
+               ]
+               accounting.called_station_id = new_called_station_id
+               accounting.save
+               modified_records.push(accounting)
+             else
+               next
+             end
+
+           rescue Exception => e
+             puts e.to_s
+             ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+             next
+           end
+         }
+      else
+        return false
       end
-
-      unless ap_mac
-        next
-      end
-
-      new_called_station_id = "%s:%s" % [
-        ap_mac.upcase.gsub(':', '-'),
-        accounting.called_station_id.gsub(':', '-').gsub(' ', '')
-      ]
-
-      accounting.called_station_id = new_called_station_id
-      accounting.save
-      modified_records.push(accounting)
     end
 
     return modified_records
@@ -297,6 +316,15 @@ class RadiusAccounting < ActiveRecord::Base
     puts "OWUMS-Stale-Invalid #{invalid}\n\n"
   end
 
+  def self.delete_1y_old_sessions
+    all_sessions=RadiusAccounting.count    
+    sessions=RadiusAccounting.delete_all('AcctStartTime < NOW() - INTERVAL 1 YEAR')
+    remained_sessions=RadiusAccounting.count
+    diff=all_sessions.to_i - remained_sessions.to_i
+    puts "[#{Date.today}] Before: #{all_sessions} Deleted: #{diff} Remaining: #{remained_sessions}\n"
+  
+  end
+    
   # Accessors
 
   ## Read

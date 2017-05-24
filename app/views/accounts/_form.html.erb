@@ -88,9 +88,13 @@
 <% end %>
 <% if account_verification_methods.include?('spid') and account.new_record? %>
    <div id="registration-spid" class="spid-login center hidden">
-      <p><a href="<%= root_path %>/auth/spid">
-      <%= image_tag("spid-button-link-link.png", :width => "200") %>
-      </a></p>
+   <% if URI.parse(root_path) && %w( http https ).include?(URI.parse(root_path).scheme) %>
+            <p class="center social-login"><%= root_path.inspect%><a href="<%= root_path %>/auth/spid">
+   <%else %>
+      <p class="center social-login"><a href="<%= root_url %>auth/spid">
+   <% end %>
+    <%= image_tag("spid-button-link-link.png", :width => "200") %>
+   </a></p>
    </div>
 <% end %>
 <p class="cancel"><%= link_to t(:Undo), :back %></p>

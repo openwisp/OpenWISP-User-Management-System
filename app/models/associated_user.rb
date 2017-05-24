@@ -1,7 +1,7 @@
 class AssociatedUser < ActiveResource::Base
-  self.site = OWMW["url"]
-  self.user = OWMW["username"]
-  self.password = OWMW["password"]
+  self.site = OWMW[0]["url"]
+  self.user = OWMW[0]["username"]
+  self.password = OWMW[0]["password"]
   
   # return access point mac address from user mac address
   # return false if OWMW is not configured
