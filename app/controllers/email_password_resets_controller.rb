@@ -30,7 +30,7 @@ class EmailPasswordResetsController < ApplicationController
 
   def create
     @account = Account.find_by_email(params[:email_password_reset][:email]) if params[:email_password_reset]
-    if @account.verification_method == 'spid'
+    if @account && @account.verification_method == 'spid' 
       flash[:notice] =  I18n.t(:No_password_reset_spid)
       respond_to do |format|
         format.html { render :action => :new }
