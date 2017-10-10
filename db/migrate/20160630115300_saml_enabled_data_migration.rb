@@ -7,7 +7,9 @@ class SamlEnabledDataMigration < ActiveRecord::Migration
     keys[162],
     keys[163],
     keys[164],
-    keys[165]
+    keys[165],
+    keys[168],
+    keys[169]
   ]
 
   def self.up

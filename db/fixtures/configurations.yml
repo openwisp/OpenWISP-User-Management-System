@@ -695,3 +695,13 @@ Staff"
   system_key: t
   key: "pfsense_zone"
   value: ""
+
+168:
+  system_key: f
+  key: "spid_issuer"
+  value: "https://localhost"
+
+169:
+  system_key: f
+  key: "assertion_consumer_service_url"
+  value: "https://localhost/owums/consume/spid"

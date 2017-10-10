@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/onelogin/ruby-saml.git
-  revision: 47b7a8efec960b49a9d56391687f88b4e219b7c2
+  revision: b3ac5bd3acb76c31c6bbb24784cc8648244e0e80
   specs:
-    ruby-saml (1.3.0)
+    ruby-saml (1.5.0)
       nokogiri (<= 1.5.11)
       uuid
 
