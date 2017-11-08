@@ -24,6 +24,13 @@
                                'owums.account_traffic_graph'
     %>
 <% end %>
+<div class="grid_12">
+   <div id="noticespid" class="boxspid">
+      <% if CONFIG['spid_redir_url'] !='' and account_verification_methods.include?('spid') %>
+            <a href=<%= CONFIG['spid_redir_url'] %> class="buttonspid">Prosegui con la navigazione</a>
+       <% end %>
+   </div>
+</div>
 
 <div class="grid_3">
   <div class="box">

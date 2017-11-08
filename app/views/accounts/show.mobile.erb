@@ -24,10 +24,10 @@
     <%= link_to t(:Instructions), account_instructions_path, 'data-icon' => 'info', 'data-role' => 'button' %>
 <% end %>
 
+<%= link_to "Prosegui con la navigazione", CONFIG['spid_redir_url'], 'data-icon' => 'info', 'data-role' => 'button', 'data-theme' => 'b' %>
 <%# Reload the graphs every time, skipping jQuery Mobile cache %>
 <%= javascript_include_tag 'owums.account_logins_graph', :cache => false %>
 <%= javascript_include_tag 'owums.account_traffic_graph', :cache => false %>
-
 <div data-role="collapsible">
   <h2><%= t(:Personal_details) %></h2>
 

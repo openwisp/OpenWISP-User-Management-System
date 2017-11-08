@@ -42,6 +42,7 @@ defaults: &defaults
      {:skip_subject_confirmation: false, :allowed_clock_drift: 30} ]
   spid_skip_errors: 'Invalid Signature on SAML Response'
   spid_issuer: 'http://idp.domain/entityID'
+  spid_redir_url: 'http://www.cineca.it'
 
 production:
   <<: *defaults
