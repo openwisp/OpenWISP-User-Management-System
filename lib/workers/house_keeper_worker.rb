@@ -53,7 +53,7 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
       if user.verification_expired?
         puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username}) didn't validate its account but it's a credit card user. Disabling it..."
         user.active = false
-        user.save! if user.verify_with_gestpay?  # extra paranoia
+        user.save!(:validate=>false) if user.verify_with_gestpay?  # extra paranoia
       end
     end
   end
@@ -71,7 +71,7 @@ class HouseKeeperWorker < BackgrounDRb::MetaWorker
       if user.registration_expired?
         puts "[#{Time.now()}] User '#{user.given_name} #{user.surname}' - (#{user.username})  was disabled for a long time. but it's a credit card user. Disabling it..."
         user.active = false
-        user.save! if user.verify_with_gestpay?  # extra paranoia
+        user.save!(:validate=>false) if user.verify_with_gestpay?  # extra paranoia
       end
     end
   end
