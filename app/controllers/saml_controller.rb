@@ -22,7 +22,6 @@ class SamlController < ApplicationController
        return nil
     end
     response = OneLogin::RubySaml::Response.new(params[:SAMLResponse], options)
-#    Rails.logger.warn(response.inspect)
     # We validate the SAML Response and check if the user already exists in the system
     if response.is_valid? || response.errors.include?(CONFIG['spid_skip_errors'])
        # authorize_success, log the user
@@ -90,18 +89,9 @@ class SamlController < ApplicationController
     settings.authn_context = [ "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport", 
                                "https://www.spid.gov.it/SpidL1" ]
 
-    # Optional. Describe according to IdP specification (if supported) which attributes the SP desires to receive in SAMLResponse.
-#    settings.attributes_index = 5
-    # Optional. Describe an attribute consuming service for support of additional attributes.
-    # {"fiscalNumber" => "Codice Fiscale", "name" => "Nome", "familyName" => "Cognome", "email" => "Indirizzo di posta elettronica"}
     settings.attribute_consuming_service.configure do
       service_name "Registrazione Utenti WiFi con SPID"
-#      service_index 5
       CONFIG['spid_required'].first.each { |key, value| add_attribute :name => key, :name_format => "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified", :friendly_name => value }
-#     add_attribute :name => "email", :name_format => "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified", :friendly_name => "Indirizzo e-mail"
-#     add_attribute :name => "Name", :name_format => "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified", :friendly_name => "Nome"
-#     add_attribute :name => "givenName", :name_format => "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified", :friendly_name => "Cognome"
-#     add_attribute :name => "fiscalNumber", :name_format => "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified", :friendly_name => "Codice fiscale"
     end
 
     settings
