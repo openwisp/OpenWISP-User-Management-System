@@ -36,13 +36,17 @@ defaults: &defaults
     # filter radius accounting sessions newer than between_max
     between_max: 60
 
+  spid_required: [
+     {Codice-fiscale-SPID: "Codice Fiscale", Shib-Identita-Nome: "Nome", Shib-Identita-Cognome: "Cognome", Shib-Email: "Indirizzo e-mail"} ]
   spid_attributes: [
-    {username: "fiscalNumber", given_name: "name", surname: "familyName", email: "email", auth_method: "spid"} ]
+    {username: "Codice-fiscale-SPID", given_name: "Shib-Identita-Nome", surname: "Shib-Identita-Cognome", email: "Shib-Email", auth_method: "spid"} ]
   spid_options: [
-     {:skip_subject_confirmation: false, :allowed_clock_drift: 30} ]
+     {:skip_subject_confirmation: true, skip_recipient_check: true, :allowed_clock_drift: 30} ]
   spid_skip_errors: 'Invalid Signature on SAML Response'
   spid_issuer: 'http://idp.domain/entityID'
   spid_redir_url: 'http://www.cineca.it'
+  spid_want_assertions_encrypted: true
+  spid_redirect_logout: 'https://idp.domain/logout.do'
 
 production:
   <<: *defaults

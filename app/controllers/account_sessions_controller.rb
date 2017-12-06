@@ -54,13 +54,23 @@ class AccountSessionsController < ApplicationController
   end
 
   def destroy
-    current_account_session.destroy
-    flash[:notice] = I18n.t(:Logout_successful)
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.mobile { redirect_to root_path }
-      format.xml { render_if_xml_restful_enabled :nothing => true }
-    end
 
+   curr_user_cred = cookies[:account_credentials]
+   curr_user_id = curr_user_cred.split("::").last
+   curr_user= User.find(curr_user_id)
+   curr_ver_method=curr_user.verification_method
+
+   current_account_session.destroy
+
+   if(curr_ver_method && curr_ver_method != 'spid') 
+     flash[:notice] = I18n.t(:Logout_successful)
+     respond_to do |format|
+       format.html { redirect_to root_path }
+       format.mobile { redirect_to root_path }
+       format.xml { render_if_xml_restful_enabled :nothing => true }
+     end
+   else
+     redirect_to CONFIG['spid_redirect_logout']
+   end
   end
 end

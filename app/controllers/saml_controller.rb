@@ -12,10 +12,17 @@ class SamlController < ApplicationController
   end
 
   def consume
-    if request.fullpath.ends_with? 'spid'  
-       options =  CONFIG['spid_options'].first
-       options[:settings] = saml_settings('spid')
-    else 
+    if request.fullpath.ends_with? 'spid'
+      options =  CONFIG['spid_options'].first
+      options[:settings] = saml_settings('spid')
+    elsif request[:logout]=='SPID'
+      # logger.info "Deleted session for '#{session[:userid]}'"
+      redirect_to root_url, :flash => {
+         :notice => "#{I18n.t(:Logout_successful)}"
+      }
+      return nil
+    else
+      #   logger.error "The SAML Response is invalid"
        redirect_to root_url, :flash => {
          :error => "#{I18n.t(:Spid_login_failed)} Fullpath #{response.inspect}" 
        }
@@ -49,6 +56,7 @@ class SamlController < ApplicationController
 
     end
     else
+      #   logger.error "The SAML Login Response is invalid"
        redirect_to root_url, :flash => {
          :error => "#{I18n.t(:Spid_login_failed)} #{response.inspect}"
        }
@@ -65,7 +73,6 @@ class SamlController < ApplicationController
     }
     end
   end
-
 
   private
 
@@ -84,6 +91,7 @@ class SamlController < ApplicationController
     settings.idp_cert = hash["EntitiesDescriptor"]["EntityDescriptor"]["IDPSSODescriptor"]["KeyDescriptor"]["KeyInfo"]["X509Data"]["X509Certificate"]
     settings.certificate = IO.read(CONFIG[service]["certificate_file"])
     settings.private_key = IO.read(CONFIG[service]["private_key_file"]) 
+    settings.security[:want_assertions_encrypted] = CONFIG["spid_want_assertions_encrypted"]
 
     # Optional for most SAML IdPs
     settings.authn_context = [ "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport", 
