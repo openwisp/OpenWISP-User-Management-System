@@ -144,12 +144,13 @@ class Account < AccountCommon
     default_zip = CONFIG['zip'] ? 'null' : ''
 
     default_email = session[list_attr["email"]] ? session[list_attr["email"]] : session[list_attr["username"]] + "@no-samlmail.it"
+    default_email[default_email.rindex('@'),0] = "+" + session[list_attr["username"]]
 
     if list_attr
        account = Account.new(
         :given_name => first_name,
         :surname => last_name,
-        :email => session[list_attr["email"]] || default_email,
+        :email => default_email,
         :username => session[list_attr["username"]],
         :password => password,
         :password_confirmation => password,
@@ -164,21 +165,16 @@ class Account < AccountCommon
         :active => true
       )# username lowercase withouth dashes
       account.username = account.username.downcase.gsub(' ', '-')
-      # find available username
-#      original_username = account.username
-#      counter = 1
-#      while Account.where(:username => account.username).count > 0
-#        counter += 1
-#        account.username = "#{original_username}#{counter}"
-#      end
       account.radius_groups << RadiusGroup.find_by_name!(Configuration.get('default_radius_group'))
       account.verified = true
 
-      if account.save
-        if session[list_attr["email"]]
-            account.new_account_notification!
-        end
-      end
+      account.save
+      #     don't send "welcome" email
+#      if account.save
+#        if session[list_attr["email"]]
+#            account.new_account_notification!
+#        end
+#      end
       return account
     end
   end
