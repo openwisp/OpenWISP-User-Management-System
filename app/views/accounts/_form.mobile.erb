@@ -27,7 +27,7 @@
 
 <ul data-role="listview" data-inset="true" id="mobile-registration"<% if account_verification_methods.length > 1 and account.new_record? %> class="has-more-verification-methods"<% end %>>
   <% if account.new_record? %>
-      <% if account_verification_methods.length <= 1 %>
+      <% if account_verification_methods.length <= 1 or ( account_verification_methods.length == 2 and account_verification_methods.include? 'spid' ) %>
           <%= f.input :verification_method, :as => :hidden %>
       <% else %>
         <li data-role="fieldcontain" class="ignore-toggle" id="verification-methods-container">
@@ -115,15 +115,4 @@
       <a href="<%= root_path %>auth/google_oauth2" class="social-button google"><%= t(:Sign_up_with) %> Google+</a>
     <% end %>
   </div>
-<% end %>
-<% if account_verification_methods.include?('spid') and account.new_record? %>
-   <div id="registration-spid" class="spid-login center ignore-toggle" style="line-height:45px">
-   <% if URI.parse(root_path) && %w( http https ).include?(URI.parse(root_path).scheme) %>
-      <p class="center social-login"><%= root_path.inspect%><a href="<%= root_path %>/auth/spid">
-   <%else %>
-      <p class="center social-login"><a href="<%= root_url %>auth/spid">
-   <% end %>
-      <%= image_tag("spid-button-link-link.png", :width => "200") %>
-   </a></p>
-   </div>
 <% end %>

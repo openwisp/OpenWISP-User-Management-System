@@ -25,7 +25,7 @@
             <%= Configuration.get('verification_explain_mobile_%s' % I18n.locale.to_s).html_safe %>
         <% end %>
     </div>
-    <% if account_verification_methods.length <= 1 %>
+    <% if account_verification_methods.length <= 1 or ( account_verification_methods.length == 2 and account_verification_methods.include? 'spid' ) %>
         <%= f.input :verification_method, :as => :hidden %>
     <% else %>
         <%= f.input :verification_method, :collection => account_verification_select, :selected => @verification_method %>
@@ -85,16 +85,5 @@
     <a href="<%= root_path %>/auth/google_oauth2" class="social-button google"><%= t(:Sign_up_with) %> Google+</a>
   <% end %>
 </div>
-<% end %>
-<% if account_verification_methods.include?('spid') and account.new_record? %>
-   <div id="registration-spid" class="spid-login center hidden">
-   <% if URI.parse(root_path) && %w( http https ).include?(URI.parse(root_path).scheme) %>
-            <p class="center social-login"><%= root_path.inspect%><a href="<%= root_path %>/auth/spid">
-   <%else %>
-      <p class="center social-login"><a href="<%= root_path %>/auth/spid">
-   <% end %>
-    <%= image_tag("spid-button-link-link.png", :width => "200") %>
-   </a></p>
-   </div>
 <% end %>
 <p class="cancel"><%= link_to t(:Undo), :back %></p>

@@ -22,6 +22,7 @@ module AccountsHelper
 
   def account_verification_select
     options = ["select_verification_method"] + account_verification_methods
+    options.delete('spid')
     options.map{ |method| [ t(method.to_sym), method ] }
   end
 end
