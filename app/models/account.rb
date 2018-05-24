@@ -282,8 +282,9 @@ class Account < AccountCommon
       time = DateTime.now
       shop_transaction_id = Digest::MD5.hexdigest("#{number}#{time}")
       # prepare SOAP params
+      #  :shopLogin => Configuration.get('gestpay_shoplogin'),
       params = {
-        :shopLogin => Configuration.get('gestpay_shoplogin'),
+        :shopLogin => "xxxxxxxx",
         :uicCode => currency,
         :amount => amount,
         :shopTransactionId => shop_transaction_id,
@@ -297,7 +298,9 @@ class Account < AccountCommon
         :customInfo => "USERID=%s*P1*SERVER=%s" % [self.id.to_s, Configuration.get("notifier_base_url")]
       }
       # init SOAP client
-      client = Savon.client(webservice_url)
+      client = Savon.client(:wsdl=> webservice_url)
+      Rails.logger.warn("service url '#{webservice_url}'")
+      #client = Savon.client("https://sandbox2.gestpay.net/gestpay/GestPayWS/WsCryptDecrypt.asmx?wsdl")
 
       if Configuration.get('gestpay_webservice_method') == 'verification'
         method = :call_verifycard_s2_s
@@ -311,9 +314,12 @@ class Account < AccountCommon
       end
 
       # execute a SOAP request to call the "callPagamS2S" action
-      response = client.request(method) do
-        soap.body = params
-      end
+      #response = client.request(method) do
+      #  soap.body = params
+      #end
+      Rails.logger.warn("parametri '#{params}'")
+      response = client.call(method, :message => params)
+      
 
       # convert response to hash
       begin
@@ -367,6 +373,8 @@ class Account < AccountCommon
       end
 
       # explicit return just for clarity
+      Rails.logger.error("RISULTATO "+response[:transaction_result])
+      Rails.logger.error("RISULTATO "+response[:error_description])
       return response
     end
 

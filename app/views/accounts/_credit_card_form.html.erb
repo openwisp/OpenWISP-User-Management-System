@@ -31,7 +31,7 @@
             <% (1..12).each do |i| %><option value="<%= i %>"<% if i == params[:expiration_month].to_i %> selected="selected"<% end %>><%= i %></option><% end %>
           </select>
           <select id="credit_card_expiration_year" name="expiration_year">
-            <% ((Date.today.strftime "%y").to_i..(Date.today.strftime "%y").to_i+8).each do |i| %><option value="<%= i %>"<% if i == params[:expiration_year].to_i %> selected="selected"<% end %>><%= i %></option><% end %>
+            <% ((Date.today.strftime "%y").to_i..(Date.today.strftime "%y").to_i+18).each do |i| %><option value="<%= i %>"<% if i == params[:expiration_year].to_i %> selected="selected"<% end %>><%= i %></option><% end %>
           </select>
         </p>
         <p<% if Configuration.get('gestpay_webservice_method') == 'verification' %> class="hidden"<% end %>>

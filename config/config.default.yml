@@ -24,8 +24,8 @@ defaults: &defaults
   
   # uncomment these if you deploy your app in a sub directory
   # app root dir and static assets host
-  #root_dir: '/app'
-  #asset_host: 'domain.com/app'
+  root_dir: '/owums'
+  asset_host: 'test3.inroma.roma.it/owums'
 
   #sentry_dsn: 'http://public:secret@example.com/project-id'
   

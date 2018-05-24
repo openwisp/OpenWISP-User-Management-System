@@ -69,9 +69,9 @@ GEM
       money
       nokogiri
     afm (0.2.0)
-    akami (1.2.0)
+    akami (1.2.2)
       gyoku (>= 0.4.0)
-      nokogiri (>= 1.4.0)
+      nokogiri
     arel (2.0.10)
     authlogic (3.0.3)
       activerecord (>= 3.0.7)
@@ -106,14 +106,14 @@ GEM
       actionmailer (>= 3.0.4)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
-    gyoku (0.4.6)
+    gyoku (1.0.0)
       builder (>= 2.1.2)
     hashery (2.1.0)
     hashie (3.4.1)
     highline (1.6.19)
     hoe (3.6.1)
       rake (>= 0.8, < 11.0)
-    httpi (1.1.1)
+    httpi (2.0.2)
       rack
     i18n (0.5.0)
     jquery-rails (1.0.19)
@@ -144,7 +144,7 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     nokogiri (1.5.9)
-    nori (1.1.5)
+    nori (2.0.4)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -189,14 +189,14 @@ GEM
       aws-s3
       rmagick
     ruby-rc4 (0.1.5)
-    savon (1.2.0)
+    savon (2.0.3)
       akami (~> 1.2.0)
       builder (>= 2.1.2)
-      gyoku (~> 0.4.5)
-      httpi (~> 1.1.0)
+      gyoku (~> 1.0.0)
+      httpi (~> 2.0.0)
       nokogiri (>= 1.4.0)
-      nori (~> 1.1.0)
-      wasabi (~> 2.5.0)
+      nori (~> 2.0.3)
+      wasabi (~> 3.0.0)
     sentry-raven (0.13.3)
       faraday (>= 0.7.6)
     simple_form (1.4.2)
@@ -210,8 +210,8 @@ GEM
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)
     tzinfo (0.3.39)
-    wasabi (2.5.1)
-      httpi (~> 1.0)
+    wasabi (3.0.0)
+      httpi (~> 2.0)
       nokogiri (>= 1.4.0)
     xml-simple (1.1.2)
 
@@ -244,7 +244,7 @@ DEPENDENCIES
   rails!
   rmagick (~> 2.12.2)
   robinboening-fleximage (~> 1.0.6)
-  savon (~> 1.2.0)
+  savon (~> 2.0.0)
   sentry-raven
   simple_form (~> 1.4.1)
   sqlite3
