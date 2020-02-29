@@ -14,7 +14,7 @@ gem 'acl9', '~> 0.12.0'
 gem 'chronic', '~> 0.2.3'
 gem 'packet', '0.1.15', :git => 'git://github.com/openwisp/packet-legacy'
 
-gem 'jquery-rails', '~> 1.0.9'
+gem 'jquery-rails', '~> 3.1.5'
 gem 'kaminari', '~> 0.12.4'
 gem 'simple_form', '~> 1.4.1'
 
