@@ -75,7 +75,6 @@ GEM
     arel (2.0.10)
     authlogic (3.0.3)
       activerecord (>= 3.0.7)
-      activerecord (>= 3.0.7)
     aws-s3 (0.6.3)
       builder
       mime-types
@@ -111,15 +110,15 @@ GEM
     hashery (2.1.0)
     hashie (3.4.1)
     highline (1.6.19)
-    hoe (3.6.1)
-      rake (>= 0.8, < 11.0)
+    hoe (3.22.1)
+      rake (>= 0.8, < 15.0)
     httpi (1.1.1)
       rack
-    i18n (0.5.0)
+    i18n (0.5.4)
     jquery-rails (1.0.19)
       railties (~> 3.0)
       thor (~> 0.14)
-    json (1.8.0)
+    json (2.3.0)
     jwt (1.4.1)
     kaminari (0.12.4)
       rails (>= 3.0.0)
@@ -181,9 +180,8 @@ GEM
       rack (>= 1.0.0)
     rack-test (0.5.7)
       rack (>= 1.0)
-    rake (10.0.4)
-    rdoc (3.12.2)
-      json (~> 1.4)
+    rake (13.0.1)
+    rdoc (3.9.5)
     rmagick (2.12.2)
     robinboening-fleximage (1.0.6)
       aws-s3
@@ -209,7 +207,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)
-    tzinfo (0.3.39)
+    tzinfo (0.3.56)
     wasabi (2.5.1)
       httpi (~> 1.0)
       nokogiri (>= 1.4.0)
