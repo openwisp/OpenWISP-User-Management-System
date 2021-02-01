@@ -1,7 +1,13 @@
+Project discontinued
+--------------------
+
+Please use [OpenWISP RADIUS](https://openwisp-radius.readthedocs.io/en/latest/).
+
+The README is maintained below for historic purposes.
+
 # OpenWISP User Management System
 
-![Build Status](https://ci.publicwifi.it/buildStatus/icon?job=OpenWISP-User-Management-System)
-![Build Status](http://img.shields.io/github/release/openwisp/OpenWISP-User-Management-System.svg)
+![Release](http://img.shields.io/github/release/openwisp/OpenWISP-User-Management-System.svg)
 
 ## What is it?
 
